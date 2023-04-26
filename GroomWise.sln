@@ -4,7 +4,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9527855B-A10
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6DF2E646-7D53-4C60-81F3-53D6A69B7AE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.Core", "GroomWise.Core\GroomWise.Core.csproj", "{D52D2382-D2A5-4601-AFE6-BCFB4268E607}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.Domain", "GroomWise.Domain\GroomWise.Domain.csproj", "{D52D2382-D2A5-4601-AFE6-BCFB4268E607}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.Infrastructure", "GroomWise.Infrastructure\GroomWise.Infrastructure.csproj", "{7B0895DF-EB61-4074-BFE3-8E0D1D35F9A8}"
 EndProject

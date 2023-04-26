@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <RootNamespace>GroomWise.Core</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Abstractions\" />
+      <Folder Include="Collections\" />
+      <Folder Include="Enums\" />
+      <Folder Include="Interfaces\" />
+      <Folder Include="Models\" />
+    </ItemGroup>
+
+</Project>
