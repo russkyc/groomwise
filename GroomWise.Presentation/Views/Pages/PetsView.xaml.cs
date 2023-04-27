@@ -3,11 +3,11 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using System.Windows.Controls;
+using GroomWise.Core.Interfaces;
 
 namespace Russkyc.GroomWise.Desktop.Views.Pages;
 
-public partial class PetsView : UserControl
+public partial class PetsView : IView
 {
     public PetsView()
     {
