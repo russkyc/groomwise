@@ -4,15 +4,68 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using GroomWise.Core.Interfaces;
+using GroomWise.Core.Models;
+using Russkyc.Services.Services;
 
 namespace Russkyc.GroomWise.Desktop.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    [ObservableProperty] private string? _welcomeMessage;
+    [ObservableProperty]
+    private IAppInstance _appInstance;
 
-    public MainViewModel()
+    [ObservableProperty]
+    private IView? _view;
+    
+    public MainViewModel(IAppInstance appInstance)
     {
-        WelcomeMessage = "Welcome to your MVVM App!";
+        _appInstance = appInstance;
+        Init();
+    }
+
+    void Init()
+    {
+        AppInstance.NavItems.AddRange(new []
+        {
+            new NavItem
+            {
+                Name = "Dashboard",
+                Page = "DashboardView"
+            },
+            new NavItem
+            {
+                Name = "Appointments",
+                Page = "AppointmentsView"
+            },
+            new NavItem
+            {
+                Name = "Services",
+                Page = "ServicesView"
+            },
+            new NavItem
+            {
+                Name = "Customers",
+                Page = "CustomersView"
+            },
+            new NavItem
+            {
+                Name = "Pets",
+                Page = "PetsView"
+            },
+            new NavItem
+            {
+                Name = "Reports",
+                Page = "ReportsView"
+            }
+        });
+    }
+
+    [RelayCommand]
+    private void GetView(string pageName)
+    {
+        View = Injector.GetInstance()
+            .Resolve<IView>(pageName);
     }
 }
