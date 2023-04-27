@@ -1,8 +1,9 @@
 ﻿using System;
-using GroomWise.Presentation.ViewModels;
 using GroomWise.Presentation.Views;
+using org.russkyc.moderncontrols.Helpers;
+using Russkyc.GroomWise.Desktop.ViewModels;
 
-namespace GroomWise.Presentation;
+namespace Russkyc.GroomWise.Desktop;
 
 /// <summary>
 /// Interaction logic for App.xaml
@@ -15,6 +16,7 @@ public partial class App
     public App()
     {
         InitializeComponent();
+        ThemeManager.Instance.SetBaseTheme("Light");
         
         var view = new MainView
         {

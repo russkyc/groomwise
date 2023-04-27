@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace GroomWise.Presentation.ViewModels;
+namespace Russkyc.GroomWise.Desktop.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
