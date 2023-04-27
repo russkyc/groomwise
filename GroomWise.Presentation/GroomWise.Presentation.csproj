@@ -12,7 +12,10 @@
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+        <PackageReference Include="Material.Icons.WPF" Version="1.2.0" />
+        <PackageReference Include="Russkyc.Abstractions" Version="1.0.4" />
         <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.5.2" />
+        <PackageReference Include="Russkyc.Services" Version="1.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -22,6 +25,11 @@
     <ItemGroup>
       <None Remove="Views\Resources\Icons\groomwise-icon-multi.ico" />
       <Resource Include="Views\Resources\Icons\groomwise-icon-multi.ico" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GroomWise.Application\GroomWise.Application.csproj" />
+      <ProjectReference Include="..\GroomWise.Domain\GroomWise.Domain.csproj" />
     </ItemGroup>
 
 </Project>
