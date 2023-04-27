@@ -5,10 +5,23 @@
         <TargetFramework>net6.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
+        <AssemblyName>Russkyc.GroomWise.Desktop</AssemblyName>
+        <RootNamespace>Russkyc.GroomWise.Desktop</RootNamespace>
+        <ApplicationIcon>Views\Resources\Icons\groomwise-icon-multi.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.5.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Views\Resources\Icons\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Views\Resources\Icons\groomwise-icon-multi.ico" />
+      <Resource Include="Views\Resources\Icons\groomwise-icon-multi.ico" />
     </ItemGroup>
 
 </Project>
