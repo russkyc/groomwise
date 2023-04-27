@@ -5,11 +5,11 @@
 
 using GroomWise.Core.Interfaces;
 
-namespace Russkyc.GroomWise.Desktop.Views;
+namespace Russkyc.GroomWise.Desktop.Views.Pages;
 
-public partial class MainView : IView
+public partial class PetsView : IView
 {
-    public MainView()
+    public PetsView()
     {
         InitializeComponent();
     }

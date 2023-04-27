@@ -5,7 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Common\" />
+      <ProjectReference Include="..\GroomWise.Domain\GroomWise.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Common\Collections\" />
     </ItemGroup>
 
 </Project>

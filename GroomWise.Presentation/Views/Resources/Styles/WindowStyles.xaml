@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF">
+    <Style BasedOn="{StaticResource {x:Type russkyc:ModernWindow}}" TargetType="{x:Type russkyc:ModernWindow}">
+        <Setter Property="Icon" Value="../Icons/groomwise-icon-multi.ico" />
+    </Style>
+</ResourceDictionary>

@@ -3,14 +3,13 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using GroomWise.Core.Interfaces;
-
-namespace Russkyc.GroomWise.Desktop.Views;
-
-public partial class MainView : IView
+namespace GroomWise.Core.Models
 {
-    public MainView()
+    public class NavItem
     {
-        InitializeComponent();
+        public string Name { get; set; }
+        public string ShortName { get; set; }
+        public string TooltipDescription { get; set; }
+        public string Page { get; set; }
     }
 }

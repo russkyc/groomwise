@@ -4,13 +4,14 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Core.Interfaces;
+using Russkyc.GroomWise.Desktop.ViewModels;
 
-namespace Russkyc.GroomWise.Desktop.Views;
+namespace Russkyc.GroomWise.Desktop.Factories;
 
-public partial class MainView : IView
+public static class ViewModelFactory
 {
-    public MainView()
+    public static MainViewModel CreateMainViewModel(IAppInstance app)
     {
-        InitializeComponent();
+        return new MainViewModel(app);
     }
 }
