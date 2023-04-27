@@ -8,5 +8,7 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
-    <Grid />
+    <TextBlock HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Text="Services" />
 </UserControl>
