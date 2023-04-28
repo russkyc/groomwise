@@ -13,17 +13,21 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     private IAppService _appService;
 
     [ObservableProperty]
+    private INavItem _selectedPage;
+
+    [ObservableProperty]
     private IView? _view;
     
     public MainViewModel(IAppService appService)
     {
-        _appService = appService;
+        AppService = appService;
+        SelectedPage = AppService.NavItems.First(item => item.Selected);
     }
 
     [RelayCommand]
-    private void GetView(string pageName)
+    private void GetView(INavItem navItem)
     {
-        _appService!.NavItems.First(item => item.Page == pageName).Selected = true;
-        View = BuilderServices.Resolve(pageName) as IView;
+        AppService!.NavItems.First(item => item == navItem).Selected = true;
+        View = BuilderServices.Resolve(navItem.Page) as IView;
     }
 }
