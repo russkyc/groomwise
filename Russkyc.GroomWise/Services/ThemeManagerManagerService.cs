@@ -5,10 +5,15 @@
 
 namespace GroomWise.Services;
 
-public class AppointmentFactoryService : IAppointmentFactoryService
+public class ThemeManagerManagerService : IThemeManagerService
 {
-    public IAppointment Create()
+    public void UseNightBaseTheme(bool night)
     {
-        return new Appointment();
+        ThemeManager.Instance.SetBaseTheme(night ? "Dark" : "Light");
+    }
+
+    public void UseColorTheme(string name)
+    {
+        ThemeManager.Instance.SetColorTheme(name);
     }
 }

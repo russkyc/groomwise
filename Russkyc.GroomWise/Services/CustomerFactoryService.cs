@@ -3,7 +3,7 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace Russkyc.GroomWise.Services;
+namespace GroomWise.Services;
 
 public class CustomerFactoryService : ICustomerFactoryService
 {

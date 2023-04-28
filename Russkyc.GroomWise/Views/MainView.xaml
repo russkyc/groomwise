@@ -1,12 +1,13 @@
-﻿<russkyc:ModernWindow x:Class="Russkyc.GroomWise.Views.MainView"
+﻿<russkyc:ModernWindow x:Class="GroomWise.Views.MainView"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
-                      xmlns:controls="clr-namespace:Russkyc.GroomWise.Views.Controls"
+                      xmlns:controls="clr-namespace:GroomWise.Views.Controls"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-                      xmlns:viewModels1="clr-namespace:Russkyc.GroomWise.ViewModels"
+                      xmlns:viewModels1="clr-namespace:GroomWise.ViewModels"
                       Title="GroomWise"
                       Width="1280"
                       Height="720"
@@ -14,8 +15,23 @@
                                                        IsDesignTimeCreatable=True}"
                       d:DesignHeight="864"
                       d:DesignWidth="1546"
+                      TitleBarHeight="38"
                       WindowStartupLocation="CenterScreen"
                       mc:Ignorable="d">
+    <russkyc:ModernWindow.TitleBarTemplate>
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <russkyc:ModernToggleButton Width="30"
+                                        Margin="5"
+                                        Padding="6"
+                                        CheckedForeground="{DynamicResource inverted-lighten-3}"
+                                        Command="{Binding SwitchBaseThemeCommand}"
+                                        CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                        Content="{icons:PackIcon Kind=Lightbulb}"
+                                        CornerRadius="5"
+                                        DefaultForeground="{DynamicResource fg-600}"
+                                        HoverForeground="{DynamicResource fg-500}" />
+        </StackPanel>
+    </russkyc:ModernWindow.TitleBarTemplate>
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
             <b:InvokeCommandAction Command="{Binding GetViewCommand}" CommandParameter="{Binding SelectedPage}" />
@@ -23,7 +39,7 @@
     </b:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="72" />
+            <ColumnDefinition Width="56" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0"
@@ -39,7 +55,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>
                     <Style>
-                        <Setter Property="FrameworkElement.Margin" Value="12,12,12,0" />
+                        <Setter Property="FrameworkElement.Margin" Value="8,8,8,0" />
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>

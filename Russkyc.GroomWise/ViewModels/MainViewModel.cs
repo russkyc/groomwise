@@ -3,12 +3,12 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using System.Linq;
-
-namespace Russkyc.GroomWise.ViewModels;
+namespace GroomWise.ViewModels;
 
 public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
+    private IThemeManagerService _themeManagerService;
+    
     [ObservableProperty]
     private IAppService _appService;
 
@@ -18,16 +18,25 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     [ObservableProperty]
     private IView? _view;
     
-    public MainViewModel(IAppService appService)
+    public MainViewModel(
+        IAppService appService,
+        IThemeManagerService themeManagerService)
     {
         AppService = appService;
+        _themeManagerService = themeManagerService;
         SelectedPage = AppService.NavItems.First(item => item.Selected);
+    }
+
+    [RelayCommand]
+    private void SwitchBaseTheme(bool night)
+    {
+        _themeManagerService.UseNightBaseTheme(night);
     }
 
     [RelayCommand]
     private void GetView(INavItem navItem)
     {
-        AppService!.NavItems.First(item => item == navItem).Selected = true;
         View = BuilderServices.Resolve(navItem.Page) as IView;
+        AppService!.NavItems.First(item => item == navItem).Selected = true;
     }
 }

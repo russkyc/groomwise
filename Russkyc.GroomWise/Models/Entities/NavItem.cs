@@ -3,7 +3,7 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace Russkyc.GroomWise.Models.Entities
+namespace GroomWise.Models.Entities
 {
     public class NavItem : INavItem
     {
@@ -12,5 +12,6 @@ namespace Russkyc.GroomWise.Models.Entities
         public string TooltipDescription { get; set; }
         public string Page { get; set; }
         public bool Selected { get; set; }
+        public object Icon { get; set; }
     }
 }

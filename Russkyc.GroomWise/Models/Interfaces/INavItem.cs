@@ -3,7 +3,7 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace Russkyc.GroomWise.Models.Interfaces
+namespace GroomWise.Models.Interfaces
 {
     public interface INavItem
     {
@@ -12,5 +12,6 @@ namespace Russkyc.GroomWise.Models.Interfaces
         string TooltipDescription { get; set; }
         string Page { get; set; }
         bool Selected { get; set; }
+        object Icon { get; set; }
     }
 }

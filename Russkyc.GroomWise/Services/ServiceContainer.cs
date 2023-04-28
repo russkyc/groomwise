@@ -4,7 +4,7 @@
 // without written, signed consent from the author is strictly prohibited.
 
 
-namespace Russkyc.GroomWise.Services;
+namespace GroomWise.Services;
 
 public static class ServiceContainer
 {
@@ -14,11 +14,12 @@ public static class ServiceContainer
             
             // Add Application Services
             .AddSingleton<IAppService, AppService>()
+            .AddSingleton<IThemeManagerService, ThemeManagerManagerService>()
             
             // Add Factory Services
-            .AddSingleton<IPetFactoryService,PetFactoryService>()
-            .AddSingleton<IGroomerFactoryService,GroomerFactoryService>()
-            .AddSingleton<ICustomerFactoryService,CustomerFactoryService>()
+            .AddSingleton<IPetFactoryService, PetFactoryService>()
+            .AddSingleton<IGroomerFactoryService, GroomerFactoryService>()
+            .AddSingleton<ICustomerFactoryService, CustomerFactoryService>()
             .AddSingleton<IAppointmentFactoryService, AppointmentFactoryService>()
             
             // Add Data Services

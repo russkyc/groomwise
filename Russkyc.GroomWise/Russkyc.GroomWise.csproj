@@ -6,6 +6,8 @@
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <ApplicationIcon>Views\Resources\Icons\groomwise-icon-multi.ico</ApplicationIcon>
+        <AssemblyName>GroomWise</AssemblyName>
+        <RootNamespace>GroomWise</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,7 +16,7 @@
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
         <PackageReference Include="Russkyc.Abstractions" Version="1.0.5" />
         <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.3" />
-        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.6.0" />
+        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.6.1" />
     </ItemGroup>
 
     <ItemGroup>
