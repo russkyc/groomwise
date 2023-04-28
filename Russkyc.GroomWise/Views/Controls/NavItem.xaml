@@ -17,7 +17,7 @@
         <russkyc:ModernRadioButton HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch"
                                    Command="{Binding Path=DataContext.GetViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type russkyc:ModernWindow}}}"
-                                   CommandParameter="{Binding Page, UpdateSourceTrigger=PropertyChanged}"
+                                   CommandParameter="{Binding .DataContext, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"
                                    Content="{icons:PackIcon Kind=ViewDashboard}"
                                    CornerRadius="10"
                                    DefaultForeground="{DynamicResource bg-600}"
