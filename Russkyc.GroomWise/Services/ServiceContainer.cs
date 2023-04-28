@@ -4,7 +4,6 @@
 // without written, signed consent from the author is strictly prohibited.
 
 
-
 namespace Russkyc.GroomWise.Services;
 
 public static class ServiceContainer
@@ -13,17 +12,27 @@ public static class ServiceContainer
     {
         return new ServicesCollection()
             
-            // Add Services
+            // Add Application Services
             .AddSingleton<IAppService, AppService>()
             
+            // Add Factory Services
+            .AddSingleton<IPetFactoryService,PetFactoryService>()
+            .AddSingleton<IGroomerFactoryService,GroomerFactoryService>()
+            .AddSingleton<ICustomerFactoryService,CustomerFactoryService>()
+            .AddSingleton<IAppointmentFactoryService, AppointmentFactoryService>()
+            
+            // Add Data Services
+            .AddSingleton<IDatabaseService, LiteDbDataService>()
+            .AddSingleton<IAppointmentsRepository, AppointmentsRepository>()
+            
             // Add ViewModels
-            .AddSingleton<IAppointmentsViewModel, AppointmentsViewModel>()
-            .AddSingleton<ICustomersViewModel, CustomersViewModel>()
-            .AddSingleton<IDashboardViewModel, DashboardViewModel>()
-            .AddSingleton<IPetsViewModel, PetsViewModel>()
-            .AddSingleton<IReportsViewModel, ReportsViewModel>()
-            .AddSingleton<IServicesViewModel, ServicesViewModel>()
-            .AddSingleton<IMainViewModel, MainViewModel>()
+            .AddTransient<IAppointmentsViewModel, AppointmentsViewModel>()
+            .AddTransient<ICustomersViewModel, CustomersViewModel>()
+            .AddTransient<IDashboardViewModel, DashboardViewModel>()
+            .AddTransient<IPetsViewModel, PetsViewModel>()
+            .AddTransient<IReportsViewModel, ReportsViewModel>()
+            .AddTransient<IServicesViewModel, ServicesViewModel>()
+            .AddTransient<IMainViewModel, MainViewModel>()
             
             // Add Views
             .AddSingleton<AppointmentsView>(nameof(AppointmentsView))
