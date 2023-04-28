@@ -14,6 +14,7 @@ public static class ServiceContainer
             
             // Add Application Services
             .AddSingleton<IAppService, AppService>()
+            .AddSingleton<IThemeManagerService, ThemeManagerManagerService>()
             
             // Add Factory Services
             .AddSingleton<IPetFactoryService, PetFactoryService>()

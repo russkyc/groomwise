@@ -9,6 +9,8 @@ namespace Russkyc.GroomWise.ViewModels;
 
 public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
+    private IThemeManagerService _themeManagerService;
+    
     [ObservableProperty]
     private IAppService _appService;
 
@@ -18,10 +20,19 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     [ObservableProperty]
     private IView? _view;
     
-    public MainViewModel(IAppService appService)
+    public MainViewModel(
+        IAppService appService,
+        IThemeManagerService themeManagerService)
     {
+        _themeManagerService = themeManagerService;
         AppService = appService;
         SelectedPage = AppService.NavItems.First(item => item.Selected);
+    }
+
+    [RelayCommand]
+    private void SwitchBaseTheme(bool night)
+    {
+        _themeManagerService.UseNightBaseTheme(night);
     }
 
     [RelayCommand]

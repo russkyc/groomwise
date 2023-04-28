@@ -4,6 +4,7 @@
                       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
                       xmlns:controls="clr-namespace:Russkyc.GroomWise.Views.Controls"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
                       xmlns:viewModels1="clr-namespace:Russkyc.GroomWise.ViewModels"
@@ -14,8 +15,21 @@
                                                        IsDesignTimeCreatable=True}"
                       d:DesignHeight="864"
                       d:DesignWidth="1546"
+                      TitleBarHeight="38"
                       WindowStartupLocation="CenterScreen"
                       mc:Ignorable="d">
+    <russkyc:ModernWindow.TitleBarTemplate>
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <russkyc:ModernToggleButton Width="32"
+                                        Margin="4"
+                                        Padding="6"
+                                        CheckedForeground="{DynamicResource inverted-lighten-3}"
+                                        Command="{Binding SwitchBaseThemeCommand}"
+                                        CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                        Content="{icons:PackIcon Kind=Lightbulb}"
+                                        CornerRadius="5" />
+        </StackPanel>
+    </russkyc:ModernWindow.TitleBarTemplate>
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
             <b:InvokeCommandAction Command="{Binding GetViewCommand}" CommandParameter="{Binding SelectedPage}" />
