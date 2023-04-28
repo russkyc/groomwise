@@ -22,9 +22,9 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
         IAppService appService,
         IThemeManagerService themeManagerService)
     {
-        _themeManagerService = themeManagerService;
         AppService = appService;
-        SelectedPage = Enumerable.First<INavItem>(AppService.NavItems, item => item.Selected);
+        _themeManagerService = themeManagerService;
+        SelectedPage = AppService.NavItems.First(item => item.Selected);
     }
 
     [RelayCommand]
@@ -36,7 +36,7 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     [RelayCommand]
     private void GetView(INavItem navItem)
     {
-        Enumerable.First<INavItem>(AppService!.NavItems, item => item == navItem).Selected = true;
         View = BuilderServices.Resolve(navItem.Page) as IView;
+        AppService!.NavItems.First(item => item == navItem).Selected = true;
     }
 }
