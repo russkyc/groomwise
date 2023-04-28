@@ -32,7 +32,7 @@ public class ServiceContainer
             .AddSingleton<PetsView>(nameof(PetsView))
             .AddSingleton<ReportsView>(nameof(ReportsView))
             .AddSingleton<ServicesView>(nameof(ServicesView))
-            .AddTransient<MainView>()
+            .AddSingleton<MainView>()
             
             // Build Container
             .Build();
