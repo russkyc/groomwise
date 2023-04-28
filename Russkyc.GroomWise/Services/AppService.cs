@@ -4,9 +4,8 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using System.Collections.ObjectModel;
-using Russkyc.GroomWise.Models.Interfaces;
 
-namespace Russkyc.GroomWise.Models.Entities
+namespace Russkyc.GroomWise.Services
 {
     public class AppService : IAppService
     {
