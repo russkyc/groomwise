@@ -1,0 +1,16 @@
+﻿<Application x:Class="Russkyc.GroomWise.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--  ModernControls WPF  -->
+                <ResourceDictionary Source="pack://application:,,,/Russkyc.ModernControls.WPF;component/Themes/BaseTheme/DefaultLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Russkyc.ModernControls.WPF;component/Themes/ColorThemes/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Russkyc.ModernControls.WPF;component/Themes/Generic.xaml" />
+                <!--  Custom Styles  -->
+                <ResourceDictionary Source="Views/Resources/Styles/WindowStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
