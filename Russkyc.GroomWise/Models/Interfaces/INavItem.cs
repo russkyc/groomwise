@@ -12,5 +12,6 @@ namespace Russkyc.GroomWise.Models.Interfaces
         string TooltipDescription { get; set; }
         string Page { get; set; }
         bool Selected { get; set; }
+        object Icon { get; set; }
     }
 }

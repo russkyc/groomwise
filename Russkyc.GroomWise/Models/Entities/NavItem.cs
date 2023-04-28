@@ -12,5 +12,6 @@ namespace Russkyc.GroomWise.Models.Entities
         public string TooltipDescription { get; set; }
         public string Page { get; set; }
         public bool Selected { get; set; }
+        public object Icon { get; set; }
     }
 }

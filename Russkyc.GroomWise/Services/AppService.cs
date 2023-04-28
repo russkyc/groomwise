@@ -3,8 +3,6 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using System.Collections.ObjectModel;
-
 namespace Russkyc.GroomWise.Services
 {
     public class AppService : IAppService
@@ -26,32 +24,56 @@ namespace Russkyc.GroomWise.Services
                 {
                     Name = "Dashboard",
                     Page = "DashboardView",
+                    Icon = new MaterialIcon
+                    {
+                        Kind = MaterialIconKind.ViewDashboard
+                    },
                     Selected = true
                 },
                 new NavItem
                 {
                     Name = "Appointments",
-                    Page = "AppointmentsView"
+                    Page = "AppointmentsView",
+                    Icon = new MaterialIcon
+                    {
+                        Kind = MaterialIconKind.EventAvailable
+                    },
                 },
                 new NavItem
                 {
                     Name = "Services",
-                    Page = "ServicesView"
+                    Page = "ServicesView",
+                    Icon = new MaterialIcon
+                    {
+                        Kind = MaterialIconKind.BubbleChart
+                    },
                 },
                 new NavItem
                 {
                     Name = "Customers",
-                    Page = "CustomersView"
+                    Page = "CustomersView",
+                    Icon = new MaterialIcon
+                    {
+                        Kind = MaterialIconKind.People
+                    },
                 },
                 new NavItem
                 {
                     Name = "Pets",
-                    Page = "PetsView"
+                    Page = "PetsView",
+                    Icon = new MaterialIcon
+                    {
+                        Kind = MaterialIconKind.Pets
+                    },
                 },
                 new NavItem
                 {
                     Name = "Reports",
-                    Page = "ReportsView"
+                    Page = "ReportsView",
+                    Icon = new MaterialIcon
+                    {
+                        Kind = MaterialIconKind.BarChart
+                    },
                 }
             });
         }
