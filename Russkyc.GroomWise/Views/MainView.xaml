@@ -20,14 +20,16 @@
                       mc:Ignorable="d">
     <russkyc:ModernWindow.TitleBarTemplate>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-            <russkyc:ModernToggleButton Width="32"
-                                        Margin="4"
+            <russkyc:ModernToggleButton Width="30"
+                                        Margin="5"
                                         Padding="6"
                                         CheckedForeground="{DynamicResource inverted-lighten-3}"
                                         Command="{Binding SwitchBaseThemeCommand}"
                                         CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
                                         Content="{icons:PackIcon Kind=Lightbulb}"
-                                        CornerRadius="5" />
+                                        CornerRadius="5"
+                                        DefaultForeground="{DynamicResource fg-600}"
+                                        HoverForeground="{DynamicResource fg-500}" />
         </StackPanel>
     </russkyc:ModernWindow.TitleBarTemplate>
     <b:Interaction.Triggers>
