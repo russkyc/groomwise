@@ -23,7 +23,7 @@
         <Grid Grid.Column="0"
               HorizontalAlignment="Stretch"
               Background="{DynamicResource bg-100}">
-            <ItemsControl VerticalAlignment="Top" ItemsSource="{Binding Path=AppInstance.NavItems, UpdateSourceTrigger=PropertyChanged}">
+            <ItemsControl VerticalAlignment="Top" ItemsSource="{Binding Path=AppService.NavItems, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel HorizontalAlignment="Center"

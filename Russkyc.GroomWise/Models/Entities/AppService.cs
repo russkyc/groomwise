@@ -8,13 +8,13 @@ using Russkyc.GroomWise.Models.Interfaces;
 
 namespace Russkyc.GroomWise.Models.Entities
 {
-    public class AppInstance : IAppInstance
+    public class AppService : IAppService
     {
         public ObservableCollection<INavItem> NavItems { get; set; }
 
-        private IAppInstance _appInstanceImplementation;
+        private IAppService _appServiceImplementation;
 
-        public AppInstance()
+        public AppService()
         {
             ConfigureNavItems();
         }

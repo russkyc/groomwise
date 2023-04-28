@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace Russkyc.GroomWise.Models.Interfaces
 {
-    public interface IAppInstance
+    public interface IAppService
     {
         ObservableCollection<INavItem> NavItems { get; set; }
     }
