@@ -27,11 +27,4 @@ global using Material.Icons;
 global using Material.Icons.WPF;
 
 // GroomWise
-global using Russkyc.GroomWise.Views;
-global using Russkyc.GroomWise.Views.Pages;
-global using Russkyc.GroomWise.ViewModels;
-global using Russkyc.GroomWise.Services;
-global using Russkyc.GroomWise.Repositories;
-global using Russkyc.GroomWise.Models.Enums;
-global using Russkyc.GroomWise.Models.Entities;
-global using Russkyc.GroomWise.Models.Interfaces;
+global using GroomWise.ViewModels;

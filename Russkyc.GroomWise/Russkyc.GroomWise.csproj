@@ -6,6 +6,8 @@
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <ApplicationIcon>Views\Resources\Icons\groomwise-icon-multi.ico</ApplicationIcon>
+        <AssemblyName>GroomWise</AssemblyName>
+        <RootNamespace>GroomWise</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

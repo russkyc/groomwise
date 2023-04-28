@@ -4,7 +4,14 @@
 // without written, signed consent from the author is strictly prohibited.
 
 
-namespace Russkyc.GroomWise.Services;
+using GroomWise.Models.Interfaces;
+using GroomWise.Repositories;
+using GroomWise.ViewModels;
+using GroomWise.Views;
+using GroomWise.Views.Pages;
+using MainViewModel = GroomWise.ViewModels.MainViewModel;
+
+namespace GroomWise.Services;
 
 public static class ServiceContainer
 {

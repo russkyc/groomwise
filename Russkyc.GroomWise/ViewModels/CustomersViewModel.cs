@@ -3,7 +3,9 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace Russkyc.GroomWise.ViewModels;
+using GroomWise.Models.Interfaces;
+
+namespace GroomWise.ViewModels;
 
 public class CustomersViewModel : ICustomersViewModel
 {

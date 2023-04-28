@@ -4,8 +4,9 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using System.Linq;
+using GroomWise.Models.Interfaces;
 
-namespace Russkyc.GroomWise.ViewModels;
+namespace GroomWise.ViewModels;
 
 public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
@@ -26,7 +27,7 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     {
         _themeManagerService = themeManagerService;
         AppService = appService;
-        SelectedPage = AppService.NavItems.First(item => item.Selected);
+        SelectedPage = Enumerable.First<INavItem>(AppService.NavItems, item => item.Selected);
     }
 
     [RelayCommand]
@@ -38,7 +39,7 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     [RelayCommand]
     private void GetView(INavItem navItem)
     {
-        AppService!.NavItems.First(item => item == navItem).Selected = true;
+        Enumerable.First<INavItem>(AppService!.NavItems, item => item == navItem).Selected = true;
         View = BuilderServices.Resolve(navItem.Page) as IView;
     }
 }

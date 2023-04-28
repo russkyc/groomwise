@@ -4,7 +4,9 @@
 // without written, signed consent from the author is strictly prohibited.
 
 
-namespace Russkyc.GroomWise.Models.Interfaces;
+using GroomWise.Models.Enums;
+
+namespace GroomWise.Models.Interfaces;
 
 public interface IAppointment
 {
