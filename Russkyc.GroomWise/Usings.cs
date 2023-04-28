@@ -6,6 +6,7 @@
 // DotNet
 global using System;
 global using System.Collections.Generic;
+global using System.Collections.ObjectModel;
 
 // CommunityToolkit.Mvvm
 global using CommunityToolkit.Mvvm.ComponentModel;
@@ -17,6 +18,10 @@ global using Russkyc.DependencyInjection.Interfaces;
 
 // Russkyc.Abstractions
 global using Russkyc.Abstractions.Interfaces;
+
+// Material.Icons
+global using Material.Icons;
+global using Material.Icons.WPF;
 
 // GroomWise
 global using Russkyc.GroomWise.Views;
