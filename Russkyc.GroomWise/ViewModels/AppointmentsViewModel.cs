@@ -5,7 +5,16 @@
 
 namespace Russkyc.GroomWise.ViewModels;
 
-public class AppointmentsViewModel : IAppointmentsViewModel
+public class AppointmentsViewModel : ObservableObject, IAppointmentsViewModel
 {
-    
+    private IAppointmentFactoryService _appointmentFactory;
+    private IAppointmentsRepository _appointmentsRepository;
+
+    public AppointmentsViewModel(
+        IAppointmentFactoryService appointmentFactory,
+        IAppointmentsRepository appointmentsRepository)
+    {
+        _appointmentFactory = appointmentFactory;
+        _appointmentsRepository = appointmentsRepository;
+    }
 }
