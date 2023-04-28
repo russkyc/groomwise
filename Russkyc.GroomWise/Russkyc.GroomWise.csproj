@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+        <ApplicationIcon>Views\Resources\Icons\groomwise-icon-multi.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+        <PackageReference Include="Material.Icons.WPF" Version="1.2.0" />
+        <PackageReference Include="Russkyc.Abstractions" Version="1.0.4" />
+        <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.2" />
+        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.5.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Models\Abstractions\" />
+      <Folder Include="Views\Resources\Icons\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Views\Resources\Icons\groomwise-icon-multi.ico" />
+      <Resource Include="Views\Resources\Icons\groomwise-icon-multi.ico" />
+    </ItemGroup>
+
+</Project>
