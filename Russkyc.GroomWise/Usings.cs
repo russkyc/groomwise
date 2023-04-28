@@ -8,10 +8,9 @@ global using CommunityToolkit.Mvvm.Input;
 
 global using Russkyc.DependencyInjection.Implementations;
 global using Russkyc.DependencyInjection.Interfaces;
-
-global using Russkyc.GroomWise.Configuration;
 global using Russkyc.GroomWise.Models.Entities;
 global using Russkyc.GroomWise.Models.Interfaces;
 global using Russkyc.GroomWise.Views;
 global using Russkyc.GroomWise.Views.Pages;
 global using Russkyc.GroomWise.ViewModels;
+global using Russkyc.GroomWise.Services;
