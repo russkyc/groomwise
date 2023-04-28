@@ -7,7 +7,7 @@
 
 namespace Russkyc.GroomWise.Services;
 
-public class ServiceContainer
+public static class ServiceContainer
 {
     public static IServicesContainer ConfigureServices()
     {
