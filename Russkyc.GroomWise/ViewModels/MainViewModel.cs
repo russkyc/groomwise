@@ -3,9 +3,6 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using System.Linq;
-using GroomWise.Models.Interfaces;
-
 namespace GroomWise.ViewModels;
 
 public partial class MainViewModel : ViewModelBase, IMainViewModel

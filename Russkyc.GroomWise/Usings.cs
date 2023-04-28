@@ -5,6 +5,7 @@
 
 // DotNet
 global using System;
+global using System.Linq;
 global using System.Collections.Generic;
 global using System.Collections.ObjectModel;
 
@@ -28,3 +29,10 @@ global using Material.Icons.WPF;
 
 // GroomWise
 global using GroomWise.ViewModels;
+global using GroomWise.Models.Interfaces;
+global using GroomWise.Models.Entities;
+global using GroomWise.Models.Enums;
+global using GroomWise.Views;
+global using GroomWise.Views.Pages;
+global using GroomWise.Repositories;
+global using GroomWise.Services;
