@@ -3,13 +3,12 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace Russkyc.GroomWise.Views.Pages;
+namespace Russkyc.GroomWise.Models.Entities;
 
-public partial class PetsView : IView
+public class Pet : IPet
 {
-    public PetsView(IPetsViewModel viewModel)
-    {
-        InitializeComponent();
-        DataContext = viewModel;
-    }
+    public string Name { get; set; }
+    public string Type { get; set; }
+    public int Age { get; set; }
+    public IEnumerable<IAppointment> Appointments { get; set; }
 }

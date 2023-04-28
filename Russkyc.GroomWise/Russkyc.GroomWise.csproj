@@ -11,13 +11,13 @@
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
         <PackageReference Include="Material.Icons.WPF" Version="1.2.0" />
-        <PackageReference Include="Russkyc.Abstractions" Version="1.0.4" />
-        <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.2" />
-        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.5.2" />
+        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+        <PackageReference Include="Russkyc.Abstractions" Version="1.0.5" />
+        <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.3" />
+        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.6.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Models\Abstractions\" />
       <Folder Include="Views\Resources\Icons\" />
     </ItemGroup>
 

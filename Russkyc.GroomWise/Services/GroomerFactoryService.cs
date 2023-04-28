@@ -3,13 +3,12 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace Russkyc.GroomWise.Views.Pages;
+namespace Russkyc.GroomWise.Services;
 
-public partial class PetsView : IView
+public class GroomerFactoryService : IGroomerFactoryService
 {
-    public PetsView(IPetsViewModel viewModel)
+    public IGroomer Create()
     {
-        InitializeComponent();
-        DataContext = viewModel;
+        return new Groomer();
     }
 }

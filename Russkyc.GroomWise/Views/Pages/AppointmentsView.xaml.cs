@@ -7,8 +7,9 @@ namespace Russkyc.GroomWise.Views.Pages;
 
 public partial class AppointmentsView : IView
 {
-    public AppointmentsView()
+    public AppointmentsView(IAppointmentsViewModel viewModel)
     {
         InitializeComponent();
+        DataContext = viewModel;
     }
 }

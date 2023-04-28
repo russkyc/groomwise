@@ -3,13 +3,12 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace Russkyc.GroomWise.Views.Pages;
+using System.Collections.ObjectModel;
 
-public partial class PetsView : IView
+namespace Russkyc.GroomWise.Models.Interfaces
 {
-    public PetsView(IPetsViewModel viewModel)
+    public interface IAppService
     {
-        InitializeComponent();
-        DataContext = viewModel;
+        ObservableCollection<INavItem> NavItems { get; set; }
     }
 }

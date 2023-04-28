@@ -3,12 +3,12 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using System.Collections.ObjectModel;
+namespace Russkyc.GroomWise.Models.Interfaces;
 
-namespace Russkyc.GroomWise.Models.Interfaces
+public interface IPet
 {
-    public interface IAppInstance
-    {
-        ObservableCollection<INavItem> NavItems { get; set; }
-    }
+    string Name { get; set; }
+    string Type { get; set; }
+    int Age { get; set; }
+    IEnumerable<IAppointment> Appointments { get; set; }
 }

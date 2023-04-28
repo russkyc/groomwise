@@ -3,13 +3,9 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace Russkyc.GroomWise.Views.Pages;
+namespace Russkyc.GroomWise.ViewModels;
 
-public partial class PetsView : IView
+public class ServicesViewModel : IServicesViewModel
 {
-    public PetsView(IPetsViewModel viewModel)
-    {
-        InitializeComponent();
-        DataContext = viewModel;
-    }
+    
 }
