@@ -5,9 +5,9 @@
 
 namespace Russkyc.GroomWise.Views.Controls;
 
-public partial class NavItem
+public partial class NavItemControl
 {
-    public NavItem()
+    public NavItemControl()
     {
         InitializeComponent();
     }

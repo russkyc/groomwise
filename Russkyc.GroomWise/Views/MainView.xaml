@@ -44,7 +44,7 @@
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <controls:NavItem />
+                        <controls:NavItemControl />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
