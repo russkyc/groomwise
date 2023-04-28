@@ -19,6 +19,9 @@ global using Russkyc.DependencyInjection.Interfaces;
 // Russkyc.Abstractions
 global using Russkyc.Abstractions.Interfaces;
 
+// Russkyc.ModernControls
+global using org.russkyc.moderncontrols.Helpers;
+
 // Material.Icons
 global using Material.Icons;
 global using Material.Icons.WPF;
