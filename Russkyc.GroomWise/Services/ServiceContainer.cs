@@ -16,9 +16,9 @@ public static class ServiceContainer
             .AddSingleton<IAppService, AppService>()
             
             // Add Factory Services
-            .AddSingleton<IPetFactoryService,PetFactoryService>()
-            .AddSingleton<IGroomerFactoryService,GroomerFactoryService>()
-            .AddSingleton<ICustomerFactoryService,CustomerFactoryService>()
+            .AddSingleton<IPetFactoryService, PetFactoryService>()
+            .AddSingleton<IGroomerFactoryService, GroomerFactoryService>()
+            .AddSingleton<ICustomerFactoryService, CustomerFactoryService>()
             .AddSingleton<IAppointmentFactoryService, AppointmentFactoryService>()
             
             // Add Data Services
