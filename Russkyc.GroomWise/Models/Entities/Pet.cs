@@ -1,0 +1,14 @@
+﻿// Copyright (C) 2023 Russell Camo (Russkyc). - All Rights Reserved
+// 
+// Unauthorized copying or redistribution of all files, in source and binary forms via any medium
+// without written, signed consent from the author is strictly prohibited.
+
+namespace Russkyc.GroomWise.Models.Entities;
+
+public class Pet : IPet
+{
+    public string Name { get; set; }
+    public string Type { get; set; }
+    public int Age { get; set; }
+    public IEnumerable<IAppointment> Appointments { get; set; }
+}
