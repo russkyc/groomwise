@@ -5,15 +5,27 @@
 
 
 
-namespace Russkyc.GroomWise.Configuration;
+namespace Russkyc.GroomWise.Services;
 
 public class ServiceContainer
 {
     public static IServicesContainer ConfigureServices()
     {
         return new ServicesCollection()
-            .AddSingleton<IAppInstance, AppInstance>()
+            
+            // Add Services
+            .AddSingleton<IAppService, AppService>()
+            
+            // Add ViewModels
+            .AddSingleton<IAppointmentsViewModel, AppointmentsViewModel>()
+            .AddSingleton<ICustomersViewModel, CustomersViewModel>()
+            .AddSingleton<IDashboardViewModel, DashboardViewModel>()
+            .AddSingleton<IPetsViewModel, PetsViewModel>()
+            .AddSingleton<IReportsViewModel, ReportsViewModel>()
+            .AddSingleton<IServicesViewModel, ServicesViewModel>()
             .AddSingleton<IMainViewModel, MainViewModel>()
+            
+            // Add Views
             .AddSingleton<AppointmentsView>(nameof(AppointmentsView))
             .AddSingleton<CustomersView>(nameof(CustomersView))
             .AddSingleton<DashboardView>(nameof(DashboardView))
@@ -21,6 +33,8 @@ public class ServiceContainer
             .AddSingleton<ReportsView>(nameof(ReportsView))
             .AddSingleton<ServicesView>(nameof(ServicesView))
             .AddTransient<MainView>()
+            
+            // Build Container
             .Build();
     }
 }
