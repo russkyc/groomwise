@@ -6,6 +6,8 @@
 // DotNet
 global using System;
 global using System.Linq;
+global using System.Threading;
+global using System.Windows.Data;
 global using System.Collections.Generic;
 global using System.Collections.ObjectModel;
 
