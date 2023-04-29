@@ -4,6 +4,10 @@
 // without written, signed consent from the author is strictly prohibited.
 
 
+using GroomWise.Services.App;
+using GroomWise.Services.Data;
+using GroomWise.Services.Factory;
+
 namespace GroomWise.Services;
 
 public static class ServiceContainer
@@ -14,7 +18,7 @@ public static class ServiceContainer
             
             // Add Application Services
             .AddSingleton<IAppService, AppService>()
-            .AddSingleton<IThemeManagerService, ThemeManagerManagerService>()
+            .AddSingleton<IThemeManagerService, ThemeManagerService>()
             
             // Add Factory Services
             .AddSingleton<IPetFactoryService, PetFactoryService>()
