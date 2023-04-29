@@ -8,13 +8,13 @@ namespace GroomWise.ViewModels;
 public class AppointmentsViewModel : ObservableObject, IAppointmentsViewModel
 {
     private IAppointmentFactoryService _appointmentFactory;
-    private IAppointmentsRepository _appointmentsRepository;
+    private IAppointmentsRepositoryService _appointmentsRepositoryService;
 
     public AppointmentsViewModel(
         IAppointmentFactoryService appointmentFactory,
-        IAppointmentsRepository appointmentsRepository)
+        IAppointmentsRepositoryService appointmentsRepositoryService)
     {
         _appointmentFactory = appointmentFactory;
-        _appointmentsRepository = appointmentsRepository;
+        _appointmentsRepositoryService = appointmentsRepositoryService;
     }
 }
