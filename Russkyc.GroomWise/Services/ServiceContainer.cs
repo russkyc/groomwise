@@ -21,6 +21,7 @@ public static class ServiceContainer
             .AddSingleton<IThemeManagerService, ThemeManagerService>()
             
             // Add Factory Services
+            .AddSingleton<INotificationFactoryService,NotificationFactoryService>()
             .AddSingleton<IPetFactoryService, PetFactoryService>()
             .AddSingleton<IGroomerFactoryService, GroomerFactoryService>()
             .AddSingleton<ICustomerFactoryService, CustomerFactoryService>()
