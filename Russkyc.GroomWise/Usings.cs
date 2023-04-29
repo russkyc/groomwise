@@ -30,11 +30,14 @@ global using Material.Icons;
 global using Material.Icons.WPF;
 
 // GroomWise
-global using GroomWise.ViewModels;
 global using GroomWise.Models.Interfaces;
 global using GroomWise.Models.Entities;
 global using GroomWise.Models.Enums;
 global using GroomWise.Views;
 global using GroomWise.Views.Pages;
-global using GroomWise.Repositories;
+global using GroomWise.ViewModels;
 global using GroomWise.Services;
+global using GroomWise.Services.App;
+global using GroomWise.Services.Data;
+global using GroomWise.Services.Factory;
+global using GroomWise.Services.Repository;
