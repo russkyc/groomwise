@@ -48,6 +48,7 @@ public static class ServiceContainer
             .AddSingleton<ReportsView>(nameof(ReportsView))
             .AddSingleton<ServicesView>(nameof(ServicesView))
             .AddSingleton<MainView>()
+            .AddSingleton<LoginView>()
             
             // Build Container
             .Build();
