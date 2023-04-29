@@ -3,9 +3,11 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Models.Interfaces;
+namespace GroomWise.Models.Entities;
 
-public interface IAppointmentsRepository : IRepository<IAppointment>
+public class Notification : INotification
 {
-    
+    public object Icon { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
 }

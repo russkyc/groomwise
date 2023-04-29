@@ -3,12 +3,14 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Services;
+using System.Windows.Controls;
 
-public class PetFactoryService : IPetFactoryService
+namespace GroomWise.Views.Templates;
+
+public partial class NotificationItemTemplate : UserControl
 {
-    public IPet Create()
+    public NotificationItemTemplate()
     {
-        return new Pet();
+        InitializeComponent();
     }
 }

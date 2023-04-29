@@ -3,12 +3,12 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Services;
+namespace GroomWise.Services.Factory;
 
-public class CustomerFactoryService : ICustomerFactoryService
+public class NotificationFactoryService : INotificationFactoryService
 {
-    public ICustomer Create()
+    public INotification Create()
     {
-        return new Customer();
+        return new Notification();
     }
 }

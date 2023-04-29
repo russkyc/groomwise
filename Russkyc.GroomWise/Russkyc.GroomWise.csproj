@@ -20,6 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Services\Cache\" />
       <Folder Include="Views\Resources\Icons\" />
     </ItemGroup>
 

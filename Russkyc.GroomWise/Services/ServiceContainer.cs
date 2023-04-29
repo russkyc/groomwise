@@ -3,7 +3,6 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-
 namespace GroomWise.Services;
 
 public static class ServiceContainer
@@ -14,17 +13,20 @@ public static class ServiceContainer
             
             // Add Application Services
             .AddSingleton<IAppService, AppService>()
-            .AddSingleton<IThemeManagerService, ThemeManagerManagerService>()
+            .AddSingleton<IThemeManagerService, ThemeManagerService>()
             
             // Add Factory Services
             .AddSingleton<IPetFactoryService, PetFactoryService>()
+            .AddSingleton<IAccountFactoryService, AccountFactoryService>()
             .AddSingleton<IGroomerFactoryService, GroomerFactoryService>()
             .AddSingleton<ICustomerFactoryService, CustomerFactoryService>()
             .AddSingleton<IAppointmentFactoryService, AppointmentFactoryService>()
+            .AddSingleton<INotificationFactoryService,NotificationFactoryService>()
             
             // Add Data Services
             .AddSingleton<IDatabaseService, LiteDbDataService>()
-            .AddSingleton<IAppointmentsRepository, AppointmentsRepository>()
+            .AddSingleton<IAccountsRepositoryService, AccountsRepositoryService>()
+            .AddSingleton<IAppointmentsRepositoryService, AppointmentsRepositoryService>()
             
             // Add ViewModels
             .AddTransient<IAppointmentsViewModel, AppointmentsViewModel>()
@@ -34,6 +36,7 @@ public static class ServiceContainer
             .AddTransient<IReportsViewModel, ReportsViewModel>()
             .AddTransient<IServicesViewModel, ServicesViewModel>()
             .AddTransient<IMainViewModel, MainViewModel>()
+            .AddTransient<ILoginViewModel, LoginViewModel>()
             
             // Add Views
             .AddSingleton<AppointmentsView>(nameof(AppointmentsView))
@@ -43,6 +46,7 @@ public static class ServiceContainer
             .AddSingleton<ReportsView>(nameof(ReportsView))
             .AddSingleton<ServicesView>(nameof(ServicesView))
             .AddSingleton<MainView>()
+            .AddSingleton<LoginView>()
             
             // Build Container
             .Build();

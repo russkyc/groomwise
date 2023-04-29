@@ -3,13 +3,13 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Repositories;
+namespace GroomWise.Services.Repository;
 
-public class AppointmentsRepository : IAppointmentsRepository
+public class AppointmentsRepositoryService : IAppointmentsRepositoryService
 {
     private IDatabaseService _databaseService;
 
-    public AppointmentsRepository(IDatabaseService databaseService)
+    public AppointmentsRepositoryService(IDatabaseService databaseService)
     {
         _databaseService = databaseService;
     }

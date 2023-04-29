@@ -17,6 +17,6 @@ public partial class App
     {
         InitializeComponent();
         BuilderServices.BuildWithContainer(ServiceContainer.ConfigureServices());
-        BuilderServices.Resolve<MainView>().Show();
+        BuilderServices.Resolve<LoginView>().Show();
     }
 }
