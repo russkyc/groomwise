@@ -25,6 +25,7 @@
                                    HoverBackground="{DynamicResource bg-200}"
                                    HoverForeground="{DynamicResource bg-600}"
                                    IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}"
-                                   PressedForeground="{DynamicResource inverted-default}" />
+                                   PressedForeground="{DynamicResource inverted-default}"
+                                   ToolTip="{Binding Name}" />
     </Grid>
 </UserControl>
