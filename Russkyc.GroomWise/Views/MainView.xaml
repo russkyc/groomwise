@@ -31,7 +31,8 @@
                                         Content="{icons:PackIcon Kind=Lightbulb}"
                                         CornerRadius="5"
                                         DefaultForeground="{DynamicResource fg-600}"
-                                        HoverForeground="{DynamicResource fg-500}" />
+                                        HoverForeground="{DynamicResource fg-500}"
+                                        IsChecked="{Binding NightMode, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
     </russkyc:ModernWindow.TitleBarTemplate>
     <b:Interaction.Triggers>
