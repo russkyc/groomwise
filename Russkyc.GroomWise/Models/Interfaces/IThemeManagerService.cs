@@ -7,6 +7,8 @@ namespace GroomWise.Models.Interfaces;
 
 public interface IThemeManagerService
 {
-    void UseNightBaseTheme(bool night);
-    void UseColorTheme(string name);
+    bool DarkMode { get; set; }
+    void UseDarkTheme(bool night);
+    void UseColorTheme(string color);
+    void Reset();
 }
