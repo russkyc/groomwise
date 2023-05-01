@@ -5,13 +5,44 @@
 
 namespace GroomWise.ViewModels;
 
-public class LoginViewModel : ViewModelBase, ILoginViewModel
+public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 {
 
     private IAccountsRepositoryService _accountsRepositoryService;
+
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Username cannot be blank.")]
+    [RegularExpression("^[a-zA-Z0-9_-]{1,16}$", ErrorMessage = "Invalid Username format.")]
+    private string _username;
+    
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Password cannot be blank.")]
+    private string _password;
     
     public LoginViewModel(IAccountsRepositoryService accountsRepositoryService)
     {
         _accountsRepositoryService = accountsRepositoryService;
     }
+
+    [RelayCommand]
+    void SwitchFocus(object element)
+    {
+        element.GetType()
+            .GetMethod("Focus")?
+            .Invoke(element, null);
+    }
+    
+    [RelayCommand]
+    void Login()
+    {
+        if (_accountsRepositoryService.Get(account => account.Username == Username && account.Password == Password) !=
+            null)
+        {
+            BuilderServices.Resolve<MainView>().Show();
+            BuilderServices.Resolve<LoginView>().Close();
+        }
+    }
+
 }
