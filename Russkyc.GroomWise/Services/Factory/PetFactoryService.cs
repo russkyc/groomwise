@@ -11,4 +11,9 @@ public class PetFactoryService : IPetFactoryService
     {
         return new Pet();
     }
+
+    public IPet Create(params object[] values)
+    {
+        throw new NotImplementedException();
+    }
 }

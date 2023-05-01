@@ -11,4 +11,9 @@ public class AppointmentFactoryService : IAppointmentFactoryService
     {
         return new Appointment();
     }
+
+    public IAppointment Create(params object[] values)
+    {
+        throw new NotImplementedException();
+    }
 }
