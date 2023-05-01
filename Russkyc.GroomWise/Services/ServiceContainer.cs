@@ -11,6 +11,9 @@ public static class ServiceContainer
     {
         return new ServicesCollection()
             
+            // Add Configs
+            .AddSingleton<IConfigurationService,ConfigurationService>()
+            
             // Add Application Services
             .AddSingleton<IAppService, AppService>()
             .AddSingleton<IThemeManagerService, ThemeManagerService>()
@@ -22,6 +25,9 @@ public static class ServiceContainer
             .AddSingleton<ICustomerFactoryService, CustomerFactoryService>()
             .AddSingleton<IAppointmentFactoryService, AppointmentFactoryService>()
             .AddSingleton<INotificationFactoryService,NotificationFactoryService>()
+            
+            // Add Migrations
+            .AddSingleton<IMigrationService, MigrationService>()
             
             // Add Data Services
             .AddSingleton<IDatabaseService, LiteDbDataService>()
@@ -50,5 +56,6 @@ public static class ServiceContainer
             
             // Build Container
             .Build();
+        
     }
 }

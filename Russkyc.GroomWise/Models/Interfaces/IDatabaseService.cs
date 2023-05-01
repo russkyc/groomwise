@@ -7,5 +7,5 @@ namespace GroomWise.Models.Interfaces;
 
 public interface IDatabaseService : IDbAccess
 {
-    
+    bool Contains<T>(Func<T, bool> filter);
 }

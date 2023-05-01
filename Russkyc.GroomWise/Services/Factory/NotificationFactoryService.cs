@@ -11,4 +11,9 @@ public class NotificationFactoryService : INotificationFactoryService
     {
         return new Notification();
     }
+
+    public INotification Create(params object[] values)
+    {
+        throw new NotImplementedException();
+    }
 }

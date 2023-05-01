@@ -3,11 +3,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:templates="clr-namespace:GroomWise.Views.Templates"
              HorizontalAlignment="Stretch"
-             d:DesignHeight="300"
-             d:DesignWidth="300"
+             d:DesignHeight="720"
+             d:DesignWidth="1280"
              mc:Ignorable="d">
-    <TextBlock HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               Text="Appointments" />
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Margin="16,20,16,16">
+            <Grid Margin="0,0,0,0" VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           Margin="0,0,0,12"
+                           FontSize="16"
+                           Text="Schedule" />
+                <ScrollViewer Grid.Row="1"
+                              VerticalAlignment="Stretch"
+                              HorizontalContentAlignment="Stretch"
+                              VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding Notifications, UpdateSourceTrigger=PropertyChanged}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <templates:NotificationItemTemplate />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1" Margin="16,20,16,16">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           Margin="0,0,0,12"
+                           FontSize="16"
+                           Text="Appointments" />
+                <Border Grid.Row="1"
+                        Background="{DynamicResource bg-100}"
+                        CornerRadius="5">
+                    <Grid Height="200" HorizontalAlignment="Stretch" />
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
 </UserControl>

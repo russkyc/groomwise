@@ -17,6 +17,9 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
 
     [ObservableProperty]
     private IView? _view;
+
+    [ObservableProperty]
+    private bool _nightMode;
     
     public MainViewModel(
         IAppService appService,
@@ -24,13 +27,14 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     {
         AppService = appService;
         _themeManagerService = themeManagerService;
+        NightMode = _themeManagerService.DarkMode;
         SelectedPage = AppService.NavItems.First(item => item.Selected);
     }
 
     [RelayCommand]
-    private void SwitchBaseTheme(bool night)
+    private void SwitchBaseTheme()
     {
-        _themeManagerService.UseNightBaseTheme(night);
+        _themeManagerService.UseDarkTheme(NightMode);
     }
 
     [RelayCommand]

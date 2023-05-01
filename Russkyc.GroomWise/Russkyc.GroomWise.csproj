@@ -8,25 +8,56 @@
         <ApplicationIcon>Views\Resources\Icons\groomwise-icon-multi.ico</ApplicationIcon>
         <AssemblyName>GroomWise</AssemblyName>
         <RootNamespace>GroomWise</RootNamespace>
+        <PreserveCompilationContext>false</PreserveCompilationContext>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <Prefer32bit>true</Prefer32bit>
+      <DebugType>none</DebugType>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
+        <PackageReference Include="ini.net" Version="1.1.0" />
+        <PackageReference Include="LiteDB" Version="5.0.16" />
         <PackageReference Include="Material.Icons.WPF" Version="1.2.0" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
-        <PackageReference Include="Russkyc.Abstractions" Version="1.0.5" />
+        <PackageReference Include="Russkyc.Abstractions" Version="1.0.9" />
         <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.3" />
-        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.6.1" />
+        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.7.7" />
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Models\Helpers\" />
       <Folder Include="Services\Cache\" />
       <Folder Include="Views\Resources\Icons\" />
+      <Folder Include="Views\Resources\Themes\BaseThemes\" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Views\Resources\Icons\groomwise-icon-multi.ico" />
       <Resource Include="Views\Resources\Icons\groomwise-icon-multi.ico" />
+      <None Remove="Views\Resources\Images\groomwise-logo-vertical.png" />
+      <None Remove="Views\Resources\Images\groomwise-logo-vertical-inverted.png" />
+      <None Update="GroomWise.ini">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="Views\Resources\Themes\ColorThemes\Default.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Models\Helpers\FilterHelper.cs" />
     </ItemGroup>
 
 </Project>

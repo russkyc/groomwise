@@ -5,11 +5,12 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!--  ModernControls WPF  -->
-                <ResourceDictionary Source="pack://application:,,,/Russkyc.ModernControls.WPF;component/Themes/BaseTheme/DefaultLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Russkyc.ModernControls.WPF;component/Themes/BaseThemes/Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Russkyc.ModernControls.WPF;component/Themes/ColorThemes/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Russkyc.ModernControls.WPF;component/Themes/Generic.xaml" />
                 <!--  Custom Styles  -->
                 <ResourceDictionary Source="Views/Resources/Styles/WindowStyles.xaml" />
+                <ResourceDictionary Source="Views/Resources/Styles/TooltipStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

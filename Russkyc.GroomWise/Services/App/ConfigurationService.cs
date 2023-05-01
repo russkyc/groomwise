@@ -3,12 +3,15 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Models.Interfaces;
+using Ini.Net;
 
-public interface IThemeManagerService
+namespace GroomWise.Services.App;
+
+public class ConfigurationService : IConfigurationService
 {
-    bool DarkMode { get; set; }
-    void UseDarkTheme(bool night);
-    void UseColorTheme(string color);
-    void Reset();
+    public ConfigurationService()
+    {
+        Config = new IniFile("GroomWise.ini");
+    }
+    public IniFile Config { get; set; }
 }

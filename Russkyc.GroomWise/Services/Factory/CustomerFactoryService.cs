@@ -11,4 +11,9 @@ public class CustomerFactoryService : ICustomerFactoryService
     {
         return new Customer();
     }
+
+    public ICustomer Create(params object[] values)
+    {
+        throw new NotImplementedException();
+    }
 }

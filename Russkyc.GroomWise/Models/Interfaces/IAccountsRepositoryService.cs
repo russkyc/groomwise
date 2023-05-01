@@ -7,5 +7,5 @@ namespace GroomWise.Models.Interfaces;
 
 public interface IAccountsRepositoryService : IRepository<IAccount>
 {
-    
+    bool Contains(Func<IAccount, bool> filter);
 }

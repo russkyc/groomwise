@@ -5,10 +5,7 @@
 
 namespace GroomWise.Models.Interfaces;
 
-public interface IThemeManagerService
+public interface IDatabaseMigration
 {
-    bool DarkMode { get; set; }
-    void UseDarkTheme(bool night);
-    void UseColorTheme(string color);
-    void Reset();
+    public void Migrate();
 }

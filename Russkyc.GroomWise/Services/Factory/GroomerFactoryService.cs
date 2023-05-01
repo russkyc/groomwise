@@ -11,4 +11,9 @@ public class GroomerFactoryService : IGroomerFactoryService
     {
         return new Groomer();
     }
+
+    public IGroomer Create(params object[] values)
+    {
+        throw new NotImplementedException();
+    }
 }
