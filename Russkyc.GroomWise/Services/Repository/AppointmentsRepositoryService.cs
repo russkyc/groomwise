@@ -13,39 +13,39 @@ public class AppointmentsRepositoryService : IAppointmentsRepositoryService
     {
         _databaseService = databaseService;
     }
-    
-    public bool Insert(IAppointment item)
+
+    public bool Add(IAppointment item)
     {
-        return _databaseService.Insert(item);
+        throw new NotImplementedException();
     }
 
-    public bool Insert(ICollection<IAppointment> items)
+    public bool AddMultiple(ICollection<IAppointment> item)
     {
-        return _databaseService.Insert(items);
+        throw new NotImplementedException();
     }
 
     public IAppointment Get(Func<IAppointment, bool> filter)
     {
-        return _databaseService.Get(filter);
+        throw new NotImplementedException();
     }
 
-    public ICollection<IAppointment> GetAll(Func<IAppointment, bool> filter)
+    public ICollection<IAppointment> GetMultiple(Func<IAppointment, bool> filter)
     {
-        return _databaseService.GetAll(filter);
+        throw new NotImplementedException();
     }
 
     public ICollection<IAppointment> GetCollection()
     {
-        return _databaseService.GetCollection<IAppointment>();
+        throw new NotImplementedException();
     }
 
     public bool Update(Func<IAppointment, bool> filter, Action<IAppointment> action)
     {
-        return _databaseService.Update(filter, action);
+        throw new NotImplementedException();
     }
 
     public bool Delete(Func<IAppointment, bool> filter)
     {
-        return _databaseService.Delete(filter);
+        throw new NotImplementedException();
     }
 }

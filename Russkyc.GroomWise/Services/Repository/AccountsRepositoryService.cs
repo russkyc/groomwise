@@ -14,14 +14,14 @@ public class AccountsRepositoryService : IAccountsRepositoryService
         _databaseService = databaseService;
     }
 
-    public bool Insert(IAccount item)
+    public bool Add(IAccount item)
     {
-        return _databaseService.Insert(item);
+        return _databaseService.Add(item);
     }
 
-    public bool Insert(ICollection<IAccount> item)
+    public bool AddMultiple(ICollection<IAccount> items)
     {
-        return _databaseService.Insert(item);
+        return _databaseService.AddMultiple(items);
     }
 
     public IAccount Get(Func<IAccount, bool> filter)
@@ -29,9 +29,9 @@ public class AccountsRepositoryService : IAccountsRepositoryService
         return _databaseService.Get(filter);
     }
 
-    public ICollection<IAccount> GetAll(Func<IAccount, bool> filter)
+    public ICollection<IAccount> GetMultiple(Func<IAccount, bool> filter)
     {
-        return _databaseService.GetAll(filter);
+        return _databaseService.GetMultiple(filter);
     }
 
     public ICollection<IAccount> GetCollection()
@@ -47,5 +47,10 @@ public class AccountsRepositoryService : IAccountsRepositoryService
     public bool Delete(Func<IAccount, bool> filter)
     {
         return _databaseService.Delete(filter);
+    }
+
+    public bool Contains(Func<IAccount, bool> filter)
+    {
+        return _databaseService.Contains<IAccount>(filter);
     }
 }
