@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Interfaces;
 
-public interface IDatabaseService : IDbAccess
+public interface IDatabaseMigration
 {
-    bool Contains<T>(Func<T, bool> filter);
+    public void Migrate();
 }
