@@ -16,6 +16,10 @@ public partial class LoginView
     protected override void OnClosed(EventArgs e)
     {
         base.OnClosed(e);
-        if (!BuilderServices.Resolve<MainView>().IsVisible) Application.Current.Shutdown();
+        if (!BuilderServices.Resolve<MainView>().IsVisible)
+        {
+            Application.Current.Shutdown();
+            Environment.Exit(0);
+        }
     }
 }
