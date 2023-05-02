@@ -12,4 +12,11 @@ public partial class MainView : IView
         InitializeComponent();
         DataContext = viewModel;
     }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        base.OnClosed(e);
+        Application.Current.Shutdown();
+        Environment.Exit(0);
+    }
 }
