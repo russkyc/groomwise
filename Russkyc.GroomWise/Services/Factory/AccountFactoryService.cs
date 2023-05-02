@@ -7,19 +7,19 @@ namespace GroomWise.Services.Factory;
 
 public class AccountFactoryService : IAccountFactoryService
 {
-    public IAccount Create()
+    public Account Create()
     {
         return new Account();
     }
 
-    public IAccount Create(params object[] values)
+    public Account Create(params object[] values)
     {
         return new Account
         {
             FirstName = (string)values[0],
             MiddleName = (string)values[1],
             LastName = (string)values[2],
-            Email = new []{(string)values[3]},
+            Email = new List<string> { (string)values[3] },
             Username = (string)values[4],
             Password = (string)values[5]
         };

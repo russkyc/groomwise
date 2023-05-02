@@ -10,30 +10,30 @@ public static class ServiceContainer
     public static IServicesContainer ConfigureServices()
     {
         return new ServicesCollection()
-            
+
             // Add Configs
-            .AddSingleton<IConfigurationService,ConfigurationService>()
-            
+            .AddSingleton<IConfigurationService, ConfigurationService>()
+
             // Add Application Services
             .AddSingleton<IAppService, AppService>()
             .AddSingleton<IThemeManagerService, ThemeManagerService>()
-            
+
             // Add Factory Services
             .AddSingleton<IPetFactoryService, PetFactoryService>()
             .AddSingleton<IAccountFactoryService, AccountFactoryService>()
             .AddSingleton<IGroomerFactoryService, GroomerFactoryService>()
             .AddSingleton<ICustomerFactoryService, CustomerFactoryService>()
             .AddSingleton<IAppointmentFactoryService, AppointmentFactoryService>()
-            .AddSingleton<INotificationFactoryService,NotificationFactoryService>()
-            
+            .AddSingleton<INotificationFactoryService, NotificationFactoryService>()
+
             // Add Migrations
             .AddSingleton<IMigrationService, MigrationService>()
-            
+
             // Add Data Services
             .AddSingleton<IDatabaseService, LiteDbDataService>()
             .AddSingleton<IAccountsRepositoryService, AccountsRepositoryService>()
             .AddSingleton<IAppointmentsRepositoryService, AppointmentsRepositoryService>()
-            
+
             // Add ViewModels
             .AddTransient<IAppointmentsViewModel, AppointmentsViewModel>()
             .AddTransient<ICustomersViewModel, CustomersViewModel>()
@@ -43,7 +43,7 @@ public static class ServiceContainer
             .AddTransient<IServicesViewModel, ServicesViewModel>()
             .AddTransient<IMainViewModel, MainViewModel>()
             .AddTransient<ILoginViewModel, LoginViewModel>()
-            
+
             // Add Views
             .AddSingleton<AppointmentsView>(nameof(AppointmentsView))
             .AddSingleton<CustomersView>(nameof(CustomersView))
@@ -53,9 +53,9 @@ public static class ServiceContainer
             .AddSingleton<ServicesView>(nameof(ServicesView))
             .AddSingleton<MainView>()
             .AddSingleton<LoginView>()
-            
+
             // Build Container
             .Build();
-        
+
     }
 }

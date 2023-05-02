@@ -12,12 +12,10 @@ public partial class LoginView
         InitializeComponent();
         DataContext = viewModel;
     }
+
     protected override void OnClosed(EventArgs e)
     {
         base.OnClosed(e);
-        if (!BuilderServices.Resolve<MainView>().IsVisible)
-        {
-            Application.Current.Shutdown();
-        }
+        if (!BuilderServices.Resolve<MainView>().IsVisible) Application.Current.Shutdown();
     }
 }

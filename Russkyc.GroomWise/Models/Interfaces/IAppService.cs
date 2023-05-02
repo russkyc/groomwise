@@ -3,10 +3,9 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Models.Interfaces
+namespace GroomWise.Models.Interfaces;
+
+public interface IAppService
 {
-    public interface IAppService
-    {
-        ObservableCollection<INavItem> NavItems { get; set; }
-    }
+    ObservableCollection<INavItem> NavItems { get; set; }
 }

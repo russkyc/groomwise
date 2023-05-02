@@ -5,7 +5,6 @@
 
 namespace GroomWise.Models.Interfaces;
 
-public interface IAppointmentFactoryService : IFactory<IAppointment>
+public interface IAppointmentFactoryService : IFactory<Appointment>
 {
-    
 }

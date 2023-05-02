@@ -7,12 +7,12 @@ namespace GroomWise.Services.Factory;
 
 public class PetFactoryService : IPetFactoryService
 {
-    public IPet Create()
+    public Pet Create()
     {
         return new Pet();
     }
 
-    public IPet Create(params object[] values)
+    public Pet Create(params object[] values)
     {
         throw new NotImplementedException();
     }

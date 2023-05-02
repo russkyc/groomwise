@@ -5,7 +5,6 @@
 
 namespace GroomWise.Models.Interfaces;
 
-public interface IPetFactoryService : IFactory<IPet>
+public interface IPetFactoryService : IFactory<Pet>
 {
-    
 }

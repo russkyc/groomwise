@@ -9,16 +9,16 @@ namespace GroomWise.Services.Data;
 
 public class LiteDbDataService : IDatabaseService
 {
-    private IConfigurationService _configurationService;
-    private ILiteDatabase _db;
+    private readonly IConfigurationService _configurationService;
+    private readonly ILiteDatabase _db;
 
     public LiteDbDataService(IConfigurationService configurationService)
     {
         _configurationService = configurationService;
-        _db = new LiteDatabase(_configurationService.Config.ReadString("ConnectionStrings","LiteDb"));
+        _db = new LiteDatabase(_configurationService.Config.ReadString("ConnectionStrings", "LiteDb"));
     }
 
-    public bool Add<T>(T item)
+    public bool Add<T>(T item) where T : new()
     {
         _db.GetCollection<T>().Insert(item);
         return _db.GetCollection<T>()
@@ -27,24 +27,20 @@ public class LiteDbDataService : IDatabaseService
             .Contains(item);
     }
 
-    public bool AddMultiple<T>(ICollection<T> items)
+    public bool AddMultiple<T>(ICollection<T> items) where T : new()
     {
         var exists = true;
         _db.GetCollection<T>()
             .Insert(items);
         foreach (T item in items)
-        {
             if (!_db.GetCollection<T>().Query()
-                .ToList()
-                .Contains(item))
-            {
+                    .ToList()
+                    .Contains(item))
                 exists = false;
-            }
-        }
         return exists;
     }
 
-    public T Get<T>(Func<T, bool> filter)
+    public T Get<T>(Func<T, bool> filter) where T : new()
     {
         return _db.GetCollection<T>()
             .Query()
@@ -52,7 +48,7 @@ public class LiteDbDataService : IDatabaseService
             .FirstOrDefault(filter)!;
     }
 
-    public ICollection<T> GetMultiple<T>(Func<T, bool> filter)
+    public ICollection<T> GetMultiple<T>(Func<T, bool> filter) where T : new()
     {
         return _db.GetCollection<T>()
             .Query()
@@ -61,32 +57,39 @@ public class LiteDbDataService : IDatabaseService
             .ToList();
     }
 
-    public ICollection<T> GetCollection<T>()
+    public ICollection<T> GetCollection<T>() where T : new()
     {
         return _db.GetCollection<T>()
             .Query()
             .ToList();
     }
 
-    public bool Update<T>(Func<T, bool> filter, Action<T> action)
+    public bool Update<T>(Func<T, bool> filter, Func<T, T> action) where T : new()
     {
-        _db.GetCollection<T>()
-            .Query()
-            .ToList()
-            .Where(filter)
-            .ToList()
-            .ForEach(action);
-        return Contains(filter);
+        return _db.GetCollection<T>()
+            .UpdateMany(t => action(t), t => filter(t)) > 0;
     }
 
-    public bool Update<T>(Func<T, bool> filter, T item)
+    public bool Update<T>(Func<T, bool> filter, T item) where T : new()
     {
         throw new NotImplementedException();
     }
 
-    public bool Delete<T>(Func<T, bool> filter)
+    public bool Update<T>(T item) where T : new()
     {
         throw new NotImplementedException();
+    }
+
+    public bool Delete<T>(Func<T, bool> filter) where T : new()
+    {
+        return _db.GetCollection<T>()
+            .DeleteMany(t => filter(t)) > 0;
+    }
+
+    public bool Delete<T>(object id) where T : new()
+    {
+        return _db.GetCollection<T>()
+            .Delete(id as BsonValue);
     }
 
     public bool Contains<T>(Func<T, bool> filter)

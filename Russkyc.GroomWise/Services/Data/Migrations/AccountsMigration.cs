@@ -11,12 +11,12 @@ public class AccountsMigration : IDatabaseMigration
     {
         BuilderServices.Resolve<IDatabaseService>().Add(
             BuilderServices.Resolve<IAccountFactoryService>().Create(
-            "",
-            "",
-            "",
-            "admin@groomwise.com",
-            "admin",
-            "admin")
-            );
+                "",
+                "",
+                "",
+                "admin@groomwise.com",
+                "admin",
+                "admin")
+        );
     }
 }

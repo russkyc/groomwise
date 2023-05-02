@@ -7,5 +7,4 @@ namespace GroomWise.ViewModels;
 
 public class ServicesViewModel : IServicesViewModel
 {
-    
 }

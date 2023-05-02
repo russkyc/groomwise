@@ -7,5 +7,4 @@ namespace GroomWise.Models.Interfaces;
 
 public interface IGroomer : IPerson, IEmployee
 {
-    
 }

@@ -5,7 +5,6 @@
 
 namespace GroomWise.Models.Interfaces;
 
-public interface INotificationFactoryService : IFactory<INotification>
+public interface INotificationFactoryService : IFactory<Notification>
 {
-    
 }

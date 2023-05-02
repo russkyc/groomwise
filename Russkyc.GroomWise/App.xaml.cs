@@ -6,12 +6,12 @@
 namespace GroomWise;
 
 /// <summary>
-/// Interaction logic for App.xaml
+///     Interaction logic for App.xaml
 /// </summary>
 public partial class App
 {
     /// <summary>
-    /// Application Entry for GroomWise.Desktop
+    ///     Application Entry for GroomWise.Desktop
     /// </summary>
     public App()
     {

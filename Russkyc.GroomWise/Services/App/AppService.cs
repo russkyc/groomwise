@@ -3,22 +3,23 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Services.App
+namespace GroomWise.Services.App;
+
+public class AppService : IAppService
 {
-    public class AppService : IAppService
+    private IAppService _appServiceImplementation;
+
+    public AppService()
     {
-        public ObservableCollection<INavItem> NavItems { get; set; }
+        ConfigureNavItems();
+    }
 
-        private IAppService _appServiceImplementation;
+    public ObservableCollection<INavItem> NavItems { get; set; }
 
-        public AppService()
-        {
-            ConfigureNavItems();
-        }
-
-        void ConfigureNavItems()
-        {
-            NavItems = new ObservableCollection<INavItem>(new []
+    private void ConfigureNavItems()
+    {
+        NavItems = new ObservableCollection<INavItem>(
+            new[]
             {
                 new NavItem
                 {
@@ -37,7 +38,7 @@ namespace GroomWise.Services.App
                     Icon = new MaterialIcon
                     {
                         Kind = MaterialIconKind.EventAvailable
-                    },
+                    }
                 },
                 new NavItem
                 {
@@ -46,7 +47,7 @@ namespace GroomWise.Services.App
                     Icon = new MaterialIcon
                     {
                         Kind = MaterialIconKind.BubbleChart
-                    },
+                    }
                 },
                 new NavItem
                 {
@@ -55,7 +56,7 @@ namespace GroomWise.Services.App
                     Icon = new MaterialIcon
                     {
                         Kind = MaterialIconKind.People
-                    },
+                    }
                 },
                 new NavItem
                 {
@@ -64,7 +65,7 @@ namespace GroomWise.Services.App
                     Icon = new MaterialIcon
                     {
                         Kind = MaterialIconKind.Pets
-                    },
+                    }
                 },
                 new NavItem
                 {
@@ -73,10 +74,8 @@ namespace GroomWise.Services.App
                     Icon = new MaterialIcon
                     {
                         Kind = MaterialIconKind.BarChart
-                    },
+                    }
                 }
             });
-        }
-
     }
 }

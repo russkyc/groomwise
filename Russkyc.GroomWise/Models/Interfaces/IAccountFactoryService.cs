@@ -5,7 +5,6 @@
 
 namespace GroomWise.Models.Interfaces;
 
-public interface IAccountFactoryService : IFactory<IAccount>
+public interface IAccountFactoryService : IFactory<Account>
 {
-    
 }

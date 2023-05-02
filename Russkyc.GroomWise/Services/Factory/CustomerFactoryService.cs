@@ -7,12 +7,12 @@ namespace GroomWise.Services.Factory;
 
 public class CustomerFactoryService : ICustomerFactoryService
 {
-    public ICustomer Create()
+    public Customer Create()
     {
         return new Customer();
     }
 
-    public ICustomer Create(params object[] values)
+    public Customer Create(params object[] values)
     {
         throw new NotImplementedException();
     }

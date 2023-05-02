@@ -13,5 +13,6 @@ public class ConfigurationService : IConfigurationService
     {
         Config = new IniFile("GroomWise.ini");
     }
+
     public IniFile Config { get; set; }
 }

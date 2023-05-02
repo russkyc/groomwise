@@ -7,13 +7,14 @@ using System.Globalization;
 
 namespace GroomWise.Converters;
 
-[ValueConversion(typeof(bool),typeof(bool))]
+[ValueConversion(typeof(bool), typeof(bool))]
 public class InverseBooleanConverter : IValueConverter
 {
     public static InverseBooleanConverter Instance = new InverseBooleanConverter();
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return !((bool)value);
+        return !(bool)value;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

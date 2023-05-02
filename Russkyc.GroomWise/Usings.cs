@@ -4,6 +4,7 @@
 // without written, signed consent from the author is strictly prohibited.
 
 // DotNet
+
 global using System;
 global using System.Linq;
 global using System.Windows;
@@ -12,7 +13,6 @@ global using System.Windows.Data;
 global using System.Collections.Generic;
 global using System.Collections.ObjectModel;
 global using System.ComponentModel.DataAnnotations;
-
 
 // CommunityToolkit.Mvvm
 global using CommunityToolkit.Mvvm.ComponentModel;

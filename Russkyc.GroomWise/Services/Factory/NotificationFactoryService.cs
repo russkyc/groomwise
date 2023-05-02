@@ -7,12 +7,12 @@ namespace GroomWise.Services.Factory;
 
 public class NotificationFactoryService : INotificationFactoryService
 {
-    public INotification Create()
+    public Notification Create()
     {
         return new Notification();
     }
 
-    public INotification Create(params object[] values)
+    public Notification Create(params object[] values)
     {
         throw new NotImplementedException();
     }

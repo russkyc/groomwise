@@ -7,12 +7,12 @@ namespace GroomWise.Services.Factory;
 
 public class GroomerFactoryService : IGroomerFactoryService
 {
-    public IGroomer Create()
+    public Groomer Create()
     {
         return new Groomer();
     }
 
-    public IGroomer Create(params object[] values)
+    public Groomer Create(params object[] values)
     {
         throw new NotImplementedException();
     }

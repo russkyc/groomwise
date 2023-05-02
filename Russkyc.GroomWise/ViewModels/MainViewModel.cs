@@ -7,20 +7,16 @@ namespace GroomWise.ViewModels;
 
 public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
-    private IThemeManagerService _themeManagerService;
-    
-    [ObservableProperty]
-    private IAppService _appService;
+    [ObservableProperty] private IAppService _appService;
 
-    [ObservableProperty]
-    private INavItem _selectedPage;
+    [ObservableProperty] private bool _nightMode;
 
-    [ObservableProperty]
-    private IView? _view;
+    [ObservableProperty] private INavItem _selectedPage;
 
-    [ObservableProperty]
-    private bool _nightMode;
-    
+    private readonly IThemeManagerService _themeManagerService;
+
+    [ObservableProperty] private IView? _view;
+
     public MainViewModel(
         IAppService appService,
         IThemeManagerService themeManagerService)
