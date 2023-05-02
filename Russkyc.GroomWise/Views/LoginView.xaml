@@ -3,8 +3,10 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:converters="clr-namespace:GroomWise.Converters"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:helpers="clr-namespace:org.russkyc.moderncontrols.Helpers;assembly=Russkyc.ModernControls.WPF"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+                      xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
                       Title="LoginView"
                       Width="650"
                       Height="400"
@@ -1066,15 +1068,21 @@
         </Image>
         <Grid Grid.Column="1">
             <StackPanel Margin="12,18" VerticalAlignment="Center">
-                <TextBlock Margin="12,12,0,10"
-                           FontSize="19"
+                <TextBlock Margin="12,0,12,0"
+                           FontSize="20"
                            FontWeight="Medium"
                            Foreground="{DynamicResource fg-200}"
-                           Text="Welcome Back!" />
+                           Text="Welcome Back!"
+                           TextAlignment="Center" />
+                <TextBlock Margin="12,0,12,10"
+                           Foreground="{DynamicResource fg-600}"
+                           Text="Your furry friends are waiting for you"
+                           TextAlignment="Center" />
                 <russkyc:ModernTextBox x:Name="UsernameBox"
                                        Margin="12,8,12,0"
                                        CornerRadius="5"
-                                       HelperText="Required *"
+                                       HelperText="No special characters except '_' and '-'"
+                                       LeftIcon="{wpf:PackIcon Kind=User}"
                                        Placeholder="Username"
                                        Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                     <russkyc:ModernTextBox.InputBindings>
@@ -1083,20 +1091,22 @@
                                     CommandParameter="{Binding ElementName=PasswordBox}" />
                     </russkyc:ModernTextBox.InputBindings>
                 </russkyc:ModernTextBox>
-                <russkyc:ModernTextBox x:Name="PasswordBox"
-                                       Margin="12,8,12,0"
-                                       CornerRadius="5"
-                                       HelperText="Required *"
-                                       Placeholder="Password"
-                                       Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}">
-                    <russkyc:ModernTextBox.InputBindings>
+                <PasswordBox x:Name="PasswordBox"
+                             Margin="12,8,12,0"
+                             helpers:PasswordBoxHelper.CornerRadius="5"
+                             helpers:PasswordBoxHelper.HelperText="Required *"
+                             helpers:PasswordBoxHelper.LeftIcon="{wpf:PackIcon Kind=Password}"
+                             helpers:PasswordBoxHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             helpers:PasswordBoxHelper.Placeholder="Password">
+                    <PasswordBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding LoginCommand}" />
-                    </russkyc:ModernTextBox.InputBindings>
-                </russkyc:ModernTextBox>
+                    </PasswordBox.InputBindings>
+                </PasswordBox>
                 <russkyc:ModernButton Margin="12,20,12,0"
                                       Command="{Binding LoginCommand}"
                                       Content="Log In"
                                       CornerRadius="5"
+                                      FontWeight="Bold"
                                       IsEnabled="{Binding Path=HasErrors, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:InverseBooleanConverter.Instance}}" />
             </StackPanel>
         </Grid>

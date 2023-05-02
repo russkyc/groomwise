@@ -22,4 +22,10 @@ public partial class LoginView
             Environment.Exit(0);
         }
     }
+
+    public void ClearFields()
+    {
+        PasswordBox.Clear();
+        UsernameBox.Focus();
+    }
 }
