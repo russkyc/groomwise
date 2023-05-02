@@ -36,11 +36,19 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
     [RelayCommand]
     private void Login()
     {
-        if (_accountsRepositoryService.Get(account => account.Username == Username && account.Password == Password) !=
-            null)
+        ValidateAllProperties();
+        if (!HasErrors)
         {
-            BuilderServices.Resolve<MainView>().Show();
-            BuilderServices.Resolve<LoginView>().Hide();
+            if (_accountsRepositoryService.Get(account => account.Username == Username && account.Password == Password) !=
+                null)
+            {
+                BuilderServices.Resolve<MainView>().Show();
+                BuilderServices.Resolve<LoginView>().Hide();
+            }
+            else
+            {
+                BuilderServices.Resolve<LoginView>().ClearFields();
+            }
         }
         else
         {
