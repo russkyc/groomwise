@@ -14,16 +14,19 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     [ObservableProperty] private INavItem _selectedPage;
 
     private readonly IThemeManagerService _themeManagerService;
+    private readonly IConfigurationService _configurationService;
 
     [ObservableProperty] private IView? _view;
 
     public MainViewModel(
         IAppService appService,
-        IThemeManagerService themeManagerService)
+        IThemeManagerService themeManagerService,
+        IConfigurationService configurationService)
     {
         AppService = appService;
+        _configurationService = configurationService;
         _themeManagerService = themeManagerService;
-        NightMode = _themeManagerService.DarkMode;
+        NightMode = _configurationService.Config.ReadBoolean("AppSettings", "DarkMode");
         SelectedPage = AppService.NavItems.First(item => item.Selected);
     }
 
