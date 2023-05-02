@@ -28,7 +28,7 @@
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
         <PackageReference Include="Russkyc.Abstractions" Version="1.2.1" />
         <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.3" />
-        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.7.7" />
+        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.8.6" />
     </ItemGroup>
 
     <ItemGroup>
@@ -57,6 +57,12 @@
 
     <ItemGroup>
         <Compile Remove="Models\Helpers\FilterHelper.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Russkyc.ModernControls.WPF">
+        <HintPath>..\..\..\.nuget\packages\russkyc.moderncontrols.wpf\1.8.6\lib\net6.0-windows7.0\Russkyc.ModernControls.WPF.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>
