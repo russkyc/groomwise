@@ -9,7 +9,9 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 {
     private readonly IAccountsRepositoryService _accountsRepositoryService;
 
-    [ObservableProperty] [NotifyDataErrorInfo] [Required(ErrorMessage = "Password cannot be blank.")]
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Password cannot be blank.")]
     private string _password;
 
     [ObservableProperty]
@@ -38,7 +40,11 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
             null)
         {
             BuilderServices.Resolve<MainView>().Show();
-            BuilderServices.Resolve<LoginView>().Close();
+            BuilderServices.Resolve<LoginView>().Hide();
+        }
+        else
+        {
+            BuilderServices.Resolve<LoginView>().ClearFields();
         }
     }
 }

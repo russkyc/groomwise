@@ -9,8 +9,9 @@ public partial class LoginView
 {
     public LoginView(ILoginViewModel viewModel)
     {
-        InitializeComponent();
         DataContext = viewModel;
+        InitializeComponent();
+        ClearFields();
     }
 
     protected override void OnClosed(EventArgs e)
