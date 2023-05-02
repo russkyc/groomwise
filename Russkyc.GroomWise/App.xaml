@@ -6,7 +6,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <!--  ModernControls WPF  -->
                 <ResourceDictionary Source="pack://application:,,,/Russkyc.ModernControls.WPF;component/Themes/BaseThemes/Light.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Russkyc.ModernControls.WPF;component/Themes/ColorThemes/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Russkyc.ModernControls.WPF;component/Themes/ColorThemes/Teal.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Russkyc.ModernControls.WPF;component/Themes/Generic.xaml" />
                 <!--  Custom Styles  -->
                 <ResourceDictionary Source="Views/Resources/Styles/WindowStyles.xaml" />
