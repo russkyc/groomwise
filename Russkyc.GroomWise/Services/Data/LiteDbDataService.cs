@@ -15,7 +15,7 @@ public class LiteDbDataService : IDatabaseService
     public LiteDbDataService(IConfigurationService configurationService)
     {
         _configurationService = configurationService;
-        _db = new LiteDatabase(_configurationService.Config.ReadString("ConnectionStrings", "LiteDb"));
+        _db = new LiteDatabase(_configurationService.Config.ReadString("ConnectionStrings", "LiteDb") + _configurationService.Key);
     }
 
     public bool Add<T>(T item) where T : new()

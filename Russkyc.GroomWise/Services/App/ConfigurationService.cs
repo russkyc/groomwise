@@ -11,8 +11,10 @@ public class ConfigurationService : IConfigurationService
 {
     public ConfigurationService()
     {
+        Key = "@Tcu700600";
         Config = new IniFile("GroomWise.ini");
     }
 
+    public string Key { get; set; }
     public IniFile Config { get; set; }
 }

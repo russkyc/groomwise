@@ -9,5 +9,6 @@ namespace GroomWise.Models.Interfaces;
 
 public interface IConfigurationService
 {
+    string Key { get; set; }
     IniFile Config { get; set; }
 }
