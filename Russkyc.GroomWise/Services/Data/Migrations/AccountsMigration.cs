@@ -14,9 +14,9 @@ public class AccountsMigration : IDatabaseMigration
                 "",
                 "",
                 "",
-                "admin@groomwise.com",
-                "admin",
-                "admin")
+                "russkyc@groomwise.com",
+                "russkyc",
+                "tcu700600")
         );
     }
 }
