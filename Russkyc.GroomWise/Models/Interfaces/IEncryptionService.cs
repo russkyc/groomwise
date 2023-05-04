@@ -5,6 +5,11 @@
 
 namespace GroomWise.Models.Interfaces;
 
-public interface IAccountsRepositoryService : IRepository<Account>
+public interface IEncryptionService
 {
+    T Encrypt<T>(T item);
+    T Encrypt<T>(T item, params string[] ignore);
+    T Decrypt<T>(T item);
+    T Hash<T>(T item);
+    T Hash<T>(T item, params string[] ignore);
 }

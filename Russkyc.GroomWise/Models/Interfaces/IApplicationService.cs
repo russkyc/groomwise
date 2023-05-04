@@ -5,6 +5,8 @@
 
 namespace GroomWise.Models.Interfaces;
 
-public interface IAccountsRepositoryService : IRepository<Account>
+public interface IApplicationService
 {
+    void BuildNavItems();
+    ObservableCollection<INavItem> NavItems { get; set; }
 }

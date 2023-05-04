@@ -22,6 +22,18 @@
                       mc:Ignorable="d">
     <russkyc:ModernWindow.TitleBarTemplate>
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <russkyc:ModernButton Margin="5"
+                                  Padding="6"
+                                  Command="{Binding LogoutCommand}"
+                                  Content="Logout"
+                                  CornerRadius="5"
+                                  DefaultBackground="{DynamicResource bg-100}"
+                                  DefaultForeground="{DynamicResource fg-000}"
+                                  HoverBackground="{DynamicResource bg-200}"
+                                  HoverForeground="{DynamicResource fg-000}"
+                                  LeftIcon="{icons:PackIcon Kind=UserRemove}"
+                                  PressedBackground="{DynamicResource bg-300}"
+                                  PressedForeground="{DynamicResource fg-000}" />
             <russkyc:ModernToggleButton Width="30"
                                         Margin="5"
                                         Padding="6"
@@ -32,7 +44,7 @@
                                         CornerRadius="5"
                                         DefaultForeground="{DynamicResource fg-600}"
                                         HoverForeground="{DynamicResource fg-500}"
-                                        IsChecked="{Binding NightMode, UpdateSourceTrigger=PropertyChanged}" />
+                                        IsChecked="{Binding ThemeManagerService.DarkMode, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
     </russkyc:ModernWindow.TitleBarTemplate>
     <b:Interaction.Triggers>
@@ -48,7 +60,7 @@
         <Grid Grid.Column="0"
               HorizontalAlignment="Stretch"
               Background="{DynamicResource bg-100}">
-            <ItemsControl VerticalAlignment="Top" ItemsSource="{Binding Path=AppService.NavItems, UpdateSourceTrigger=PropertyChanged}">
+            <ItemsControl VerticalAlignment="Top" ItemsSource="{Binding Path=ApplicationService.NavItems, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel HorizontalAlignment="Center"

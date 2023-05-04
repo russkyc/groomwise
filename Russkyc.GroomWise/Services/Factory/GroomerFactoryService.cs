@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2023 Russell Camo (Russkyc). - All Rights Reserved
+﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
 // 
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
@@ -7,12 +7,12 @@ namespace GroomWise.Services.Factory;
 
 public class GroomerFactoryService : IGroomerFactoryService
 {
-    public IGroomer Create()
+    public Groomer Create()
     {
         return new Groomer();
     }
 
-    public IGroomer Create(params object[] values)
+    public Groomer Create(params object[] values)
     {
         throw new NotImplementedException();
     }

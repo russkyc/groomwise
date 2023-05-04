@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2023 Russell Camo (Russkyc). - All Rights Reserved
+﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
 // 
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
@@ -7,12 +7,12 @@ namespace GroomWise.Services.Factory;
 
 public class AppointmentFactoryService : IAppointmentFactoryService
 {
-    public IAppointment Create()
+    public Appointment Create()
     {
         return new Appointment();
     }
 
-    public IAppointment Create(params object[] values)
+    public Appointment Create(params object[] values)
     {
         throw new NotImplementedException();
     }

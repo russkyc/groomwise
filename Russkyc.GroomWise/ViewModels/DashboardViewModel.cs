@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2023 Russell Camo (Russkyc). - All Rights Reserved
+﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
 // 
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
@@ -7,35 +7,45 @@ namespace GroomWise.ViewModels;
 
 public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 {
+    private readonly object _collectionsLock;
     private readonly INotificationFactoryService _notificationFactoryService;
 
-    private object _collectionsLock;
-    
-    [ObservableProperty]
-    private ObservableCollection<INotification> _notifications;
+    [ObservableProperty] private string? _welcomeMessage;
+    [ObservableProperty] private ISessionService _sessionService;
+    [ObservableProperty] private ObservableCollection<INotification> _notifications;
 
-    public DashboardViewModel(INotificationFactoryService notificationFactoryService)
+    public DashboardViewModel(
+        ISessionService sessionService,
+        INotificationFactoryService notificationFactoryService)
     {
-        _notificationFactoryService = notificationFactoryService;
         _collectionsLock = new object();
+        SessionService = sessionService;
+        _notificationFactoryService = notificationFactoryService;
         Notifications = new ObservableCollection<INotification>();
-        BindingOperations.EnableCollectionSynchronization(Notifications,_collectionsLock);
-        GetNotifications();
+        BindingOperations.EnableCollectionSynchronization(_notifications, _collectionsLock);
     }
 
-    void GetNotifications()
+    [RelayCommand]
+    private void GetNotifications()
     {
-        new Thread(
-            () =>
-            {
-                for (int i = 0; i < 20; i++)
-                {
-                    var item = _notificationFactoryService.Create();
-                    item.Title = $"Notification {i}";
-                    item.Description = $"Insert description for notification {i}";
-                    Notifications.Add(item);
-                    Thread.Sleep(2000);
-                }
-            }).Start();
+        for (var i = 0; i < 20; i++)
+        {
+            Notification? item = _notificationFactoryService.Create();
+            item.Title = $"Notification {i}";
+            item.Description = $"Insert description for notification {i}";
+            Notifications.Add(item);
+        }
+    }
+
+    [RelayCommand]
+    private void GetWelcomeMessage()
+    {
+        WelcomeMessage = $"Good Morning, {SessionService.GetSession()?.FirstName}!";
+    }
+
+    public void Invalidate()
+    {
+        GetWelcomeMessage();
+        GetNotifications();
     }
 }

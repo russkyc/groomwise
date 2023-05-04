@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2023 Russell Camo (Russkyc). - All Rights Reserved
+﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
 // 
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
@@ -7,12 +7,12 @@ namespace GroomWise.Services.Factory;
 
 public class PetFactoryService : IPetFactoryService
 {
-    public IPet Create()
+    public Pet Create()
     {
         return new Pet();
     }
 
-    public IPet Create(params object[] values)
+    public Pet Create(params object[] values)
     {
         throw new NotImplementedException();
     }

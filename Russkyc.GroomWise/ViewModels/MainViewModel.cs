@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2023 Russell Camo (Russkyc). - All Rights Reserved
+﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
 // 
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
@@ -7,40 +7,45 @@ namespace GroomWise.ViewModels;
 
 public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
-    private IThemeManagerService _themeManagerService;
-    
-    [ObservableProperty]
-    private IAppService _appService;
+    [ObservableProperty] private IThemeManagerService _themeManagerService;
+    [ObservableProperty] private IApplicationService _applicationService;
+    [ObservableProperty] private ISessionService _sessionService;
+    [ObservableProperty] private INavItem? _selectedPage;
+    [ObservableProperty] private IView? _view;
 
-    [ObservableProperty]
-    private INavItem _selectedPage;
-
-    [ObservableProperty]
-    private IView? _view;
-
-    [ObservableProperty]
-    private bool _nightMode;
-    
     public MainViewModel(
-        IAppService appService,
+        ISessionService sessionService,
+        IApplicationService applicationService,
         IThemeManagerService themeManagerService)
     {
-        AppService = appService;
-        _themeManagerService = themeManagerService;
-        NightMode = _themeManagerService.DarkMode;
-        SelectedPage = AppService.NavItems.First(item => item.Selected);
+        ThemeManagerService = themeManagerService;
+        ApplicationService = applicationService;
+        SessionService = sessionService;
     }
 
     [RelayCommand]
-    private void SwitchBaseTheme()
+    private void SwitchBaseTheme(bool nightMode)
     {
-        _themeManagerService.UseDarkTheme(NightMode);
+        ThemeManagerService?.UseDarkTheme(nightMode);
     }
 
     [RelayCommand]
-    private void GetView(INavItem navItem)
+    private void GetView(INavItem? navItem)
     {
-        View = BuilderServices.Resolve(navItem.Page) as IView;
-        AppService!.NavItems.First(item => item == navItem).Selected = true;
+        if (ApplicationService.NavItems.Count > 0 && navItem != null && (bool)navItem.Selected)
+        {
+            View = BuilderServices.Resolve(navItem.Page) as IView;
+            ApplicationService!.NavItems.First(item => item == navItem).Selected = true;
+        }
+    }
+
+    [RelayCommand]
+    private void Logout()
+    {
+        if (MessageBox.Show("Are you sure you want to log out?", "GroomWise", MessageBoxButton.YesNo) ==
+            MessageBoxResult.Yes)
+        {
+            SessionService.Logout();
+        }
     }
 }

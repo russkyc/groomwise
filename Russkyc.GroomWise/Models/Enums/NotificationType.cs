@@ -3,8 +3,12 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Models.Interfaces;
+namespace GroomWise.Models.Enums;
 
-public interface IAccountsRepositoryService : IRepository<Account>
+public enum NotificationType
 {
+    Notify,
+    Success,
+    Warning,
+    Danger
 }

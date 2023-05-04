@@ -1,13 +1,25 @@
 ﻿<UserControl x:Class="GroomWise.Views.Pages.DashboardView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:icon="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
              xmlns:templates="clr-namespace:GroomWise.Views.Templates"
+             xmlns:viewModels="clr-namespace:GroomWise.ViewModels"
              HorizontalAlignment="Stretch"
+             d:DataContext="{d:DesignInstance viewModels:DashboardViewModel,
+                                              IsDesignTimeCreatable=True}"
              d:DesignHeight="720"
              d:DesignWidth="1280"
              mc:Ignorable="d">
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding GetNotificationsCommand}" />
+            <b:InvokeCommandAction Command="{Binding GetWelcomeMessageCommand}" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -15,7 +27,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Margin="16,20,16,16">
             <Grid.RowDefinitions>
-                <RowDefinition Height="300" />
+                <RowDefinition Height="290" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
@@ -27,10 +39,421 @@
                            Margin="0,0,0,12"
                            FontSize="16"
                            Text="Dashboard" />
-                <Border Grid.Row="1"
-                        Background="{DynamicResource bg-100}"
-                        CornerRadius="5">
-                    <Grid Height="200" HorizontalAlignment="Stretch" />
+                <Border Grid.Row="1" CornerRadius="5">
+                    <Border.Background>
+                        <ImageBrush ImageSource="{Binding Source, ElementName=Image}" Stretch="UniformToFill" />
+                    </Border.Background>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="550" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="Image"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="2"
+                               Stretch="Uniform"
+                               Visibility="Collapsed">
+                            <Image.Source>
+                                <DrawingImage>
+                                    <DrawingImage.Drawing>
+                                        <DrawingGroup>
+                                            <DrawingGroup.Transform>
+                                                <MatrixTransform Matrix="1.20,0,0,0.48,0,0" />
+                                            </DrawingGroup.Transform>
+                                            <DrawingGroup>
+                                                <DrawingGroup.ClipGeometry>
+                                                    <StreamGeometry>F1 M6381.49 1715.65L8159.74 1715.65L8159.74 2975.24L6381.49 2975.24L6381.49 1715.65Z</StreamGeometry>
+                                                </DrawingGroup.ClipGeometry>
+                                                <DrawingGroup>
+                                                    <DrawingGroup.Transform>
+                                                        <MatrixTransform Matrix="0.83652306,0,0,2.16604,1994.1,-1347.46" />
+                                                    </DrawingGroup.Transform>
+                                                    <GeometryDrawing Brush="{DynamicResource primary-default}" Geometry="F0 M5244.78 1414.15L7370.55 1414.15L7370.55 1995.67L5244.78 1995.67L5244.78 1414.15Z" />
+                                                    <DrawingGroup>
+                                                        <DrawingGroup.ClipGeometry>
+                                                            <StreamGeometry>F1 M5244.78 1414.15L7370.55 1414.15L7370.55 1995.67L5244.78 1995.67L5244.78 1414.15Z</StreamGeometry>
+                                                        </DrawingGroup.ClipGeometry>
+                                                        <DrawingGroup>
+                                                            <DrawingGroup.Transform>
+                                                                <MatrixTransform Matrix="1.0778198,0,0,0.461673,-1581.0103,586.8419" />
+                                                            </DrawingGroup.Transform>
+                                                            <DrawingGroup>
+                                                                <DrawingGroup.Transform>
+                                                                    <MatrixTransform Matrix="1.44974,-3.35513,1.44974,3.35513,-1453.9401,18593.102" />
+                                                                </DrawingGroup.Transform>
+                                                                <GeometryDrawing Geometry="F0 M5166.66 739.258C5243.88 680.631 5376.67 695.421 5415.3 778.333C5439.14 829.507 5410.98 847.626 5392.65 840.768C5373.28 833.525 5369.92 795.783 5412.3 772.708C5458.11 747.758 5511.44 766.07 5544.28 827.92C5604.15 940.692 5686.81 930.776 5735.7 871.709C5760.58 841.648 5757.51 795.39 5732.45 779.283C5707.28 763.1 5666.22 797.755 5695.12 843.347C5740.84 915.476 5835.36 830.133 5855.73 747.946C5881.34 644.594 5900.22 516.687 6068.11 530.126C6176.41 538.796 6282.16 703.428 6386.6 546.348C6406.85 515.903 6394.77 482.765 6369.9 483.519C6336.81 484.522 6325.21 529.408 6355.73 573.91C6483.44 760.159 6658.36 572.586 6805.62 578.422C6952.88 584.258 7279.04 923.525 6887.96 1036.79C6496.88 1150.05 6289.37 1105.67 6169.49 1399.91">
+                                                                    <GeometryDrawing.Pen>
+                                                                        <Pen Brush="#FFFEFEFF"
+                                                                             EndLineCap="Round"
+                                                                             LineJoin="Round"
+                                                                             MiterLimit="1.5"
+                                                                             StartLineCap="Round"
+                                                                             Thickness="9.31" />
+                                                                    </GeometryDrawing.Pen>
+                                                                </GeometryDrawing>
+                                                            </DrawingGroup>
+                                                            <DrawingGroup>
+                                                                <DrawingGroup.Transform>
+                                                                    <MatrixTransform Matrix="-1.9803803,-1.22806,0.530642,-4.58319,19013.602,11703.401" />
+                                                                </DrawingGroup.Transform>
+                                                                <GeometryDrawing Geometry="F0 M5166.66 739.258C5243.88 680.631 5376.67 695.421 5415.3 778.333C5439.14 829.507 5410.98 847.626 5392.65 840.768C5373.28 833.525 5369.92 795.783 5412.3 772.708C5458.11 747.758 5511.44 766.07 5544.28 827.92C5604.15 940.692 5686.81 930.776 5735.7 871.709C5760.58 841.648 5757.51 795.39 5732.45 779.283C5707.28 763.1 5666.22 797.755 5695.12 843.347C5740.84 915.476 5835.36 830.133 5855.73 747.946C5881.34 644.594 5900.22 516.687 6068.11 530.126C6176.41 538.796 6282.16 703.428 6386.6 546.348C6406.85 515.903 6394.77 482.765 6369.9 483.519C6336.81 484.522 6325.21 529.408 6355.73 573.91C6483.44 760.159 6658.36 572.586 6805.62 578.422C6952.88 584.258 7279.04 923.525 6887.96 1036.79C6496.88 1150.05 6289.37 1105.67 6169.49 1399.91">
+                                                                    <GeometryDrawing.Pen>
+                                                                        <Pen Brush="#FFFEFEFF"
+                                                                             EndLineCap="Round"
+                                                                             LineJoin="Round"
+                                                                             MiterLimit="1.5"
+                                                                             StartLineCap="Round"
+                                                                             Thickness="9.31" />
+                                                                    </GeometryDrawing.Pen>
+                                                                </GeometryDrawing>
+                                                            </DrawingGroup>
+                                                            <DrawingGroup>
+                                                                <DrawingGroup.Transform>
+                                                                    <MatrixTransform Matrix="0.80902207,0,0,1.8723103,7557.1494,2063.01" />
+                                                                </DrawingGroup.Transform>
+                                                                <GeometryDrawing Brush="{DynamicResource primary-darken-3}" Geometry="F1 M681.303 454.584C681.303 465.103 532.974 473.629 350 473.629C167.026 473.629 18.697 465.103 18.697 454.584C18.697 444.066 167.026 435.539 350 435.539C532.974 435.539 681.303 444.066 681.303 454.584Z" />
+                                                            </DrawingGroup>
+                                                            <DrawingGroup>
+                                                                <DrawingGroup.Transform>
+                                                                    <MatrixTransform Matrix="-0.246783,0,0,0.24678303,9648.23,2020.9302" />
+                                                                </DrawingGroup.Transform>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.40505,0,0,7.88029,2046.3672,-2484.17" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFB040" Geometry="F1 M1714.6 764.838C1711.93 757.24 1698.38 738.246 1688.15 721.492C1677.08 703.366 1670.29 679.619 1670.29 679.619L1637.15 716.048C1652.12 751.86 1689.39 768.946 1700.48 773.348C1703.56 774.51 1706.95 774.556 1710.06 773.478C1713.38 772.323 1716.38 769.906 1714.6 764.838Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.40505,0,0,7.88029,2046.3672,-2484.17" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFC540" Geometry="F1 M1673.22 672.921C1673.22 672.921 1664.03 774.534 1544.35 774.534C1503.88 774.534 1483.99 758.185 1468.71 756.376C1468.71 756.376 1484.94 768.003 1471.01 774.534L1420.59 774.534C1420.59 774.534 1411.08 764.827 1419.71 755.493C1419.71 755.493 1371.78 728.263 1367.31 676.525C1364.13 639.768 1375.97 613.215 1395.73 596.632C1409.66 584.936 1427.54 578.198 1446.86 576.362C1453.43 575.727 1460.15 575.671 1466.96 576.168C1467.76 576.224 1468.55 576.293 1469.34 576.376L1469.35 576.376C1486.4 578.171 1499.19 585.351 1509.78 593.843C1524.73 605.787 1535.28 620.285 1547.13 625.753L1673.22 672.921Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="-3.3114603,0,0,7.6636906,30484.8,-11427.201" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Geometry="F0 M7074.95 1836.38C7074.95 1836.38 7041.67 1881.85 7073.06 1914.42">
+                                                                        <GeometryDrawing.Pen>
+                                                                            <Pen Brush="#FF221334"
+                                                                                 EndLineCap="Round"
+                                                                                 LineJoin="Round"
+                                                                                 MiterLimit="1.5"
+                                                                                 StartLineCap="Round"
+                                                                                 Thickness="2.13" />
+                                                                        </GeometryDrawing.Pen>
+                                                                    </GeometryDrawing>
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.40505,0,0,7.88029,2046.3672,-2484.17" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFC540" Geometry="F1 M1527.98 575.992C1519.79 581.525 1524.55 608.023 1538.96 611.441L1568.08 585.917C1565.25 577.891 1536.16 570.458 1527.98 575.992Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.40505,0,0,7.88029,2046.3672,-2484.17" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFDCB1" Geometry="F1 M1531.57 583.49C1525.77 587.41 1529.14 606.181 1539.35 608.602L1559.98 590.521C1557.98 584.835 1537.37 579.57 1531.57 583.49Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.40505,0,0,7.88029,2046.3672,-2484.17" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFC540" Geometry="F1 M1653.37 552.52C1663.57 555.03 1668.56 583.216 1655.44 591.925L1617.01 577.166C1616.88 568.12 1643.16 550.009 1653.37 552.52Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.40505,0,0,7.88029,2046.3672,-2484.17" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFDCB1" Geometry="F1 M1652.54 561.322C1659.77 563.1 1663.3 583.067 1654.01 589.236L1626.78 578.781C1626.69 572.373 1645.31 559.543 1652.54 561.322Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.40505,0,0,7.88029,2046.3672,-2484.17" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFC540" Geometry="F1 M1599.55 573.566C1539.55 579.161 1509.96 638.073 1526.45 678.236C1543.51 719.826 1674.65 711.616 1686.79 660.323C1696.86 617.789 1649.29 568.927 1599.55 573.566Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="-3.3114603,0,0,7.6636906,30438.803,-11427.201" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Geometry="F0 M6997.43 1800C6997.43 1800 7019.69 1830.42 7005.05 1862.72C6990.92 1893.88 6939.65 1888.56 6939.65 1888.56">
+                                                                        <GeometryDrawing.Pen>
+                                                                            <Pen Brush="#FF221334"
+                                                                                 EndLineCap="Round"
+                                                                                 LineJoin="Round"
+                                                                                 MiterLimit="1.5"
+                                                                                 StartLineCap="Round"
+                                                                                 Thickness="2.13" />
+                                                                        </GeometryDrawing.Pen>
+                                                                    </GeometryDrawing>
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="-3.70247,2.22835,0.962862,8.568609,31407.002,-28486.303" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Geometry="F0 M6907.65 1827.28L6872.43 1827.28">
+                                                                        <GeometryDrawing.Pen>
+                                                                            <Pen Brush="#FF221334"
+                                                                                 EndLineCap="Round"
+                                                                                 LineJoin="Round"
+                                                                                 MiterLimit="1.5"
+                                                                                 StartLineCap="Round"
+                                                                                 Thickness="1.84" />
+                                                                        </GeometryDrawing.Pen>
+                                                                    </GeometryDrawing>
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.79749,1.0718402,-0.46313903,8.7885,-17961.8,-20865" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Geometry="F0 M6907.65 1827.28L6872.43 1827.28">
+                                                                        <GeometryDrawing.Pen>
+                                                                            <Pen Brush="#FF221334"
+                                                                                 EndLineCap="Round"
+                                                                                 LineJoin="Round"
+                                                                                 MiterLimit="1.5"
+                                                                                 StartLineCap="Round"
+                                                                                 Thickness="1.84" />
+                                                                        </GeometryDrawing.Pen>
+                                                                    </GeometryDrawing>
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="-3.8252697,-0.12139,-0.0524522,8.852791,34110.5,-12725.699" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Geometry="F0 M6907.65 1827.28L6872.43 1827.28">
+                                                                        <GeometryDrawing.Pen>
+                                                                            <Pen Brush="#FF221334"
+                                                                                 EndLineCap="Round"
+                                                                                 LineJoin="Round"
+                                                                                 MiterLimit="1.5"
+                                                                                 StartLineCap="Round"
+                                                                                 Thickness="1.84" />
+                                                                        </GeometryDrawing.Pen>
+                                                                    </GeometryDrawing>
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.7844906,-1.2948301,0.55949205,8.75842,-19737.797,-4413.5996" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Geometry="F0 M6907.65 1827.28L6872.43 1827.28">
+                                                                        <GeometryDrawing.Pen>
+                                                                            <Pen Brush="#FF221334"
+                                                                                 EndLineCap="Round"
+                                                                                 LineJoin="Round"
+                                                                                 MiterLimit="1.5"
+                                                                                 StartLineCap="Round"
+                                                                                 Thickness="1.84" />
+                                                                        </GeometryDrawing.Pen>
+                                                                    </GeometryDrawing>
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="2.8952303,0.39838502,0,10.8402,2875.1953,-4862.18" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FF221334" Geometry="F1 M1602.49 633.474C1594.77 634.196 1590.71 629.499 1592.65 625.897C1594.59 622.296 1608.79 621.174 1610.22 624.253C1611.64 627.331 1609.48 632.819 1602.49 633.474Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="-2.0010002,0,0,4.63089,21358.803,-5811.8994" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Geometry="F0 M6901.24 1844.32C6904.59 1855.96 6927.79 1857.74 6933.53 1847.46">
+                                                                        <GeometryDrawing.Pen>
+                                                                            <Pen Brush="#FF221334"
+                                                                                 EndLineCap="Round"
+                                                                                 LineJoin="Round"
+                                                                                 MiterLimit="1.5"
+                                                                                 StartLineCap="Round"
+                                                                                 Thickness="3.52" />
+                                                                        </GeometryDrawing.Pen>
+                                                                    </GeometryDrawing>
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="9.86859,0,0,17.5732,-8568.48,-8508.5" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M1638.56 612.571C1632.93 615.251 1635.2 626.512 1642.41 625.526C1649.63 624.54 1644.65 609.669 1638.56 612.571Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="17.6679,0,0,37.137405,-21392.805,-20526.4" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FF221334" Geometry="F1 M1640.54 613.813C1638.38 614.842 1639.25 619.164 1642.02 618.785C1644.79 618.407 1642.88 612.699 1640.54 613.813Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="-10.3599,0,0,23.975903,78988.4,-40846.004" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M6888.72 1801.19Q6888.72 1801.28 6888.71 1801.37Q6888.7 1801.46 6888.69 1801.55Q6888.67 1801.64 6888.64 1801.72Q6888.62 1801.81 6888.58 1801.89Q6888.55 1801.97 6888.51 1802.05Q6888.46 1802.13 6888.41 1802.21Q6888.36 1802.28 6888.31 1802.35Q6888.25 1802.42 6888.19 1802.49Q6888.12 1802.55 6888.05 1802.61Q6887.98 1802.66 6887.91 1802.71Q6887.83 1802.76 6887.75 1802.81Q6887.67 1802.85 6887.59 1802.88Q6887.51 1802.92 6887.42 1802.94Q6887.34 1802.97 6887.25 1802.99Q6887.16 1803 6887.07 1803.01Q6886.98 1803.02 6886.89 1803.02Q6886.8 1803.02 6886.71 1803.01Q6886.62 1803 6886.53 1802.99Q6886.44 1802.97 6886.36 1802.94Q6886.27 1802.92 6886.19 1802.88Q6886.1 1802.85 6886.03 1802.81Q6885.95 1802.76 6885.87 1802.71Q6885.8 1802.66 6885.73 1802.61Q6885.66 1802.55 6885.59 1802.49Q6885.53 1802.42 6885.47 1802.35Q6885.42 1802.28 6885.37 1802.21Q6885.32 1802.13 6885.27 1802.05Q6885.23 1801.97 6885.2 1801.89Q6885.16 1801.81 6885.14 1801.72Q6885.11 1801.64 6885.09 1801.55Q6885.08 1801.46 6885.07 1801.37Q6885.06 1801.28 6885.06 1801.19Q6885.06 1801.1 6885.07 1801.01Q6885.08 1800.92 6885.09 1800.83Q6885.11 1800.74 6885.14 1800.66Q6885.16 1800.57 6885.2 1800.49Q6885.23 1800.41 6885.27 1800.33Q6885.32 1800.25 6885.37 1800.17Q6885.42 1800.1 6885.47 1800.03Q6885.53 1799.96 6885.59 1799.89Q6885.66 1799.83 6885.73 1799.77Q6885.8 1799.72 6885.87 1799.67Q6885.95 1799.62 6886.03 1799.57Q6886.11 1799.53 6886.19 1799.5Q6886.27 1799.46 6886.36 1799.44Q6886.44 1799.41 6886.53 1799.39Q6886.62 1799.38 6886.71 1799.37Q6886.8 1799.36 6886.89 1799.36Q6886.98 1799.36 6887.07 1799.37Q6887.16 1799.38 6887.25 1799.39Q6887.34 1799.41 6887.42 1799.44Q6887.51 1799.46 6887.59 1799.5Q6887.67 1799.53 6887.75 1799.57Q6887.83 1799.62 6887.91 1799.67Q6887.98 1799.72 6888.05 1799.77Q6888.12 1799.83 6888.19 1799.89Q6888.25 1799.96 6888.31 1800.03Q6888.36 1800.1 6888.41 1800.17Q6888.46 1800.25 6888.51 1800.33Q6888.55 1800.41 6888.58 1800.49Q6888.62 1800.57 6888.64 1800.66Q6888.67 1800.74 6888.69 1800.83Q6888.7 1800.92 6888.71 1801.01Q6888.72 1801.1 6888.72 1801.19Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="-3.9598901,0,0,9.16434,34872.6,-14180" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M6888.72 1801.19Q6888.72 1801.28 6888.71 1801.37Q6888.7 1801.46 6888.69 1801.55Q6888.67 1801.64 6888.64 1801.72Q6888.62 1801.81 6888.58 1801.89Q6888.55 1801.97 6888.51 1802.05Q6888.46 1802.13 6888.41 1802.21Q6888.36 1802.28 6888.31 1802.35Q6888.25 1802.42 6888.19 1802.49Q6888.12 1802.55 6888.05 1802.61Q6887.98 1802.66 6887.91 1802.71Q6887.83 1802.76 6887.75 1802.81Q6887.67 1802.85 6887.59 1802.88Q6887.51 1802.92 6887.42 1802.94Q6887.34 1802.97 6887.25 1802.99Q6887.16 1803 6887.07 1803.01Q6886.98 1803.02 6886.89 1803.02Q6886.8 1803.02 6886.71 1803.01Q6886.62 1803 6886.53 1802.99Q6886.44 1802.97 6886.36 1802.94Q6886.27 1802.92 6886.19 1802.88Q6886.1 1802.85 6886.03 1802.81Q6885.95 1802.76 6885.87 1802.71Q6885.8 1802.66 6885.73 1802.61Q6885.66 1802.55 6885.59 1802.49Q6885.53 1802.42 6885.47 1802.35Q6885.42 1802.28 6885.37 1802.21Q6885.32 1802.13 6885.27 1802.05Q6885.23 1801.97 6885.2 1801.89Q6885.16 1801.81 6885.14 1801.72Q6885.11 1801.64 6885.09 1801.55Q6885.08 1801.46 6885.07 1801.37Q6885.06 1801.28 6885.06 1801.19Q6885.06 1801.1 6885.07 1801.01Q6885.08 1800.92 6885.09 1800.83Q6885.11 1800.74 6885.14 1800.66Q6885.16 1800.57 6885.2 1800.49Q6885.23 1800.41 6885.27 1800.33Q6885.32 1800.25 6885.37 1800.17Q6885.42 1800.1 6885.47 1800.03Q6885.53 1799.96 6885.59 1799.89Q6885.66 1799.83 6885.73 1799.77Q6885.8 1799.72 6885.87 1799.67Q6885.95 1799.62 6886.03 1799.57Q6886.11 1799.53 6886.19 1799.5Q6886.27 1799.46 6886.36 1799.44Q6886.44 1799.41 6886.53 1799.39Q6886.62 1799.38 6886.71 1799.37Q6886.8 1799.36 6886.89 1799.36Q6886.98 1799.36 6887.07 1799.37Q6887.16 1799.38 6887.25 1799.39Q6887.34 1799.41 6887.42 1799.44Q6887.51 1799.46 6887.59 1799.5Q6887.67 1799.53 6887.75 1799.57Q6887.83 1799.62 6887.91 1799.67Q6887.98 1799.72 6888.05 1799.77Q6888.12 1799.83 6888.19 1799.89Q6888.25 1799.96 6888.31 1800.03Q6888.36 1800.1 6888.41 1800.17Q6888.46 1800.25 6888.51 1800.33Q6888.55 1800.41 6888.58 1800.49Q6888.62 1800.57 6888.64 1800.66Q6888.67 1800.74 6888.69 1800.83Q6888.7 1800.92 6888.71 1801.01Q6888.72 1801.1 6888.72 1801.19Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="-1,0,0,1,15007.004,38.541504" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <DrawingGroup>
+                                                                        <DrawingGroup.Transform>
+                                                                            <MatrixTransform Matrix="9.86859,0,0,17.5732,-8568.477,-8508.5" />
+                                                                        </DrawingGroup.Transform>
+                                                                        <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M1638.56 612.571C1632.93 615.251 1635.2 626.512 1642.41 625.526C1649.63 624.54 1644.65 609.669 1638.56 612.571Z" />
+                                                                        <DrawingGroup>
+                                                                            <DrawingGroup.ClipGeometry>
+                                                                                <StreamGeometry>F1 M1638.56 612.571C1632.93 615.251 1635.2 626.512 1642.41 625.526C1649.63 624.54 1644.65 609.669 1638.56 612.571Z</StreamGeometry>
+                                                                            </DrawingGroup.ClipGeometry>
+                                                                            <DrawingGroup>
+                                                                                <DrawingGroup.Transform>
+                                                                                    <MatrixTransform Matrix="1.74983,0.49199796,-0.34383503,2.0655098,-1021.23004,-1462.2798" />
+                                                                                </DrawingGroup.Transform>
+                                                                                <GeometryDrawing Brush="#FF221334" Geometry="F1 M1640.54 613.813C1638.38 614.842 1639.25 619.164 1642.02 618.785C1644.79 618.407 1642.88 612.699 1640.54 613.813Z" />
+                                                                                <DrawingGroup>
+                                                                                    <DrawingGroup.ClipGeometry>
+                                                                                        <StreamGeometry>F1 M1640.54 613.813C1638.38 614.842 1639.25 619.164 1642.02 618.785C1644.79 618.407 1642.88 612.699 1640.54 613.813Z</StreamGeometry>
+                                                                                    </DrawingGroup.ClipGeometry>
+                                                                                    <DrawingGroup>
+                                                                                        <DrawingGroup.Transform>
+                                                                                            <MatrixTransform Matrix="-0.58637106,2.1245334E-08,1.37794975E-08,0.64559907,5677.871,-546.6074" />
+                                                                                        </DrawingGroup.Transform>
+                                                                                        <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M6888.72 1801.19Q6888.72 1801.28 6888.71 1801.37Q6888.7 1801.46 6888.69 1801.55Q6888.67 1801.64 6888.64 1801.72Q6888.62 1801.81 6888.58 1801.89Q6888.55 1801.97 6888.51 1802.05Q6888.46 1802.13 6888.41 1802.21Q6888.36 1802.28 6888.31 1802.35Q6888.25 1802.42 6888.19 1802.49Q6888.12 1802.55 6888.05 1802.61Q6887.98 1802.66 6887.91 1802.71Q6887.83 1802.76 6887.75 1802.81Q6887.67 1802.85 6887.59 1802.88Q6887.51 1802.92 6887.42 1802.94Q6887.34 1802.97 6887.25 1802.99Q6887.16 1803 6887.07 1803.01Q6886.98 1803.02 6886.89 1803.02Q6886.8 1803.02 6886.71 1803.01Q6886.62 1803 6886.53 1802.99Q6886.44 1802.97 6886.36 1802.94Q6886.27 1802.92 6886.19 1802.88Q6886.1 1802.85 6886.03 1802.81Q6885.95 1802.76 6885.87 1802.71Q6885.8 1802.66 6885.73 1802.61Q6885.66 1802.55 6885.59 1802.49Q6885.53 1802.42 6885.47 1802.35Q6885.42 1802.28 6885.37 1802.21Q6885.32 1802.13 6885.27 1802.05Q6885.23 1801.97 6885.2 1801.89Q6885.16 1801.81 6885.14 1801.72Q6885.11 1801.64 6885.09 1801.55Q6885.08 1801.46 6885.07 1801.37Q6885.06 1801.28 6885.06 1801.19Q6885.06 1801.1 6885.07 1801.01Q6885.08 1800.92 6885.09 1800.83Q6885.11 1800.74 6885.14 1800.66Q6885.16 1800.57 6885.2 1800.49Q6885.23 1800.41 6885.27 1800.33Q6885.32 1800.25 6885.37 1800.17Q6885.42 1800.1 6885.47 1800.03Q6885.53 1799.96 6885.59 1799.89Q6885.66 1799.83 6885.73 1799.77Q6885.8 1799.72 6885.87 1799.67Q6885.95 1799.62 6886.03 1799.57Q6886.11 1799.53 6886.19 1799.5Q6886.27 1799.46 6886.36 1799.44Q6886.44 1799.41 6886.53 1799.39Q6886.62 1799.38 6886.71 1799.37Q6886.8 1799.36 6886.89 1799.36Q6886.98 1799.36 6887.07 1799.37Q6887.16 1799.38 6887.25 1799.39Q6887.34 1799.41 6887.42 1799.44Q6887.51 1799.46 6887.59 1799.5Q6887.67 1799.53 6887.75 1799.57Q6887.83 1799.62 6887.91 1799.67Q6887.98 1799.72 6888.05 1799.77Q6888.12 1799.83 6888.19 1799.89Q6888.25 1799.96 6888.31 1800.03Q6888.36 1800.1 6888.41 1800.17Q6888.46 1800.25 6888.51 1800.33Q6888.55 1800.41 6888.58 1800.49Q6888.62 1800.57 6888.64 1800.66Q6888.67 1800.74 6888.69 1800.83Q6888.7 1800.92 6888.71 1801.01Q6888.72 1801.1 6888.72 1801.19Z" />
+                                                                                    </DrawingGroup>
+                                                                                </DrawingGroup>
+                                                                            </DrawingGroup>
+                                                                        </DrawingGroup>
+                                                                    </DrawingGroup>
+                                                                    <DrawingGroup>
+                                                                        <DrawingGroup.Transform>
+                                                                            <MatrixTransform Matrix="-3.9598901,0,0,9.16434,34886.902,-14178.299" />
+                                                                        </DrawingGroup.Transform>
+                                                                        <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M6888.72 1801.19Q6888.72 1801.28 6888.71 1801.37Q6888.7 1801.46 6888.69 1801.55Q6888.67 1801.64 6888.64 1801.72Q6888.62 1801.81 6888.58 1801.89Q6888.55 1801.97 6888.51 1802.05Q6888.46 1802.13 6888.41 1802.21Q6888.36 1802.28 6888.31 1802.35Q6888.25 1802.42 6888.19 1802.49Q6888.12 1802.55 6888.05 1802.61Q6887.98 1802.66 6887.91 1802.71Q6887.83 1802.76 6887.75 1802.81Q6887.67 1802.85 6887.59 1802.88Q6887.51 1802.92 6887.42 1802.94Q6887.34 1802.97 6887.25 1802.99Q6887.16 1803 6887.07 1803.01Q6886.98 1803.02 6886.89 1803.02Q6886.8 1803.02 6886.71 1803.01Q6886.62 1803 6886.53 1802.99Q6886.44 1802.97 6886.36 1802.94Q6886.27 1802.92 6886.19 1802.88Q6886.1 1802.85 6886.03 1802.81Q6885.95 1802.76 6885.87 1802.71Q6885.8 1802.66 6885.73 1802.61Q6885.66 1802.55 6885.59 1802.49Q6885.53 1802.42 6885.47 1802.35Q6885.42 1802.28 6885.37 1802.21Q6885.32 1802.13 6885.27 1802.05Q6885.23 1801.97 6885.2 1801.89Q6885.16 1801.81 6885.14 1801.72Q6885.11 1801.64 6885.09 1801.55Q6885.08 1801.46 6885.07 1801.37Q6885.06 1801.28 6885.06 1801.19Q6885.06 1801.1 6885.07 1801.01Q6885.08 1800.92 6885.09 1800.83Q6885.11 1800.74 6885.14 1800.66Q6885.16 1800.57 6885.2 1800.49Q6885.23 1800.41 6885.27 1800.33Q6885.32 1800.25 6885.37 1800.17Q6885.42 1800.1 6885.47 1800.03Q6885.53 1799.96 6885.59 1799.89Q6885.66 1799.83 6885.73 1799.77Q6885.8 1799.72 6885.87 1799.67Q6885.95 1799.62 6886.03 1799.57Q6886.11 1799.53 6886.19 1799.5Q6886.27 1799.46 6886.36 1799.44Q6886.44 1799.41 6886.53 1799.39Q6886.62 1799.38 6886.71 1799.37Q6886.8 1799.36 6886.89 1799.36Q6886.98 1799.36 6887.07 1799.37Q6887.16 1799.38 6887.25 1799.39Q6887.34 1799.41 6887.42 1799.44Q6887.51 1799.46 6887.59 1799.5Q6887.67 1799.53 6887.75 1799.57Q6887.83 1799.62 6887.91 1799.67Q6887.98 1799.72 6888.05 1799.77Q6888.12 1799.83 6888.19 1799.89Q6888.25 1799.96 6888.31 1800.03Q6888.36 1800.1 6888.41 1800.17Q6888.46 1800.25 6888.51 1800.33Q6888.55 1800.41 6888.58 1800.49Q6888.62 1800.57 6888.64 1800.66Q6888.67 1800.74 6888.69 1800.83Q6888.7 1800.92 6888.71 1801.01Q6888.72 1801.1 6888.72 1801.19Z" />
+                                                                    </DrawingGroup>
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.3568006,1.3219602,-0.57121706,7.76861,2517.3984,-4498.1494" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFC540" Geometry="F1 M1620.5 774.527C1633.33 778.093 1655.37 777.02 1660.19 769.919C1665.01 762.819 1652.67 760.704 1652.67 760.704C1632.58 757.531 1614.72 727.212 1614.72 727.212L1557.25 741.314C1586.85 767.05 1603.34 769.759 1620.5 774.527Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.40505,0,0,7.88029,2046.3672,-2484.17" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFC540" Geometry="F1 M1459.79 558.177C1422.03 575.63 1399.87 543.085 1399.87 543.085C1394.65 545.183 1390.18 547.613 1386.36 550.292C1377.86 556.257 1372.72 563.479 1370.1 571.184C1368.72 575.257 1368.04 579.482 1367.96 583.721C1367.83 589.355 1368.76 595.044 1370.44 600.47L1370.46 600.47C1374.41 613.312 1382.54 624.828 1391.04 631.483L1381.89 644.918C1305.04 612.18 1305.74 479.982 1391.75 454.948C1413.04 448.749 1430.63 450.723 1444.37 457.503C1463.05 466.713 1474.64 484.829 1478.81 503.373C1483.97 526.28 1477.83 549.851 1459.79 558.177Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.40505,0,0,7.88029,2046.3672,-2484.17" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFDF97" Geometry="F1 M1478.81 503.373C1457.64 496.786 1427.94 511.45 1420.59 499.465C1413.43 487.784 1425.15 464.351 1444.37 457.503C1463.05 466.713 1474.64 484.829 1478.81 503.373Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.40505,0,0,7.88029,2046.3672,-2484.17" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFDF97" Geometry="F1 M1370.44 600.47C1363.35 603.329 1352.4 604.171 1350.06 598.206C1347.74 592.282 1359.29 588.471 1367.96 583.721C1367.83 589.355 1368.76 595.044 1370.44 600.47Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.40505,0,0,7.88029,2046.3672,-2484.17" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFDF97" Geometry="F1 M1386.36 550.292C1377.86 556.257 1372.72 563.479 1370.1 571.184C1359.53 569.195 1344.68 560.759 1347.04 551.59C1349.68 541.4 1371.93 550.472 1386.36 550.292Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.40505,0,0,7.88029,2046.3672,-2484.17" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFDF97" Geometry="F1 M1446.86 576.362C1425.08 592.31 1419.99 631.828 1409.17 633.016C1400.45 633.969 1390.64 616.018 1395.73 596.632C1409.66 584.936 1427.54 578.198 1446.86 576.362Z" />
+                                                                </DrawingGroup>
+                                                                <DrawingGroup>
+                                                                    <DrawingGroup.Transform>
+                                                                        <MatrixTransform Matrix="3.40505,0,0,7.88029,2046.3672,-2484.17" />
+                                                                    </DrawingGroup.Transform>
+                                                                    <GeometryDrawing Brush="#FFFFDF97" Geometry="F1 M1509.78 593.843C1489.56 611.448 1475.16 636.73 1464.99 634.756C1452.44 632.312 1447.49 599.269 1469.34 576.376L1469.35 576.376C1486.4 578.171 1499.19 585.351 1509.78 593.843Z" />
+                                                                </DrawingGroup>
+                                                            </DrawingGroup>
+                                                            <DrawingGroup>
+                                                                <DrawingGroup.Transform>
+                                                                    <MatrixTransform Matrix="0.81721306,0,0,1.89127,2136.4302,-799.11487" />
+                                                                </DrawingGroup.Transform>
+                                                                <GeometryDrawing Geometry="F0 M7121.39 1737.83C7121.39 1737.83 7138.41 1732.16 7141.36 1701.76">
+                                                                    <GeometryDrawing.Pen>
+                                                                        <Pen Brush="#FF221334"
+                                                                             EndLineCap="Round"
+                                                                             LineJoin="Round"
+                                                                             MiterLimit="1.5"
+                                                                             StartLineCap="Round"
+                                                                             Thickness="2.13" />
+                                                                    </GeometryDrawing.Pen>
+                                                                </GeometryDrawing>
+                                                            </DrawingGroup>
+                                                            <DrawingGroup>
+                                                                <DrawingGroup.Transform>
+                                                                    <MatrixTransform Matrix="0.81721306,0,0,1.89127,2136.4302,-799.11487" />
+                                                                </DrawingGroup.Transform>
+                                                                <GeometryDrawing Geometry="F0 M6864.88 1895.64C6864.88 1895.64 6872.82 1918.32 6891.73 1930.42">
+                                                                    <GeometryDrawing.Pen>
+                                                                        <Pen Brush="#FF221334"
+                                                                             EndLineCap="Round"
+                                                                             LineJoin="Round"
+                                                                             MiterLimit="1.5"
+                                                                             StartLineCap="Round"
+                                                                             Thickness="2.13" />
+                                                                    </GeometryDrawing.Pen>
+                                                                </GeometryDrawing>
+                                                            </DrawingGroup>
+                                                        </DrawingGroup>
+                                                    </DrawingGroup>
+                                                </DrawingGroup>
+                                            </DrawingGroup>
+                                        </DrawingGroup>
+                                    </DrawingImage.Drawing>
+                                </DrawingImage>
+                            </Image.Source>
+                        </Image>
+                        <StackPanel Grid.Column="0"
+                                    Margin="24"
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
+                            <TextBlock FontSize="16"
+                                       FontWeight="Medium"
+                                       Foreground="{DynamicResource inverted-lighten-1}"
+                                       LineHeight="16"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       Text="Wednesday, May 3" />
+                            <TextBlock FontSize="22"
+                                       FontWeight="Medium"
+                                       Foreground="{DynamicResource inverted-lighten-2}"
+                                       LineHeight="32"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       Text="{Binding WelcomeMessage, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Margin="0,20,0,0"
+                                       FontSize="34"
+                                       FontWeight="Bold"
+                                       Foreground="{DynamicResource inverted-lighten-3}"
+                                       LineHeight="32"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       Text="Make Every Pet Grooming Appointment a Breeze"
+                                       TextWrapping="Wrap" />
+                            <russkyc:ModernButton Margin="0,35,0,0"
+                                                  HorizontalAlignment="Left"
+                                                  Content="Customize Widgets"
+                                                  CornerRadius="5"
+                                                  DefaultBackground="{DynamicResource inverted-lighten-3}"
+                                                  DefaultForeground="{DynamicResource primary-default}"
+                                                  FontWeight="Medium"
+                                                  HoverBackground="{DynamicResource inverted-lighten-1}"
+                                                  HoverForeground="{DynamicResource primary-default}"
+                                                  IconSize="18"
+                                                  LeftIcon="{icon:PackIcon Kind=Edit}"
+                                                  PressedBackground="{DynamicResource inverted-darken-1}"
+                                                  PressedForeground="{DynamicResource primary-default}" />
+                        </StackPanel>
+                    </Grid>
                 </Border>
             </Grid>
             <Grid Grid.Row="1" Margin="0,20,0,0">

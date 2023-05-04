@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2023 Russell Camo (Russkyc). - All Rights Reserved
+﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
 // 
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
@@ -7,42 +7,102 @@ namespace GroomWise.ViewModels;
 
 public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 {
+    private readonly ISessionService _sessionService;
+    private readonly IApplicationService _applicationService;
+    private readonly IAccountsRepositoryService _accountsRepositoryService;
+    
+    [ObservableProperty]
+    private ObservableCollection<INotification> _notifications;
 
-    private IAccountsRepositoryService _accountsRepositoryService;
+    [ObservableProperty] [NotifyDataErrorInfo] [Required(ErrorMessage = "Password cannot be blank.")]
+    private string? _password;
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
     [Required(ErrorMessage = "Username cannot be blank.")]
     [RegularExpression("^[a-zA-Z0-9_-]{1,16}$", ErrorMessage = "Invalid Username format.")]
-    private string _username;
-    
-    [ObservableProperty]
-    [NotifyDataErrorInfo]
-    [Required(ErrorMessage = "Password cannot be blank.")]
-    private string _password;
-    
-    public LoginViewModel(IAccountsRepositoryService accountsRepositoryService)
+    private string? _username;
+
+    public LoginViewModel(
+        IAccountsRepositoryService accountsRepositoryService,
+        ISessionService sessionService, IApplicationService applicationService)
     {
         _accountsRepositoryService = accountsRepositoryService;
+        _sessionService = sessionService;
+        _applicationService = applicationService;
+        Notifications = new ObservableCollection<INotification>();
     }
 
     [RelayCommand]
-    void SwitchFocus(object element)
+    private void SwitchFocus(object element)
     {
         element.GetType()
             .GetMethod("Focus")?
             .Invoke(element, null);
     }
-    
+
     [RelayCommand]
-    void Login()
+    private void Login()
     {
-        if (_accountsRepositoryService.Get(account => account.Username == Username && account.Password == Password) !=
-            null)
+        ValidateAllProperties();
+        if (!HasErrors)
         {
-            BuilderServices.Resolve<MainView>().Show();
-            BuilderServices.Resolve<LoginView>().Close();
+            var notification = new Notification();
+            var account = _accountsRepositoryService.Get(
+                account => account.Username == Username.SHA256());
+            if (account != null)
+            {
+                if (account.Password == Password.SHA256())
+                {
+                    RemoveNotification();
+                    _sessionService.Login(account);
+                    _applicationService.BuildNavItems();
+                    BuilderServices.Resolve<MainView>().Show();
+                    BuilderServices.Resolve<LoginView>().Hide();
+                    BuilderServices.Resolve<IDashboardViewModel>().Invalidate();
+                }
+                else
+                {
+                    
+                    notification.Description = "Password is incorrect.";
+                    notification.Type = NotificationType.Danger;
+                    
+                    if (Notifications.Count > 0)
+                    {
+                        Notifications[0] = notification;
+                    }
+                    else
+                    {
+                        Notifications.Add(notification);
+                    }
+                }
+            }
+            else
+            {
+                
+                notification.Description = "Account does not exist.";
+                notification.Type = NotificationType.Danger;
+                
+                if (Notifications.Count > 0)
+                {
+                    Notifications[0] = notification;
+                }
+                else
+                {
+                    Notifications.Add(notification);
+                }
+                BuilderServices.Resolve<LoginView>().ClearFields();
+            }
+        }
+        else
+        {
+            BuilderServices.Resolve<LoginView>().ClearFields();
         }
     }
 
+    [RelayCommand]
+    private void RemoveNotification()
+    {
+        Notifications.Clear();
+    }
 }
