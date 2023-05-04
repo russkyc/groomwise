@@ -7,6 +7,9 @@ namespace GroomWise.Models.Interfaces;
 
 public interface IApplicationService
 {
-    void BuildNavItems();
+    string AppAuthor { get; set; }
+    string AppVersion { get; set; } 
     ObservableCollection<INavItem> NavItems { get; set; }
+    void BuildNavItems();
+
 }

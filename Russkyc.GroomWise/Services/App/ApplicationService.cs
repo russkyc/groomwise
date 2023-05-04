@@ -7,14 +7,24 @@ namespace GroomWise.Services.App;
 
 public partial class ApplicationService : ObservableObject, IApplicationService
 {
-    private readonly ISessionService _sessionService;
+
+    [ObservableProperty]
+    private string _appAuthor;
+    [ObservableProperty]
+    private string _appVersion;
+
+    private IConfigurationService _configurationService;
+    private ISessionService _sessionService;
 
     [ObservableProperty] private ObservableCollection<INavItem> _navItems;
 
-    public ApplicationService(ISessionService sessionService)
+    public ApplicationService(ISessionService sessionService, IConfigurationService configurationService)
     {
-        NavItems = new ObservableCollection<INavItem>();
         _sessionService = sessionService;
+        _configurationService = configurationService;
+        NavItems = new ObservableCollection<INavItem>();
+        AppAuthor = "Russell Camo (@russkyc)";
+        AppVersion = _configurationService.Config.ReadString("AppSettings", "Version");
     }
 
     public void BuildNavItems()
