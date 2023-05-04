@@ -3,29 +3,39 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-#region
-
-using LiteDB;
-
-#endregion
-
 namespace GroomWise.Services.Data;
 
 public class LiteDbDataService : IDatabaseService
 {
     private readonly IConfigurationService _configurationService;
-    private readonly ILiteDatabase _db;
+    private readonly ILiteDatabaseFactory _liteDatabaseFactory;
+    private readonly ILogger _logger;
+    private ILiteDatabase? _db;
 
-    public LiteDbDataService(IConfigurationService configurationService)
+    public LiteDbDataService(
+        ILogger logger,
+        IConfigurationService configurationService,
+        ILiteDatabaseFactory liteDatabaseFactory)
     {
+        _logger = logger;
         _configurationService = configurationService;
-        _db = new LiteDatabase(
-            _configurationService.Config.ReadString("ConnectionStrings", "LiteDb") + _configurationService.Key);
+        _liteDatabaseFactory = liteDatabaseFactory;
+
+        Initialize();
     }
 
+
+    void Initialize()
+    {
+        _db = _liteDatabaseFactory.Create(
+            _configurationService.Config
+                .ReadString("ConnectionStrings", "LiteDb") + _configurationService.Key);
+        _logger.Log(this, _db is null ? "Failed to create database file" : "Created database file");
+    }
     public bool Add<T>(T item) where T : new()
     {
-        _db.GetCollection<T>().Insert(item);
+        _db!.GetCollection<T>().Insert(item);
+        _logger.Log(this, $"Added {typeof(T)} to Database");
         return _db.GetCollection<T>()
             .Query()
             .ToList()
@@ -34,20 +44,20 @@ public class LiteDbDataService : IDatabaseService
 
     public bool AddMultiple<T>(ICollection<T> items) where T : new()
     {
-        var exists = true;
-        _db.GetCollection<T>()
+        _db!.GetCollection<T>()
             .Insert(items);
-        foreach (T item in items)
-            if (!_db.GetCollection<T>().Query()
-                    .ToList()
-                    .Contains(item))
-                exists = false;
-        return exists;
+        _logger.Log(this, $"Added {typeof(T)} collection to Database");
+        return items.Any(
+            item => _db.GetCollection<T>()
+                .Query()
+                .ToList()
+                .Contains(item));
     }
 
     public T Get<T>(Func<T, bool> filter) where T : new()
     {
-        return _db.GetCollection<T>()
+        _logger.Log(this, $"Finding {typeof(T)} from Database");
+        return _db!.GetCollection<T>()
             .Query()
             .ToList()
             .FirstOrDefault(filter)!;
@@ -55,7 +65,8 @@ public class LiteDbDataService : IDatabaseService
 
     public ICollection<T> GetMultiple<T>(Func<T, bool> filter) where T : new()
     {
-        return _db.GetCollection<T>()
+        _logger.Log(this, $"Finding Multiple {typeof(T)} from Database");
+        return _db!.GetCollection<T>()
             .Query()
             .ToList()
             .Where(filter)
@@ -64,20 +75,26 @@ public class LiteDbDataService : IDatabaseService
 
     public ICollection<T> GetCollection<T>() where T : new()
     {
-        return _db.GetCollection<T>()
+        _logger.Log(this, $"Get {typeof(T)} Collection from Database");
+        return _db!.GetCollection<T>()
             .Query()
             .ToList();
     }
 
     public bool Update<T>(Func<T, bool> filter, Func<T, T> action) where T : new()
     {
-        return _db.GetCollection<T>()
-            .UpdateMany(t => action(t), t => filter(t)) > 0;
+        _logger.Log(this, $"Update Multiple {typeof(T)} from Database");
+        return _db!.GetCollection<T>()
+            .UpdateMany(item => action(item),
+                t => filter(t)) > 0;
     }
 
     public bool Update<T>(Func<T, bool> filter, T item) where T : new()
     {
-        throw new NotImplementedException();
+        _logger.Log(this, $"Update Multiple {typeof(T)} from Database");
+        return _db!.GetCollection<T>()
+            .UpdateMany(t => item,
+                t => filter(t)) > 0;
     }
 
     public bool Update<T>(T item) where T : new()
@@ -87,18 +104,22 @@ public class LiteDbDataService : IDatabaseService
 
     public bool Delete<T>(Func<T, bool> filter) where T : new()
     {
-        return _db.GetCollection<T>()
+        _logger.Log(this, $"Delete Multiple {typeof(T)} from Database");
+        return _db!.GetCollection<T>()
             .DeleteMany(t => filter(t)) > 0;
     }
 
     public bool Delete<T>(object id) where T : new()
     {
-        return _db.GetCollection<T>()
+        _logger.Log(this, $"Delete Multiple {typeof(T)} where id = {id} from Database");
+        return _db!.GetCollection<T>()
             .Delete(id as BsonValue);
     }
 
     public bool Contains<T>(Func<T, bool> filter)
     {
-        return _db.GetCollection<T>().Exists(x => filter(x));
+        _logger.Log(this, $"Count {filter.Method.GetParameters()[0].GetType()} Collection from Database");
+        return _db!.GetCollection<T>()
+            .Exists(item => filter(item));
     }
 }

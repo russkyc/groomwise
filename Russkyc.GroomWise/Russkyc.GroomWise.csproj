@@ -28,7 +28,8 @@
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
         <PackageReference Include="NETCore.Encrypt" Version="2.1.1" />
         <PackageReference Include="Russkyc.Abstractions" Version="1.2.1" />
-        <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.3" />
+        <PackageReference Include="Russkyc.AttachedUtilities.FilestreamExtensions" Version="1.1.1" />
+        <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.5" />
         <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.8.8" />
     </ItemGroup>
 
@@ -54,10 +55,10 @@
             <XamlRuntime>Wpf</XamlRuntime>
             <SubType>Designer</SubType>
         </Page>
-        <Page Update="Views\Templates\NotificationItemTemplate.xaml">
-          <Generator>MSBuild:Compile</Generator>
-          <XamlRuntime>Wpf</XamlRuntime>
-          <SubType>Designer</SubType>
+        <Page Update="Views\Templates\LoginNotificationTemplate.xaml">
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
         </Page>
     </ItemGroup>
 

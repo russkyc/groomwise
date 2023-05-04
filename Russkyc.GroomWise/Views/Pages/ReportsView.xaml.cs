@@ -5,11 +5,16 @@
 
 namespace GroomWise.Views.Pages;
 
-public partial class ReportsView : IView
+public partial class ReportsView : IReportsView
 {
     public ReportsView(IReportsViewModel viewModel)
     {
         InitializeComponent();
         DataContext = viewModel;
+    }
+
+    public void Invalidate()
+    {
+        throw new NotImplementedException();
     }
 }

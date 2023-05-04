@@ -5,12 +5,19 @@
 
 namespace GroomWise.Services.App;
 
-public class ThemeManagerService : IThemeManagerService
+public partial class ThemeManagerService : ObservableObject, IThemeManagerService
 {
+    private readonly ILogger _logger;
     private readonly IConfigurationService _configurationService;
-
-    public ThemeManagerService(IConfigurationService configurationService)
+    
+    [ObservableProperty]
+    private bool _darkMode;
+    
+    public ThemeManagerService(
+        ILogger logger,
+        IConfigurationService configurationService)
     {
+        _logger = logger;
         _configurationService = configurationService;
         ThemeManager.Instance.AddColorTheme(
             "Default", "pack://application:,,,/GroomWise;component/Views/Resources/Themes/ColorThemes/Default.xaml");
@@ -18,12 +25,11 @@ public class ThemeManagerService : IThemeManagerService
         UseColorTheme(_configurationService.Config.ReadString("AppSettings", "ColorTheme"));
     }
 
-    public bool DarkMode { get; set; }
-
     public void UseDarkTheme(bool night)
     {
         SaveBaseTheme(night);
         ThemeManager.Instance.SetBaseTheme(night ? "Dark" : "Light");
+        _logger.Log(this, $"Set dark mode {night}");
         DarkMode = night;
     }
 
@@ -31,6 +37,7 @@ public class ThemeManagerService : IThemeManagerService
     {
         SaveColorTheme(color);
         ThemeManager.Instance.SetColorTheme(color);
+        _logger.Log(this, $"Set color theme {color}");
     }
 
     public void Reset()
@@ -39,12 +46,14 @@ public class ThemeManagerService : IThemeManagerService
         UseDarkTheme(false);
         SaveColorTheme("Default");
         UseColorTheme("Default");
+        _logger.Log(this,"Reset color theme");
     }
 
     private void SaveColorTheme(string color)
     {
         _configurationService.Config
             .WriteString("AppSettings", "ColorTheme", color);
+        _logger.Log(this,$"Save color theme {color}");
 
     }
 
@@ -52,5 +61,6 @@ public class ThemeManagerService : IThemeManagerService
     {
         _configurationService.Config
             .WriteBoolean("AppSettings", "DarkMode", dark);
+        _logger.Log(this,$"Save base dark theme {dark}");
     }
 }

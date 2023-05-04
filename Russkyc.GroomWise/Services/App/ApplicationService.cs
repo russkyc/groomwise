@@ -8,128 +8,121 @@ namespace GroomWise.Services.App;
 public partial class ApplicationService : ObservableObject, IApplicationService
 {
 
+    private readonly IConfigurationService _configurationService;
+    private readonly ISessionManagerService _sessionManagerService;
+    private readonly INavItemFactoryService _navItemFactoryService;
+    private readonly IMaterialIconFactory _materialIconFactory;
+    
     [ObservableProperty]
-    private string _appAuthor;
+    private string? _appAuthor;
+
     [ObservableProperty]
-    private string _appVersion;
+    private string? _appVersion;
+    
+    [ObservableProperty]
+    private NavItemsCollection _navItems;
 
-    private IConfigurationService _configurationService;
-    private ISessionService _sessionService;
-
-    [ObservableProperty] private ObservableCollection<INavItem> _navItems;
-
-    public ApplicationService(ISessionService sessionService, IConfigurationService configurationService)
+    public ApplicationService(
+        ISessionManagerService sessionManagerService,
+        IConfigurationService configurationService,
+        INavItemFactoryService navItemFactoryService,
+        IMaterialIconFactory materialIconFactory)
     {
-        _sessionService = sessionService;
+        _sessionManagerService = sessionManagerService;
         _configurationService = configurationService;
-        NavItems = new ObservableCollection<INavItem>();
+        _navItemFactoryService = navItemFactoryService;
+        _materialIconFactory = materialIconFactory;
+        NavItems = new NavItemsCollection();
+        BuildAppInfo();
+    }
+
+    public void BuildAppInfo()
+    {
         AppAuthor = "Russell Camo (@russkyc)";
         AppVersion = _configurationService.Config.ReadString("AppSettings", "Version");
     }
-
+    
     public void BuildNavItems()
     {
         NavItems.Clear();
-        foreach (NavItem navItem in new[]
+        foreach (INavItem navItem in new[]
                  {
-                     new NavItem
-                     {
-                         Name = "Dashboard",
-                         Page = "DashboardView",
-                         Icon = new MaterialIcon
-                         {
-                             Kind = MaterialIconKind.ViewDashboard
-                         },
-                         Selected = true,
-                         AccountTypes = new[]
+                     _navItemFactoryService.Create("Dashboard",
+                         typeof(IDashboardView),
+                         _materialIconFactory.Create(MaterialIconKind.ViewDashboard),
+                         true,
+                         new[]
                          {
                              AccountType.Admin,
                              AccountType.Groomer,
                              AccountType.Manager,
                              AccountType.Customer
                          }
-                     },
-                     new NavItem
-                     {
-                         Name = "Appointments",
-                         Page = "AppointmentsView",
-                         Icon = new MaterialIcon
-                         {
-                             Kind = MaterialIconKind.EventAvailable
-                         },
-                         AccountTypes = new[]
+                     ),
+                     _navItemFactoryService.Create("Appointments",
+                         typeof(IAppointmentsView),
+                         _materialIconFactory.Create(MaterialIconKind.EventAvailable),
+                         false,
+                         new[]
                          {
                              AccountType.Admin,
                              AccountType.Groomer,
                              AccountType.Manager,
                              AccountType.Customer
                          }
-                     },
-                     new NavItem
-                     {
-                         Name = "Services",
-                         Page = "ServicesView",
-                         Icon = new MaterialIcon
-                         {
-                             Kind = MaterialIconKind.BubbleChart
-                         },
-                         AccountTypes = new[]
+                     ),
+                     _navItemFactoryService.Create("Services",
+                         typeof(IServicesView),
+                         _materialIconFactory.Create(MaterialIconKind.BubbleChart),
+                         false,
+                         new[]
                          {
                              AccountType.Admin,
                              AccountType.Manager
                          }
-                     },
-                     new NavItem
-                     {
-                         Name = "Customers",
-                         Page = "CustomersView",
-                         Icon = new MaterialIcon
-                         {
-                             Kind = MaterialIconKind.People
-                         },
-                         AccountTypes = new[]
+                     ),
+                     _navItemFactoryService.Create("Customers",
+                         typeof(ICustomersView),
+                         _materialIconFactory.Create(MaterialIconKind.People),
+                         false,
+                         new[]
                          {
                              AccountType.Admin,
                              AccountType.Manager
                          }
-                     },
-                     new NavItem
-                     {
-                         Name = "Pets",
-                         Page = "PetsView",
-                         Icon = new MaterialIcon
-                         {
-                             Kind = MaterialIconKind.Pets
-                         },
-                         AccountTypes = new[]
+                     ),
+                     _navItemFactoryService.Create("Pets",
+                         typeof(IPetsView),
+                         _materialIconFactory.Create(MaterialIconKind.BubbleChart),
+                         false,
+                         new[]
                          {
                              AccountType.Admin,
                              AccountType.Groomer,
                              AccountType.Manager,
                              AccountType.Customer
                          }
-                     },
-                     new NavItem
-                     {
-                         Name = "Reports",
-                         Page = "ReportsView",
-                         Icon = new MaterialIcon
-                         {
-                             Kind = MaterialIconKind.BarChart
-                         },
-                         AccountTypes = new[]
+                     ),
+                     _navItemFactoryService.Create("Reports",
+                         typeof(IReportsView),
+                         _materialIconFactory.Create(MaterialIconKind.BarChart),
+                         false,
+                         new[]
                          {
                              AccountType.Admin,
                              AccountType.Manager
                          }
-                     }
+                     )
                  })
-        {
-            if (_sessionService != null && _sessionService.GetSession()?.Type != null && navItem.AccountTypes!
-                    .ToList().Contains((AccountType)_sessionService.GetSession()?.Type!))
-            {
+            
+            // Checks if nav item restriction allows access to current session type
+            if (_sessionManagerService != null
+                && _sessionManagerService.SessionUser?.Type != null
+                && navItem.AccountTypes!
+                    .ToList()
+                    .Contains((AccountType)_sessionManagerService.SessionUser?
+                        .Type!))
+                // Add nav item
                 NavItems.Add(navItem);
-            }
-        }
     }
 }

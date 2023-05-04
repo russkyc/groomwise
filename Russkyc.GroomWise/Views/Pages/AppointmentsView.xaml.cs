@@ -5,11 +5,16 @@
 
 namespace GroomWise.Views.Pages;
 
-public partial class AppointmentsView : IView
+public partial class AppointmentsView : IAppointmentsView
 {
     public AppointmentsView(IAppointmentsViewModel viewModel)
     {
         InitializeComponent();
         DataContext = viewModel;
+    }
+
+    public void Invalidate()
+    {
+        throw new NotImplementedException();
     }
 }

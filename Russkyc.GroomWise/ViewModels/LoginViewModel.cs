@@ -7,14 +7,15 @@ namespace GroomWise.ViewModels;
 
 public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 {
-    private readonly ISessionService _sessionService;
+    private readonly ILogger _logger;
     private readonly IAccountsRepositoryService _accountsRepositoryService;
-    
+    private readonly ISessionManagerService _sessionManagerService;
+
     [ObservableProperty]
     private IApplicationService _applicationService;
-    
+
     [ObservableProperty]
-    private ObservableCollection<INotification> _notifications;
+    private NotificationsCollection _notifications;
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
@@ -29,12 +30,14 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 
     public LoginViewModel(
         IAccountsRepositoryService accountsRepositoryService,
-        ISessionService sessionService, IApplicationService applicationService)
+        ISessionManagerService sessionManagerService, IApplicationService applicationService, ILogger logger)
     {
         _accountsRepositoryService = accountsRepositoryService;
-        _sessionService = sessionService;
+        _sessionManagerService = sessionManagerService;
+        _logger = logger;
+        
+        Notifications = new NotificationsCollection();
         ApplicationService = applicationService;
-        Notifications = new ObservableCollection<INotification>();
     }
 
     [RelayCommand]
@@ -51,52 +54,46 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
         ValidateAllProperties();
         if (!HasErrors)
         {
-            var notification = new Notification();
-            var account = _accountsRepositoryService.Get(
+            Notification notification = new Notification();
+            Account? account = _accountsRepositoryService.Get(
                 account => account.Username == Username.SHA256());
             if (account != null)
             {
                 if (account.Password == Password.SHA256())
                 {
                     RemoveNotification();
-                    _sessionService.Login(account);
+                    _sessionManagerService.StartSession(account);
                     ApplicationService.BuildNavItems();
-                    BuilderServices.Resolve<MainView>().Show();
-                    BuilderServices.Resolve<LoginView>().Hide();
+                    BuilderServices.Resolve<IMainView>().Show();
+                    BuilderServices.Resolve<ILoginView>().Hide();
                     BuilderServices.Resolve<IDashboardViewModel>().Invalidate();
+                    _logger.Log(this, $"Login successful for user {account.Username?.Substring(0,12)}({account.Type})");
                 }
                 else
                 {
-                    
-                    BuilderServices.Resolve<LoginView>().ClearPasswords();
+                    BuilderServices.Resolve<ILoginView>().ClearFields("Password");
                     notification.Description = "Password is incorrect.";
                     notification.Type = NotificationType.Danger;
-                    
+
                     if (Notifications.Count > 0)
-                    {
                         Notifications[0] = notification;
-                    }
                     else
-                    {
                         Notifications.Add(notification);
-                    }
+                    _logger.Log(this, $"Unsuccessful login attempt from user {account.Username?.Substring(0,12)}(Wrong credentials)");
                 }
             }
             else
             {
-                
-                BuilderServices.Resolve<LoginView>().ClearFields();
+
+                BuilderServices.Resolve<ILoginView>().ClearFields();
                 notification.Description = "Account does not exist.";
                 notification.Type = NotificationType.Danger;
-                
+
                 if (Notifications.Count > 0)
-                {
                     Notifications[0] = notification;
-                }
                 else
-                {
                     Notifications.Add(notification);
-                }
+                _logger.Log(this, $"Unsuccessful login attempt from user(No account)");
             }
         }
     }

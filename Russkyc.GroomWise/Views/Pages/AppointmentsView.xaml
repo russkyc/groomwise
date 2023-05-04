@@ -35,7 +35,7 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <templates:NotificationItemTemplate />
+                                <templates:LoginNotificationTemplate />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

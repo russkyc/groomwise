@@ -5,11 +5,16 @@
 
 namespace GroomWise.Views.Pages;
 
-public partial class DashboardView : IView
+public partial class DashboardView : IDashboardView
 {
     public DashboardView(IDashboardViewModel viewModel)
     {
         InitializeComponent();
         DataContext = viewModel;
+    }
+
+    public void Invalidate()
+    {
+        throw new NotImplementedException();
     }
 }

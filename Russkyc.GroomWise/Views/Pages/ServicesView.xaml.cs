@@ -5,11 +5,16 @@
 
 namespace GroomWise.Views.Pages;
 
-public partial class ServicesView : IView
+public partial class ServicesView : IServicesView
 {
     public ServicesView(IServicesViewModel viewModel)
     {
         InitializeComponent();
         DataContext = viewModel;
+    }
+
+    public void Invalidate()
+    {
+        throw new NotImplementedException();
     }
 }

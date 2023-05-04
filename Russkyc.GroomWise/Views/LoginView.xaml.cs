@@ -5,7 +5,7 @@
 
 namespace GroomWise.Views;
 
-public partial class LoginView
+public partial class LoginView : ILoginView
 {
     public LoginView(ILoginViewModel viewModel)
     {
@@ -14,25 +14,39 @@ public partial class LoginView
         ClearFields();
     }
 
-    protected override void OnClosed(EventArgs e)
-    {
-        base.OnClosed(e);
-        if (!BuilderServices.Resolve<MainView>().IsVisible)
-        {
-            Application.Current.Shutdown();
-            Environment.Exit(0);
-        }
-    }
-
     public void ClearFields()
     {
         UsernameBox.Clear();
         PasswordBox.Clear();
         UsernameBox.Focus();
     }
-    public void ClearPasswords()
+
+    public void ClearFields(params string[] fields)
     {
-        PasswordBox.Clear();
-        PasswordBox.Focus();
+        if (fields.Any(field => UsernameBox
+                .Name
+                .Contains(field)))
+        {
+            UsernameBox.Clear();
+            UsernameBox.Focus();
+        }
+
+        if (fields.Any(field => PasswordBox
+                .Name
+                .Contains(field)))
+        {
+            PasswordBox.Clear();
+            PasswordBox.Focus();
+        }
+    }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        base.OnClosed(e);
+        BuilderServices.Resolve<ILogger>()
+            .Log(this, "Exiting application environment");
+        Application.Current
+            .Shutdown();
+        Environment.Exit(0);
     }
 }

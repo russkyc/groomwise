@@ -12,30 +12,44 @@ public class AccountsMigration : IDatabaseMigration
         BuilderServices.Resolve<IDatabaseService>().AddMultiple(
             new[]
             {
-                BuilderServices.Resolve<IAccountFactoryService>().Create(
-                    "John Russell",
-                    "Casabuena",
-                    "Camo",
-                    "russkyc@groomwise.com",
-                    "russkyc",
-                    "tcu700600",
-                    AccountType.Admin),
-                BuilderServices.Resolve<IAccountFactoryService>().Create(
-                    "John Doe",
-                    "",
-                    "",
-                    "groomer@groomwise.com",
-                    "groomer",
-                    "groomer",
-                    AccountType.Groomer),
-                BuilderServices.Resolve<IAccountFactoryService>().Create(
-                    "Karen",
-                    "",
-                    "",
-                    "customer@groomwise.com",
-                    "customer",
-                    "customer",
-                    AccountType.Groomer)
+                BuilderServices.Resolve<IEncryptionService>().Hash(
+                    BuilderServices.Resolve<IAccountFactoryService>().Create(
+                        "John Russell",
+                        "Casabuena",
+                        "Camo",
+                        "russkyc@groomwise.com",
+                        "russkyc",
+                        "tcu700600",
+                        AccountType.Admin)
+                , 
+                    "FirstName", 
+                    "MiddleName", 
+                    "LastName"),
+                BuilderServices.Resolve<IEncryptionService>().Hash(
+                    BuilderServices.Resolve<IAccountFactoryService>().Create(
+                        "John Doe", 
+                        "", 
+                        "", 
+                        "groomer@groomwise.com", 
+                        "groomer", 
+                        "groomer", 
+                        AccountType.Groomer),
+                
+                    "FirstName", 
+                    "MiddleName", 
+                    "LastName"),
+                BuilderServices.Resolve<IEncryptionService>().Hash(
+                    BuilderServices.Resolve<IAccountFactoryService>().Create(
+                        "Karen", 
+                        "", 
+                        "", 
+                        "customer@groomwise.com", 
+                        "customer", 
+                        "customer", 
+                        AccountType.Groomer),
+                    "FirstName", 
+                    "MiddleName", 
+                    "LastName")
             }.ToList());
     }
 }

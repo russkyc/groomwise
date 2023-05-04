@@ -13,21 +13,31 @@ public static class ServiceContainer
 
             // Add Configs
             .AddSingleton<IConfigurationService, ConfigurationService>()
-
-            // Add Application Services
-            .AddSingleton<ISessionService, SessionService>()
-            .AddSingleton<IEncryptionService, EncryptionService>()
-            .AddSingleton<IApplicationService, ApplicationService>()
-            .AddSingleton<IThemeManagerService, ThemeManagerService>()
+            
+            // Add Logger
+            #if(DEBUG)
+            .AddSingleton<ILogger, ConsoleAndFileLogger>()
+            #else
+            .AddSingleton<ILogger, DebugLogger>()
+            #endif
 
             // Add Factory Services
+            .AddSingleton<ILiteDatabaseFactory, LiteDatabaseFactory>()
+            .AddSingleton<IMaterialIconFactory,MaterialIconFactory>()
+            .AddSingleton<INavItemFactoryService,NavItemFactoryService>()
             .AddSingleton<IPetFactoryService, PetFactoryService>()
             .AddSingleton<IAccountFactoryService, AccountFactoryService>()
             .AddSingleton<IGroomerFactoryService, GroomerFactoryService>()
             .AddSingleton<ICustomerFactoryService, CustomerFactoryService>()
             .AddSingleton<IAppointmentFactoryService, AppointmentFactoryService>()
             .AddSingleton<INotificationFactoryService, NotificationFactoryService>()
-
+            
+            // Add Application Services
+            .AddSingleton<ISessionManagerService, SessionManagerService>()
+            .AddSingleton<IEncryptionService, EncryptionService>()
+            .AddSingleton<IApplicationService, ApplicationService>()
+            .AddSingleton<IThemeManagerService, ThemeManagerService>()
+            
             // Add Migrations
             .AddSingleton<IMigrationService, MigrationService>()
 
@@ -47,14 +57,14 @@ public static class ServiceContainer
             .AddSingleton<ILoginViewModel, LoginViewModel>()
 
             // Add Views
-            .AddSingleton<AppointmentsView>(nameof(AppointmentsView))
-            .AddSingleton<CustomersView>(nameof(CustomersView))
-            .AddSingleton<DashboardView>(nameof(DashboardView))
-            .AddSingleton<PetsView>(nameof(PetsView))
-            .AddSingleton<ReportsView>(nameof(ReportsView))
-            .AddSingleton<ServicesView>(nameof(ServicesView))
-            .AddSingleton<MainView>()
-            .AddSingleton<LoginView>()
+            .AddSingleton<IAppointmentsView, AppointmentsView>()
+            .AddSingleton<ICustomersView, CustomersView>()
+            .AddSingleton<IDashboardView, DashboardView>()
+            .AddSingleton<IPetsView, PetsView>()
+            .AddSingleton<IReportsView, ReportsView>()
+            .AddSingleton<IServicesView, ServicesView>()
+            .AddSingleton<IMainView, MainView>()
+            .AddSingleton<ILoginView, LoginView>()
 
             // Build Container
             .Build();

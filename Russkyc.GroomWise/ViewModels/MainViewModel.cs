@@ -7,20 +7,31 @@ namespace GroomWise.ViewModels;
 
 public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
-    [ObservableProperty] private IThemeManagerService _themeManagerService;
-    [ObservableProperty] private IApplicationService _applicationService;
-    [ObservableProperty] private ISessionService _sessionService;
-    [ObservableProperty] private INavItem? _selectedPage;
-    [ObservableProperty] private IView? _view;
+    [ObservableProperty]
+    private ISessionManagerService _sessionManagerService;
+    
+    [ObservableProperty]
+    private IThemeManagerService _themeManagerService;
+    
+    [ObservableProperty]
+    private IApplicationService _applicationService;
+    
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(View))]
+    private INavItem? _selectedPage;
+    
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SelectedPage))]
+    private IPage? _view;
 
     public MainViewModel(
-        ISessionService sessionService,
+        ISessionManagerService sessionManagerService,
         IApplicationService applicationService,
         IThemeManagerService themeManagerService)
     {
         ThemeManagerService = themeManagerService;
         ApplicationService = applicationService;
-        SessionService = sessionService;
+        SessionManagerService = sessionManagerService;
     }
 
     [RelayCommand]
@@ -32,20 +43,22 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     [RelayCommand]
     private void GetView(INavItem? navItem)
     {
-        if (ApplicationService.NavItems.Count > 0 && navItem != null && (bool)navItem.Selected)
+        if (ApplicationService.NavItems?.Count > 0
+            && navItem is { Selected: true })
         {
-            View = BuilderServices.Resolve(navItem.Page) as IView;
-            ApplicationService!.NavItems.First(item => item == navItem).Selected = true;
+            View = BuilderServices.Resolve(navItem.Page) as IPage;
+            ApplicationService!.NavItems
+                .First(item => item == navItem)
+                .Selected = true;
         }
     }
 
     [RelayCommand]
     private void Logout()
     {
-        if (MessageBox.Show("Are you sure you want to log out?", "GroomWise", MessageBoxButton.YesNo) ==
-            MessageBoxResult.Yes)
-        {
-            SessionService.Logout();
-        }
+        if (MessageBox.Show("Are you sure you want to log out?",
+                "GroomWise",
+                MessageBoxButton.YesNo) == MessageBoxResult.Yes) 
+            SessionManagerService.EndSession();
     }
 }
