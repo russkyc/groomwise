@@ -8,13 +8,17 @@ namespace GroomWise.ViewModels;
 public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 {
     private readonly ISessionService _sessionService;
-    private readonly IApplicationService _applicationService;
     private readonly IAccountsRepositoryService _accountsRepositoryService;
+    
+    [ObservableProperty]
+    private IApplicationService _applicationService;
     
     [ObservableProperty]
     private ObservableCollection<INotification> _notifications;
 
-    [ObservableProperty] [NotifyDataErrorInfo] [Required(ErrorMessage = "Password cannot be blank.")]
+    [ObservableProperty]
+    [NotifyDataErrorInfo]
+    [Required(ErrorMessage = "Password cannot be blank.")]
     private string? _password;
 
     [ObservableProperty]
@@ -29,7 +33,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
     {
         _accountsRepositoryService = accountsRepositoryService;
         _sessionService = sessionService;
-        _applicationService = applicationService;
+        ApplicationService = applicationService;
         Notifications = new ObservableCollection<INotification>();
     }
 
@@ -56,7 +60,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
                 {
                     RemoveNotification();
                     _sessionService.Login(account);
-                    _applicationService.BuildNavItems();
+                    ApplicationService.BuildNavItems();
                     BuilderServices.Resolve<MainView>().Show();
                     BuilderServices.Resolve<LoginView>().Hide();
                     BuilderServices.Resolve<IDashboardViewModel>().Invalidate();
@@ -64,6 +68,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
                 else
                 {
                     
+                    BuilderServices.Resolve<LoginView>().ClearPasswords();
                     notification.Description = "Password is incorrect.";
                     notification.Type = NotificationType.Danger;
                     
@@ -80,6 +85,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
             else
             {
                 
+                BuilderServices.Resolve<LoginView>().ClearFields();
                 notification.Description = "Account does not exist.";
                 notification.Type = NotificationType.Danger;
                 
@@ -91,12 +97,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
                 {
                     Notifications.Add(notification);
                 }
-                BuilderServices.Resolve<LoginView>().ClearFields();
             }
-        }
-        else
-        {
-            BuilderServices.Resolve<LoginView>().ClearFields();
         }
     }
 
