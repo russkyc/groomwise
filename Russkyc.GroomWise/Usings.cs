@@ -1,9 +1,11 @@
-﻿// Copyright (C) 2023 Russell Camo (Russkyc). - All Rights Reserved
+﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
 // 
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
 // DotNet
+
+#region
 
 global using System;
 global using System.Linq;
@@ -13,6 +15,9 @@ global using System.Windows.Data;
 global using System.Collections.Generic;
 global using System.Collections.ObjectModel;
 global using System.ComponentModel.DataAnnotations;
+
+// NetCore.Encrypt
+global using NETCore.Encrypt.Extensions;
 
 // CommunityToolkit.Mvvm
 global using CommunityToolkit.Mvvm.ComponentModel;
@@ -44,3 +49,5 @@ global using GroomWise.Services.App;
 global using GroomWise.Services.Data;
 global using GroomWise.Services.Factory;
 global using GroomWise.Services.Repository;
+
+#endregion

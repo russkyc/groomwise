@@ -1,4 +1,4 @@
-﻿// Copyright (C) 2023 Russell Camo (Russkyc). - All Rights Reserved
+﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
 // 
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
@@ -15,7 +15,9 @@ public static class ServiceContainer
             .AddSingleton<IConfigurationService, ConfigurationService>()
 
             // Add Application Services
-            .AddSingleton<IAppService, AppService>()
+            .AddSingleton<ISessionService, SessionService>()
+            .AddSingleton<IEncryptionService, EncryptionService>()
+            .AddSingleton<IApplicationService, ApplicationService>()
             .AddSingleton<IThemeManagerService, ThemeManagerService>()
 
             // Add Factory Services
@@ -35,14 +37,14 @@ public static class ServiceContainer
             .AddSingleton<IAppointmentsRepositoryService, AppointmentsRepositoryService>()
 
             // Add ViewModels
-            .AddTransient<IAppointmentsViewModel, AppointmentsViewModel>()
-            .AddTransient<ICustomersViewModel, CustomersViewModel>()
-            .AddTransient<IDashboardViewModel, DashboardViewModel>()
-            .AddTransient<IPetsViewModel, PetsViewModel>()
-            .AddTransient<IReportsViewModel, ReportsViewModel>()
-            .AddTransient<IServicesViewModel, ServicesViewModel>()
-            .AddTransient<IMainViewModel, MainViewModel>()
-            .AddTransient<ILoginViewModel, LoginViewModel>()
+            .AddSingleton<IAppointmentsViewModel, AppointmentsViewModel>()
+            .AddSingleton<ICustomersViewModel, CustomersViewModel>()
+            .AddSingleton<IDashboardViewModel, DashboardViewModel>()
+            .AddSingleton<IPetsViewModel, PetsViewModel>()
+            .AddSingleton<IReportsViewModel, ReportsViewModel>()
+            .AddSingleton<IServicesViewModel, ServicesViewModel>()
+            .AddSingleton<IMainViewModel, MainViewModel>()
+            .AddSingleton<ILoginViewModel, LoginViewModel>()
 
             // Add Views
             .AddSingleton<AppointmentsView>(nameof(AppointmentsView))

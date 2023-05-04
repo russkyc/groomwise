@@ -1,9 +1,13 @@
-﻿// Copyright (C) 2023 Russell Camo (Russkyc). - All Rights Reserved
+﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
 // 
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+#region
+
 using LiteDB;
+
+#endregion
 
 namespace GroomWise.Services.Data;
 
@@ -15,7 +19,8 @@ public class LiteDbDataService : IDatabaseService
     public LiteDbDataService(IConfigurationService configurationService)
     {
         _configurationService = configurationService;
-        _db = new LiteDatabase(_configurationService.Config.ReadString("ConnectionStrings", "LiteDb") + _configurationService.Key);
+        _db = new LiteDatabase(
+            _configurationService.Config.ReadString("ConnectionStrings", "LiteDb") + _configurationService.Key);
     }
 
     public bool Add<T>(T item) where T : new()

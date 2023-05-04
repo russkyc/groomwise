@@ -5,6 +5,9 @@
 
 namespace GroomWise.Models.Interfaces;
 
-public interface IAccountsRepositoryService : IRepository<Account>
+public interface ISessionService
 {
+    void Login(IAccount account);
+    void Logout();
+    IAccount? GetSession();
 }

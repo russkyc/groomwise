@@ -26,9 +26,10 @@
         <PackageReference Include="LiteDB" Version="5.0.16" />
         <PackageReference Include="Material.Icons.WPF" Version="1.2.0" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+        <PackageReference Include="NETCore.Encrypt" Version="2.1.1" />
         <PackageReference Include="Russkyc.Abstractions" Version="1.2.1" />
         <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.3" />
-        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.8.6" />
+        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.8.8" />
     </ItemGroup>
 
     <ItemGroup>
@@ -53,6 +54,11 @@
             <XamlRuntime>Wpf</XamlRuntime>
             <SubType>Designer</SubType>
         </Page>
+        <Page Update="Views\Templates\NotificationItemTemplate.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <XamlRuntime>Wpf</XamlRuntime>
+          <SubType>Designer</SubType>
+        </Page>
     </ItemGroup>
 
     <ItemGroup>
@@ -60,9 +66,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="Russkyc.ModernControls.WPF">
-        <HintPath>..\..\..\.nuget\packages\russkyc.moderncontrols.wpf\1.8.6\lib\net6.0-windows7.0\Russkyc.ModernControls.WPF.dll</HintPath>
-      </Reference>
+        <Reference Include="Russkyc.ModernControls.WPF">
+            <HintPath>..\..\..\.nuget\packages\russkyc.moderncontrols.wpf\1.8.6\lib\net6.0-windows7.0\Russkyc.ModernControls.WPF.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
 </Project>
