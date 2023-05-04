@@ -4,17 +4,18 @@
 // without written, signed consent from the author is strictly prohibited.
 
 // DotNet
-
-#region
-
 global using System;
 global using System.Linq;
 global using System.Windows;
 global using System.Threading;
+global using System.Reflection;
 global using System.Windows.Data;
 global using System.Collections.Generic;
 global using System.Collections.ObjectModel;
 global using System.ComponentModel.DataAnnotations;
+
+// Ini.Net
+global using Ini.Net;
 
 // NetCore.Encrypt
 global using NETCore.Encrypt.Extensions;
@@ -33,21 +34,32 @@ global using Russkyc.Abstractions.Interfaces;
 // Russkyc.ModernControls
 global using org.russkyc.moderncontrols.Helpers;
 
+// Russkyc.FileStreamExtensions
+global using Russkyc.AttachedUtilities.FileStreamExtensions;
+
 // Material.Icons
 global using Material.Icons;
 global using Material.Icons.WPF;
 
+// LiteDb
+global using LiteDB;
+
 // GroomWise
-global using GroomWise.Models.Interfaces;
-global using GroomWise.Models.Entities;
-global using GroomWise.Models.Enums;
 global using GroomWise.Views;
 global using GroomWise.Views.Pages;
 global using GroomWise.ViewModels;
+global using GroomWise.Models.Enums;
+global using GroomWise.Models.Entities;
+global using GroomWise.Models.Collections;
+global using GroomWise.Models.Abstractions;
+global using GroomWise.Models.Interfaces.View;
+global using GroomWise.Models.Interfaces.Entity;
+global using GroomWise.Models.Interfaces.Service;
+global using GroomWise.Models.Interfaces.Factory;
+global using GroomWise.Models.Interfaces.ViewModel;
+global using GroomWise.Models.Interfaces.Repository;
 global using GroomWise.Services;
 global using GroomWise.Services.App;
 global using GroomWise.Services.Data;
 global using GroomWise.Services.Factory;
 global using GroomWise.Services.Repository;
-
-#endregion

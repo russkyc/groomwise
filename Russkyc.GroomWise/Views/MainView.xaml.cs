@@ -5,7 +5,7 @@
 
 namespace GroomWise.Views;
 
-public partial class MainView : IView
+public partial class MainView : IMainView
 {
     public MainView(IMainViewModel viewModel)
     {
@@ -13,8 +13,20 @@ public partial class MainView : IView
         DataContext = viewModel;
     }
 
+    public void ClearFields()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ClearFields(params string[] fields)
+    {
+        throw new NotImplementedException();
+    }
+
     protected override void OnClosed(EventArgs e)
     {
+        BuilderServices.Resolve<ILogger>()
+            .Log(this,"Exiting application environment");
         base.OnClosed(e);
         Application.Current.Shutdown();
         Environment.Exit(0);

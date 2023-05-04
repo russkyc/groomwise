@@ -3,16 +3,11 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-#region
-
-using System.Reflection;
-
-#endregion
-
 namespace GroomWise.Services.App;
 
 public class EncryptionService : IEncryptionService
 {
+    
     public T Encrypt<T>(T item)
     {
         throw new NotImplementedException();
@@ -30,17 +25,21 @@ public class EncryptionService : IEncryptionService
 
     public T Hash<T>(T item)
     {
-        item?.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-            .Where(field => field.FieldType == typeof(string))
+        // Get fields in item
+        item?.GetType()
+            .GetFields(BindingFlags.Instance
+                                  | BindingFlags.Public
+                                  | BindingFlags.NonPublic)
+            // where field is type(String)
+            .Where(field => field
+                .FieldType == typeof(string))
             .ToList()
             .ForEach(
                 f =>
                 {
-                    string currentValue = (string)f.GetValue(item)!;
-                    if (!string.IsNullOrEmpty(currentValue))
-                    {
-                        f.SetValue(item, currentValue.SHA256());
-                    }
+                    var currentValue = (string)f.GetValue(item)!;
+                    f.SetValue(string.IsNullOrEmpty(currentValue) ? item
+                        : null, currentValue.SHA256());
                 });
         return item;
     }
@@ -53,12 +52,10 @@ public class EncryptionService : IEncryptionService
             .ForEach(
                 f =>
                 {
-                    string currentValue = (string)f.GetValue(item)!;
+                    var currentValue = (string)f.GetValue(item)!;
                     if (!string.IsNullOrEmpty(currentValue) &&
                         !ignore.ToList().Any(fieldName => f.Name.Contains(fieldName)))
-                    {
                         f.SetValue(item, currentValue.SHA256());
-                    }
                 });
         return item;
     }

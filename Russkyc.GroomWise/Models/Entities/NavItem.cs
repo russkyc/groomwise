@@ -10,7 +10,7 @@ public class NavItem : INavItem
     public string? Name { get; set; }
     public string? ShortName { get; set; }
     public string? TooltipDescription { get; set; }
-    public string? Page { get; set; }
+    public Type? Page { get; set; }
     public bool Selected { get; set; }
     public object? Icon { get; set; }
     public AccountType[]? AccountTypes { get; set; }

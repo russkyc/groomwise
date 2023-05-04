@@ -1,7 +1,6 @@
 ﻿<russkyc:ModernWindow x:Class="GroomWise.Views.LoginView"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:controls="clr-namespace:GroomWise.Views.Controls"
                       xmlns:converters="clr-namespace:GroomWise.Services.Converter"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:helpers="clr-namespace:org.russkyc.moderncontrols.Helpers;assembly=Russkyc.ModernControls.WPF"
@@ -1071,6 +1070,15 @@
                 </DrawingImage>
             </Image.Source>
         </Image>
+        <StackPanel Grid.Column="0"
+                    Margin="22"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+            <TextBlock Foreground="{DynamicResource bg-600}" Text="Version " />
+            <TextBlock Foreground="{DynamicResource bg-600}" Text="{Binding ApplicationService.AppVersion}" />
+            <TextBlock Foreground="{DynamicResource bg-600}" Text=" © 2023, " />
+            <TextBlock Foreground="{DynamicResource bg-600}" Text="{Binding ApplicationService.AppAuthor}" />
+        </StackPanel>
         <Grid Grid.Column="1">
             <StackPanel Margin="12,18" VerticalAlignment="Center">
                 <TextBlock Margin="12,0,12,0"
@@ -1117,7 +1125,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <templates:NotificationItemTemplate />
+                            <templates:LoginNotificationTemplate />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

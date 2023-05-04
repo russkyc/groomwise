@@ -7,7 +7,7 @@ namespace GroomWise.Services.Repository;
 
 public class AppointmentsRepositoryService : IAppointmentsRepositoryService
 {
-    private IDatabaseService _databaseService;
+    private readonly IDatabaseService _databaseService;
 
     public AppointmentsRepositoryService(IDatabaseService databaseService)
     {
@@ -16,36 +16,36 @@ public class AppointmentsRepositoryService : IAppointmentsRepositoryService
 
     public bool Add(Appointment item)
     {
-        throw new NotImplementedException();
+        return _databaseService.Add(item);
     }
 
-    public bool AddMultiple(ICollection<Appointment> item)
+    public bool AddMultiple(ICollection<Appointment> items)
     {
-        throw new NotImplementedException();
+        return _databaseService.AddMultiple(items);
     }
 
     public Appointment Get(Func<Appointment, bool> filter)
     {
-        throw new NotImplementedException();
+        return _databaseService.Get(filter);
     }
 
     public ICollection<Appointment> GetMultiple(Func<Appointment, bool> filter)
     {
-        throw new NotImplementedException();
+        return _databaseService.GetMultiple(filter);
     }
 
     public ICollection<Appointment> GetCollection()
     {
-        throw new NotImplementedException();
+        return _databaseService.GetCollection<Appointment>();
     }
 
     public bool Update(Func<Appointment, bool> filter, Func<Appointment, Appointment> action)
     {
-        throw new NotImplementedException();
+        return _databaseService.Update(filter, action);
     }
 
     public bool Delete(Func<Appointment, bool> filter)
     {
-        throw new NotImplementedException();
+        return _databaseService.Delete(filter);
     }
 }

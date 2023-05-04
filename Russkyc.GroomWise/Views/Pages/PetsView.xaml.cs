@@ -5,11 +5,16 @@
 
 namespace GroomWise.Views.Pages;
 
-public partial class PetsView : IView
+public partial class PetsView : IPetsView
 {
     public PetsView(IPetsViewModel viewModel)
     {
         InitializeComponent();
         DataContext = viewModel;
+    }
+
+    public void Invalidate()
+    {
+        throw new NotImplementedException();
     }
 }
