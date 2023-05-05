@@ -44,6 +44,8 @@ public static class ServiceContainer
 
             // Add Data Services
             .AddSingleton<IDatabaseService, LiteDbDataService>()
+            
+            // Add Repository Services
             .AddSingleton<IAccountsRepositoryService, AccountsRepositoryService>()
             .AddSingleton<IAppointmentsRepositoryService, AppointmentsRepositoryService>()
 
