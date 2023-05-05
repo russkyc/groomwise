@@ -17,11 +17,6 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     private IApplicationService _applicationService;
     
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(View))]
-    private INavItem? _selectedPage;
-    
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SelectedPage))]
     private IPage? _view;
 
     public MainViewModel(
@@ -29,15 +24,15 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
         IApplicationService applicationService,
         IThemeManagerService themeManagerService)
     {
+        SessionManagerService = sessionManagerService;
         ThemeManagerService = themeManagerService;
         ApplicationService = applicationService;
-        SessionManagerService = sessionManagerService;
     }
 
     [RelayCommand]
     private void SwitchBaseTheme(bool nightMode)
     {
-        ThemeManagerService?.UseDarkTheme(nightMode);
+        ThemeManagerService.UseDarkTheme(nightMode);
     }
 
     [RelayCommand]
@@ -47,7 +42,7 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
             && navItem is { Selected: true })
         {
             View = BuilderServices.Resolve(navItem.Page) as IPage;
-            ApplicationService!.NavItems
+            ApplicationService.NavItems
                 .First(item => item == navItem)
                 .Selected = true;
         }

@@ -7,9 +7,9 @@ namespace GroomWise.ViewModels;
 
 public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 {
-    private readonly ILogger _logger;
     private readonly IAccountsRepositoryService _accountsRepositoryService;
     private readonly ISessionManagerService _sessionManagerService;
+    private readonly ILogger _logger;
 
     [ObservableProperty]
     private IApplicationService _applicationService;
@@ -34,10 +34,10 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
     {
         _accountsRepositoryService = accountsRepositoryService;
         _sessionManagerService = sessionManagerService;
+        ApplicationService = applicationService;
         _logger = logger;
         
         Notifications = new NotificationsCollection();
-        ApplicationService = applicationService;
     }
 
     [RelayCommand]
@@ -61,17 +61,23 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
             {
                 if (account.Password == Password.SHA256())
                 {
-                    RemoveNotification();
                     _sessionManagerService.StartSession(account);
                     ApplicationService.BuildNavItems();
-                    BuilderServices.Resolve<IMainView>().Show();
-                    BuilderServices.Resolve<ILoginView>().Hide();
-                    BuilderServices.Resolve<IDashboardViewModel>().Invalidate();
+                    
+                    RemoveNotification();
+                    
+                    BuilderServices.Resolve<IMainView>()
+                        .Show();
+                    BuilderServices.Resolve<ILoginView>()
+                        .Hide();
+                    
                     _logger.Log(this, $"Login successful for user {account.Username?.Substring(0,12)}({account.Type})");
                 }
                 else
                 {
-                    BuilderServices.Resolve<ILoginView>().ClearFields("Password");
+                    BuilderServices.Resolve<ILoginView>()
+                        .ClearFields("Password");
+                    
                     notification.Description = "Password is incorrect.";
                     notification.Type = NotificationType.Danger;
 
@@ -86,6 +92,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
             {
 
                 BuilderServices.Resolve<ILoginView>().ClearFields();
+                
                 notification.Description = "Account does not exist.";
                 notification.Type = NotificationType.Danger;
 
