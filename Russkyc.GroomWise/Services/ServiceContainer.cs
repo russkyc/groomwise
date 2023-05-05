@@ -22,9 +22,10 @@ public static class ServiceContainer
             #endif
 
             // Add Factory Services
+            .AddSingleton<IAppointmentScheduleFactory, AppointmentScheduleFactory>()
             .AddSingleton<ILiteDatabaseFactory, LiteDatabaseFactory>()
-            .AddSingleton<IMaterialIconFactory,MaterialIconFactory>()
-            .AddSingleton<INavItemFactoryService,NavItemFactoryService>()
+            .AddSingleton<IMaterialIconFactory, MaterialIconFactory>()
+            .AddSingleton<INavItemFactoryService, NavItemFactoryService>()
             .AddSingleton<IPetFactoryService, PetFactoryService>()
             .AddSingleton<IAccountFactoryService, AccountFactoryService>()
             .AddSingleton<IGroomerFactoryService, GroomerFactoryService>()
