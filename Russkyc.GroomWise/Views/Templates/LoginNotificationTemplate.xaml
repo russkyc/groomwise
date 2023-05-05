@@ -4,9 +4,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:entities="clr-namespace:GroomWise.Models.Entities"
              xmlns:enums="clr-namespace:GroomWise.Models.Enums"
+             xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-             xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
              Height="38"
              d:DataContext="{d:DesignInstance entities:Notification,
                                               IsDesignTimeCreatable=True}"
@@ -47,7 +47,7 @@
                                   Margin="7"
                                   Padding="5"
                                   Command="{Binding .DataContext.RemoveNotificationCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernWindow}}"
-                                  Content="{wpf:PackIcon Kind=Close}">
+                                  Content="{icons:MaterialIconExt Kind=Close}">
                 <russkyc:ModernButton.Style>
                     <Style BasedOn="{StaticResource {x:Type russkyc:ModernButton}}" TargetType="{x:Type russkyc:ModernButton}">
                         <Style.Triggers>
