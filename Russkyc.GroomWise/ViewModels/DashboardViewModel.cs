@@ -7,23 +7,31 @@ namespace GroomWise.ViewModels;
 
 public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 {
-    private readonly INotificationFactoryService _notificationFactoryService;
-    
-    [ObservableProperty]
-    private NotificationsCollection _notifications;
+    private readonly IAppointmentScheduleFactory _appointmentScheduleFactoryService;
+    private readonly IApplicationService _applicationService;
     
     [ObservableProperty]
     private ISessionManagerService _sessionManagerService;
+    
+    [ObservableProperty]
+    private AppointmentsScheduleCollection _appointments;
+    
 
-    [ObservableProperty] private string? _welcomeMessage;
+    [ObservableProperty]
+    private string? _welcomeMessage;
 
     public DashboardViewModel(
         ISessionManagerService sessionManagerService,
-        INotificationFactoryService notificationFactoryService)
+        IAppointmentScheduleFactory appointmentScheduleFactoryService,
+        IApplicationService applicationService)
     {
-        Notifications = new NotificationsCollection();
+        _appointmentScheduleFactoryService = appointmentScheduleFactoryService;
         SessionManagerService = sessionManagerService;
-        _notificationFactoryService = notificationFactoryService;
+        _applicationService = applicationService;
+        
+        Appointments = new AppointmentsScheduleCollection();
+        
+        Invalidate();
     }
 
     public void Invalidate()
@@ -35,18 +43,22 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
     [RelayCommand]
     private void GetNotifications()
     {
-        new Thread(
-            _ =>
+        Task.Run(
+            () =>
             {
-                for (var i = 0; i < 20; i++)
+                for (var i = 8; i < 12; i++)
                 {
-                    Notification? item = _notificationFactoryService.Create();
-                    item.Title = $"Notification {i}";
-                    item.Description = $"Insert description for notification {i}";
-                    Notifications.Insert(0,item);
+                    Appointments.Insert(
+                        0,
+                        _appointmentScheduleFactoryService.Create(
+                            "AM",
+                            $"{i}:00",
+                            $"{i}",
+                            $"Appointment {i}",
+                            $"Service scheduled for today"));
                     Thread.Sleep(1000);
                 }
-            }).Start();
+            });
     }
 
     [RelayCommand]
@@ -54,4 +66,5 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
     {
         WelcomeMessage = $"Good Morning, {SessionManagerService.SessionUser?.FirstName}!";
     }
+
 }
