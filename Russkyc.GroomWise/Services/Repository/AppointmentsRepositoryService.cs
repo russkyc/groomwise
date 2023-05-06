@@ -24,12 +24,12 @@ public class AppointmentsRepositoryService : IAppointmentsRepositoryService
         return _databaseService.AddMultiple(items);
     }
 
-    public Appointment Get(Func<Appointment, bool> filter)
+    public Appointment Get(Expression<Func<Appointment, bool>> filter)
     {
         return _databaseService.Get(filter);
     }
 
-    public ICollection<Appointment> GetMultiple(Func<Appointment, bool> filter)
+    public ICollection<Appointment> GetMultiple(Expression<Func<Appointment, bool>> filter)
     {
         return _databaseService.GetMultiple(filter);
     }
@@ -39,12 +39,12 @@ public class AppointmentsRepositoryService : IAppointmentsRepositoryService
         return _databaseService.GetCollection<Appointment>();
     }
 
-    public bool Update(Func<Appointment, bool> filter, Func<Appointment, Appointment> action)
+    public bool Update(Expression<Func<Appointment, bool>> filter, Expression<Func<Appointment, Appointment>> action)
     {
         return _databaseService.Update(filter, action);
     }
 
-    public bool Delete(Func<Appointment, bool> filter)
+    public bool Delete(Expression<Func<Appointment, bool>> filter)
     {
         return _databaseService.Delete(filter);
     }

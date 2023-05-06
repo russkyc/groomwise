@@ -7,5 +7,5 @@ namespace GroomWise.Models.Interfaces.Service;
 
 public interface IDatabaseService : IDbAccess
 {
-    bool Contains<T>(Func<T, bool> filter);
+    bool Contains<T>(Expression<Func<T, bool>> filter) where T : class, new();
 }

@@ -24,12 +24,12 @@ public class AccountsRepositoryService : IAccountsRepositoryService
         return _databaseService.AddMultiple(items);
     }
 
-    public Account Get(Func<Account, bool> filter)
+    public Account Get(Expression<Func<Account, bool>> filter)
     {
         return _databaseService.Get(filter);
     }
 
-    public ICollection<Account> GetMultiple(Func<Account, bool> filter)
+    public ICollection<Account> GetMultiple(Expression<Func<Account, bool>> filter)
     {
         return _databaseService.GetMultiple(filter);
     }
@@ -39,12 +39,12 @@ public class AccountsRepositoryService : IAccountsRepositoryService
         return _databaseService.GetCollection<Account>();
     }
 
-    public bool Update(Func<Account, bool> filter, Func<Account, Account> action)
+    public bool Update(Expression<Func<Account, bool>> filter, Expression<Func<Account, Account>> action)
     {
         return _databaseService.Update(filter, action);
     }
 
-    public bool Delete(Func<Account, bool> filter)
+    public bool Delete(Expression<Func<Account, bool>> filter)
     {
         return _databaseService.Delete(filter);
     }

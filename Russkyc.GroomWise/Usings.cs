@@ -6,6 +6,7 @@
 // DotNet
 global using System;
 global using System.Linq;
+global using System.Linq.Expressions;
 global using System.Windows;
 global using System.Reflection;
 global using System.Windows.Data;
