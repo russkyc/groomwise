@@ -5,6 +5,10 @@
 
 namespace GroomWise.Models.Interfaces.Service;
 
+
+/// <summary>
+/// Entity encryption service
+/// </summary>
 public interface IEncryptionService
 {
     /// <summary>
