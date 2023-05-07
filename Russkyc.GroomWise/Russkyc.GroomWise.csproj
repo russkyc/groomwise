@@ -22,8 +22,7 @@
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
-        <PackageReference Include="FreeSql" Version="3.2.695" />
-        <PackageReference Include="FreeSql.Provider.MySql" Version="3.2.695" />
+        <PackageReference Include="CredentialManagement" Version="1.0.2" />
         <PackageReference Include="ini.net" Version="1.1.0" />
         <PackageReference Include="LiteDB" Version="5.0.16" />
         <PackageReference Include="Material.Icons.WPF" Version="2.0.0" />
@@ -33,6 +32,8 @@
         <PackageReference Include="Russkyc.AttachedUtilities.FilestreamExtensions" Version="1.1.1" />
         <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.6" />
         <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.8.8" />
+        <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+        <PackageReference Include="sqlite-net-sqlcipher" Version="1.8.116" />
     </ItemGroup>
 
     <ItemGroup>
