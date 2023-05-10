@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Interfaces.Factory;
 
-public interface INavItemFactoryService : IFactory<NavItem>
+public interface IDialogFactory : IFactory<DialogView>
 {
     
 }
