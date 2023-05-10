@@ -45,7 +45,7 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
     }
 
     [RelayCommand]
-    private async void SwitchBaseTheme(bool nightMode)
+    private void SwitchBaseTheme(bool nightMode)
     {
         ThemeManagerService.UseDarkTheme(nightMode);
     }
