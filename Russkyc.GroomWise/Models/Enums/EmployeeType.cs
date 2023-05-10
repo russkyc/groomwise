@@ -5,10 +5,9 @@
 
 namespace GroomWise.Models.Enums;
 
-public enum AccountType
+public enum EmployeeType
 {
     Admin,
+    Manager,
     Groomer,
-    Customer,
-    Manager
 }
