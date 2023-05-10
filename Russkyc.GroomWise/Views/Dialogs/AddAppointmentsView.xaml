@@ -48,7 +48,13 @@
                                       FontWeight="Medium"
                                       Foreground="{DynamicResource fg-600}"
                                       HoverBackground="{DynamicResource bg-000}"
-                                      PressedBackground="{DynamicResource bg-100}" />
+                                      PressedBackground="{DynamicResource bg-100}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:CallMethodAction MethodName="Hide" TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=russkyc:ModernWindow}}" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </russkyc:ModernButton>
                 <russkyc:ModernButton HorizontalAlignment="Right"
                                       Command="{Binding AddAppointmentCommand}"
                                       Content="Save Appointment"
