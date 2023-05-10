@@ -1,5 +1,5 @@
 ﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
-// 
+//
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
@@ -7,43 +7,61 @@ namespace GroomWise.ViewModels;
 
 public partial class AppointmentsViewModel : ObservableObject, IAppointmentsViewModel
 {
-    private IAppointmentScheduleFactory _appointmentScheduleFactoryService;
-    private IAppointmentsRepositoryService _appointmentsRepositoryService;
-    private IAppointmentFactoryService _appointmentFactory;
+    private IAppointmentFactory _appointmentFactory;
+    private IAddAppointmentsViewFactory _addAppointmentsViewFactory;
+    private IAppointmentsRepository _appointmentsRepository;
 
     [ObservableProperty]
-    private AppointmentsScheduleCollection _appointments;
+    private AppointmentsCollection _appointments;
+
     public AppointmentsViewModel(
-        IAppointmentFactoryService appointmentFactory,
-        IAppointmentScheduleFactory appointmentScheduleFactory,
-        IAppointmentsRepositoryService appointmentsRepositoryService)
+        IAppointmentFactory appointmentFactory,
+        IAppointmentsRepository appointmentsRepository,
+        IAddAppointmentsViewFactory addAppointmentsViewFactory
+    )
     {
-        _appointmentScheduleFactoryService = appointmentScheduleFactory;
-        _appointmentsRepositoryService = appointmentsRepositoryService;
         _appointmentFactory = appointmentFactory;
-        
-        Appointments = new AppointmentsScheduleCollection();
-        
+        _appointmentsRepository = appointmentsRepository;
+        _addAppointmentsViewFactory = addAppointmentsViewFactory;
+
+        Appointments = new AppointmentsCollection();
+
         GetAppointments();
     }
 
     void GetAppointments()
     {
-        Task.Run(
-            () =>
+        Task.Run(async () =>
+        {
+            lock (Appointments.Lock)
+                Appointments.Clear();
+            for (var i = 0; i < 50; i++)
             {
-                for (var i = 8; i < 12; i++)
+                await Application.Current.Dispatcher.InvokeAsync(() =>
                 {
-                    Appointments.Insert(
-                        0,
-                        _appointmentScheduleFactoryService.Create(
-                            "AM",
-                            $"{i}:00",
-                            $"{i}",
-                            $"Appointment {i}",
-                            $"Service scheduled for today"));
-                    Thread.Sleep(1000);
-                }
+                    lock (Appointments.Lock)
+                        Appointments.Add(
+                            _appointmentFactory.Create(
+                                $"Appointment {i}",
+                                $"Service scheduled for {DateTime.Now.AddDays(i).ToString("dddd")}",
+                                DateTime.Now.AddDays(i)
+                            )
+                        );
+                });
+                await Task.Delay(2500);
+            }
+        });
+    }
+
+    [RelayCommand]
+    void AddAppointment()
+    {
+        Task.Run(async () =>
+        {
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                _addAppointmentsViewFactory.Create(BuilderServices.Resolve<IMainView>()).Show();
             });
+        });
     }
 }

@@ -3,12 +3,9 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Models.Enums;
+namespace GroomWise.Models.Interfaces.Factory;
 
-public enum AppointmentStatus
+public interface IAddAppointmentsViewFactory : IFactory<AddAppointmentsView>
 {
-    Active,
-    Ongoing,
-    Finished,
-    Cancelled
+    
 }
