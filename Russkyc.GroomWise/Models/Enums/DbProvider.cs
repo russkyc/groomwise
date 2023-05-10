@@ -3,8 +3,11 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Models.Interfaces.Factory;
+namespace GroomWise.Models.Enums;
 
-public interface IAppointmentFactoryService : IFactory<Appointment>
+public enum DbProvider
 {
+    LiteDb,
+    Sqlite,
+    MySql
 }
