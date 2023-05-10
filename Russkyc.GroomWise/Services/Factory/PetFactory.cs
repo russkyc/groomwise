@@ -5,14 +5,14 @@
 
 namespace GroomWise.Services.Factory;
 
-public class NotificationFactoryService : INotificationFactoryService
+public class PetFactory : IPetFactory
 {
-    public Notification Create()
+    public Pet Create()
     {
-        return new Notification();
+        return new Pet();
     }
 
-    public Notification Create(params object[] values)
+    public Pet Create(params object[] values)
     {
         throw new NotImplementedException();
     }

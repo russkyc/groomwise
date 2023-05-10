@@ -5,7 +5,7 @@
 
 namespace GroomWise.Services.Factory;
 
-public class NavItemFactoryService : INavItemFactoryService
+public class NavItemFactory : INavItemFactory
 {
     public NavItem Create()
     {
@@ -20,7 +20,7 @@ public class NavItemFactoryService : INavItemFactoryService
             Page = (Type)values[1],
             Icon = (object)values[2],
             Selected = (bool)values[3],
-            AccountTypes = (AccountType[])values[4]
+            AccountTypes = (EmployeeType[])values[4]
         };
     }
 }

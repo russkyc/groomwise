@@ -5,14 +5,14 @@
 
 namespace GroomWise.Services.Factory;
 
-public class AppointmentFactoryService : IAppointmentFactoryService
+public class CustomerFactory : ICustomerFactory
 {
-    public Appointment Create()
+    public Customer Create()
     {
-        return new Appointment();
+        return new Customer();
     }
 
-    public Appointment Create(params object[] values)
+    public Customer Create(params object[] values)
     {
         throw new NotImplementedException();
     }

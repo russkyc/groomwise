@@ -5,14 +5,14 @@
 
 namespace GroomWise.Services.Factory;
 
-public class CustomerFactoryService : ICustomerFactoryService
+public class NotificationFactory : INotificationFactory
 {
-    public Customer Create()
+    public Notification Create()
     {
-        return new Customer();
+        return new Notification();
     }
 
-    public Customer Create(params object[] values)
+    public Notification Create(params object[] values)
     {
         throw new NotImplementedException();
     }
