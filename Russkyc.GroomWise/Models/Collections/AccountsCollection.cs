@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Collections;
 
-public class AppointmentsScheduleCollection : SynchronizedObservableCollection<IAppointmentSchedule>
+public class AccountsCollection : SynchronizedObservableCollection<IAccount>
 {
     
 }
