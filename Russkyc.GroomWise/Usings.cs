@@ -53,8 +53,9 @@ global using Russkyc.AttachedUtilities.FileStreamExtensions;
 global using Material.Icons;
 global using Material.Icons.WPF;
 
-// SQLite
-global using SQLite;
+// FreeSql
+global using FreeSql;
+global using FreeSql.DataAnnotations;
 
 // GroomWise
 global using GroomWise.Views;

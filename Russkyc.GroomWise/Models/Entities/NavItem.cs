@@ -7,7 +7,6 @@ namespace GroomWise.Models.Entities;
 
 public class NavItem : INavItem
 {
-    [AutoIncrement, PrimaryKey]
     public int Id { get; set; }
     public string? Name { get; set; }
     public string? ShortName { get; set; }

@@ -7,7 +7,7 @@ namespace GroomWise.Models.Entities;
 
 public class Appointment : IAppointment
 {
-    [PrimaryKey, AutoIncrement]
+    [Column(IsIdentity = true, IsPrimary = true)]
     public int Id { get; set; }
     public string? Title { get; set; }
     public string? Description { get; set; }
