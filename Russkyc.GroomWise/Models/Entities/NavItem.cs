@@ -7,11 +7,14 @@ namespace GroomWise.Models.Entities;
 
 public class NavItem : INavItem
 {
+    [AutoIncrement, PrimaryKey]
+    public int Id { get; set; }
     public string? Name { get; set; }
     public string? ShortName { get; set; }
     public string? TooltipDescription { get; set; }
     public Type? Page { get; set; }
     public bool Selected { get; set; }
     public object? Icon { get; set; }
-    public AccountType[]? AccountTypes { get; set; }
+    public EmployeeType[]? AccountTypes { get; set; }
+    
 }
