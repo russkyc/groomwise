@@ -54,6 +54,7 @@ global using Material.Icons;
 global using Material.Icons.WPF;
 
 // FreeSql
+global using FreeSql;
 global using FreeSql.DataAnnotations;
 
 // GroomWise

@@ -3,8 +3,6 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using FreeSql;
-
 namespace GroomWise.Services.Data;
 
 public class MySqlDataServiceAsync : IDatabaseServiceAsync
