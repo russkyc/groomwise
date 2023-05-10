@@ -1,5 +1,5 @@
 ﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
-// 
+//
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
@@ -7,64 +7,76 @@ namespace GroomWise.ViewModels;
 
 public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 {
-    private readonly IAppointmentScheduleFactory _appointmentScheduleFactoryService;
-    private readonly IApplicationService _applicationService;
-    
+    private readonly IAppointmentFactory _appointmentFactory;
+    private readonly IEncryptionService _encryptionService;
+
     [ObservableProperty]
     private ISessionManagerService _sessionManagerService;
-    
-    [ObservableProperty]
-    private AppointmentsScheduleCollection _appointments;
-    
 
     [ObservableProperty]
-    private string? _welcomeMessage;
+    private AppointmentsCollection _appointments;
+
+    [ObservableProperty]
+    private string? _user;
+
+    [ObservableProperty]
+    private DateTime _date;
 
     public DashboardViewModel(
+        IAppointmentFactory appointmentFactory,
         ISessionManagerService sessionManagerService,
-        IAppointmentScheduleFactory appointmentScheduleFactoryService,
-        IApplicationService applicationService)
+        IEncryptionService encryptionService
+    )
     {
-        _appointmentScheduleFactoryService = appointmentScheduleFactoryService;
+        _appointmentFactory = appointmentFactory;
         SessionManagerService = sessionManagerService;
-        _applicationService = applicationService;
-        
-        Appointments = new AppointmentsScheduleCollection();
-        
-        Invalidate();
-    }
+        _encryptionService = encryptionService;
 
-    public void Invalidate()
-    {
-        GetWelcomeMessage();
+        Appointments = new AppointmentsCollection();
         GetNotifications();
     }
 
     [RelayCommand]
+    public void Invalidate()
+    {
+        GetWelcomeMessage();
+        GetTime();
+    }
+
     private void GetNotifications()
     {
-        Task.Run(
-            () =>
+        Task.Run(async () =>
+        {
+            lock (Appointments.Lock)
+                Appointments.Clear();
+            for (var i = 0; i < 50; i++)
             {
-                for (var i = 8; i < 12; i++)
+                await Application.Current.Dispatcher.InvokeAsync(() =>
                 {
-                    Appointments.Insert(
-                        0,
-                        _appointmentScheduleFactoryService.Create(
-                            "AM",
-                            $"{i}:00",
-                            $"{i}",
-                            $"Appointment {i}",
-                            $"Service scheduled for today"));
-                    Thread.Sleep(1000);
-                }
-            });
+                    lock (Appointments.Lock)
+                    {
+                        Appointments.Insert(
+                            0,
+                            _appointmentFactory.Create(
+                                $"Appointment {i}",
+                                $"Service scheduled for today",
+                                DateTime.Now
+                            )
+                        );
+                    }
+                });
+                await Task.Delay(2500);
+            }
+        });
     }
 
-    [RelayCommand]
     private void GetWelcomeMessage()
     {
-        WelcomeMessage = $"Good Morning, {SessionManagerService.SessionUser?.FirstName}!";
+        User = _encryptionService.Decrypt(SessionManagerService.SessionUser!.FirstName!);
     }
 
+    private void GetTime()
+    {
+        Date = DateTime.Now;
+    }
 }
