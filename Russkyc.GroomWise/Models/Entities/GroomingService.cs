@@ -7,7 +7,7 @@ namespace GroomWise.Models.Entities;
 
 public class GroomingService : IGroomingService
 {
-    [PrimaryKey, AutoIncrement]
+    [Column(IsIdentity = true, IsPrimary = true)]
     public int Id { get; set; }
     public string? ServiceId { get; set; }
     public string? ServiceName { get; set; }

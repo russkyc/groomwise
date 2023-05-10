@@ -7,7 +7,7 @@ namespace GroomWise.Models.Entities;
 
 public class Account : IAccount
 {
-    [PrimaryKey, AutoIncrement]
+    [Column(IsIdentity = true, IsPrimary = true)]
     public int Id { get; set; }
     public string? Username { get; set; }
     public string? Email { get; set; }
