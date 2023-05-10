@@ -5,6 +5,6 @@
 
 namespace GroomWise.Models.Interfaces.Repository;
 
-public interface IAccountsRepositoryService : IRepository<Account>
+public interface IAccountsRepository : IRepository<Account>
 {
 }

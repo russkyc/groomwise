@@ -5,6 +5,7 @@
 
 namespace GroomWise.Models.Interfaces.Repository;
 
-public interface IPetFactoryService : IFactory<Pet>
+public interface IEmployeeRepository : IRepository<Employee>
 {
+    
 }

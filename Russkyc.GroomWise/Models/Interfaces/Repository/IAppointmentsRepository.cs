@@ -5,6 +5,6 @@
 
 namespace GroomWise.Models.Interfaces.Repository;
 
-public interface IAppointmentsRepositoryService : IRepository<Appointment>
+public interface IAppointmentsRepository : IRepository<Appointment>
 {
 }
