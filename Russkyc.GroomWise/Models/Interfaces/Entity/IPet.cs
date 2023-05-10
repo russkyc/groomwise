@@ -5,11 +5,11 @@
 
 namespace GroomWise.Models.Interfaces.Entity;
 
-public interface IPet
+public interface IPet : IEntity
 {
     string? Name { get; set; }
     string? Type { get; set; }
     int? Age { get; set; }
-    IEnumerable<string>? Allergies { get; set; }
-    IEnumerable<IAppointment>? Appointments { get; set; }
+    string? Allergies { get; set; }
+    int? AppointmentId { get; set; }
 }

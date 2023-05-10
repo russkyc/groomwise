@@ -1,64 +1,82 @@
 ﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
-// 
+//
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
 namespace GroomWise.ViewModels;
 
-public partial class MainViewModel : ViewModelBase, IMainViewModel
+public partial class MainViewModel : ObservableObject, IMainViewModel
 {
     [ObservableProperty]
+    private IDialogFactory _dialogFactory;
+
+    [ObservableProperty]
+    private IHotkeyListenerService _hotkeyListenerService;
+
+    [ObservableProperty]
     private ISessionManagerService _sessionManagerService;
-    
+
     [ObservableProperty]
     private IThemeManagerService _themeManagerService;
-    
+
     [ObservableProperty]
     private IApplicationService _applicationService;
-    
+
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(View))]
-    private INavItem? _selectedPage;
-    
+    private NavItemsCollection _navItems;
+
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(SelectedPage))]
     private IPage? _view;
 
     public MainViewModel(
         ISessionManagerService sessionManagerService,
         IApplicationService applicationService,
-        IThemeManagerService themeManagerService)
+        IThemeManagerService themeManagerService,
+        IDialogFactory dialogFactory,
+        IHotkeyListenerService hotkeyListenerService
+    )
     {
+        _dialogFactory = dialogFactory;
+        _hotkeyListenerService = hotkeyListenerService;
+        SessionManagerService = sessionManagerService;
         ThemeManagerService = themeManagerService;
         ApplicationService = applicationService;
-        SessionManagerService = sessionManagerService;
+        NavItems = ApplicationService.NavItems!;
     }
 
     [RelayCommand]
-    private void SwitchBaseTheme(bool nightMode)
+    private async void SwitchBaseTheme(bool nightMode)
     {
-        ThemeManagerService?.UseDarkTheme(nightMode);
+        ThemeManagerService.UseDarkTheme(nightMode);
     }
 
     [RelayCommand]
-    private void GetView(INavItem? navItem)
+    private async void GetView(INavItem? navItem)
     {
-        if (ApplicationService.NavItems?.Count > 0
-            && navItem is { Selected: true })
+        if (ApplicationService.NavItems?.Count > 0 && navItem is { Selected: true })
         {
-            View = BuilderServices.Resolve(navItem.Page) as IPage;
-            ApplicationService!.NavItems
-                .First(item => item == navItem)
-                .Selected = true;
+            await Task.Run(async () =>
+            {
+                await Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    View = BuilderServices.Resolve(navItem.Page) as IPage;
+                    ApplicationService.NavItems.First(item => item == navItem).Selected = true;
+                });
+            });
         }
     }
 
     [RelayCommand]
     private void Logout()
     {
-        if (MessageBox.Show("Are you sure you want to log out?",
-                "GroomWise",
-                MessageBoxButton.YesNo) == MessageBoxResult.Yes) 
+        if (
+            DialogFactory
+                .Create("Are you sure?", "Do you want to log out? You can log back in anytime.")
+                .ShowDialog() == true
+        )
+        {
+            HotkeyListenerService.UnregisterAll();
             SessionManagerService.EndSession();
+        }
     }
 }

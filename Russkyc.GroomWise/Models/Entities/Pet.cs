@@ -7,9 +7,11 @@ namespace GroomWise.Models.Entities;
 
 public class Pet : IPet
 {
+    [PrimaryKey, AutoIncrement]
+    public int Id { get; set; }
     public int? Age { get; set; }
     public string? Name { get; set; }
     public string? Type { get; set; }
-    public IEnumerable<string>? Allergies { get; set; }
-    public IEnumerable<IAppointment>? Appointments { get; set; }
+    public string? Allergies { get; set; }
+    public int? AppointmentId { get; set; }
 }

@@ -7,13 +7,5 @@ namespace GroomWise.Services.App;
 
 public class ConfigurationService : IConfigurationService
 {
-    public string Key { get; set; }
-    public IniFile Config { get; set; }
-    
-    public ConfigurationService()
-    {
-        Key = "@Tcu700600";
-        Config = new IniFile("GroomWise.ini");
-    }
-
+    public IniFile Config =>  new IniFile("GroomWise.ini");
 }

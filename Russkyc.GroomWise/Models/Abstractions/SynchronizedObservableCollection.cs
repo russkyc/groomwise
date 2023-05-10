@@ -11,10 +11,12 @@ namespace GroomWise.Models.Abstractions;
 /// <typeparam name="T">The type of elements in the collection</typeparam>
 public abstract class SynchronizedObservableCollection<T> : ObservableCollection<T>
 {
+    public readonly object Lock;
     protected SynchronizedObservableCollection()
     {
+        Lock = new object();
         // Enable synchronization
-        BindingOperations.EnableCollectionSynchronization(this, new object());
+        BindingOperations.EnableCollectionSynchronization(this, Lock);
     }
-    
+
 }

@@ -8,7 +8,7 @@ namespace GroomWise.Models.Enums;
 public enum AppointmentStatus
 {
     Active,
-    Cancelled,
     Ongoing,
-    Finished
+    Finished,
+    Cancelled
 }

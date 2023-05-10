@@ -4,6 +4,7 @@
     <option name="locations">
       <list>
         <option value="$PROJECT_DIR$/Russkyc.GroomWise/bin/Release/net6.0-windows/win-x64/publish" />
+        <option value="$PROJECT_DIR$/Russkyc.GroomWise/bin/Release/net6.0-windows/win-x86/publish" />
       </list>
     </option>
   </component>

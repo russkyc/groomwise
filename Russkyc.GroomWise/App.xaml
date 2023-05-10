@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Russkyc.ModernControls.WPF;component/Themes/Generic.xaml" />
                 <!--  Custom Styles  -->
                 <ResourceDictionary Source="Views/Resources/Styles/WindowStyles.xaml" />
+                <ResourceDictionary Source="Views/Resources/Styles/AnimationStyles.xaml" />
                 <ResourceDictionary Source="Views/Resources/Styles/TooltipStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

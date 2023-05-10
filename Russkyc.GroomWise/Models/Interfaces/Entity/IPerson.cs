@@ -5,10 +5,10 @@
 
 namespace GroomWise.Models.Interfaces.Entity;
 
-public interface IPerson
+public interface IPerson : IEntity
 {
     string? FirstName { get; set; }
     string? MiddleName { get; set; }
     string? LastName { get; set; }
-    IAddress? Address { get; set; }
+    int? AddressId { get; set; }
 }

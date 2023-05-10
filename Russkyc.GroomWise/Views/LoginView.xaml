@@ -4,7 +4,7 @@
                       xmlns:converters="clr-namespace:GroomWise.Services.Converter"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:helpers="clr-namespace:org.russkyc.moderncontrols.Helpers;assembly=Russkyc.ModernControls.WPF"
-                      xmlns:icon="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+                      xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
                       xmlns:templates="clr-namespace:GroomWise.Views.Templates"
@@ -1095,7 +1095,7 @@
                                        Margin="12,12,12,0"
                                        CornerRadius="5"
                                        HelperText="No special characters except '_' and '-'"
-                                       LeftIcon="{icon:PackIcon Kind=User}"
+                                       LeftIcon="{icons:MaterialIconExt Kind=User}"
                                        Placeholder="Username"
                                        Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                     <russkyc:ModernTextBox.InputBindings>
@@ -1108,7 +1108,7 @@
                              Margin="12,5,12,0"
                              helpers:PasswordBoxHelper.CornerRadius="5"
                              helpers:PasswordBoxHelper.HelperText="Required *"
-                             helpers:PasswordBoxHelper.LeftIcon="{icon:PackIcon Kind=Password}"
+                             helpers:PasswordBoxHelper.LeftIcon="{icons:MaterialIconExt Kind=Password}"
                              helpers:PasswordBoxHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              helpers:PasswordBoxHelper.Placeholder="Password">
                     <PasswordBox.InputBindings>

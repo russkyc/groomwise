@@ -1,5 +1,5 @@
 ﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
-// 
+//
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
@@ -7,51 +7,76 @@ namespace GroomWise.ViewModels;
 
 public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 {
-    private readonly INotificationFactoryService _notificationFactoryService;
-    
-    [ObservableProperty]
-    private NotificationsCollection _notifications;
-    
+    private readonly IAppointmentFactory _appointmentFactory;
+    private readonly IEncryptionService _encryptionService;
+
     [ObservableProperty]
     private ISessionManagerService _sessionManagerService;
 
-    [ObservableProperty] private string? _welcomeMessage;
+    [ObservableProperty]
+    private AppointmentsCollection _appointments;
+
+    [ObservableProperty]
+    private string? _user;
+
+    [ObservableProperty]
+    private DateTime _date;
 
     public DashboardViewModel(
+        IAppointmentFactory appointmentFactory,
         ISessionManagerService sessionManagerService,
-        INotificationFactoryService notificationFactoryService)
+        IEncryptionService encryptionService
+    )
     {
-        Notifications = new NotificationsCollection();
+        _appointmentFactory = appointmentFactory;
         SessionManagerService = sessionManagerService;
-        _notificationFactoryService = notificationFactoryService;
-    }
+        _encryptionService = encryptionService;
 
-    public void Invalidate()
-    {
-        GetWelcomeMessage();
+        Appointments = new AppointmentsCollection();
         GetNotifications();
     }
 
     [RelayCommand]
-    private void GetNotifications()
+    public void Invalidate()
     {
-        new Thread(
-            _ =>
-            {
-                for (var i = 0; i < 20; i++)
-                {
-                    Notification? item = _notificationFactoryService.Create();
-                    item.Title = $"Notification {i}";
-                    item.Description = $"Insert description for notification {i}";
-                    Notifications.Insert(0,item);
-                    Thread.Sleep(1000);
-                }
-            }).Start();
+        GetWelcomeMessage();
+        GetTime();
     }
 
-    [RelayCommand]
+    private void GetNotifications()
+    {
+        Task.Run(async () =>
+        {
+            lock (Appointments.Lock)
+                Appointments.Clear();
+            for (var i = 0; i < 50; i++)
+            {
+                await Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    lock (Appointments.Lock)
+                    {
+                        Appointments.Insert(
+                            0,
+                            _appointmentFactory.Create(
+                                $"Appointment {i}",
+                                $"Service scheduled for today",
+                                DateTime.Now
+                            )
+                        );
+                    }
+                });
+                await Task.Delay(2500);
+            }
+        });
+    }
+
     private void GetWelcomeMessage()
     {
-        WelcomeMessage = $"Good Morning, {SessionManagerService.SessionUser?.FirstName}!";
+        User = _encryptionService.Decrypt(SessionManagerService.SessionUser!.FirstName!);
+    }
+
+    private void GetTime()
+    {
+        Date = DateTime.Now;
     }
 }

@@ -9,47 +9,28 @@ public class AccountsMigration : IDatabaseMigration
 {
     public void Migrate()
     {
-        BuilderServices.Resolve<IDatabaseService>().AddMultiple(
+        BuilderServices.Resolve<IDatabaseServiceAsync>()
+            .AddMultiple(
             new[]
             {
-                BuilderServices.Resolve<IEncryptionService>().Hash(
-                    BuilderServices.Resolve<IAccountFactoryService>().Create(
-                        "John Russell",
-                        "Casabuena",
-                        "Camo",
-                        "russkyc@groomwise.com",
-                        "russkyc",
-                        "tcu700600",
-                        AccountType.Admin)
-                , 
-                    "FirstName", 
-                    "MiddleName", 
-                    "LastName"),
-                BuilderServices.Resolve<IEncryptionService>().Hash(
-                    BuilderServices.Resolve<IAccountFactoryService>().Create(
-                        "John Doe", 
-                        "", 
-                        "", 
-                        "groomer@groomwise.com", 
-                        "groomer", 
-                        "groomer", 
-                        AccountType.Groomer),
-                
-                    "FirstName", 
-                    "MiddleName", 
-                    "LastName"),
-                BuilderServices.Resolve<IEncryptionService>().Hash(
-                    BuilderServices.Resolve<IAccountFactoryService>().Create(
-                        "Karen", 
-                        "", 
-                        "", 
-                        "customer@groomwise.com", 
-                        "customer", 
-                        "customer", 
-                        AccountType.Groomer),
-                    "FirstName", 
-                    "MiddleName", 
-                    "LastName")
+                BuilderServices.Resolve<IAccountFactory>().Create(
+                    BuilderServices.Resolve<IEncryptionService>()
+                        .Encrypt("russkyc"),
+                    BuilderServices.Resolve<IEncryptionService>()
+                        .Encrypt("russkyc@groomwise.com"),
+                    "1234".SHA256(), 1),
+                BuilderServices.Resolve<IAccountFactory>().Create(
+                    BuilderServices.Resolve<IEncryptionService>()
+                        .Encrypt("manager"),
+                    BuilderServices.Resolve<IEncryptionService>()
+                        .Encrypt("manager@groomwise.com"),
+                    "manager".SHA256(), 2),
+                BuilderServices.Resolve<IAccountFactory>().Create(
+                    BuilderServices.Resolve<IEncryptionService>()
+                        .Encrypt("groomer"), 
+                    BuilderServices.Resolve<IEncryptionService>()
+                        .Encrypt("groomer@groomwise.com"), 
+                    "groomer".SHA256(), 3)
             }.ToList());
     }
 }

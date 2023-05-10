@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Interfaces.Entity;
 
-public interface IAddress
+public interface IAddress : IEntity
 {
     string? HouseNumber { get; set; }
     string? Street { get; set; }
