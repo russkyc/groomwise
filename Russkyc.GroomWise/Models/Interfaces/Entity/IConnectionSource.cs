@@ -5,11 +5,12 @@
 
 namespace GroomWise.Models.Interfaces.Entity;
 
-public interface IAppointmentSchedule
+public interface IConnectionSource
 {
-    string? Day { get; set; }
-    string? Time { get; set; }
-    string? Date { get; set; }
-    string? Title { get; set; }
-    string? Description { get; set; }
+    string? Path { get; set; }
+    string? Source { get; set; }
+    string? Port { get; set; }
+    string? Database { get; set; }
+    string? Username { get; set; }
+    string? Password { get; set; }
 }

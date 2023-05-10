@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Interfaces.Service;
 
-public interface IDatabaseService : IDbAccess
+public interface IConnectionSourceProvider
 {
-    bool Contains<T>(Expression<Func<T, bool>> filter) where T : class, new();
+    string Build(IConnectionSource connectionSource, DbProvider provider);
 }
