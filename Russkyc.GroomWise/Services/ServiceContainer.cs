@@ -1,5 +1,5 @@
 ﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
-// 
+//
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
@@ -10,45 +10,39 @@ public static class ServiceContainer
     public static IServicesContainer ConfigureServices()
     {
         return new ServicesCollection()
-
+            // Security
+            .AddSingleton<ICredentialStore, CredentialStore>()
+            .AddSingleton<IEncryptionService, EncryptionService>()
             // Add Configs
             .AddSingleton<IConfigurationService, ConfigurationService>()
-            
             // Add Logger
-            #if(DEBUG)
-            .AddSingleton<ILogger, ConsoleAndFileLogger>()
-            #else
-            .AddSingleton<ILogger, DebugLogger>()
-            #endif
-
+            .AddSingleton<ILogger, DebugAndFileLogger>()
+            // Add Global Hotkey Listener
+            .AddSingleton<IHotkeyListenerService, HotKeyListenerService>()
             // Add Factory Services
-            .AddSingleton<IAppointmentScheduleFactory, AppointmentScheduleFactory>()
-            .AddSingleton<ILiteDatabaseFactory, LiteDatabaseFactory>()
             .AddSingleton<IMaterialIconFactory, MaterialIconFactory>()
-            .AddSingleton<INavItemFactoryService, NavItemFactoryService>()
-            .AddSingleton<IPetFactoryService, PetFactoryService>()
-            .AddSingleton<IAccountFactoryService, AccountFactoryService>()
-            .AddSingleton<IGroomerFactoryService, GroomerFactoryService>()
-            .AddSingleton<ICustomerFactoryService, CustomerFactoryService>()
-            .AddSingleton<IAppointmentFactoryService, AppointmentFactoryService>()
-            .AddSingleton<INotificationFactoryService, NotificationFactoryService>()
-            
-            // Add Application Services
-            .AddSingleton<ISessionManagerService, SessionManagerService>()
-            .AddSingleton<IEncryptionService, EncryptionService>()
-            .AddSingleton<IApplicationService, ApplicationService>()
-            .AddSingleton<IThemeManagerService, ThemeManagerService>()
-            
+            .AddSingleton<INavItemFactory, NavItemFactory>()
+            .AddSingleton<IPetFactory, PetFactory>()
+            .AddSingleton<IEmployeeFactory, EmployeeFactory>()
+            .AddSingleton<IAccountFactory, AccountFactory>()
+            .AddSingleton<ICustomerFactory, CustomerFactory>()
+            .AddSingleton<IAppointmentFactory, AppointmentFactory>()
+            .AddSingleton<INotificationFactory, NotificationFactory>()
+            .AddSingleton<IAddAppointmentsViewFactory, AddAppointmentsViewFactory>()
+            .AddSingleton<IDialogFactory, DialogFactory>()
+            // Add Data Services
+            .AddSingleton<IConnectionSourceProvider, ConnectionSourceProvider>()
+            .AddSingleton<IDatabaseServiceAsync, SqliteDataServiceAsync>()
             // Add Migrations
             .AddSingleton<IMigrationService, MigrationService>()
-
-            // Add Data Services
-            .AddSingleton<IDatabaseService, LiteDbDataService>()
-            
+            // Add Application Services
+            .AddSingleton<ISessionManagerService, SessionManagerService>()
+            .AddSingleton<IApplicationService, ApplicationService>()
+            .AddSingleton<IThemeManagerService, ThemeManagerService>()
             // Add Repository Services
-            .AddSingleton<IAccountsRepositoryService, AccountsRepositoryService>()
-            .AddSingleton<IAppointmentsRepositoryService, AppointmentsRepositoryService>()
-
+            .AddSingleton<IAccountsRepository, AccountsRepository>()
+            .AddSingleton<IEmployeeRepository, EmployeeRepository>()
+            .AddSingleton<IAppointmentsRepository, AppointmentsRepository>()
             // Add ViewModels
             .AddSingleton<IAppointmentsViewModel, AppointmentsViewModel>()
             .AddSingleton<ICustomersViewModel, CustomersViewModel>()
@@ -58,7 +52,6 @@ public static class ServiceContainer
             .AddSingleton<IServicesViewModel, ServicesViewModel>()
             .AddSingleton<IMainViewModel, MainViewModel>()
             .AddSingleton<ILoginViewModel, LoginViewModel>()
-
             // Add Views
             .AddSingleton<IAppointmentsView, AppointmentsView>()
             .AddSingleton<ICustomersView, CustomersView>()
@@ -68,9 +61,8 @@ public static class ServiceContainer
             .AddSingleton<IServicesView, ServicesView>()
             .AddSingleton<IMainView, MainView>()
             .AddSingleton<ILoginView, LoginView>()
-
+            .AddSingleton<IAddAppointmentsView, AddAppointmentsView>()
             // Build Container
             .Build();
-
     }
 }
