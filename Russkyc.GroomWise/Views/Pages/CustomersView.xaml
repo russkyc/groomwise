@@ -6,6 +6,7 @@
              HorizontalAlignment="Stretch"
              d:DesignHeight="300"
              d:DesignWidth="300"
+             Style="{StaticResource FadeUpAnimation}"
              mc:Ignorable="d">
     <TextBlock HorizontalAlignment="Center"
                VerticalAlignment="Center"
