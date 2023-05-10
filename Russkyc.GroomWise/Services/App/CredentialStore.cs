@@ -1,5 +1,5 @@
 ﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
-// 
+//
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
@@ -21,10 +21,7 @@ public class CredentialStore : ICredentialStore
 
     public string Get(string key)
     {
-        using var credential = new Credential
-        {
-            Target = key
-        };
+        using var credential = new Credential { Target = key };
         credential.Load();
         return credential.Password;
     }
