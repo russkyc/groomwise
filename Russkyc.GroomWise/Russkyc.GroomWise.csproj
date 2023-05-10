@@ -12,33 +12,36 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <DebugType>embedded</DebugType>
+        <DebugType>none</DebugType>
+        <Prefer32bit>true</Prefer32bit>
+        <DebugSymbols>false</DebugSymbols>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <Prefer32bit>true</Prefer32bit>
         <DebugType>none</DebugType>
+        <Optimize>false</Optimize>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
         <PackageReference Include="CredentialManagement" Version="1.0.2" />
         <PackageReference Include="ini.net" Version="1.1.0" />
-        <PackageReference Include="LiteDB" Version="5.0.16" />
         <PackageReference Include="Material.Icons.WPF" Version="2.0.0" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
         <PackageReference Include="NETCore.Encrypt" Version="2.1.1" />
         <PackageReference Include="Russkyc.Abstractions" Version="1.4.2" />
         <PackageReference Include="Russkyc.AttachedUtilities.FilestreamExtensions" Version="1.1.1" />
-        <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.6" />
-        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.8.8" />
-        <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
+        <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.7" />
+        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.8.10" />
+        <PackageReference Include="Russkyc.Services.HotKeyListener" Version="0.11.1" />
         <PackageReference Include="sqlite-net-sqlcipher" Version="1.8.116" />
     </ItemGroup>
 
     <ItemGroup>
         <Folder Include="Services\Cache\" />
         <Folder Include="Views\Resources\Themes\BaseThemes\" />
+        <Folder Include="Views\Resources\Themes\ColorThemes\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -53,15 +56,15 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Page Update="Views\Resources\Themes\ColorThemes\Default.xaml">
-            <Generator>MSBuild:Compile</Generator>
-            <XamlRuntime>Wpf</XamlRuntime>
-            <SubType>Designer</SubType>
-        </Page>
         <Page Update="Views\Templates\LoginNotificationTemplate.xaml">
             <Generator>MSBuild:Compile</Generator>
             <XamlRuntime>Wpf</XamlRuntime>
             <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Views\Templates\NavItemTemplate.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <XamlRuntime>Wpf</XamlRuntime>
+          <SubType>Designer</SubType>
         </Page>
     </ItemGroup>
 

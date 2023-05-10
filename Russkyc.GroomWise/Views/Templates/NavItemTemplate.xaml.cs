@@ -3,11 +3,11 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Views.Controls;
+namespace GroomWise.Views.Templates;
 
-public partial class NavItemControl
+public partial class NavItemTemplate
 {
-    public NavItemControl()
+    public NavItemTemplate()
     {
         InitializeComponent();
     }
