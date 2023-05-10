@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Interfaces.Entity;
 
-public interface IEmployee
+public interface IEmployee : IPerson
 {
-    IEnumerable<IAppointment>? Appointments { get; set; }
+    int? EmployeeType { get; set; }
 }

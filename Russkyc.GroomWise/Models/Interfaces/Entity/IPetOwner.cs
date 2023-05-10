@@ -7,5 +7,5 @@ namespace GroomWise.Models.Interfaces.Entity;
 
 public interface IPetOwner
 {
-    IEnumerable<IPet>? Pets { get; set; }
+    int? PetId { get; set; }
 }

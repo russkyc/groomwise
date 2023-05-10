@@ -5,13 +5,14 @@
 
 namespace GroomWise.Models.Interfaces.Entity;
 
-public interface IAppointment
+public interface IAppointment : IEntity
 {
+    string? Title { get; set; }
+    string? Description { get; set; }
     DateTime? Date { get; set; }
-    TimeSpan? Time { get; set; }
-    IEnumerable<IGroomingService>? Services { get; set; }
-    IEnumerable<IPet>? Pet { get; set; }
-    ICustomer? Customer { get; set; }
-    IEnumerable<IGroomer>? Groomers { get; set; }
-    AppointmentStatus? Status { get; set; }
+    int? PetId { get; set; }
+    int? CustomerId { get; set; }
+    int? EmployeeId { get; set; }
+    int? GroomingServiceId { get; set; }
+    int? AppointmentStatus { get; set; }
 }

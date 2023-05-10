@@ -5,11 +5,10 @@
 
 namespace GroomWise.Models.Interfaces.Entity;
 
-public interface IAccount : IPerson
+public interface IAccount : IEntity
 {
-    string? PhoneNumber { get; set; }
-    string? Email { get; set; }
     string? Username { get; set; }
+    string? Email { get; set; }
     string? Password { get; set; }
-    AccountType? Type { get; set; }
+    int? EmployeeId { get; set; }
 }

@@ -5,6 +5,7 @@
 
 namespace GroomWise.Models.Interfaces.Entity;
 
-public interface IGroomer : IPerson, IEmployee
+public interface IEntity
 {
+    int Id { get; set; }
 }

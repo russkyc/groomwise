@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Interfaces.Entity;
 
-public interface INavItem
+public interface INavItem : IEntity
 {
     string? Name { get; set; }
     string? ShortName { get; set; }
@@ -13,5 +13,5 @@ public interface INavItem
     Type? Page { get; set; }
     bool Selected { get; set; }
     object? Icon { get; set; }
-    AccountType[]? AccountTypes { get; set; }
+    EmployeeType[]? AccountTypes { get; set; }
 }
