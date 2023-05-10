@@ -11,6 +11,14 @@ namespace GroomWise.Models.Interfaces.Service;
 /// </summary>
 public interface IEncryptionService
 {
+
+    /// <summary>
+    /// Encrypts a single string
+    /// </summary>
+    /// <param name="toEncrypt">String to encrypt</param>
+    /// <returns></returns>
+    string Encrypt(string toEncrypt);
+    
     /// <summary>
     /// Encrypts all text fields within an object
     /// </summary>
@@ -27,6 +35,13 @@ public interface IEncryptionService
     /// <typeparam name="T">Type of item to encrypt</typeparam>
     /// <returns>Item with encrypted fields</returns>
     T Encrypt<T>(T item, params string[] ignore);
+
+    /// <summary>
+    /// Decrypts a single string
+    /// </summary>
+    /// <param name="toDecrypt">String to decrypt</param>
+    /// <returns></returns>
+    string Decrypt(string toDecrypt);
     
     /// <summary>
     /// Decrypts all text fields within an object
