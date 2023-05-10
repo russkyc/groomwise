@@ -5,6 +5,6 @@
 
 namespace GroomWise.Models.Interfaces.Factory;
 
-public interface IGroomerFactoryService : IFactory<Groomer>
+public interface ICustomerFactory : IFactory<Customer>
 {
 }
