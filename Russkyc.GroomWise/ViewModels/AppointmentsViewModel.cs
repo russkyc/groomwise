@@ -33,23 +33,14 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     {
         Task.Run(async () =>
         {
-            lock (Appointments.Lock)
-                Appointments.Clear();
-            for (var i = 0; i < 50; i++)
+            await Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                await Application.Current.Dispatcher.InvokeAsync(() =>
+                lock (Appointments.Lock)
                 {
-                    lock (Appointments.Lock)
-                        Appointments.Add(
-                            _appointmentFactory.Create(
-                                $"Appointment {i}",
-                                $"Service scheduled for {DateTime.Now.AddDays(i).ToString("dddd")}",
-                                DateTime.Now.AddDays(i)
-                            )
-                        );
-                });
-                await Task.Delay(2500);
-            }
+                    Appointments.Clear();
+                    _appointmentsRepository.GetCollection().ToList().ForEach(Appointments.Add);
+                }
+            });
         });
     }
 
