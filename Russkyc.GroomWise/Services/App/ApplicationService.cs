@@ -99,18 +99,18 @@ public partial class ApplicationService : ObservableObject, IApplicationService
 
     public void BuildNavItems()
     {
-        var currentUserType = (EmployeeType)_sessionManagerService.SessionUser!.EmployeeType!;
-        Application.Current.Dispatcher.BeginInvoke(() => NavItems.Clear());
+        Task.Run(async () =>
+        {
+            var currentUserType = (EmployeeType)_sessionManagerService.SessionUser!.EmployeeType!;
+            await Application.Current.Dispatcher.InvokeAsync(() => NavItems.Clear());
 
-        _nav.Where(navItem => navItem.AccountTypes!.Contains(currentUserType))
-            .ToList()
-            .ForEach(navItem =>
-            {
-                navItem.Selected = navItem.Name == "Dashboard";
-                Application.Current.Dispatcher.InvokeAsync(() =>
+            _nav.Where(navItem => navItem.AccountTypes!.Contains(currentUserType))
+                .ToList()
+                .ForEach(async navItem =>
                 {
-                    NavItems.Add(navItem);
+                    navItem.Selected = navItem is { Name: "Dashboard" };
+                    await Application.Current.Dispatcher.InvokeAsync(() => NavItems.Add(navItem));
                 });
-            });
+        });
     }
 }
