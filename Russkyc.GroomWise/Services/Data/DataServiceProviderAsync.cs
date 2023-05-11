@@ -28,7 +28,7 @@ public class DataServiceProviderAsync : IDatabaseServiceAsync
                 FreeSql.DataType.MySql,
                 new ConnectionSourceProvider().Build(
                     new ConnectionSource()
-                        .WithSource(configurationService.Config.ReadString("Database", "Server"))
+                        .WithPath(configurationService.Config.ReadString("Database", "Path"))
                         .WithDatabase(
                             configurationService.Config.ReadString("Database", "Database")
                         )

@@ -8,7 +8,6 @@ namespace GroomWise.Models.Entities;
 public class ConnectionSource : IConnectionSource
 {
     public string? Path { get; set; }
-    public string? Source { get; set; }
     public string? Port { get; set; }
     public string? Database { get; set; }
     public string? Username { get; set; }
@@ -17,12 +16,6 @@ public class ConnectionSource : IConnectionSource
     public ConnectionSource WithPath(string path)
     {
         Path = path;
-        return this;
-    }
-
-    public ConnectionSource WithSource(string source)
-    {
-        Source = source;
         return this;
     }
 

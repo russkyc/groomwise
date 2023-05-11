@@ -21,7 +21,7 @@ public class ConnectionSourceProvider : IConnectionSourceProvider
                     ? "" : $"Password={connectionSource.Password};")}",
             DbProvider.MySql
                 => $@"Server={
-                connectionSource.Source};Port={
+                connectionSource.Path};Port={
                     connectionSource.Port};Database={
                         connectionSource.Database};Uid={
                             connectionSource.Username};Pwd={
