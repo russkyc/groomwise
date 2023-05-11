@@ -74,6 +74,20 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+            <russkyc:ModernRadioButton Width="40"
+                                       Height="40"
+                                       Margin="8"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Bottom"
+                                       Command="{Binding Path=DataContext.OpenSettingsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type russkyc:ModernWindow}}}"
+                                       Content="{icons:MaterialIconExt Kind=Settings}"
+                                       CornerRadius="10"
+                                       DefaultForeground="{DynamicResource bg-600}"
+                                       GroupName="NavItemGroup"
+                                       HoverBackground="{DynamicResource bg-200}"
+                                       HoverForeground="{DynamicResource bg-600}"
+                                       PressedForeground="{DynamicResource inverted-default}"
+                                       ToolTip="Settings" />
         </Grid>
         <ContentControl Grid.Column="1" Content="{Binding View, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>

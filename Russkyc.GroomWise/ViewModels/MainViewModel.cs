@@ -67,6 +67,18 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
     }
 
     [RelayCommand]
+    private async void OpenSettings()
+    {
+        await Task.Run(async () =>
+        {
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                View = BuilderServices.Resolve<ISettingsView>();
+            });
+        });
+    }
+
+    [RelayCommand]
     private void Logout()
     {
         if (
