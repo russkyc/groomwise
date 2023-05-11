@@ -3,33 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:moderncontrols="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+             xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
              d:DesignWidth="700"
              mc:Ignorable="d">
     <StackPanel>
-        <TextBlock Margin="16"
-                   VerticalAlignment="Center"
-                   FontSize="16"
-                   Text="General" />
-        <Border Margin="16,0"
-                BorderBrush="{DynamicResource bg-200}"
-                BorderThickness="0,1,0,0" />
-        <Grid Margin="16,6" HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="180" />
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <TextBlock FontSize="14" Text="Settings Item" />
-                <TextBlock Margin="0,6,0,0"
-                           FontSize="11"
-                           Foreground="{DynamicResource bg-600}"
-                           Text="Settings Item" />
-            </StackPanel>
-            <moderncontrols:ModernComboBox Grid.Column="1"
-                                           Height="38"
-                                           Margin="12"
-                                           VerticalAlignment="Center" />
+        <Grid>
+            <!--  Header Template  -->
+            <TextBlock Margin="16"
+                       VerticalAlignment="Center"
+                       FontSize="16"
+                       Text="General" />
+            <Border Margin="16,0"
+                    BorderBrush="{DynamicResource bg-200}"
+                    BorderThickness="0,0,0,1" />
         </Grid>
         <Grid Margin="16,6" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
@@ -43,10 +29,10 @@
                            Foreground="{DynamicResource bg-600}"
                            Text="Settings Item" />
             </StackPanel>
-            <moderncontrols:ModernComboBox Grid.Column="1"
-                                           Height="38"
-                                           Margin="12"
-                                           VerticalAlignment="Center" />
+            <russkyc:ModernComboBox Grid.Column="1"
+                                    Height="38"
+                                    Margin="12"
+                                    VerticalAlignment="Center" />
         </Grid>
         <Grid Margin="16,6" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
@@ -60,10 +46,10 @@
                            Foreground="{DynamicResource bg-600}"
                            Text="Settings Item" />
             </StackPanel>
-            <moderncontrols:ModernComboBox Grid.Column="1"
-                                           Height="38"
-                                           Margin="12"
-                                           VerticalAlignment="Center" />
+            <russkyc:ModernComboBox Grid.Column="1"
+                                    Height="38"
+                                    Margin="12"
+                                    VerticalAlignment="Center" />
         </Grid>
         <Grid Margin="16,6" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
@@ -77,10 +63,10 @@
                            Foreground="{DynamicResource bg-600}"
                            Text="Settings Item" />
             </StackPanel>
-            <moderncontrols:ModernComboBox Grid.Column="1"
-                                           Height="38"
-                                           Margin="12"
-                                           VerticalAlignment="Center" />
+            <russkyc:ModernComboBox Grid.Column="1"
+                                    Height="38"
+                                    Margin="12"
+                                    VerticalAlignment="Center" />
         </Grid>
         <Grid Margin="16,6" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
@@ -94,10 +80,10 @@
                            Foreground="{DynamicResource bg-600}"
                            Text="Settings Item" />
             </StackPanel>
-            <moderncontrols:ModernComboBox Grid.Column="1"
-                                           Height="38"
-                                           Margin="12"
-                                           VerticalAlignment="Center" />
+            <russkyc:ModernComboBox Grid.Column="1"
+                                    Height="38"
+                                    Margin="12"
+                                    VerticalAlignment="Center" />
         </Grid>
         <Grid Margin="16,6" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
@@ -111,10 +97,92 @@
                            Foreground="{DynamicResource bg-600}"
                            Text="Settings Item" />
             </StackPanel>
-            <moderncontrols:ModernComboBox Grid.Column="1"
-                                           Height="38"
-                                           Margin="12"
-                                           VerticalAlignment="Center" />
+            <russkyc:ModernComboBox Grid.Column="1"
+                                    Height="38"
+                                    Margin="12"
+                                    VerticalAlignment="Center" />
+        </Grid>
+        <Grid>
+            <!--  Header Template  -->
+            <TextBlock Margin="16"
+                       VerticalAlignment="Center"
+                       FontSize="16"
+                       Text="Appearance" />
+            <Border Margin="16,0"
+                    BorderBrush="{DynamicResource bg-200}"
+                    BorderThickness="0,0,0,1" />
+        </Grid>
+        <Grid Margin="16,6" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="180" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <TextBlock FontSize="14" Text="Dark Mode" />
+                <TextBlock Margin="0,6,0,0"
+                           FontSize="11"
+                           Foreground="{DynamicResource bg-600}"
+                           Text="Settings Item" />
+            </StackPanel>
+            <russkyc:ModernComboBox Grid.Column="1"
+                                    Height="38"
+                                    Margin="12"
+                                    VerticalAlignment="Center" />
+        </Grid>
+        <Grid Margin="16,6" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <TextBlock FontSize="14" Text="Color Theme" />
+                <TextBlock Margin="0,6,0,0"
+                           FontSize="11"
+                           Foreground="{DynamicResource bg-600}"
+                           Text="Settings Item" />
+            </StackPanel>
+            <WrapPanel Grid.Column="1"
+                       Margin="12,12,6,12"
+                       VerticalAlignment="Center"
+                       FlowDirection="RightToLeft"
+                       Orientation="Horizontal">
+                <russkyc:ModernRadioButton Width="32"
+                                           Height="32"
+                                           Margin="6,0,0,0"
+                                           Padding="0"
+                                           HorizontalContentAlignment="Center"
+                                           VerticalContentAlignment="Center"
+                                           CornerRadius="34">
+                    <Border Width="25"
+                            Height="25"
+                            Background="{DynamicResource primary-default}"
+                            CornerRadius="25" />
+                </russkyc:ModernRadioButton>
+                <russkyc:ModernRadioButton Width="32"
+                                           Height="32"
+                                           Margin="6,0,0,0"
+                                           Padding="0"
+                                           HorizontalContentAlignment="Center"
+                                           VerticalContentAlignment="Center"
+                                           CornerRadius="34">
+                    <Border Width="25"
+                            Height="25"
+                            Background="{DynamicResource primary-default}"
+                            CornerRadius="25" />
+                </russkyc:ModernRadioButton>
+                <russkyc:ModernRadioButton Width="32"
+                                           Height="32"
+                                           Margin="6,0,0,0"
+                                           Padding="0"
+                                           HorizontalContentAlignment="Center"
+                                           VerticalContentAlignment="Center"
+                                           CornerRadius="34">
+                    <Border Width="25"
+                            Height="25"
+                            Background="{DynamicResource primary-default}"
+                            CornerRadius="25" />
+                </russkyc:ModernRadioButton>
+            </WrapPanel>
         </Grid>
     </StackPanel>
 </UserControl>

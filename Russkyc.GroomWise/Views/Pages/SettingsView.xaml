@@ -14,7 +14,7 @@
              Style="{StaticResource FadeUpAnimation}"
              mc:Ignorable="d">
     <Grid Width="700"
-          Margin="24"
+          Margin="20"
           Style="{StaticResource FadeUpAnimation}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
