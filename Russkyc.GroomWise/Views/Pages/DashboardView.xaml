@@ -432,7 +432,6 @@
                                            Foreground="{DynamicResource inverted-lighten-2}"
                                            LineHeight="32"
                                            LineStackingStrategy="BlockLineHeight"
-                                           Style="{StaticResource FadeUpAnimation}"
                                            Text="Good " />
                                 <TextBlock FontSize="22"
                                            FontWeight="Medium"

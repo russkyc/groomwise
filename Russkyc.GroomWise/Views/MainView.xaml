@@ -11,8 +11,8 @@
                       Title="GroomWise"
                       Width="1280"
                       Height="720"
-                      MinWidth="900"
-                      MinHeight="550"
+                      MinWidth="950"
+                      MinHeight="650"
                       d:DataContext="{d:DesignInstance viewModels:MainViewModel,
                                                        IsDesignTimeCreatable=True}"
                       d:DesignHeight="864"
