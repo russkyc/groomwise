@@ -5,12 +5,24 @@
 
 namespace GroomWise.Services.Data;
 
-public class MySqlDataServiceAsync : IDatabaseServiceAsync
+public class DataServiceProviderAsync : IDatabaseServiceAsync
 {
     private readonly IFreeSql _db;
 
-    public MySqlDataServiceAsync(IConfigurationService configurationService)
+    public DataServiceProviderAsync(IConfigurationService configurationService)
     {
+#if (DEBUG)
+        _db = new FreeSqlBuilder()
+            .UseConnectionString(
+                FreeSql.DataType.Sqlite,
+                new ConnectionSourceProvider().Build(
+                    new ConnectionSource().WithPath(
+                        configurationService.Config.ReadString("Database", "Path")
+                    ),
+                    DbProvider.Sqlite
+                )
+            )
+#else
         _db = new FreeSqlBuilder()
             .UseConnectionString(
                 FreeSql.DataType.MySql,
@@ -29,6 +41,7 @@ public class MySqlDataServiceAsync : IDatabaseServiceAsync
                     DbProvider.MySql
                 )
             )
+# endif
             .UseAutoSyncStructure(true)
             .UseLazyLoading(true)
             .Build();

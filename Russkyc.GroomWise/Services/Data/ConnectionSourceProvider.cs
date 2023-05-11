@@ -1,5 +1,5 @@
 ﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
-// 
+//
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
@@ -11,13 +11,16 @@ public class ConnectionSourceProvider : IConnectionSourceProvider
     {
         return provider switch
         {
-            DbProvider.LiteDb => $@"Filename={
-                connectionSource.Path};Password={
-                    connectionSource.Password};",
-            DbProvider.Sqlite => $@"Data Source={
-                connectionSource.Path};Password={
-                    connectionSource.Password};",
-            DbProvider.MySql => $@"Server={
+            DbProvider.LiteDb
+                => $@"Filename={
+                connectionSource.Path};Password={(string.IsNullOrEmpty(connectionSource.Password)
+                    ? "" : $"Password={connectionSource.Password};")};",
+            DbProvider.Sqlite
+                => $@"Data Source={
+                connectionSource.Path};{(string.IsNullOrEmpty(connectionSource.Password)
+                    ? "" : $"Password={connectionSource.Password};")}",
+            DbProvider.MySql
+                => $@"Server={
                 connectionSource.Source};Port={
                     connectionSource.Port};Database={
                         connectionSource.Database};Uid={
