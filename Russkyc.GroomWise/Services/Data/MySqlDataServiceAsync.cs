@@ -43,7 +43,7 @@ public class MySqlDataServiceAsync : IDatabaseServiceAsync
     public async Task<bool> AddMultiple<T>(ICollection<T> items)
         where T : class, new()
     {
-        return await _db.Insert(items).ExecuteIdentityAsync() > 0;
+        return await _db.Insert(items.ToList()).ExecuteIdentityAsync() > 0;
     }
 
     public async Task<T> Get<T>(Expression<Func<T, bool>> filter)
