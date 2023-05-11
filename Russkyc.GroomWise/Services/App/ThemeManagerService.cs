@@ -46,6 +46,16 @@ public partial class ThemeManagerService : ObservableObject, IThemeManagerServic
         });
     }
 
+    public IList<string> GetColorThemes()
+    {
+        return ThemeManager.Instance.GetColorThemes().ToList();
+    }
+
+    public IList<string> GetBaseThemes()
+    {
+        return ThemeManager.Instance.GetColorThemes().ToList();
+    }
+
     public void Reset()
     {
         SaveBaseTheme(false);

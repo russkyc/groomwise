@@ -7,16 +7,38 @@ namespace GroomWise.ViewModels;
 
 public partial class SettingsViewModel : ViewModelBase, ISettingsViewModel
 {
-    private readonly IThemeManagerService _themeManagerService;
+    [ObservableProperty]
+    private IThemeManagerService _themeManagerService;
+
+    [ObservableProperty]
+    private ObservableCollection<string> _baseThemes;
+
+    [ObservableProperty]
+    private ObservableCollection<string> _colorThemes;
 
     public SettingsViewModel(IThemeManagerService themeManagerService)
     {
-        _themeManagerService = themeManagerService;
+        ThemeManagerService = themeManagerService;
+        BaseThemes = new ObservableCollection<string>();
+        ColorThemes = new ObservableCollection<string>();
+        GetThemeItems();
     }
 
     [RelayCommand]
     private void SwitchColorTheme(string theme)
     {
-        _themeManagerService.UseColorTheme(theme);
+        ThemeManagerService.UseColorTheme(theme);
+    }
+
+    [RelayCommand]
+    private void SwitchBaseTheme(string theme)
+    {
+        ThemeManagerService.UseDarkTheme(theme == "Dark");
+    }
+
+    private void GetThemeItems()
+    {
+        ThemeManagerService.GetBaseThemes().ToList().ForEach(BaseThemes.Add);
+        ThemeManagerService.GetColorThemes().ToList().ForEach(ColorThemes.Add);
     }
 }
