@@ -25,7 +25,7 @@
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                 <TextBlock FontSize="14" Text="Settings Item" />
                 <TextBlock Margin="0,6,0,0"
-                           FontSize="11"
+                           FontSize="12"
                            Foreground="{DynamicResource bg-600}"
                            Text="Settings Item" />
             </StackPanel>
@@ -42,7 +42,7 @@
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                 <TextBlock FontSize="14" Text="Settings Item" />
                 <TextBlock Margin="0,6,0,0"
-                           FontSize="11"
+                           FontSize="12"
                            Foreground="{DynamicResource bg-600}"
                            Text="Settings Item" />
             </StackPanel>
@@ -59,7 +59,7 @@
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                 <TextBlock FontSize="14" Text="Settings Item" />
                 <TextBlock Margin="0,6,0,0"
-                           FontSize="11"
+                           FontSize="12"
                            Foreground="{DynamicResource bg-600}"
                            Text="Settings Item" />
             </StackPanel>
@@ -76,7 +76,7 @@
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                 <TextBlock FontSize="14" Text="Settings Item" />
                 <TextBlock Margin="0,6,0,0"
-                           FontSize="11"
+                           FontSize="12"
                            Foreground="{DynamicResource bg-600}"
                            Text="Settings Item" />
             </StackPanel>
@@ -93,7 +93,7 @@
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                 <TextBlock FontSize="14" Text="Settings Item" />
                 <TextBlock Margin="0,6,0,0"
-                           FontSize="11"
+                           FontSize="12"
                            Foreground="{DynamicResource bg-600}"
                            Text="Settings Item" />
             </StackPanel>
@@ -118,11 +118,11 @@
                 <ColumnDefinition Width="180" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <TextBlock FontSize="14" Text="Dark Mode" />
+                <TextBlock FontSize="14" Text="Base Theme" />
                 <TextBlock Margin="0,6,0,0"
-                           FontSize="11"
+                           FontSize="12"
                            Foreground="{DynamicResource bg-600}"
-                           Text="Settings Item" />
+                           Text="Global light or dark mode" />
             </StackPanel>
             <russkyc:ModernComboBox Grid.Column="1"
                                     Height="38"
@@ -137,9 +137,9 @@
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                 <TextBlock FontSize="14" Text="Color Theme" />
                 <TextBlock Margin="0,6,0,0"
-                           FontSize="11"
+                           FontSize="12"
                            Foreground="{DynamicResource bg-600}"
-                           Text="Settings Item" />
+                           Text="Global app color scheme" />
             </StackPanel>
             <WrapPanel Grid.Column="1"
                        Margin="12,12,6,12"
@@ -152,11 +152,16 @@
                                            Padding="0"
                                            HorizontalContentAlignment="Center"
                                            VerticalContentAlignment="Center"
-                                           CornerRadius="34">
-                    <Border Width="25"
-                            Height="25"
-                            Background="{DynamicResource primary-default}"
-                            CornerRadius="25" />
+                                           CheckedBackground="{DynamicResource bg-300}"
+                                           Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                                           CommandParameter="Gray"
+                                           CornerRadius="34"
+                                           DefaultBackground="{DynamicResource bg-100}"
+                                           PressedBackground="{DynamicResource bg-200}">
+                    <Border Width="24"
+                            Height="24"
+                            Background="#232425"
+                            CornerRadius="24" />
                 </russkyc:ModernRadioButton>
                 <russkyc:ModernRadioButton Width="32"
                                            Height="32"
@@ -164,11 +169,16 @@
                                            Padding="0"
                                            HorizontalContentAlignment="Center"
                                            VerticalContentAlignment="Center"
-                                           CornerRadius="34">
-                    <Border Width="25"
-                            Height="25"
-                            Background="{DynamicResource primary-default}"
-                            CornerRadius="25" />
+                                           CheckedBackground="{DynamicResource bg-300}"
+                                           Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                                           CommandParameter="Purple"
+                                           CornerRadius="34"
+                                           DefaultBackground="{DynamicResource bg-100}"
+                                           PressedBackground="{DynamicResource bg-200}">
+                    <Border Width="24"
+                            Height="24"
+                            Background="#8000C8"
+                            CornerRadius="24" />
                 </russkyc:ModernRadioButton>
                 <russkyc:ModernRadioButton Width="32"
                                            Height="32"
@@ -176,11 +186,118 @@
                                            Padding="0"
                                            HorizontalContentAlignment="Center"
                                            VerticalContentAlignment="Center"
-                                           CornerRadius="34">
-                    <Border Width="25"
-                            Height="25"
-                            Background="{DynamicResource primary-default}"
-                            CornerRadius="25" />
+                                           CheckedBackground="{DynamicResource bg-300}"
+                                           Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                                           CommandParameter="Pink"
+                                           CornerRadius="34"
+                                           DefaultBackground="{DynamicResource bg-100}"
+                                           PressedBackground="{DynamicResource bg-200}">
+                    <Border Width="24"
+                            Height="24"
+                            Background="#C52CA0"
+                            CornerRadius="24" />
+                </russkyc:ModernRadioButton>
+                <russkyc:ModernRadioButton Width="32"
+                                           Height="32"
+                                           Margin="6,0,0,0"
+                                           Padding="0"
+                                           HorizontalContentAlignment="Center"
+                                           VerticalContentAlignment="Center"
+                                           CheckedBackground="{DynamicResource bg-300}"
+                                           Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                                           CommandParameter="Red"
+                                           CornerRadius="34"
+                                           DefaultBackground="{DynamicResource bg-100}"
+                                           PressedBackground="{DynamicResource bg-200}">
+                    <Border Width="24"
+                            Height="24"
+                            Background="#e53935"
+                            CornerRadius="24" />
+                </russkyc:ModernRadioButton>
+                <russkyc:ModernRadioButton Width="32"
+                                           Height="32"
+                                           Margin="6,0,0,0"
+                                           Padding="0"
+                                           HorizontalContentAlignment="Center"
+                                           VerticalContentAlignment="Center"
+                                           CheckedBackground="{DynamicResource bg-300}"
+                                           Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                                           CommandParameter="Orange"
+                                           CornerRadius="34"
+                                           DefaultBackground="{DynamicResource bg-100}"
+                                           PressedBackground="{DynamicResource bg-200}">
+                    <Border Width="24"
+                            Height="24"
+                            Background="#D65F00"
+                            CornerRadius="24" />
+                </russkyc:ModernRadioButton>
+                <russkyc:ModernRadioButton Width="32"
+                                           Height="32"
+                                           Margin="6,0,0,0"
+                                           Padding="0"
+                                           HorizontalContentAlignment="Center"
+                                           VerticalContentAlignment="Center"
+                                           CheckedBackground="{DynamicResource bg-300}"
+                                           Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                                           CommandParameter="Yellow"
+                                           CornerRadius="34"
+                                           DefaultBackground="{DynamicResource bg-100}"
+                                           PressedBackground="{DynamicResource bg-200}">
+                    <Border Width="24"
+                            Height="24"
+                            Background="#E4B804"
+                            CornerRadius="24" />
+                </russkyc:ModernRadioButton>
+                <russkyc:ModernRadioButton Width="32"
+                                           Height="32"
+                                           Margin="6,0,0,0"
+                                           Padding="0"
+                                           HorizontalContentAlignment="Center"
+                                           VerticalContentAlignment="Center"
+                                           CheckedBackground="{DynamicResource bg-300}"
+                                           Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                                           CommandParameter="Blue"
+                                           CornerRadius="34"
+                                           DefaultBackground="{DynamicResource bg-100}"
+                                           PressedBackground="{DynamicResource bg-200}">
+                    <Border Width="24"
+                            Height="24"
+                            Background="#0462d4"
+                            CornerRadius="24" />
+                </russkyc:ModernRadioButton>
+                <russkyc:ModernRadioButton Width="32"
+                                           Height="32"
+                                           Margin="6,0,0,0"
+                                           Padding="0"
+                                           HorizontalContentAlignment="Center"
+                                           VerticalContentAlignment="Center"
+                                           CheckedBackground="{DynamicResource bg-300}"
+                                           Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                                           CommandParameter="Lime"
+                                           CornerRadius="34"
+                                           DefaultBackground="{DynamicResource bg-100}"
+                                           PressedBackground="{DynamicResource bg-200}">
+                    <Border Width="24"
+                            Height="24"
+                            Background="#8AC800"
+                            CornerRadius="24" />
+                </russkyc:ModernRadioButton>
+                <russkyc:ModernRadioButton Width="32"
+                                           Height="32"
+                                           Margin="6,0,0,0"
+                                           Padding="0"
+                                           HorizontalContentAlignment="Center"
+                                           VerticalContentAlignment="Center"
+                                           CheckedBackground="{DynamicResource bg-300}"
+                                           Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                                           CommandParameter="Teal"
+                                           CornerRadius="34"
+                                           DefaultBackground="{DynamicResource bg-100}"
+                                           PressedBackground="{DynamicResource bg-200}">
+                    <Border Width="24"
+                            Height="24"
+                            Background="#00A99B"
+                            CornerRadius="24" />
                 </russkyc:ModernRadioButton>
             </WrapPanel>
         </Grid>

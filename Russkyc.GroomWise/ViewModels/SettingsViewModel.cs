@@ -5,4 +5,18 @@
 
 namespace GroomWise.ViewModels;
 
-public class SettingsViewModel : ISettingsViewModel { }
+public partial class SettingsViewModel : ObservableObject, ISettingsViewModel
+{
+    private readonly IThemeManagerService _themeManagerService;
+
+    public SettingsViewModel(IThemeManagerService themeManagerService)
+    {
+        _themeManagerService = themeManagerService;
+    }
+
+    [RelayCommand]
+    private void SwitchColorTheme(string theme)
+    {
+        _themeManagerService.UseColorTheme(theme);
+    }
+}
