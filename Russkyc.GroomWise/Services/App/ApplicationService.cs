@@ -59,6 +59,13 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                 new[] { EmployeeType.Admin, EmployeeType.Manager }
             ),
             _navItemFactory.Create(
+                "Pets",
+                typeof(IPetsView),
+                _materialIconFactory.Create(MaterialIconKind.Pets),
+                false,
+                new[] { EmployeeType.Admin, EmployeeType.Groomer, EmployeeType.Manager }
+            ),
+            _navItemFactory.Create(
                 "Customers",
                 typeof(ICustomersView),
                 _materialIconFactory.Create(MaterialIconKind.People),
@@ -66,11 +73,11 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                 new[] { EmployeeType.Admin, EmployeeType.Manager }
             ),
             _navItemFactory.Create(
-                "Pets",
-                typeof(IPetsView),
-                _materialIconFactory.Create(MaterialIconKind.Pets),
+                "Employees",
+                typeof(IEmployeesView),
+                _materialIconFactory.Create(MaterialIconKind.PeopleGroup),
                 false,
-                new[] { EmployeeType.Admin, EmployeeType.Groomer, EmployeeType.Manager }
+                new[] { EmployeeType.Manager }
             ),
             _navItemFactory.Create(
                 "Reports",
