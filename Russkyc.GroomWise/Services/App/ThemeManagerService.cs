@@ -42,10 +42,11 @@ public partial class ThemeManagerService : ObservableObject, IThemeManagerServic
         Task.Run(async () =>
         {
             SaveColorTheme(color);
-            await Application.Current.Dispatcher.InvokeAsync(
-                () => ThemeManager.Instance.SetColorTheme(color)
-            );
-            ColorTheme = color;
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                ColorTheme = color;
+                ThemeManager.Instance.SetColorTheme(color);
+            });
             _logger.Log(this, $"Set color theme {color}");
         });
     }
@@ -64,8 +65,8 @@ public partial class ThemeManagerService : ObservableObject, IThemeManagerServic
     {
         SaveBaseTheme(false);
         UseDarkTheme(false);
-        SaveColorTheme("Default");
         UseColorTheme("Default");
+        SaveColorTheme("Default");
         _logger.Log(this, "Reset color theme");
     }
 
