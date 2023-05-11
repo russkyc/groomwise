@@ -32,7 +32,7 @@ public static class ServiceContainer
             .AddSingleton<IDialogFactory, DialogFactory>()
             // Add Data Services
             .AddSingleton<IConnectionSourceProvider, ConnectionSourceProvider>()
-            .AddSingleton<IDatabaseServiceAsync, MySqlDataServiceAsync>()
+            .AddSingleton<IDatabaseServiceAsync, DataServiceProviderAsync>()
             // Add Migrations
             .AddSingleton<IMigrationService, MigrationService>()
             // Add Application Services

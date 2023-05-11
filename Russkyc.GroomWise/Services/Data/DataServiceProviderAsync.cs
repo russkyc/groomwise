@@ -5,18 +5,30 @@
 
 namespace GroomWise.Services.Data;
 
-public class MySqlDataServiceAsync : IDatabaseServiceAsync
+public class DataServiceProviderAsync : IDatabaseServiceAsync
 {
     private readonly IFreeSql _db;
 
-    public MySqlDataServiceAsync(IConfigurationService configurationService)
+    public DataServiceProviderAsync(IConfigurationService configurationService)
     {
+#if (DEBUG)
+        _db = new FreeSqlBuilder()
+            .UseConnectionString(
+                FreeSql.DataType.Sqlite,
+                new ConnectionSourceProvider().Build(
+                    new ConnectionSource().WithPath(
+                        configurationService.Config.ReadString("Database", "Path")
+                    ),
+                    DbProvider.Sqlite
+                )
+            )
+#else
         _db = new FreeSqlBuilder()
             .UseConnectionString(
                 FreeSql.DataType.MySql,
                 new ConnectionSourceProvider().Build(
                     new ConnectionSource()
-                        .WithSource(configurationService.Config.ReadString("Database", "Server"))
+                        .WithPath(configurationService.Config.ReadString("Database", "Path"))
                         .WithDatabase(
                             configurationService.Config.ReadString("Database", "Database")
                         )
@@ -29,6 +41,7 @@ public class MySqlDataServiceAsync : IDatabaseServiceAsync
                     DbProvider.MySql
                 )
             )
+# endif
             .UseAutoSyncStructure(true)
             .UseLazyLoading(true)
             .Build();
@@ -43,7 +56,7 @@ public class MySqlDataServiceAsync : IDatabaseServiceAsync
     public async Task<bool> AddMultiple<T>(ICollection<T> items)
         where T : class, new()
     {
-        return await _db.Insert(items).ExecuteIdentityAsync() > 0;
+        return await _db.Insert(items.ToList()).ExecuteIdentityAsync() > 0;
     }
 
     public async Task<T> Get<T>(Expression<Func<T, bool>> filter)
