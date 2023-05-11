@@ -2,13 +2,33 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:GroomWise.Views.Pages"
+             xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DesignHeight="300"
-             d:DesignWidth="300"
+             xmlns:moderncontrols="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+             xmlns:templates="clr-namespace:GroomWise.Views.Templates"
+             xmlns:viewModels="clr-namespace:GroomWise.ViewModels"
+             d:DataContext="{d:DesignInstance viewModels:SettingsViewModel,
+                                              IsDesignTimeCreatable=True}"
+             d:DesignHeight="720"
+             d:DesignWidth="1280"
              Style="{StaticResource FadeUpAnimation}"
              mc:Ignorable="d">
-    <TextBlock HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               Text="Settings" />
+    <Grid Width="700"
+          Margin="24"
+          Style="{StaticResource FadeUpAnimation}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"
+              Margin="0,0,0,12"
+              HorizontalAlignment="Stretch">
+            <TextBlock VerticalAlignment="Center"
+                       FontSize="16"
+                       Text="Settings" />
+        </Grid>
+        <ScrollViewer Grid.Row="1">
+            <templates:SettingsTemplate />
+        </ScrollViewer>
+    </Grid>
 </UserControl>
