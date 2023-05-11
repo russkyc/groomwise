@@ -5,4 +5,4 @@
 
 namespace GroomWise.ViewModels;
 
-public class EmployeesViewModel : ObservableObject, IEmployeesViewModel { }
+public class EmployeesViewModel : ViewModelBase, IEmployeesViewModel { }

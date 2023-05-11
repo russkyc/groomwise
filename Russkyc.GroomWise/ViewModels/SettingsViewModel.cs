@@ -5,7 +5,7 @@
 
 namespace GroomWise.ViewModels;
 
-public partial class SettingsViewModel : ObservableObject, ISettingsViewModel
+public partial class SettingsViewModel : ViewModelBase, ISettingsViewModel
 {
     private readonly IThemeManagerService _themeManagerService;
 

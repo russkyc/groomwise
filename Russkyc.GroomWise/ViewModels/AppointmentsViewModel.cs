@@ -5,7 +5,7 @@
 
 namespace GroomWise.ViewModels;
 
-public partial class AppointmentsViewModel : ObservableObject, IAppointmentsViewModel
+public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewModel
 {
     private IAppointmentFactory _appointmentFactory;
     private IAddAppointmentsViewFactory _addAppointmentsViewFactory;

@@ -5,7 +5,7 @@
 
 namespace GroomWise.ViewModels;
 
-public partial class MainViewModel : ObservableObject, IMainViewModel
+public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
     [ObservableProperty]
     private IDialogFactory _dialogFactory;

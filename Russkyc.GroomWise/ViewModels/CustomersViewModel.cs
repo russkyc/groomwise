@@ -5,4 +5,4 @@
 
 namespace GroomWise.ViewModels;
 
-public class CustomersViewModel : ICustomersViewModel { }
+public class CustomersViewModel : ViewModelBase, ICustomersViewModel { }
