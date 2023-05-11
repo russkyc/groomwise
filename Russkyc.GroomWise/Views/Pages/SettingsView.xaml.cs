@@ -7,9 +7,10 @@ namespace GroomWise.Views.Pages;
 
 public partial class SettingsView : ISettingsView
 {
-    public SettingsView()
+    public SettingsView(ISettingsViewModel viewModel)
     {
         InitializeComponent();
+        DataContext = viewModel;
     }
 
     public void Invalidate()
