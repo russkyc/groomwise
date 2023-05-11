@@ -93,7 +93,7 @@
                 <TextBlock Margin="0,6,0,0"
                            FontSize="12"
                            Foreground="{DynamicResource bg-600}"
-                           Text="Default color theme" />
+                           Text="Global application theme" />
             </StackPanel>
             <WrapPanel Grid.Column="1"
                        Margin="12,12,6,12"
@@ -110,7 +110,7 @@
                                            Command="{Binding DataContext.SwitchBaseThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
                                            CommandParameter="Dark"
                                            CornerRadius="34"
-                                           DefaultBackground="{DynamicResource bg-100}"
+                                           DefaultBackground="{DynamicResource bg-000}"
                                            IsChecked="{Binding ThemeManagerService.DarkMode, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                                            PressedBackground="{DynamicResource bg-200}">
                     <Border Width="24"
@@ -130,7 +130,7 @@
                                            Command="{Binding DataContext.SwitchBaseThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
                                            CommandParameter="Light"
                                            CornerRadius="34"
-                                           DefaultBackground="{DynamicResource bg-100}"
+                                           DefaultBackground="{DynamicResource bg-000}"
                                            IsChecked="{Binding ThemeManagerService.DarkMode, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:InverseBooleanConverter.Instance}}"
                                            PressedBackground="{DynamicResource bg-200}">
                     <Border Width="24"
@@ -152,7 +152,7 @@
                 <TextBlock Margin="0,6,0,0"
                            FontSize="12"
                            Foreground="{DynamicResource bg-600}"
-                           Text="Manage color scheme" />
+                           Text="Primary color scheme" />
             </StackPanel>
             <WrapPanel Grid.Column="1"
                        Margin="12,12,6,12"
@@ -169,7 +169,8 @@
                                            Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
                                            CommandParameter="Gray"
                                            CornerRadius="34"
-                                           DefaultBackground="{DynamicResource bg-100}"
+                                           DefaultBackground="{DynamicResource bg-000}"
+                                           IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Gray}"
                                            PressedBackground="{DynamicResource bg-200}">
                     <Border Width="24"
                             Height="24"
@@ -186,9 +187,30 @@
                                            VerticalContentAlignment="Center"
                                            CheckedBackground="{DynamicResource bg-300}"
                                            Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                                           CommandParameter="Blue"
+                                           CornerRadius="34"
+                                           DefaultBackground="{DynamicResource bg-000}"
+                                           IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Blue}"
+                                           PressedBackground="{DynamicResource bg-200}">
+                    <Border Width="24"
+                            Height="24"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Background="#0462d4"
+                            CornerRadius="24" />
+                </russkyc:ModernRadioButton>
+                <russkyc:ModernRadioButton Width="32"
+                                           Height="32"
+                                           Margin="6,0,0,0"
+                                           Padding="0"
+                                           HorizontalContentAlignment="Center"
+                                           VerticalContentAlignment="Center"
+                                           CheckedBackground="{DynamicResource bg-300}"
+                                           Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
                                            CommandParameter="Purple"
                                            CornerRadius="34"
-                                           DefaultBackground="{DynamicResource bg-100}"
+                                           DefaultBackground="{DynamicResource bg-000}"
+                                           IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Purple}"
                                            PressedBackground="{DynamicResource bg-200}">
                     <Border Width="24"
                             Height="24"
@@ -207,7 +229,8 @@
                                            Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
                                            CommandParameter="Pink"
                                            CornerRadius="34"
-                                           DefaultBackground="{DynamicResource bg-100}"
+                                           DefaultBackground="{DynamicResource bg-000}"
+                                           IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Pink}"
                                            PressedBackground="{DynamicResource bg-200}">
                     <Border Width="24"
                             Height="24"
@@ -226,7 +249,8 @@
                                            Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
                                            CommandParameter="Red"
                                            CornerRadius="34"
-                                           DefaultBackground="{DynamicResource bg-100}"
+                                           DefaultBackground="{DynamicResource bg-000}"
+                                           IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Red}"
                                            PressedBackground="{DynamicResource bg-200}">
                     <Border Width="24"
                             Height="24"
@@ -245,7 +269,8 @@
                                            Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
                                            CommandParameter="Orange"
                                            CornerRadius="34"
-                                           DefaultBackground="{DynamicResource bg-100}"
+                                           DefaultBackground="{DynamicResource bg-000}"
+                                           IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Orange}"
                                            PressedBackground="{DynamicResource bg-200}">
                     <Border Width="24"
                             Height="24"
@@ -264,7 +289,8 @@
                                            Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
                                            CommandParameter="Yellow"
                                            CornerRadius="34"
-                                           DefaultBackground="{DynamicResource bg-100}"
+                                           DefaultBackground="{DynamicResource bg-000}"
+                                           IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Yellow}"
                                            PressedBackground="{DynamicResource bg-200}">
                     <Border Width="24"
                             Height="24"
@@ -281,28 +307,10 @@
                                            VerticalContentAlignment="Center"
                                            CheckedBackground="{DynamicResource bg-300}"
                                            Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
-                                           CommandParameter="Blue"
-                                           CornerRadius="34"
-                                           DefaultBackground="{DynamicResource bg-100}"
-                                           PressedBackground="{DynamicResource bg-200}">
-                    <Border Width="24"
-                            Height="24"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Background="#0462d4"
-                            CornerRadius="24" />
-                </russkyc:ModernRadioButton>
-                <russkyc:ModernRadioButton Width="32"
-                                           Height="32"
-                                           Margin="6,0,0,0"
-                                           Padding="0"
-                                           HorizontalContentAlignment="Center"
-                                           VerticalContentAlignment="Center"
-                                           CheckedBackground="{DynamicResource bg-300}"
-                                           Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
                                            CommandParameter="Lime"
                                            CornerRadius="34"
-                                           DefaultBackground="{DynamicResource bg-100}"
+                                           DefaultBackground="{DynamicResource bg-000}"
+                                           IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Lime}"
                                            PressedBackground="{DynamicResource bg-200}">
                     <Border Width="24"
                             Height="24"
@@ -319,9 +327,30 @@
                                            VerticalContentAlignment="Center"
                                            CheckedBackground="{DynamicResource bg-300}"
                                            Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                                           CommandParameter="Green"
+                                           CornerRadius="34"
+                                           DefaultBackground="{DynamicResource bg-000}"
+                                           IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Green}"
+                                           PressedBackground="{DynamicResource bg-200}">
+                    <Border Width="24"
+                            Height="24"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Background="#00A955"
+                            CornerRadius="24" />
+                </russkyc:ModernRadioButton>
+                <russkyc:ModernRadioButton Width="32"
+                                           Height="32"
+                                           Margin="6,0,0,0"
+                                           Padding="0"
+                                           HorizontalContentAlignment="Center"
+                                           VerticalContentAlignment="Center"
+                                           CheckedBackground="{DynamicResource bg-300}"
+                                           Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
                                            CommandParameter="Teal"
                                            CornerRadius="34"
-                                           DefaultBackground="{DynamicResource bg-100}"
+                                           DefaultBackground="{DynamicResource bg-000}"
+                                           IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Teal}"
                                            PressedBackground="{DynamicResource bg-200}">
                     <Border Width="24"
                             Height="24"
