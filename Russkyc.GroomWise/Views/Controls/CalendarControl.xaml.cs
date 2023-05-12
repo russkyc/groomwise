@@ -19,12 +19,12 @@ public partial class CalendarControl
         private DateTime _currentMonth;
 
         [ObservableProperty]
-        private ObservableCollection<CalendarDate?> _dates;
+        private CalendarDatesCollection _dates;
 
         public CalendarViewModel()
         {
             CurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            Dates = new ObservableCollection<CalendarDate?>();
+            Dates = new CalendarDatesCollection();
             DisplayDates();
         }
 
@@ -56,31 +56,42 @@ public partial class CalendarControl
             // Get the day of the week for the first day of the current month
             var firstDayOfWeek = (int)firstDayOfMonth.DayOfWeek + 1;
 
-            var dayIndex = 1;
-            var dateIndex = 1;
+            Task.Run(async () =>
+                {
+                    var dayIndex = 1;
+                    var dateIndex = 1;
 
-            while (dateIndex <= daysInMonth)
-            {
-                if (dayIndex >= firstDayOfWeek)
-                {
-                    Dates.Add(
-                        new CalendarDate()
-                            .SetDate(dateIndex)
-                            .SetDateInfo(CurrentMonth)
-                            .SetSelected(
-                                CurrentMonth.Year == DateTime.Today.Year
-                                    && CurrentMonth.Month == DateTime.Today.Month
-                                    && dateIndex == DateTime.Now.Day
-                            )
-                    );
-                    dateIndex++;
-                }
-                else
-                {
-                    Dates.Add(null);
-                }
-                dayIndex++;
-            }
+                    while (dateIndex <= daysInMonth)
+                    {
+                        if (dayIndex >= firstDayOfWeek)
+                        {
+                            lock (_dates.Lock)
+                            {
+                                _dates.Add(
+                                    new CalendarDate()
+                                        .SetDate(dateIndex)
+                                        .SetDateInfo(CurrentMonth)
+                                        .SetSelected(
+                                            CurrentMonth.Year == DateTime.Today.Year
+                                                && CurrentMonth.Month == DateTime.Today.Month
+                                                && dateIndex == DateTime.Now.Day
+                                        )
+                                );
+                            }
+                            dateIndex++;
+                        }
+                        else
+                        {
+                            lock (_dates.Lock)
+                            {
+                                _dates.Add(null);
+                            }
+                        }
+
+                        dayIndex++;
+                    }
+                })
+                .ContinueWith(_ => OnPropertyChanged(nameof(Dates)));
         }
     }
 }

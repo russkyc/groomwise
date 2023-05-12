@@ -63,30 +63,37 @@
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        FontWeight="Medium"
+                       Foreground="{DynamicResource bg-600}"
                        Text="S" />
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        FontWeight="Medium"
+                       Foreground="{DynamicResource bg-600}"
                        Text="M" />
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        FontWeight="Medium"
+                       Foreground="{DynamicResource bg-600}"
                        Text="T" />
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        FontWeight="Medium"
+                       Foreground="{DynamicResource bg-600}"
                        Text="W" />
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        FontWeight="Medium"
+                       Foreground="{DynamicResource bg-600}"
                        Text="TH" />
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        FontWeight="Medium"
+                       Foreground="{DynamicResource bg-600}"
                        Text="F" />
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        FontWeight="Medium"
+                       Foreground="{DynamicResource bg-600}"
                        Text="S" />
         </UniformGrid>
         <ItemsControl Grid.Row="2"
@@ -99,33 +106,35 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <russkyc:ModernRadioButton Grid.Row="0"
-                                               Grid.Column="0"
-                                               Width="32"
-                                               Height="32"
-                                               Padding="4"
-                                               Content="{Binding Date}"
-                                               FontSize="14"
-                                               GroupName="CalendarDay"
-                                               IsHitTestVisible="False">
-                        <russkyc:ModernRadioButton.Resources>
-                            <Style BasedOn="{StaticResource {x:Type russkyc:ModernRadioButton}}" TargetType="{x:Type russkyc:ModernRadioButton}">
-                                <Setter Property="Margin" Value="3" />
-                                <Setter Property="CornerRadius" Value="7" />
-                                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                <Setter Property="VerticalContentAlignment" Value="Center" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding}" Value="{x:Null}">
-                                        <Setter Property="DefaultBackground" Value="Transparent" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Selected, Mode=OneWay}" Value="True">
-                                        <Setter Property="FontWeight" Value="Medium" />
-                                        <Setter Property="IsChecked" Value="True" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </russkyc:ModernRadioButton.Resources>
-                    </russkyc:ModernRadioButton>
+                    <Grid Style="{StaticResource FadeInAnimation}">
+                        <russkyc:ModernRadioButton Grid.Row="0"
+                                                   Grid.Column="0"
+                                                   Width="32"
+                                                   Height="32"
+                                                   Padding="4"
+                                                   Content="{Binding Date}"
+                                                   FontSize="14"
+                                                   GroupName="CalendarDay"
+                                                   IsHitTestVisible="False">
+                            <russkyc:ModernRadioButton.Resources>
+                                <Style BasedOn="{StaticResource {x:Type russkyc:ModernRadioButton}}" TargetType="{x:Type russkyc:ModernRadioButton}">
+                                    <Setter Property="Margin" Value="3" />
+                                    <Setter Property="CornerRadius" Value="7" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                                            <Setter Property="DefaultBackground" Value="Transparent" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Selected, Mode=OneWay}" Value="True">
+                                            <Setter Property="FontWeight" Value="Medium" />
+                                            <Setter Property="IsChecked" Value="True" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </russkyc:ModernRadioButton.Resources>
+                        </russkyc:ModernRadioButton>
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
