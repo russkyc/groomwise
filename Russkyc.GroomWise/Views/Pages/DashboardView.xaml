@@ -421,12 +421,6 @@
                                     Margin="24"
                                     VerticalAlignment="Center"
                                     Orientation="Vertical">
-                            <TextBlock FontSize="16"
-                                       FontWeight="Medium"
-                                       Foreground="{DynamicResource inverted-lighten-1}"
-                                       LineHeight="16"
-                                       LineStackingStrategy="BlockLineHeight"
-                                       Text="{Binding Date, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DateTimeToFormattedDateConverter.Instance}}" />
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontSize="22"
                                            FontWeight="Medium"
@@ -514,7 +508,7 @@
                 <Border Grid.Row="1"
                         Background="{DynamicResource bg-100}"
                         CornerRadius="10">
-                    <Grid MinHeight="280" HorizontalAlignment="Stretch">
+                    <Grid MinHeight="300" HorizontalAlignment="Stretch">
                         <controls:CalendarControl Margin="4" />
                     </Grid>
                 </Border>
