@@ -4,7 +4,6 @@
              xmlns:converters="clr-namespace:GroomWise.Services.Converter"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:entities="clr-namespace:GroomWise.Models.Entities"
-             xmlns:local="clr-namespace:GroomWise.Views.Templates"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
              Height="75"
