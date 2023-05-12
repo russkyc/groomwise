@@ -14,15 +14,33 @@
                                          To="1"
                                          Duration="0:0:0.3">
                             <DoubleAnimation.EasingFunction>
-                                <CircleEase EasingMode="EaseOut" />
+                                <CircleEase EasingMode="EaseInOut" />
                             </DoubleAnimation.EasingFunction>
                         </DoubleAnimation>
                         <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
                                          From="20"
                                          To="0"
-                                         Duration="0:0:0.25">
+                                         Duration="0:0:0.3">
                             <DoubleAnimation.EasingFunction>
-                                <CircleEase EasingMode="EaseOut" />
+                                <CircleEase EasingMode="EaseInOut" />
+                            </DoubleAnimation.EasingFunction>
+                        </DoubleAnimation>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="FadeInAnimation" TargetType="{x:Type FrameworkElement}">
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                         From="0"
+                                         To="1"
+                                         Duration="0:0:0.3">
+                            <DoubleAnimation.EasingFunction>
+                                <CircleEase EasingMode="EaseInOut" />
                             </DoubleAnimation.EasingFunction>
                         </DoubleAnimation>
                     </Storyboard>
