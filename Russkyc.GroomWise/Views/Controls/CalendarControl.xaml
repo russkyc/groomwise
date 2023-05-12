@@ -112,7 +112,6 @@
                                                    Width="32"
                                                    Height="32"
                                                    Padding="4"
-                                                   Content="{Binding Date}"
                                                    FontSize="14"
                                                    GroupName="CalendarDay"
                                                    IsHitTestVisible="False">
@@ -133,6 +132,24 @@
                                     </Style.Triggers>
                                 </Style>
                             </russkyc:ModernRadioButton.Resources>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Date, UpdateSourceTrigger=PropertyChanged}" />
+                                <Border x:Name="AppointmentStatus"
+                                        Width="3"
+                                        Height="3"
+                                        Margin="0,1,0,0"
+                                        CornerRadius="3">
+                                    <Border.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding HasAppointment}" Value="True">
+                                                    <Setter Property="Background" Value="{DynamicResource primary-default}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Resources>
+                                </Border>
+                            </StackPanel>
                         </russkyc:ModernRadioButton>
                     </Grid>
                 </DataTemplate>
