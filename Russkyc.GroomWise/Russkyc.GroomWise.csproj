@@ -12,9 +12,9 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <DebugType>none</DebugType>
+        <DebugType>pdbonly</DebugType>
         <Prefer32bit>true</Prefer32bit>
-        <DebugSymbols>false</DebugSymbols>
+        <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
