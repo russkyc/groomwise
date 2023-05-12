@@ -55,7 +55,7 @@ public static class ServiceContainer
             .AddSingleton<IPetsViewModel, PetsViewModel>()
             .AddSingleton<IMainViewModel, MainViewModel>()
             // Add Views
-            .AddSingleton<IAddAppointmentsView, AddAppointmentsView>()
+            .AddTransient<IAddAppointmentsView, AddAppointmentsView>()
             .AddSingleton<IAppointmentsView, AppointmentsView>()
             .AddSingleton<ICustomersView, CustomersView>()
             .AddSingleton<IDashboardView, DashboardView>()
