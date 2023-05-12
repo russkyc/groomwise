@@ -19,7 +19,7 @@
             <b:CallMethodAction MethodName="Hide" TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=russkyc:ModernWindow}}" />
         </b:EventTrigger>
     </b:Interaction.Triggers>
-    <Grid>
+    <Grid Style="{StaticResource FadeInAnimation}">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="70" />
