@@ -5,4 +5,32 @@
 
 namespace GroomWise.ViewModels;
 
-public class EmployeesViewModel : ViewModelBase, IEmployeesViewModel { }
+public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
+{
+    [ObservableProperty]
+    private EmployeesCollection _employees;
+
+    public EmployeesViewModel()
+    {
+        Employees = new EmployeesCollection();
+        GetEmployees();
+    }
+
+    void GetEmployees()
+    {
+        Task.Run(async () =>
+            {
+                for (int i = 0; i < 50; i++)
+                {
+                    _employees.Add(
+                        new Employee
+                        {
+                            FirstName = $"Test{i}",
+                            LastName = $"Test Employee Description {i}"
+                        }
+                    );
+                }
+            })
+            .ContinueWith(task => OnPropertyChanged(nameof(Employees)));
+    }
+}
