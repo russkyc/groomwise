@@ -56,7 +56,7 @@ public partial class CalendarControl
             // Get the day of the week for the first day of the current month
             var firstDayOfWeek = (int)firstDayOfMonth.DayOfWeek + 1;
 
-            Task.Run(async () =>
+            Task.Run(() =>
                 {
                     var dayIndex = 1;
                     var dateIndex = 1;
