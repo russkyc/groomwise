@@ -54,6 +54,6 @@ public class DataClassHelperTests
         // Execute
         var result = subject.HasSameValues(control);
         // Assert
-        Assert.True(result);
+        Assert.False(result);
     }
 }

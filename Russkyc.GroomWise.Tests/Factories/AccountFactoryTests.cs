@@ -10,7 +10,12 @@ public class AccountFactoryTests
     [Theory]
     [InlineData(0, "email@email.com", "russkyc", "password")]
     [InlineData(0, "manager@groomwise.com", "manager", "manager")]
-    void Create_Returns_New_Account(int id, string email, string username, string password)
+    void Create_Returns_New_Account_WithModifications(
+        int id,
+        string email,
+        string username,
+        string password
+    )
     {
         // Setup
         var accountFactory = new AccountFactory();
@@ -25,11 +30,9 @@ public class AccountFactoryTests
         });
 
         // Assert
-        Assert.True(
-            result.Id == id
-                && result.Email == email
-                && result.Username == username
-                && result.Password == password
-        );
+        Assert.Equal(id, result.Id);
+        Assert.Equal(email, result.Email);
+        Assert.Equal(username, result.Username);
+        Assert.Equal(password, result.Password);
     }
 }
