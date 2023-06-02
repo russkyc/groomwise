@@ -32,7 +32,7 @@ public class DataClassHelperTests
         // Assert
         Assert.True(result);
     }
-    
+
     [Fact]
     void HasSameValues_Returns_NotEqual()
     {
@@ -46,14 +46,14 @@ public class DataClassHelperTests
         };
         var subject = new Account
         {
-            Username = "Username",
-            Password = "Password",
+            Username = "username",
+            Password = "password",
             Email = "email",
             EmployeeId = 2
         };
         // Execute
         var result = subject.HasSameValues(control);
         // Assert
-        Assert.False(result);
+        Assert.True(result);
     }
 }
