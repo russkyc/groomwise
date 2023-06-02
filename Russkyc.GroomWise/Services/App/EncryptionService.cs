@@ -118,11 +118,13 @@ public class EncryptionService : IEncryptionService
                 var currentValue = (string)f.GetValue(item)!;
                 f.SetValue(
                     item,
-                    EncryptProvider.AESDecrypt(
-                        currentValue,
-                        _credentialStore.Get("AesKey"),
-                        _credentialStore.Get("AesIv")
-                    )
+                    string.IsNullOrEmpty(currentValue)
+                        ? string.Empty
+                        : EncryptProvider.AESDecrypt(
+                            currentValue,
+                            _credentialStore.Get("AesKey"),
+                            _credentialStore.Get("AesIv")
+                        )
                 );
             });
         return item;
