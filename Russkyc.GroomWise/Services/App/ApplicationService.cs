@@ -37,55 +37,91 @@ public partial class ApplicationService : ObservableObject, IApplicationService
 
         _nav = new List<INavItem>
         {
-            _navItemFactory.Create(
-                "Dashboard",
-                typeof(IDashboardView),
-                _materialIconFactory.Create(MaterialIconKind.ViewDashboard),
-                true,
-                new[] { EmployeeType.Admin, EmployeeType.Groomer, EmployeeType.Manager }
-            ),
-            _navItemFactory.Create(
-                "Appointments",
-                typeof(IAppointmentsView),
-                _materialIconFactory.Create(MaterialIconKind.EventAvailable),
-                false,
-                new[] { EmployeeType.Admin, EmployeeType.Groomer, EmployeeType.Manager }
-            ),
-            _navItemFactory.Create(
-                "Services",
-                typeof(IServicesView),
-                _materialIconFactory.Create(MaterialIconKind.BubbleChart),
-                false,
-                new[] { EmployeeType.Admin, EmployeeType.Manager }
-            ),
-            _navItemFactory.Create(
-                "Pets",
-                typeof(IPetsView),
-                _materialIconFactory.Create(MaterialIconKind.Pets),
-                false,
-                new[] { EmployeeType.Admin, EmployeeType.Groomer, EmployeeType.Manager }
-            ),
-            _navItemFactory.Create(
-                "Customers",
-                typeof(ICustomersView),
-                _materialIconFactory.Create(MaterialIconKind.People),
-                false,
-                new[] { EmployeeType.Admin, EmployeeType.Manager }
-            ),
-            _navItemFactory.Create(
-                "Employees",
-                typeof(IEmployeesView),
-                _materialIconFactory.Create(MaterialIconKind.PeopleGroup),
-                false,
-                new[] { EmployeeType.Manager }
-            ),
-            _navItemFactory.Create(
-                "Reports",
-                typeof(IReportsView),
-                _materialIconFactory.Create(MaterialIconKind.BarChart),
-                false,
-                new[] { EmployeeType.Admin, EmployeeType.Manager }
-            )
+            _navItemFactory.Create(navItem =>
+            {
+                navItem.Name = "Dashboard";
+                navItem.Page = typeof(IDashboardView);
+                navItem.Icon = _materialIconFactory.Create(
+                    icon => icon.Kind = MaterialIconKind.ViewDashboard
+                );
+                navItem.Selected = true;
+                navItem.AccountTypes = new[]
+                {
+                    EmployeeType.Admin,
+                    EmployeeType.Groomer,
+                    EmployeeType.Manager
+                };
+            }),
+            _navItemFactory.Create(navItem =>
+            {
+                navItem.Name = "Appointments";
+                navItem.Page = typeof(IAppointmentsView);
+                navItem.Icon = _materialIconFactory.Create(
+                    icon => icon.Kind = MaterialIconKind.EventAvailable
+                );
+                navItem.Selected = false;
+                navItem.AccountTypes = new[]
+                {
+                    EmployeeType.Admin,
+                    EmployeeType.Groomer,
+                    EmployeeType.Manager
+                };
+            }),
+            _navItemFactory.Create(navItem =>
+            {
+                navItem.Name = "Services";
+                navItem.Page = typeof(IServicesView);
+                navItem.Icon = _materialIconFactory.Create(
+                    icon => icon.Kind = MaterialIconKind.BubbleChart
+                );
+                navItem.Selected = false;
+                navItem.AccountTypes = new[] { EmployeeType.Admin, EmployeeType.Manager };
+            }),
+            _navItemFactory.Create(navItem =>
+            {
+                navItem.Name = "Pets";
+                navItem.Page = typeof(IPetsView);
+                navItem.Icon = _materialIconFactory.Create(
+                    icon => icon.Kind = MaterialIconKind.Pets
+                );
+                navItem.Selected = false;
+                navItem.AccountTypes = new[]
+                {
+                    EmployeeType.Admin,
+                    EmployeeType.Groomer,
+                    EmployeeType.Manager
+                };
+            }),
+            _navItemFactory.Create(navItem =>
+            {
+                navItem.Name = "Customers";
+                navItem.Page = typeof(ICustomersView);
+                navItem.Icon = _materialIconFactory.Create(
+                    icon => icon.Kind = MaterialIconKind.People
+                );
+                navItem.Selected = false;
+                navItem.AccountTypes = new[] { EmployeeType.Admin, EmployeeType.Manager };
+            }),
+            _navItemFactory.Create(navItem =>
+            {
+                navItem.Name = "Employees";
+                navItem.Page = typeof(IEmployeesView);
+                navItem.Icon = _materialIconFactory.Create(
+                    icon => icon.Kind = MaterialIconKind.PeopleGroup
+                );
+                navItem.Selected = false;
+                navItem.AccountTypes = new[] { EmployeeType.Manager };
+            }),
+            _navItemFactory.Create(navItem =>
+            {
+                navItem.Name = "Reports";
+                navItem.Page = typeof(IReportsView);
+                navItem.Icon = _materialIconFactory.Create(
+                    icon => icon.Kind = MaterialIconKind.BarChart
+                );
+                navItem.Selected = false;
+                navItem.AccountTypes = new[] { EmployeeType.Admin, EmployeeType.Manager };
+            })
         };
         NavItems = new NavItemsCollection();
         BuildAppInfo();

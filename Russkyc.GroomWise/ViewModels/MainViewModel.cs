@@ -83,7 +83,11 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     {
         if (
             DialogFactory
-                .Create("Are you sure?", "Do you want to log out? You can log back in anytime.")
+                .Create(dialog =>
+                {
+                    dialog.MessageBoxText = "Are you sure?";
+                    dialog.Caption = "Do you want to log out? You can log back in anytime.";
+                })
                 .ShowDialog() == true
         )
         {

@@ -7,30 +7,39 @@ namespace GroomWise.ViewModels;
 
 public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
 {
+    private readonly IEmployeeRepository _employeeRepository;
+    private readonly IEncryptionService _encryptionService;
+    private readonly ISchedulerService _schedulerService;
+
+    [ObservableProperty]
+    private string _filter;
+
     [ObservableProperty]
     private EmployeesCollection _employees;
 
-    public EmployeesViewModel()
+    public EmployeesViewModel(
+        IEncryptionService encryptionService,
+        IEmployeeRepository employeeRepository,
+        ISchedulerService schedulerService
+    )
     {
+        _encryptionService = encryptionService;
+        _employeeRepository = employeeRepository;
+        _schedulerService = schedulerService;
         Employees = new EmployeesCollection();
-        GetEmployees();
+
+        _schedulerService.RunPeriodically(GetEmployees, TimeSpan.FromSeconds(2));
     }
 
-    void GetEmployees()
+    async Task GetEmployees()
     {
-        Task.Run(async () =>
-            {
-                for (int i = 0; i < 50; i++)
-                {
-                    _employees.Add(
-                        new Employee
-                        {
-                            FirstName = $"Test{i}",
-                            LastName = $"Test Employee Description {i}"
-                        }
-                    );
-                }
-            })
-            .ContinueWith(task => OnPropertyChanged(nameof(Employees)));
+        await Task.Run(() =>
+        {
+            _employeeRepository
+                .GetCollection()
+                .Select(employee => _encryptionService.Decrypt(employee))
+                .ToList()
+                .SyncTo(ref _employees);
+        });
     }
 }

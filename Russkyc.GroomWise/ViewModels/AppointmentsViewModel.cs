@@ -32,16 +32,12 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     void GetAppointments()
     {
         Task.Run(async () =>
-        {
-            await Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                lock (Appointments.Lock)
-                {
-                    Appointments.Clear();
-                    _appointmentsRepository.GetCollection().ToList().ForEach(Appointments.Add);
-                }
-            });
-        });
+                await Application.Current.Dispatcher.InvokeAsync(
+                    () => Appointments.ReplaceRange(_appointmentsRepository.GetCollection())
+                );
+            })
+            .ContinueWith(_ => OnPropertyChanged(nameof(Appointments)));
     }
 
     [RelayCommand]
@@ -51,7 +47,9 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
         {
             await Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                _addAppointmentsViewFactory.Create(BuilderServices.Resolve<IMainView>()).Show();
+                _addAppointmentsViewFactory
+                    .Create(addAppointmentsView => addAppointmentsView.AsChild())
+                    .Show();
             });
         });
     }
