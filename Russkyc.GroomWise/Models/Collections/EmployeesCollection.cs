@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Collections;
 
-public class EmployeesCollection : SynchronizedObservableCollection<IEmployee>
+public class EmployeesCollection : SynchronizedObservableCollection<Employee>
 {
     
 }
