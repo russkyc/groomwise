@@ -8,7 +8,7 @@ namespace GroomWise.Services.Helper;
 public static class WindowHelper
 {
     public static T AsChild<T>(this T child)
-        where T : ModernWindow
+        where T : Window
     {
         child.Owner = (ModernWindow)BuilderServices.Resolve<IMainView>();
         child.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -16,8 +16,8 @@ public static class WindowHelper
         return child;
     }
 
-    public static T AddParent<T>(this T child, ModernWindow parent)
-        where T : ModernWindow
+    public static T AddParent<T>(this T child, Window parent)
+        where T : Window
     {
         child.Owner = parent;
         child.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -26,7 +26,7 @@ public static class WindowHelper
     }
 
     public static T ExitOnParentMouseDown<T>(this T child)
-        where T : ModernWindow
+        where T : Window
     {
         child.Owner.MouseDown += (s, e) => child.Close();
         child.Owner.PreviewMouseDown += (s, e) => child.Close();
@@ -34,7 +34,7 @@ public static class WindowHelper
     }
 
     public static T HideOnParentMouseDown<T>(this T child)
-        where T : ModernWindow
+        where T : Window
     {
         child.Owner.MouseDown += (s, e) => child.Hide();
         child.Owner.PreviewMouseDown += (s, e) => child.Hide();
