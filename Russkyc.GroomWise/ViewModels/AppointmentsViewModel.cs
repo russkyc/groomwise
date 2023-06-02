@@ -5,7 +5,7 @@
 
 namespace GroomWise.ViewModels;
 
-public partial class AppointmentsViewModel : ObservableObject, IAppointmentsViewModel
+public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewModel
 {
     private IAppointmentFactory _appointmentFactory;
     private IAddAppointmentsViewFactory _addAppointmentsViewFactory;
@@ -32,25 +32,12 @@ public partial class AppointmentsViewModel : ObservableObject, IAppointmentsView
     void GetAppointments()
     {
         Task.Run(async () =>
-        {
-            lock (Appointments.Lock)
-                Appointments.Clear();
-            for (var i = 0; i < 50; i++)
             {
-                await Application.Current.Dispatcher.InvokeAsync(() =>
-                {
-                    lock (Appointments.Lock)
-                        Appointments.Add(
-                            _appointmentFactory.Create(
-                                $"Appointment {i}",
-                                $"Service scheduled for {DateTime.Now.AddDays(i).ToString("dddd")}",
-                                DateTime.Now.AddDays(i)
-                            )
-                        );
-                });
-                await Task.Delay(2500);
-            }
-        });
+                await Application.Current.Dispatcher.InvokeAsync(
+                    () => Appointments.ReplaceRange(_appointmentsRepository.GetCollection())
+                );
+            })
+            .ContinueWith(_ => OnPropertyChanged(nameof(Appointments)));
     }
 
     [RelayCommand]
@@ -60,7 +47,9 @@ public partial class AppointmentsViewModel : ObservableObject, IAppointmentsView
         {
             await Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                _addAppointmentsViewFactory.Create(BuilderServices.Resolve<IMainView>()).Show();
+                _addAppointmentsViewFactory
+                    .Create(addAppointmentsView => addAppointmentsView.AsChild())
+                    .Show();
             });
         });
     }

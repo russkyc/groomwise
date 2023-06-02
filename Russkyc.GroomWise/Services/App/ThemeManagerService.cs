@@ -13,6 +13,9 @@ public partial class ThemeManagerService : ObservableObject, IThemeManagerServic
     [ObservableProperty]
     private bool _darkMode;
 
+    [ObservableProperty]
+    private string _colorTheme;
+
     public ThemeManagerService(ILogger logger, IConfigurationService configurationService)
     {
         _logger = logger;
@@ -39,19 +42,31 @@ public partial class ThemeManagerService : ObservableObject, IThemeManagerServic
         Task.Run(async () =>
         {
             SaveColorTheme(color);
-            await Application.Current.Dispatcher.InvokeAsync(
-                () => ThemeManager.Instance.SetColorTheme(color)
-            );
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                ColorTheme = color;
+                ThemeManager.Instance.SetColorTheme(color);
+            });
             _logger.Log(this, $"Set color theme {color}");
         });
+    }
+
+    public IList<string> GetColorThemes()
+    {
+        return ThemeManager.Instance.GetColorThemes().ToList();
+    }
+
+    public IList<string> GetBaseThemes()
+    {
+        return ThemeManager.Instance.GetColorThemes().ToList();
     }
 
     public void Reset()
     {
         SaveBaseTheme(false);
         UseDarkTheme(false);
-        SaveColorTheme("Default");
         UseColorTheme("Default");
+        SaveColorTheme("Default");
         _logger.Log(this, "Reset color theme");
     }
 

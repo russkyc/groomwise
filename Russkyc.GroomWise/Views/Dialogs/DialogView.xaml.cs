@@ -8,8 +8,8 @@ namespace GroomWise.Views.Dialogs;
 public partial class DialogView
 {
     public MessageBoxButton Buttons { get; set; }
-    public string? MessageBoxText { get; }
-    public string? Caption { get; }
+    public string? MessageBoxText { get; set; }
+    public string? Caption { get; set; }
 
     public DialogView()
     {

@@ -15,21 +15,23 @@ public static class ServiceContainer
             .AddSingleton<IEncryptionService, EncryptionService>()
             // Add Configs
             .AddSingleton<IConfigurationService, ConfigurationService>()
+            // Add Scheduler
+            .AddSingleton<ISchedulerService, SchedulerService>()
             // Add Logger
             .AddSingleton<ILogger, DebugAndFileLogger>()
             // Add Global Hotkey Listener
             .AddSingleton<IHotkeyListenerService, HotKeyListenerService>()
             // Add Factory Services
-            .AddSingleton<IMaterialIconFactory, MaterialIconFactory>()
-            .AddSingleton<INavItemFactory, NavItemFactory>()
-            .AddSingleton<IPetFactory, PetFactory>()
-            .AddSingleton<IEmployeeFactory, EmployeeFactory>()
-            .AddSingleton<IAccountFactory, AccountFactory>()
-            .AddSingleton<ICustomerFactory, CustomerFactory>()
-            .AddSingleton<IAppointmentFactory, AppointmentFactory>()
-            .AddSingleton<INotificationFactory, NotificationFactory>()
             .AddSingleton<IAddAppointmentsViewFactory, AddAppointmentsViewFactory>()
+            .AddSingleton<IMaterialIconFactory, MaterialIconFactory>()
+            .AddSingleton<INotificationFactory, NotificationFactory>()
+            .AddSingleton<IAppointmentFactory, AppointmentFactory>()
+            .AddSingleton<ICustomerFactory, CustomerFactory>()
+            .AddSingleton<IEmployeeFactory, EmployeeFactory>()
+            .AddSingleton<INavItemFactory, NavItemFactory>()
+            .AddSingleton<IAccountFactory, AccountFactory>()
             .AddSingleton<IDialogFactory, DialogFactory>()
+            .AddSingleton<IPetFactory, PetFactory>()
             // Add Data Services
             .AddSingleton<IConnectionSourceProvider, ConnectionSourceProvider>()
             .AddSingleton<IDatabaseServiceAsync, DataServiceProviderAsync>()
@@ -37,31 +39,35 @@ public static class ServiceContainer
             .AddSingleton<IMigrationService, MigrationService>()
             // Add Application Services
             .AddSingleton<ISessionManagerService, SessionManagerService>()
-            .AddSingleton<IApplicationService, ApplicationService>()
             .AddSingleton<IThemeManagerService, ThemeManagerService>()
+            .AddSingleton<IApplicationService, ApplicationService>()
             // Add Repository Services
+            .AddSingleton<IAppointmentsRepository, AppointmentsRepository>()
             .AddSingleton<IAccountsRepository, AccountsRepository>()
             .AddSingleton<IEmployeeRepository, EmployeeRepository>()
-            .AddSingleton<IAppointmentsRepository, AppointmentsRepository>()
             // Add ViewModels
             .AddSingleton<IAppointmentsViewModel, AppointmentsViewModel>()
+            .AddSingleton<IEmployeesViewModel, EmployeesViewModel>()
             .AddSingleton<ICustomersViewModel, CustomersViewModel>()
             .AddSingleton<IDashboardViewModel, DashboardViewModel>()
-            .AddSingleton<IPetsViewModel, PetsViewModel>()
-            .AddSingleton<IReportsViewModel, ReportsViewModel>()
             .AddSingleton<IServicesViewModel, ServicesViewModel>()
-            .AddSingleton<IMainViewModel, MainViewModel>()
+            .AddSingleton<ISettingsViewModel, SettingsViewModel>()
+            .AddSingleton<IReportsViewModel, ReportsViewModel>()
             .AddSingleton<ILoginViewModel, LoginViewModel>()
+            .AddSingleton<IPetsViewModel, PetsViewModel>()
+            .AddSingleton<IMainViewModel, MainViewModel>()
             // Add Views
+            .AddTransient<IAddAppointmentsView, AddAppointmentsView>()
             .AddSingleton<IAppointmentsView, AppointmentsView>()
             .AddSingleton<ICustomersView, CustomersView>()
             .AddSingleton<IDashboardView, DashboardView>()
-            .AddSingleton<IPetsView, PetsView>()
-            .AddSingleton<IReportsView, ReportsView>()
+            .AddSingleton<IEmployeesView, EmployeesView>()
+            .AddSingleton<ISettingsView, SettingsView>()
             .AddSingleton<IServicesView, ServicesView>()
-            .AddSingleton<IMainView, MainView>()
+            .AddSingleton<IReportsView, ReportsView>()
             .AddSingleton<ILoginView, LoginView>()
-            .AddSingleton<IAddAppointmentsView, AddAppointmentsView>()
+            .AddSingleton<IPetsView, PetsView>()
+            .AddSingleton<IMainView, MainView>()
             // Build Container
             .Build();
     }

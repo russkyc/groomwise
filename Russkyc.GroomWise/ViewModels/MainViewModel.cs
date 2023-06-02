@@ -5,7 +5,7 @@
 
 namespace GroomWise.ViewModels;
 
-public partial class MainViewModel : ObservableObject, IMainViewModel
+public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
     [ObservableProperty]
     private IDialogFactory _dialogFactory;
@@ -67,11 +67,27 @@ public partial class MainViewModel : ObservableObject, IMainViewModel
     }
 
     [RelayCommand]
+    private async void OpenSettings()
+    {
+        await Task.Run(async () =>
+        {
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                View = BuilderServices.Resolve<ISettingsView>();
+            });
+        });
+    }
+
+    [RelayCommand]
     private void Logout()
     {
         if (
             DialogFactory
-                .Create("Are you sure?", "Do you want to log out? You can log back in anytime.")
+                .Create(dialog =>
+                {
+                    dialog.MessageBoxText = "Are you sure?";
+                    dialog.Caption = "Do you want to log out? You can log back in anytime.";
+                })
                 .ShowDialog() == true
         )
         {

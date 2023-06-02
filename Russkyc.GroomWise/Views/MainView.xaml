@@ -7,45 +7,103 @@
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
                       xmlns:templates="clr-namespace:GroomWise.Views.Templates"
-                      xmlns:viewModels1="clr-namespace:GroomWise.ViewModels"
+                      xmlns:viewModels="clr-namespace:GroomWise.ViewModels"
                       Title="GroomWise"
                       Width="1280"
                       Height="720"
-                      MinWidth="900"
-                      MinHeight="550"
-                      d:DataContext="{d:DesignInstance viewModels1:MainViewModel,
+                      MinWidth="950"
+                      MinHeight="650"
+                      d:DataContext="{d:DesignInstance viewModels:MainViewModel,
                                                        IsDesignTimeCreatable=True}"
                       d:DesignHeight="864"
                       d:DesignWidth="1546"
+                      HideDefaultWindowTitle="True"
                       TitleBarHeight="38"
                       WindowStartupLocation="CenterScreen"
                       mc:Ignorable="d">
     <russkyc:ModernWindow.TitleBarTemplate>
-        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-            <russkyc:ModernButton Margin="5"
-                                  Padding="6"
-                                  Command="{Binding LogoutCommand}"
-                                  Content="Logout"
-                                  CornerRadius="5"
-                                  DefaultBackground="{DynamicResource bg-100}"
-                                  DefaultForeground="{DynamicResource fg-000}"
-                                  HoverBackground="{DynamicResource bg-200}"
-                                  HoverForeground="{DynamicResource fg-000}"
-                                  LeftIcon="{icons:MaterialIconExt Kind=UserRemove}"
-                                  PressedBackground="{DynamicResource bg-300}"
-                                  PressedForeground="{DynamicResource fg-000}" />
-            <russkyc:ModernToggleButton Width="30"
-                                        Margin="5"
-                                        Padding="6"
-                                        CheckedForeground="{DynamicResource inverted-lighten-3}"
-                                        Command="{Binding SwitchBaseThemeCommand}"
-                                        CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
-                                        Content="{icons:MaterialIconExt Kind=Lightbulb}"
-                                        CornerRadius="5"
-                                        DefaultForeground="{DynamicResource fg-600}"
-                                        HoverForeground="{DynamicResource fg-500}"
-                                        IsChecked="{Binding ThemeManagerService.DarkMode, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Image Width="23"
+                       Height="23"
+                       Margin="7"
+                       VerticalAlignment="Center">
+                    <Image.Source>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <DrawingGroup>
+                                    <GeometryDrawing Brush="Transparent" Geometry="F1M0,0L257,0L257,256L0,256z" />
+                                    <DrawingGroup>
+                                        <DrawingGroup.Transform>
+                                            <MatrixTransform Matrix="1,0,0,1,-3097,0" />
+                                        </DrawingGroup.Transform>
+                                        <DrawingGroup>
+                                            <DrawingGroup.Transform>
+                                                <MatrixTransform Matrix="0.196897,0,0,0.196897,2210.33,-89.0816" />
+                                            </DrawingGroup.Transform>
+                                            <DrawingGroup>
+                                                <DrawingGroup.Transform>
+                                                    <MatrixTransform Matrix="1.5974699,0,0,2.71304,3956.6006,-2491.7998" />
+                                                </DrawingGroup.Transform>
+                                                <DrawingGroup>
+                                                    <DrawingGroup.Transform>
+                                                        <MatrixTransform Matrix="0.99999994,0,0,0.588813,0,0" />
+                                                    </DrawingGroup.Transform>
+                                                    <GeometryDrawing Brush="{DynamicResource primary-default}" Geometry="F0 M1156.79 2046.61C1156.79 1934.35 1065.65 1843.21 953.394 1843.21L546.606 1843.21C434.35 1843.21 343.212 1934.35 343.212 2046.61L343.212 2453.39C343.212 2565.65 434.35 2656.79 546.606 2656.79L953.394 2656.79C1065.65 2656.79 1156.79 2565.65 1156.79 2453.39L1156.79 2046.61Z" />
+                                                </DrawingGroup>
+                                                <DrawingGroup>
+                                                    <DrawingGroup.Transform>
+                                                        <MatrixTransform Matrix="3.1780298,0,0,1.87127,-9500.04,1097.67" />
+                                                    </DrawingGroup.Transform>
+                                                    <GeometryDrawing Brush="{DynamicResource inverted-darken-2}" Geometry="F0 M3214.78 97.333L3214.78 108.378C3214.78 123.993 3202.1 136.671 3186.49 136.671C3170.87 136.671 3158.2 123.993 3158.2 108.378C3158.2 102.586 3153.49 97.884 3147.7 97.884C3141.91 97.884 3137.21 102.586 3137.21 108.378C3137.21 128.261 3149.01 145.409 3165.98 153.196L3165.96 153.268C3165.86 153.742 3165.79 154.22 3165.75 154.703C3165.72 155.197 3165.72 155.693 3165.73 156.188C3165.74 156.712 3165.76 157.235 3165.79 157.758C3165.95 160.239 3166.37 162.702 3167.05 165.094C3168.1 168.78 3169.76 172.285 3171.95 175.434C3175.72 180.873 3181.02 185.199 3187.12 187.78C3190.25 189.104 3193.57 189.965 3196.95 190.33C3200.85 190.752 3204.83 190.52 3208.65 189.636C3211.78 188.913 3214.81 187.753 3217.62 186.202C3221.43 184.1 3224.84 181.285 3227.64 177.945C3230.22 174.856 3232.26 171.326 3233.64 167.547C3235.06 163.693 3235.76 159.612 3235.77 155.51L3235.77 148.724C3243.78 154.353 3253.54 157.66 3264.06 157.66C3291.26 157.66 3313.35 135.577 3313.35 108.378C3313.35 102.586 3308.64 97.884 3302.85 97.884C3297.06 97.884 3292.36 102.586 3292.36 108.378C3292.36 123.993 3279.68 136.671 3264.06 136.671C3248.45 136.671 3235.77 123.993 3235.77 108.378L3235.77 97.546L3247.8 82.517C3250.32 79.366 3250.81 75.051 3249.06 71.415C3247.31 67.779 3243.63 65.466 3239.6 65.466L3211.22 65.466C3207.19 65.466 3203.52 67.77 3201.77 71.397C3200.01 75.023 3200.49 79.331 3203 82.485L3214.78 97.333ZM3214.78 148.724C3206.87 154.283 3197.26 157.578 3186.88 157.658C3187.91 164.386 3193.73 169.545 3200.75 169.545C3208.49 169.545 3214.78 163.256 3214.78 155.51L3214.78 148.724Z" />
+                                                </DrawingGroup>
+                                                <DrawingGroup>
+                                                    <DrawingGroup.Transform>
+                                                        <MatrixTransform Matrix="3.1780298,0,0,1.87127,-9500.04,1085.3099" />
+                                                    </DrawingGroup.Transform>
+                                                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F0 M3214.78 97.333L3214.78 108.378C3214.78 123.993 3202.1 136.671 3186.49 136.671C3170.87 136.671 3158.2 123.993 3158.2 108.378C3158.2 102.586 3153.49 97.884 3147.7 97.884C3141.91 97.884 3137.21 102.586 3137.21 108.378C3137.21 128.261 3149.01 145.409 3165.98 153.196L3165.96 153.268C3165.86 153.742 3165.79 154.22 3165.75 154.703C3165.72 155.197 3165.72 155.693 3165.73 156.188C3165.74 156.712 3165.76 157.235 3165.79 157.758C3165.95 160.239 3166.37 162.702 3167.05 165.094C3168.1 168.78 3169.76 172.285 3171.95 175.434C3175.72 180.873 3181.02 185.199 3187.12 187.78C3190.25 189.104 3193.57 189.965 3196.95 190.33C3200.85 190.752 3204.83 190.52 3208.65 189.636C3211.78 188.913 3214.81 187.753 3217.62 186.202C3221.43 184.1 3224.84 181.285 3227.64 177.945C3230.22 174.856 3232.26 171.326 3233.64 167.547C3235.06 163.693 3235.76 159.612 3235.77 155.51L3235.77 148.724C3243.78 154.353 3253.54 157.66 3264.06 157.66C3291.26 157.66 3313.35 135.577 3313.35 108.378C3313.35 102.586 3308.64 97.884 3302.85 97.884C3297.06 97.884 3292.36 102.586 3292.36 108.378C3292.36 123.993 3279.68 136.671 3264.06 136.671C3248.45 136.671 3235.77 123.993 3235.77 108.378L3235.77 97.546L3247.8 82.517C3250.32 79.366 3250.81 75.051 3249.06 71.415C3247.31 67.779 3243.63 65.466 3239.6 65.466L3211.22 65.466C3207.19 65.466 3203.52 67.77 3201.77 71.397C3200.01 75.023 3200.49 79.331 3203 82.485L3214.78 97.333ZM3214.78 148.724C3206.87 154.283 3197.26 157.578 3186.88 157.658C3187.91 164.386 3193.73 169.545 3200.75 169.545C3208.49 169.545 3214.78 163.256 3214.78 155.51L3214.78 148.724Z" />
+                                                </DrawingGroup>
+                                            </DrawingGroup>
+                                        </DrawingGroup>
+                                    </DrawingGroup>
+                                </DrawingGroup>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Image.Source>
+                </Image>
+                <TextBlock VerticalAlignment="Center" Text="GroomWise" />
+            </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <russkyc:ModernButton Margin="5"
+                                      Padding="6"
+                                      Command="{Binding LogoutCommand}"
+                                      Content="Logout"
+                                      CornerRadius="5"
+                                      DefaultBackground="{DynamicResource bg-100}"
+                                      DefaultForeground="{DynamicResource fg-000}"
+                                      HoverBackground="{DynamicResource bg-200}"
+                                      HoverForeground="{DynamicResource fg-000}"
+                                      LeftIcon="{icons:MaterialIconExt Kind=UserRemove}"
+                                      PressedBackground="{DynamicResource bg-300}"
+                                      PressedForeground="{DynamicResource fg-000}" />
+                <russkyc:ModernToggleButton Width="30"
+                                            Margin="5"
+                                            Padding="6"
+                                            CheckedForeground="{DynamicResource inverted-lighten-3}"
+                                            Command="{Binding SwitchBaseThemeCommand}"
+                                            CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                            Content="{icons:MaterialIconExt Kind=Lightbulb}"
+                                            CornerRadius="5"
+                                            DefaultForeground="{DynamicResource fg-600}"
+                                            HoverForeground="{DynamicResource fg-500}"
+                                            IsChecked="{Binding ThemeManagerService.DarkMode, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+        </Grid>
     </russkyc:ModernWindow.TitleBarTemplate>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -74,6 +132,20 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+            <russkyc:ModernRadioButton Width="40"
+                                       Height="40"
+                                       Margin="8"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Bottom"
+                                       Command="{Binding Path=DataContext.OpenSettingsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type russkyc:ModernWindow}}}"
+                                       Content="{icons:MaterialIconExt Kind=Settings}"
+                                       CornerRadius="10"
+                                       DefaultForeground="{DynamicResource bg-600}"
+                                       GroupName="NavItemGroup"
+                                       HoverBackground="{DynamicResource bg-200}"
+                                       HoverForeground="{DynamicResource bg-600}"
+                                       PressedForeground="{DynamicResource inverted-default}"
+                                       ToolTip="Settings" />
         </Grid>
         <ContentControl Grid.Column="1" Content="{Binding View, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>

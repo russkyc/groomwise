@@ -11,8 +11,6 @@
              Height="40"
              d:DataContext="{d:DesignInstance entities:NavItem,
                                               IsDesignTimeCreatable=True}"
-             d:DesignHeight="38"
-             d:DesignWidth="38"
              mc:Ignorable="d">
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
@@ -20,7 +18,7 @@
         </b:EventTrigger>
     </b:Interaction.Triggers>
     <Grid Background="Transparent">
-        <russkyc:ModernRadioButton Padding="8"
+        <russkyc:ModernRadioButton Padding="4"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch"
                                    Command="{Binding Path=DataContext.GetViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type russkyc:ModernWindow}}}"

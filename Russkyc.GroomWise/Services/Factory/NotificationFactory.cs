@@ -1,5 +1,5 @@
 ﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
-// 
+//
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
@@ -7,13 +7,10 @@ namespace GroomWise.Services.Factory;
 
 public class NotificationFactory : INotificationFactory
 {
-    public Notification Create()
+    public Notification Create(Action<Notification> builder = null)
     {
-        return new Notification();
-    }
-
-    public Notification Create(params object[] values)
-    {
-        throw new NotImplementedException();
+        var notification = new Notification();
+        builder(notification);
+        return notification;
     }
 }

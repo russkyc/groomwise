@@ -13,7 +13,7 @@
              d:DesignWidth="200"
              Background="Transparent"
              IsTabStop="False"
-             Style="{StaticResource FadeUpAnimation}"
+             Style="{StaticResource FadeInFromBottomAnimation}"
              mc:Ignorable="d">
     <Border CornerRadius="5">
         <Border.Style>

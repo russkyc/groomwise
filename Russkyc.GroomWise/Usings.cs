@@ -21,6 +21,10 @@ global using System.ComponentModel.DataAnnotations;
 // Ini.Net
 global using Ini.Net;
 
+// DarkHelpers
+global using DarkHelpers.Collections;
+global using DarkHelpers.WPF;
+
 // NetCore.Encrypt
 global using NETCore.Encrypt;
 global using NETCore.Encrypt.Extensions;

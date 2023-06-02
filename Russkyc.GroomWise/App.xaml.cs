@@ -16,6 +16,9 @@ public partial class App
     public App()
     {
         InitializeComponent();
+
+        DarkObservableCollectionSettings.RegisterSynchronizer<DarkWpfSynchronizer>();
+
         BuilderServices.BuildWithContainer(ServiceContainer.ConfigureServices());
         BuilderServices.Resolve<IHotkeyListenerService>().Start();
         BuilderServices.Resolve<IMigrationService>().RunMigrations();

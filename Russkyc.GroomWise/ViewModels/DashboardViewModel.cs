@@ -47,23 +47,19 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
     {
         Task.Run(async () =>
         {
-            lock (Appointments.Lock)
-                Appointments.Clear();
             for (var i = 0; i < 50; i++)
             {
                 await Application.Current.Dispatcher.InvokeAsync(() =>
                 {
-                    lock (Appointments.Lock)
-                    {
-                        Appointments.Insert(
-                            0,
-                            _appointmentFactory.Create(
-                                $"Appointment {i}",
-                                $"Service scheduled for today",
-                                DateTime.Now
-                            )
-                        );
-                    }
+                    Appointments.Insert(
+                        0,
+                        _appointmentFactory.Create(appointment =>
+                        {
+                            appointment.Title = $"Appointment {i}";
+                            appointment.Description = "Service scheduled for today";
+                            appointment.Date = DateTime.Now;
+                        })
+                    );
                 });
                 await Task.Delay(2500);
             }
