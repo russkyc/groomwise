@@ -65,27 +65,21 @@ public partial class CalendarControl
                     {
                         if (dayIndex >= firstDayOfWeek)
                         {
-                            lock (_dates.Lock)
-                            {
-                                _dates.Add(
-                                    new CalendarDate()
-                                        .SetDate(dateIndex)
-                                        .SetDateInfo(CurrentMonth)
-                                        .SetSelected(
-                                            CurrentMonth.Year == DateTime.Today.Year
-                                                && CurrentMonth.Month == DateTime.Today.Month
-                                                && dateIndex == DateTime.Now.Day
-                                        )
-                                );
-                            }
+                            _dates.Add(
+                                new CalendarDate()
+                                    .SetDate(dateIndex)
+                                    .SetDateInfo(CurrentMonth)
+                                    .SetSelected(
+                                        CurrentMonth.Year == DateTime.Today.Year
+                                            && CurrentMonth.Month == DateTime.Today.Month
+                                            && dateIndex == DateTime.Now.Day
+                                    )
+                            );
                             dateIndex++;
                         }
                         else
                         {
-                            lock (_dates.Lock)
-                            {
-                                _dates.Add(null);
-                            }
+                            _dates.Add(null);
                         }
 
                         dayIndex++;
