@@ -7,4 +7,17 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Configurations\" />
+      <Folder Include="Migrations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="JsonFlatFileDataStore" Version="2.4.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Russkyc.GroomWise\Russkyc.GroomWise.csproj" />
+    </ItemGroup>
+
 </Project>
