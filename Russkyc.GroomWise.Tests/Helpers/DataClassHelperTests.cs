@@ -27,8 +27,10 @@ public class DataClassHelperTests
             Email = "email",
             EmployeeId = 0
         };
+
         // Execute
         var result = subject.HasSameValues(control);
+
         // Assert
         Assert.True(result);
     }
@@ -51,8 +53,10 @@ public class DataClassHelperTests
             Email = "email",
             EmployeeId = 2
         };
+
         // Execute
         var result = subject.HasSameValues(control);
+
         // Assert
         Assert.False(result);
     }

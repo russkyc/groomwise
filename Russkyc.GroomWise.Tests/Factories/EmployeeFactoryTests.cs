@@ -8,8 +8,8 @@ namespace Russkyc.GroomWise.Tests.Factories;
 public class EmployeeFactoryTests
 {
     [Theory]
-    [InlineData(0, "email@email.com", "russkyc", "password", 0, 0)]
-    [InlineData(0, "manager@groomwise.com", "manager", "manager", 0, 1)]
+    [InlineData(0, "John Russell", "Casabuena", "Camo", 0, 0)]
+    [InlineData(0, "Cronica", "Menes", "Llona", 1, 1)]
     void Create_Returns_New_Employee_WithModifications(
         int id,
         string firstName,
