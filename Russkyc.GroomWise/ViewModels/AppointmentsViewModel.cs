@@ -33,8 +33,8 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     {
         Task.Run(async () =>
             {
-                await Application.Current.Dispatcher.InvokeAsync(
-                    () => Appointments.ReplaceRange(_appointmentsRepository.GetCollection())
+                await DispatchHelper.UiInvokeAsync(
+                    () => _appointments.AddRange(_appointmentsRepository.GetCollection())
                 );
             })
             .ContinueWith(_ => OnPropertyChanged(nameof(Appointments)));
@@ -45,12 +45,12 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     {
         Task.Run(async () =>
         {
-            await Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                _addAppointmentsViewFactory
-                    .Create(addAppointmentsView => addAppointmentsView.AsChild())
-                    .Show();
-            });
+            await DispatchHelper.UiInvokeAsync(
+                () =>
+                    _addAppointmentsViewFactory
+                        .Create(addAppointmentsView => addAppointmentsView.AsChild())
+                        .Show()
+            );
         });
     }
 }

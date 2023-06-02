@@ -57,7 +57,7 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
         {
             await Task.Run(async () =>
             {
-                await Application.Current.Dispatcher.InvokeAsync(() =>
+                await DispatchHelper.UiInvokeAsync(() =>
                 {
                     View = BuilderServices.Resolve(navItem.Page) as IPage;
                     ApplicationService.NavItems.First(item => item == navItem).Selected = true;
@@ -71,10 +71,9 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     {
         await Task.Run(async () =>
         {
-            await Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                View = BuilderServices.Resolve<ISettingsView>();
-            });
+            await DispatchHelper.UiInvokeAsync(
+                () => View = BuilderServices.Resolve<ISettingsView>()
+            );
         });
     }
 

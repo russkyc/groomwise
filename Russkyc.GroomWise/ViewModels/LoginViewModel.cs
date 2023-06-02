@@ -110,7 +110,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
         Task.Run(async () =>
         {
             RegisterHotKeys();
-            await Application.Current.Dispatcher.InvokeAsync(() =>
+            await DispatchHelper.UiInvokeAsync(() =>
             {
                 RemoveNotification();
                 BuilderServices.Resolve<IMainView>().Show();
@@ -145,10 +145,9 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
                 .WithName("CreateAppointment"),
             () =>
             {
-                Application.Current.Dispatcher.BeginInvoke(() =>
-                {
-                    BuilderServices.Resolve<IAddAppointmentsViewFactory>().Create().Show();
-                });
+                DispatchHelper.UiInvoke(
+                    () => BuilderServices.Resolve<IAddAppointmentsViewFactory>().Create().Show()
+                );
             }
         );
     }
