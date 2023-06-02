@@ -11,11 +11,11 @@
                                               IsDesignTimeCreatable=True}"
              d:DesignHeight="720"
              d:DesignWidth="1280"
-             Style="{StaticResource FadeUpAnimation}"
+             Style="{StaticResource FadeInFromBottomAnimation}"
              mc:Ignorable="d">
     <Grid Width="700"
           Margin="20"
-          Style="{StaticResource FadeUpAnimation}">
+          Style="{StaticResource FadeInFromBottomAnimation}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

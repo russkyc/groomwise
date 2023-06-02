@@ -10,7 +10,7 @@
              d:DataContext="{d:DesignInstance entities:Appointment,
                                               IsDesignTimeCreatable=True}"
              d:DesignWidth="300"
-             Style="{StaticResource FadeUpAnimation}"
+             Style="{StaticResource FadeInFromBottomAnimation}"
              mc:Ignorable="d">
     <russkyc:ModernButton Padding="5"
                           HorizontalContentAlignment="Stretch"

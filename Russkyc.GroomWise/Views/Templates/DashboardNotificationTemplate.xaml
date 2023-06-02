@@ -12,7 +12,7 @@
              d:DesignWidth="300"
              Background="Transparent"
              IsTabStop="False"
-             Style="{StaticResource FadeUpAnimation}"
+             Style="{StaticResource FadeInFromBottomAnimation}"
              mc:Ignorable="d">
     <russkyc:ModernButton Padding="5"
                           HorizontalContentAlignment="Stretch"

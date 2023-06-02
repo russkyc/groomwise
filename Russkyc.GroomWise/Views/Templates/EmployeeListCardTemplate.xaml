@@ -9,64 +9,56 @@
              d:DesignWidth="600"
              Background="Transparent"
              mc:Ignorable="d">
-
-
-    <Border Background="{DynamicResource bg-100}" CornerRadius="10">
-        <Grid HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Border Grid.Column="0"
-                    Width="40"
-                    Height="40"
-                    Margin="12,0"
-                    VerticalAlignment="Center"
-                    Background="{DynamicResource primary-default}"
-                    CornerRadius="40" />
-            <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                <TextBlock FontSize="14" Text="Employee Name" />
-                <TextBlock FontSize="10"
-                           Foreground="{DynamicResource bg-600}"
-                           Text="Employee Name" />
-            </StackPanel>
-            <StackPanel Grid.Column="2"
-                        Margin="12,0"
-                        VerticalAlignment="Center">
-                <TextBlock FontSize="14" Text="Employee Name" />
-                <TextBlock FontSize="10"
-                           Foreground="{DynamicResource bg-600}"
-                           Text="Employee Name" />
-            </StackPanel>
-            <Border Grid.Column="4"
-                    Width="80"
-                    Margin="12,0"
-                    Padding="5"
-                    VerticalAlignment="Center"
-                    Background="{DynamicResource primary-default}"
-                    CornerRadius="12">
-                <TextBlock HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           FontSize="12"
-                           Foreground="{DynamicResource inverted-default}"
-                           Text="Role Type" />
-            </Border>
-            <StackPanel Grid.Column="5"
+    <Grid Style="{StaticResource FadeInFromBottomAnimation}">
+        <Border Background="{DynamicResource bg-100}" CornerRadius="10">
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0"
+                        Width="40"
+                        Height="40"
                         Margin="12,0"
                         VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                <StackPanel.Resources>
-                    <Style BasedOn="{StaticResource {x:Type russkyc:ModernButton}}" TargetType="{x:Type russkyc:ModernButton}">
-                        <Setter Property="Margin" Value="5" />
-                    </Style>
-                </StackPanel.Resources>
-                <russkyc:ModernButton />
-                <russkyc:ModernButton />
-            </StackPanel>
-        </Grid>
-    </Border>
+                        Background="{DynamicResource primary-default}"
+                        CornerRadius="40" />
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock FontSize="14" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock FontSize="10"
+                               Foreground="{DynamicResource bg-600}"
+                               Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+                <Border Grid.Column="4"
+                        Width="80"
+                        Margin="12,0"
+                        Padding="5"
+                        VerticalAlignment="Center"
+                        Background="{DynamicResource primary-default}"
+                        CornerRadius="12">
+                    <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="12"
+                               Foreground="{DynamicResource inverted-default}"
+                               Text="Role Type" />
+                </Border>
+                <StackPanel Grid.Column="5"
+                            Margin="12,0"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                    <StackPanel.Resources>
+                        <Style BasedOn="{StaticResource {x:Type russkyc:ModernButton}}" TargetType="{x:Type russkyc:ModernButton}">
+                            <Setter Property="Margin" Value="5" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <russkyc:ModernButton />
+                    <russkyc:ModernButton />
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
 </UserControl>

@@ -18,7 +18,7 @@
         </b:EventTrigger>
     </b:Interaction.Triggers>
     <Grid Background="Transparent">
-        <russkyc:ModernRadioButton Padding="8"
+        <russkyc:ModernRadioButton Padding="4"
                                    HorizontalAlignment="Stretch"
                                    VerticalAlignment="Stretch"
                                    Command="{Binding Path=DataContext.GetViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type russkyc:ModernWindow}}}"
