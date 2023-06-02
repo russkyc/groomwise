@@ -15,6 +15,8 @@ public static class ServiceContainer
             .AddSingleton<IEncryptionService, EncryptionService>()
             // Add Configs
             .AddSingleton<IConfigurationService, ConfigurationService>()
+            // Add Scheduler
+            .AddSingleton<ISchedulerService, SchedulerService>()
             // Add Logger
             .AddSingleton<ILogger, DebugAndFileLogger>()
             // Add Global Hotkey Listener
