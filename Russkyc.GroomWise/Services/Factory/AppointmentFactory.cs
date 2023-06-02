@@ -7,23 +7,10 @@ namespace GroomWise.Services.Factory;
 
 public class AppointmentFactory : IAppointmentFactory
 {
-    public Appointment Create()
+    public Appointment Create(Action<Appointment> builder = null)
     {
-        return new Appointment();
-    }
-
-    public Appointment Create(params object[] values)
-    {
-        return new Appointment
-        {
-            Title = (string)values[0],
-            Description = (string)values[1],
-            Date = (DateTime)values[2],
-            PetId = (int)values[3],
-            CustomerId = (int)values[4],
-            EmployeeId = (int)values[5],
-            GroomingServiceId = (int)values[6],
-            AppointmentStatus = (int)values[7]
-        };
+        var appointment = new Appointment();
+        builder(appointment);
+        return appointment;
     }
 }
