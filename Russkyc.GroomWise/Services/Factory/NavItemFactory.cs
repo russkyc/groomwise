@@ -7,10 +7,10 @@ namespace GroomWise.Services.Factory;
 
 public class NavItemFactory : INavItemFactory
 {
-    public NavItem Create(Action<NavItem> builder = null)
+    public NavItem Create(Action<NavItem>? builder = null)
     {
         var navItem = new NavItem();
-        builder(navItem);
+        builder!(navItem);
         return navItem;
     }
 }

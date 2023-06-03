@@ -4,12 +4,18 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Models.Entities;
+using GroomWise.Models.Interfaces.Service;
+using GroomWise.Services.App;
 using Russkyc.Groomwise.Cli.Services;
 
 namespace Russkyc.Groomwise.Cli;
 
 public class Program
 {
+    private static IEncryptionService _encryptionService = new EncryptionService(
+        new CredentialStore()
+    );
+
     public static void Main(string[] args)
     {
         CreateAccountsMigration();
@@ -19,32 +25,31 @@ public class Program
     static void CreateAccountsMigration()
     {
         new Migration<Account>(
-            "Accounts.json",
             "Accounts",
             new List<Account>
             {
                 new Account
                 {
                     Id = 0,
-                    Username = "russkyc",
-                    Password = "1234",
-                    Email = "russkyc@groomwise.com",
+                    Username = _encryptionService.Encrypt("russkyc"),
+                    Password = _encryptionService.Hash("1234"),
+                    Email = _encryptionService.Encrypt("russkyc@groomwise.com"),
                     EmployeeId = 0
                 },
                 new Account
                 {
                     Id = 1,
-                    Username = "manager",
-                    Password = "manager",
-                    Email = "manager@groomwise.com",
+                    Username = _encryptionService.Encrypt("manager"),
+                    Password = _encryptionService.Hash("manager"),
+                    Email = _encryptionService.Encrypt("manager@groomwise.com"),
                     EmployeeId = 1
                 },
                 new Account
                 {
                     Id = 2,
-                    Username = "groomer",
-                    Password = "groomer",
-                    Email = "groomer@groomwise.com",
+                    Username = _encryptionService.Encrypt("groomer"),
+                    Password = _encryptionService.Hash("groomer"),
+                    Email = _encryptionService.Encrypt("groomer@groomwise.com"),
                     EmployeeId = 2
                 },
             }
@@ -54,34 +59,33 @@ public class Program
     static void CreateEmployeesMigration()
     {
         new Migration<Employee>(
-            "Employees.json",
             "Employees",
             new List<Employee>
             {
                 new Employee
                 {
                     Id = 0,
-                    FirstName = "John Russell",
-                    MiddleName = "Casabuena",
-                    LastName = "Camo",
+                    FirstName = _encryptionService.Encrypt("John Russell"),
+                    MiddleName = _encryptionService.Encrypt("Casabuena"),
+                    LastName = _encryptionService.Encrypt("Camo"),
                     AddressId = 0,
                     EmployeeType = 0
                 },
                 new Employee
                 {
                     Id = 1,
-                    FirstName = "John",
-                    MiddleName = "Williams",
-                    LastName = "Doe",
+                    FirstName = _encryptionService.Encrypt("John"),
+                    MiddleName = _encryptionService.Encrypt("Williams"),
+                    LastName = _encryptionService.Encrypt("Doe"),
                     AddressId = 1,
                     EmployeeType = 1
                 },
                 new Employee
                 {
                     Id = 2,
-                    FirstName = "Karen",
-                    MiddleName = "Karen",
-                    LastName = "Karen",
+                    FirstName = _encryptionService.Encrypt("Karen"),
+                    MiddleName = _encryptionService.Encrypt("Karen"),
+                    LastName = _encryptionService.Encrypt("Karen"),
                     AddressId = 2,
                     EmployeeType = 2
                 }

@@ -12,7 +12,7 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <DebugType>pdbonly</DebugType>
+        <DebugType>full</DebugType>
         <Prefer32bit>true</Prefer32bit>
         <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
@@ -31,6 +31,7 @@
         <PackageReference Include="FreeSql.Provider.MySql" Version="3.2.697-preview20230530" />
         <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.2.697-preview20230530" />
         <PackageReference Include="ini.net" Version="1.1.0" />
+        <PackageReference Include="JsonFlatFileDataStore" Version="2.4.1" />
         <PackageReference Include="Material.Icons.WPF" Version="2.0.0" />
         <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
         <PackageReference Include="NETCore.Encrypt" Version="2.1.1" />

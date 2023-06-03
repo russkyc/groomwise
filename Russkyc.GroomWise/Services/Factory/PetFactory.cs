@@ -7,10 +7,10 @@ namespace GroomWise.Services.Factory;
 
 public class PetFactory : IPetFactory
 {
-    public Pet Create(Action<Pet> builder = null)
+    public Pet Create(Action<Pet>? builder = null)
     {
         var pet = new Pet();
-        builder(pet);
+        builder!(pet);
         return pet;
     }
 }

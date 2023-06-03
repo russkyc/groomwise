@@ -14,7 +14,7 @@ public partial class ThemeManagerService : ObservableObject, IThemeManagerServic
     private bool _darkMode;
 
     [ObservableProperty]
-    private string _colorTheme;
+    private string? _colorTheme;
 
     public ThemeManagerService(ILogger logger, IConfigurationService configurationService)
     {

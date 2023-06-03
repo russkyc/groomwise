@@ -7,10 +7,10 @@ namespace GroomWise.Services.Factory;
 
 public class AppointmentFactory : IAppointmentFactory
 {
-    public Appointment Create(Action<Appointment> builder = null)
+    public Appointment Create(Action<Appointment>? builder = null)
     {
         var appointment = new Appointment();
-        builder(appointment);
+        builder!(appointment);
         return appointment;
     }
 }

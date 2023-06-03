@@ -7,7 +7,6 @@ namespace GroomWise.ViewModels;
 
 public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewModel
 {
-    private IAppointmentFactory _appointmentFactory;
     private IAddAppointmentsViewFactory _addAppointmentsViewFactory;
     private IAppointmentsRepository _appointmentsRepository;
 
@@ -15,12 +14,10 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     private AppointmentsCollection _appointments;
 
     public AppointmentsViewModel(
-        IAppointmentFactory appointmentFactory,
         IAppointmentsRepository appointmentsRepository,
         IAddAppointmentsViewFactory addAppointmentsViewFactory
     )
     {
-        _appointmentFactory = appointmentFactory;
         _appointmentsRepository = appointmentsRepository;
         _addAppointmentsViewFactory = addAppointmentsViewFactory;
 
@@ -32,12 +29,11 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     void GetAppointments()
     {
         Task.Run(async () =>
-            {
-                await DispatchHelper.UiInvokeAsync(
-                    () => _appointments.AddRange(_appointmentsRepository.GetCollection())
-                );
-            })
-            .ContinueWith(_ => OnPropertyChanged(nameof(Appointments)));
+        {
+            await DispatchHelper.UiInvokeAsync(
+                () => Appointments.AddRange(_appointmentsRepository.GetCollection())
+            );
+        });
     }
 
     [RelayCommand]

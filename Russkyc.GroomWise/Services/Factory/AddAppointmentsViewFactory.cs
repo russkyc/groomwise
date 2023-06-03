@@ -7,14 +7,14 @@ namespace GroomWise.Services.Factory;
 
 public class AddAppointmentsViewFactory : IAddAppointmentsViewFactory
 {
-    public AddAppointmentsView Create(Action<AddAppointmentsView> builder = null)
+    public AddAppointmentsView Create(Action<AddAppointmentsView>? builder = null)
     {
         var addAppointmentsView = (
             (AddAppointmentsView)BuilderServices.Resolve<IAddAppointmentsView>()
         )
             .AsChild()
             .HideOnParentMouseDown();
-        builder(addAppointmentsView);
+        builder!(addAppointmentsView);
         return addAppointmentsView;
     }
 }

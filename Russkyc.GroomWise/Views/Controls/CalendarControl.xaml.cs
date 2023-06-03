@@ -57,35 +57,34 @@ public partial class CalendarControl
             var firstDayOfWeek = (int)firstDayOfMonth.DayOfWeek + 1;
 
             Task.Run(() =>
+            {
+                var dayIndex = 1;
+                var dateIndex = 1;
+
+                while (dateIndex <= daysInMonth)
                 {
-                    var dayIndex = 1;
-                    var dateIndex = 1;
-
-                    while (dateIndex <= daysInMonth)
+                    if (dayIndex >= firstDayOfWeek)
                     {
-                        if (dayIndex >= firstDayOfWeek)
-                        {
-                            _dates.Add(
-                                new CalendarDate()
-                                    .SetDate(dateIndex)
-                                    .SetDateInfo(CurrentMonth)
-                                    .SetSelected(
-                                        CurrentMonth.Year == DateTime.Today.Year
-                                            && CurrentMonth.Month == DateTime.Today.Month
-                                            && dateIndex == DateTime.Now.Day
-                                    )
-                            );
-                            dateIndex++;
-                        }
-                        else
-                        {
-                            _dates.Add(null);
-                        }
-
-                        dayIndex++;
+                        Dates.Add(
+                            new CalendarDate()
+                                .SetDate(dateIndex)
+                                .SetDateInfo(CurrentMonth)
+                                .SetSelected(
+                                    CurrentMonth.Year == DateTime.Today.Year
+                                        && CurrentMonth.Month == DateTime.Today.Month
+                                        && dateIndex == DateTime.Now.Day
+                                )
+                        );
+                        dateIndex++;
                     }
-                })
-                .ContinueWith(_ => OnPropertyChanged(nameof(Dates)));
+                    else
+                    {
+                        Dates.Add(null!);
+                    }
+
+                    dayIndex++;
+                }
+            });
         }
     }
 }

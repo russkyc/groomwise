@@ -3,50 +3,46 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using System.Collections;
+using System.IO;
+using JsonFlatFileDataStore;
+
 namespace GroomWise.Services.Data;
 
 public class MigrationService : IMigrationService
 {
     private readonly ILogger _logger;
+    private readonly IDatabaseServiceAsync _databaseServiceAsync;
     private readonly IConfigurationService _configurationService;
-    private readonly List<IDatabaseMigration> _databaseMigrations;
 
-    public MigrationService(ILogger logger, IConfigurationService configurationService)
+    public MigrationService(
+        ILogger logger,
+        IConfigurationService configurationService,
+        IDatabaseServiceAsync databaseServiceAsync
+    )
     {
         _logger = logger;
         _configurationService = configurationService;
-        _databaseMigrations = new List<IDatabaseMigration>();
-        GetMigrations();
-    }
-
-    void GetMigrations()
-    {
-        Assembly
-            .GetExecutingAssembly()
-            .GetTypes()
-            .Where(type => type.Namespace == "GroomWise.Services.Data.Migrations")
-            .ToList()
-            .ForEach(type =>
-            {
-                _logger.Log(this, $"Reading migrations from {type.FullName}");
-                _databaseMigrations.Add((IDatabaseMigration)Activator.CreateInstance(type)!);
-            });
+        _databaseServiceAsync = databaseServiceAsync;
     }
 
     public void RunMigrations()
     {
-        if (_configurationService.Config.ReadBoolean("Database", "RunMigrations"))
-        {
-            _databaseMigrations.ForEach(migration =>
+        new DirectoryInfo(_configurationService.Config.ReadString("Database", "MigrationsPath"))
+            .GetFiles()
+            .ToList()
+            .ForEach(file =>
             {
-                migration.Migrate();
-                _logger.Log(this, $"Run migrations for {migration.GetType()}");
+                var migration = new DataStore(file.FullName);
+                var items = migration
+                    .GetCollection(file.Name.ToLower().Replace(".json", ""))
+                    .AsQueryable()
+                    .ToList();
+                _databaseServiceAsync.AddMultiple(items);
+                _logger.Log(this, $"Run migrations from {file.Name}");
             });
-            _configurationService.Config.WriteBoolean("Database", "RunMigrations", false);
-        }
-        else
-        {
-            _logger.Log(this, "Run Migrations: False");
-        }
+
+        _configurationService.Config.WriteBoolean("Database", "RunMigrations", false);
+        _logger.Log(this, "Done migrating");
     }
 }
