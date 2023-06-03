@@ -30,16 +30,14 @@ public partial class ApplicationService : ObservableObject, IApplicationService
     {
         _sessionManagerService = sessionManagerService;
         _configProvider = configProvider;
-        IMaterialIconFactory materialIconFactory1 = materialIconFactory;
-        INavItemFactory navItemFactory1 = navItemFactory;
 
         _nav = new List<INavItem>
         {
-            navItemFactory1.Create(navItem =>
+            navItemFactory.Create(navItem =>
             {
                 navItem.Name = "Dashboard";
                 navItem.Page = typeof(IDashboardView);
-                navItem.Icon = materialIconFactory1.Create(
+                navItem.Icon = materialIconFactory.Create(
                     icon => icon.Kind = MaterialIconKind.ViewDashboard
                 );
                 navItem.Selected = true;
@@ -50,11 +48,11 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     EmployeeType.Manager
                 };
             }),
-            navItemFactory1.Create(navItem =>
+            navItemFactory.Create(navItem =>
             {
                 navItem.Name = "Appointments";
                 navItem.Page = typeof(IAppointmentsView);
-                navItem.Icon = materialIconFactory1.Create(
+                navItem.Icon = materialIconFactory.Create(
                     icon => icon.Kind = MaterialIconKind.EventAvailable
                 );
                 navItem.Selected = false;
@@ -65,21 +63,21 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     EmployeeType.Manager
                 };
             }),
-            navItemFactory1.Create(navItem =>
+            navItemFactory.Create(navItem =>
             {
                 navItem.Name = "Services";
                 navItem.Page = typeof(IServicesView);
-                navItem.Icon = materialIconFactory1.Create(
+                navItem.Icon = materialIconFactory.Create(
                     icon => icon.Kind = MaterialIconKind.BubbleChart
                 );
                 navItem.Selected = false;
                 navItem.AccountTypes = new[] { EmployeeType.Admin, EmployeeType.Manager };
             }),
-            navItemFactory1.Create(navItem =>
+            navItemFactory.Create(navItem =>
             {
                 navItem.Name = "Pets";
                 navItem.Page = typeof(IPetsView);
-                navItem.Icon = materialIconFactory1.Create(
+                navItem.Icon = materialIconFactory.Create(
                     icon => icon.Kind = MaterialIconKind.Pets
                 );
                 navItem.Selected = false;
@@ -90,31 +88,31 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     EmployeeType.Manager
                 };
             }),
-            navItemFactory1.Create(navItem =>
+            navItemFactory.Create(navItem =>
             {
                 navItem.Name = "Customers";
                 navItem.Page = typeof(ICustomersView);
-                navItem.Icon = materialIconFactory1.Create(
+                navItem.Icon = materialIconFactory.Create(
                     icon => icon.Kind = MaterialIconKind.People
                 );
                 navItem.Selected = false;
                 navItem.AccountTypes = new[] { EmployeeType.Admin, EmployeeType.Manager };
             }),
-            navItemFactory1.Create(navItem =>
+            navItemFactory.Create(navItem =>
             {
                 navItem.Name = "Employees";
                 navItem.Page = typeof(IEmployeesView);
-                navItem.Icon = materialIconFactory1.Create(
+                navItem.Icon = materialIconFactory.Create(
                     icon => icon.Kind = MaterialIconKind.PeopleGroup
                 );
                 navItem.Selected = false;
                 navItem.AccountTypes = new[] { EmployeeType.Manager };
             }),
-            navItemFactory1.Create(navItem =>
+            navItemFactory.Create(navItem =>
             {
                 navItem.Name = "Reports";
                 navItem.Page = typeof(IReportsView);
-                navItem.Icon = materialIconFactory1.Create(
+                navItem.Icon = materialIconFactory.Create(
                     icon => icon.Kind = MaterialIconKind.BarChart
                 );
                 navItem.Selected = false;
