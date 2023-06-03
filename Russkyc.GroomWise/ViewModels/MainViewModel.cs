@@ -92,6 +92,9 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
         {
             HotkeyListenerService.UnregisterAll();
             SessionManagerService.EndSession();
+            BuilderServices.Resolve<ILoginView>().ClearFields("Password");
+            BuilderServices.Resolve<ILoginView>().Show();
+            BuilderServices.Resolve<IMainView>().Hide();
         }
     }
 }

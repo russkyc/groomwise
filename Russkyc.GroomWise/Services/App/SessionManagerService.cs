@@ -27,9 +27,5 @@ public partial class SessionManagerService : ObservableObject, ISessionManagerSe
     {
         SessionUser = null;
         _logger.Log(this, "Ended user session");
-
-        BuilderServices.Resolve<ILoginView>().ClearFields("Password");
-        BuilderServices.Resolve<ILoginView>().Show();
-        BuilderServices.Resolve<IMainView>().Hide();
     }
 }
