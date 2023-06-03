@@ -9,9 +9,9 @@ public class DebugLogger : ILogger
 {
     private readonly bool _isLoggingEnabled;
 
-    public DebugLogger(IConfigurationService configurationService)
+    public DebugLogger(IConfigProvider configProvider)
     {
-        _isLoggingEnabled = configurationService.Config.ReadBoolean("Debugging", "Logging");
+        _isLoggingEnabled = configProvider.Logging;
     }
 
     public void Log(string message)

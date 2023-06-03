@@ -14,7 +14,7 @@ public static class ServiceContainer
             .AddSingleton<ICredentialStore, CredentialStore>()
             .AddSingleton<IEncryptionService, EncryptionService>()
             // Add Configs
-            .AddSingleton<IConfigurationService, ConfigurationService>()
+            .AddSingleton<IConfigProvider, ConfigProvider>()
             // Add Scheduler
             .AddSingleton<ISchedulerService, SchedulerService>()
             // Add Logger
@@ -35,8 +35,6 @@ public static class ServiceContainer
             // Add Data Services
             .AddSingleton<IConnectionSourceProvider, ConnectionSourceProvider>()
             .AddSingleton<IDatabaseServiceAsync, DataServiceProviderAsync>()
-            // Add Migrations
-            .AddSingleton<IMigrationService, MigrationService>()
             // Add Application Services
             .AddSingleton<ISessionManagerService, SessionManagerService>()
             .AddSingleton<IThemeManagerService, ThemeManagerService>()

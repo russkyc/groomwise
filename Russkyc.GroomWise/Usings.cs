@@ -21,6 +21,9 @@ global using System.ComponentModel.DataAnnotations;
 // Ini.Net
 global using Ini.Net;
 
+// Case Extensions
+global using CaseExtensions;
+
 // DarkHelpers
 global using DarkHelpers.Collections;
 global using DarkHelpers.WPF;
@@ -67,6 +70,7 @@ global using GroomWise.Views.Pages;
 global using GroomWise.ViewModels;
 global using GroomWise.Models.Enums;
 global using GroomWise.Models.Entities;
+global using GroomWise.Models.Interfaces;
 global using GroomWise.Models.Collections;
 global using GroomWise.Models.Abstractions;
 global using GroomWise.Models.Interfaces.View;

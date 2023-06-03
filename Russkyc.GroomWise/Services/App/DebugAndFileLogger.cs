@@ -10,10 +10,10 @@ public class DebugAndFileLogger : ILogger
     private readonly string _path;
     private readonly bool _isLoggingEnabled;
 
-    public DebugAndFileLogger(IConfigurationService configurationService)
+    public DebugAndFileLogger(IConfigProvider configProvider)
     {
-        _path = configurationService.Config.ReadString("Debugging", "LogFile");
-        _isLoggingEnabled = configurationService.Config.ReadBoolean("Debugging", "Logging");
+        _path = configProvider.LogPath;
+        _isLoggingEnabled = configProvider.Logging;
 
         if (_isLoggingEnabled)
             Log(this, "Starting application environment");

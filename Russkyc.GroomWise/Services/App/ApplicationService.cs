@@ -7,10 +7,8 @@ namespace GroomWise.Services.App;
 
 public partial class ApplicationService : ObservableObject, IApplicationService
 {
-    private readonly IMaterialIconFactory _materialIconFactory;
-    private readonly IConfigurationService _configurationService;
+    private readonly IConfigProvider _configProvider;
     private readonly ISessionManagerService _sessionManagerService;
-    private readonly INavItemFactory _navItemFactory;
 
     private List<INavItem> _nav;
 
@@ -25,23 +23,23 @@ public partial class ApplicationService : ObservableObject, IApplicationService
 
     public ApplicationService(
         ISessionManagerService sessionManagerService,
-        IConfigurationService configurationService,
+        IConfigProvider configProvider,
         IMaterialIconFactory materialIconFactory,
         INavItemFactory navItemFactory
     )
     {
         _sessionManagerService = sessionManagerService;
-        _configurationService = configurationService;
-        _materialIconFactory = materialIconFactory;
-        _navItemFactory = navItemFactory;
+        _configProvider = configProvider;
+        IMaterialIconFactory materialIconFactory1 = materialIconFactory;
+        INavItemFactory navItemFactory1 = navItemFactory;
 
         _nav = new List<INavItem>
         {
-            _navItemFactory.Create(navItem =>
+            navItemFactory1.Create(navItem =>
             {
                 navItem.Name = "Dashboard";
                 navItem.Page = typeof(IDashboardView);
-                navItem.Icon = _materialIconFactory.Create(
+                navItem.Icon = materialIconFactory1.Create(
                     icon => icon.Kind = MaterialIconKind.ViewDashboard
                 );
                 navItem.Selected = true;
@@ -52,11 +50,11 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     EmployeeType.Manager
                 };
             }),
-            _navItemFactory.Create(navItem =>
+            navItemFactory1.Create(navItem =>
             {
                 navItem.Name = "Appointments";
                 navItem.Page = typeof(IAppointmentsView);
-                navItem.Icon = _materialIconFactory.Create(
+                navItem.Icon = materialIconFactory1.Create(
                     icon => icon.Kind = MaterialIconKind.EventAvailable
                 );
                 navItem.Selected = false;
@@ -67,21 +65,21 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     EmployeeType.Manager
                 };
             }),
-            _navItemFactory.Create(navItem =>
+            navItemFactory1.Create(navItem =>
             {
                 navItem.Name = "Services";
                 navItem.Page = typeof(IServicesView);
-                navItem.Icon = _materialIconFactory.Create(
+                navItem.Icon = materialIconFactory1.Create(
                     icon => icon.Kind = MaterialIconKind.BubbleChart
                 );
                 navItem.Selected = false;
                 navItem.AccountTypes = new[] { EmployeeType.Admin, EmployeeType.Manager };
             }),
-            _navItemFactory.Create(navItem =>
+            navItemFactory1.Create(navItem =>
             {
                 navItem.Name = "Pets";
                 navItem.Page = typeof(IPetsView);
-                navItem.Icon = _materialIconFactory.Create(
+                navItem.Icon = materialIconFactory1.Create(
                     icon => icon.Kind = MaterialIconKind.Pets
                 );
                 navItem.Selected = false;
@@ -92,31 +90,31 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     EmployeeType.Manager
                 };
             }),
-            _navItemFactory.Create(navItem =>
+            navItemFactory1.Create(navItem =>
             {
                 navItem.Name = "Customers";
                 navItem.Page = typeof(ICustomersView);
-                navItem.Icon = _materialIconFactory.Create(
+                navItem.Icon = materialIconFactory1.Create(
                     icon => icon.Kind = MaterialIconKind.People
                 );
                 navItem.Selected = false;
                 navItem.AccountTypes = new[] { EmployeeType.Admin, EmployeeType.Manager };
             }),
-            _navItemFactory.Create(navItem =>
+            navItemFactory1.Create(navItem =>
             {
                 navItem.Name = "Employees";
                 navItem.Page = typeof(IEmployeesView);
-                navItem.Icon = _materialIconFactory.Create(
+                navItem.Icon = materialIconFactory1.Create(
                     icon => icon.Kind = MaterialIconKind.PeopleGroup
                 );
                 navItem.Selected = false;
                 navItem.AccountTypes = new[] { EmployeeType.Manager };
             }),
-            _navItemFactory.Create(navItem =>
+            navItemFactory1.Create(navItem =>
             {
                 navItem.Name = "Reports";
                 navItem.Page = typeof(IReportsView);
-                navItem.Icon = _materialIconFactory.Create(
+                navItem.Icon = materialIconFactory1.Create(
                     icon => icon.Kind = MaterialIconKind.BarChart
                 );
                 navItem.Selected = false;
@@ -130,7 +128,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
     public void BuildAppInfo()
     {
         AppAuthor = "Russell Camo (@russkyc)";
-        AppVersion = _configurationService.Config.ReadString("AppSettings", "Version");
+        AppVersion = _configProvider.Version;
     }
 
     public void BuildNavItems()

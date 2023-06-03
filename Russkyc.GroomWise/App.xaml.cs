@@ -21,15 +21,6 @@ public partial class App
 
         BuilderServices.BuildWithContainer(ServiceContainer.ConfigureServices());
 
-        if (
-            BuilderServices
-                .Resolve<IConfigurationService>()
-                .Config.ReadBoolean("Database", "RunMigrations")
-        )
-        {
-            BuilderServices.Resolve<IMigrationService>().RunMigrations();
-        }
-
         BuilderServices.Resolve<IHotkeyListenerService>().Start();
         BuilderServices.Resolve<ILoginView>().Show();
     }

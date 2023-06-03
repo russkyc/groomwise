@@ -9,16 +9,14 @@ public class DataServiceProviderAsync : IDatabaseServiceAsync
 {
     private readonly IFreeSql _db;
 
-    public DataServiceProviderAsync(IConfigurationService configurationService)
+    public DataServiceProviderAsync(IConfigProvider configProvider)
     {
 #if (DEBUG)
         _db = new FreeSqlBuilder()
             .UseConnectionString(
                 FreeSql.DataType.Sqlite,
                 new ConnectionSourceProvider().Build(
-                    new ConnectionSource().WithPath(
-                        configurationService.Config.ReadString("Database", "Path")
-                    ),
+                    new ConnectionSource().WithPath(configProvider.Path),
                     DbProvider.Sqlite
                 )
             )
@@ -28,16 +26,10 @@ public class DataServiceProviderAsync : IDatabaseServiceAsync
                 FreeSql.DataType.MySql,
                 new ConnectionSourceProvider().Build(
                     new ConnectionSource()
-                        .WithPath(configurationService.Config.ReadString("Database", "Path"))
-                        .WithDatabase(
-                            configurationService.Config.ReadString("Database", "Database")
-                        )
-                        .WithUsername(
-                            configurationService.Config.ReadString("Database", "Username")
-                        )
-                        .WithPassword(
-                            configurationService.Config.ReadString("Database", "Password")
-                        ),
+                        .WithPath(configProvider.Path)
+                        .WithDatabase(configProvider.Database)
+                        .WithUsername(configProvider.Username)
+                        .WithPassword(configProvider.Password),
                     DbProvider.MySql
                 )
             )
