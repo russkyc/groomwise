@@ -103,10 +103,20 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                 navItem.Name = "Employees";
                 navItem.Page = typeof(IEmployeesView);
                 navItem.Icon = materialIconFactory.Create(
-                    icon => icon.Kind = MaterialIconKind.PeopleGroup
+                    icon => icon.Kind = MaterialIconKind.AccountGroup
                 );
                 navItem.Selected = false;
                 navItem.AccountTypes = new[] { EmployeeType.Manager };
+            }),
+            navItemFactory.Create(navItem =>
+            {
+                navItem.Name = "Inventory";
+                navItem.Page = typeof(IInventoryView);
+                navItem.Icon = materialIconFactory.Create(
+                    icon => icon.Kind = MaterialIconKind.Table
+                );
+                navItem.Selected = false;
+                navItem.AccountTypes = new[] { EmployeeType.Groomer, EmployeeType.Manager };
             }),
             navItemFactory.Create(navItem =>
             {
