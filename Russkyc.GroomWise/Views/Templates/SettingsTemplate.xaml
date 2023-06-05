@@ -89,11 +89,11 @@
                 <ColumnDefinition Width="180" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <TextBlock FontSize="14" Text="Base Theme" />
+                <TextBlock FontSize="14" Text="Background Mode" />
                 <TextBlock Margin="0,6,0,0"
                            FontSize="12"
                            Foreground="{DynamicResource bg-600}"
-                           Text="Global application theme" />
+                           Text="Switch between dark and light theme" />
             </StackPanel>
             <WrapPanel Grid.Column="1"
                        Margin="12,12,6,12"
@@ -152,7 +152,7 @@
                 <TextBlock Margin="0,6,0,0"
                            FontSize="12"
                            Foreground="{DynamicResource bg-600}"
-                           Text="Primary color scheme" />
+                           Text="Choose the primary color" />
             </StackPanel>
             <WrapPanel Grid.Column="1"
                        Margin="12,12,6,12"
