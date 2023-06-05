@@ -14,7 +14,7 @@ public static class ServiceContainer
             .AddSingleton<ICredentialStore, CredentialStore>()
             .AddSingleton<IEncryptionService, EncryptionService>()
             // Add Configs
-            .AddSingleton<IConfigurationService, ConfigurationService>()
+            .AddSingleton<IConfigProvider, ConfigProvider>()
             // Add Scheduler
             .AddSingleton<ISchedulerService, SchedulerService>()
             // Add Logger
@@ -35,8 +35,6 @@ public static class ServiceContainer
             // Add Data Services
             .AddSingleton<IConnectionSourceProvider, ConnectionSourceProvider>()
             .AddSingleton<IDatabaseServiceAsync, DataServiceProviderAsync>()
-            // Add Migrations
-            .AddSingleton<IMigrationService, MigrationService>()
             // Add Application Services
             .AddSingleton<ISessionManagerService, SessionManagerService>()
             .AddSingleton<IThemeManagerService, ThemeManagerService>()
@@ -47,6 +45,7 @@ public static class ServiceContainer
             .AddSingleton<IEmployeeRepository, EmployeeRepository>()
             // Add ViewModels
             .AddSingleton<IAppointmentsViewModel, AppointmentsViewModel>()
+            .AddSingleton<IInventoryViewModel, InventoryViewModel>()
             .AddSingleton<IEmployeesViewModel, EmployeesViewModel>()
             .AddSingleton<ICustomersViewModel, CustomersViewModel>()
             .AddSingleton<IDashboardViewModel, DashboardViewModel>()
@@ -57,8 +56,9 @@ public static class ServiceContainer
             .AddSingleton<IPetsViewModel, PetsViewModel>()
             .AddSingleton<IMainViewModel, MainViewModel>()
             // Add Views
-            .AddTransient<IAddAppointmentsView, AddAppointmentsView>()
+            .AddSingleton<IAddAppointmentsView, AddAppointmentsView>()
             .AddSingleton<IAppointmentsView, AppointmentsView>()
+            .AddSingleton<IInventoryView, InventoryView>()
             .AddSingleton<ICustomersView, CustomersView>()
             .AddSingleton<IDashboardView, DashboardView>()
             .AddSingleton<IEmployeesView, EmployeesView>()

@@ -3,12 +3,10 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Services.Helper;
+namespace GroomWise.Models.Interfaces;
 
-public static class DateHelper
+public interface IGenericCommand<T>
 {
-    public static string GetMonth(this DateTime date)
-    {
-        return date.ToString("MMMM");
-    }
+    public bool CanExecute { get; }
+    void Execute(T param);
 }

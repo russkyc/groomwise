@@ -9,37 +9,38 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
 {
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IEncryptionService _encryptionService;
-    private readonly ISchedulerService _schedulerService;
 
     [ObservableProperty]
-    private string _filter;
+    private string? _filter;
 
     [ObservableProperty]
     private EmployeesCollection _employees;
 
     public EmployeesViewModel(
         IEncryptionService encryptionService,
-        IEmployeeRepository employeeRepository,
-        ISchedulerService schedulerService
+        IEmployeeRepository employeeRepository
     )
     {
         _encryptionService = encryptionService;
         _employeeRepository = employeeRepository;
-        _schedulerService = schedulerService;
         Employees = new EmployeesCollection();
 
-        _schedulerService.RunPeriodically(GetEmployees, TimeSpan.FromSeconds(2));
+        GetEmployees();
     }
 
-    async Task GetEmployees()
+    void GetEmployees()
     {
-        await Task.Run(() =>
+        Task.Run(async () =>
         {
-            _employeeRepository
-                .GetCollection()
-                .Select(employee => _encryptionService.Decrypt(employee))
-                .ToList()
-                .SyncTo(ref _employees);
+            await DispatchHelper.UiInvokeAsync(
+                () =>
+                    Employees.AddRange(
+                        _employeeRepository
+                            .GetCollection()
+                            .Select(employee => _encryptionService.Decrypt(employee))
+                            .ToList()
+                    )
+            );
         });
     }
 }

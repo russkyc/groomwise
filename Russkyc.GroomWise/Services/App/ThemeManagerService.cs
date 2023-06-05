@@ -8,20 +8,20 @@ namespace GroomWise.Services.App;
 public partial class ThemeManagerService : ObservableObject, IThemeManagerService
 {
     private readonly ILogger _logger;
-    private readonly IConfigurationService _configurationService;
+    private readonly IConfigProvider _configProvider;
 
     [ObservableProperty]
     private bool _darkMode;
 
     [ObservableProperty]
-    private string _colorTheme;
+    private string? _colorTheme;
 
-    public ThemeManagerService(ILogger logger, IConfigurationService configurationService)
+    public ThemeManagerService(ILogger logger, IConfigProvider configProvider)
     {
         _logger = logger;
-        _configurationService = configurationService;
-        UseDarkTheme(_configurationService.Config.ReadBoolean("AppSettings", "DarkMode"));
-        UseColorTheme(_configurationService.Config.ReadString("AppSettings", "ColorTheme"));
+        _configProvider = configProvider;
+        UseDarkTheme(_configProvider.DarkMode);
+        UseColorTheme(_configProvider.ColorTheme);
     }
 
     public void UseDarkTheme(bool night)
@@ -72,13 +72,13 @@ public partial class ThemeManagerService : ObservableObject, IThemeManagerServic
 
     private void SaveColorTheme(string color)
     {
-        _configurationService.Config.WriteString("AppSettings", "ColorTheme", color);
+        _configProvider.ColorTheme = color;
         _logger.Log(this, $"Save color theme {color}");
     }
 
     private void SaveBaseTheme(bool dark)
     {
-        _configurationService.Config.WriteBoolean("AppSettings", "DarkMode", dark);
+        _configProvider.DarkMode = dark;
         _logger.Log(this, $"Save base dark theme {dark}");
     }
 }

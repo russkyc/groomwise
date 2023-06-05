@@ -3,13 +3,9 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Services.App;
+namespace GroomWise.ViewModels;
 
-public class ConfigurationService : IConfigurationService
+public class InventoryViewModel : ViewModelBase, IInventoryViewModel
 {
-# if (DEBUG)
-    public IniFile Config => new IniFile("appconfig-indev.ini");
-# else
-    public IniFile Config => new IniFile("appconfig.ini");
-#endif
+    
 }

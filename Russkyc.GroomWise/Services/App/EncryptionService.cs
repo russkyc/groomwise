@@ -130,6 +130,11 @@ public class EncryptionService : IEncryptionService
         return item;
     }
 
+    public string Hash(string item)
+    {
+        return item.SHA256();
+    }
+
     /// <inheritdoc />
     public T Hash<T>(T item)
     {

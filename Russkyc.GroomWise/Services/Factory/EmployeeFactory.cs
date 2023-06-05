@@ -7,10 +7,10 @@ namespace GroomWise.Services.Factory;
 
 public class EmployeeFactory : IEmployeeFactory
 {
-    public Employee Create(Action<Employee> builder = null)
+    public Employee Create(Action<Employee>? builder = null)
     {
         var employee = new Employee();
-        builder(employee);
+        builder!(employee);
         return employee;
     }
 }

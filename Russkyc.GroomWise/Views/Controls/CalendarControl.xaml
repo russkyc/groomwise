@@ -106,12 +106,12 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid Style="{StaticResource FadeInAnimation}">
+                    <Grid Style="{StaticResource FadeInFromBottomAnimation}">
                         <russkyc:ModernRadioButton Grid.Row="0"
                                                    Grid.Column="0"
                                                    Width="32"
                                                    Height="32"
-                                                   Padding="4"
+                                                   Padding="3"
                                                    FontSize="14"
                                                    GroupName="CalendarDay"
                                                    IsHitTestVisible="False">

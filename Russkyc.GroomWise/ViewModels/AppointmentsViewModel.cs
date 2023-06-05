@@ -7,22 +7,22 @@ namespace GroomWise.ViewModels;
 
 public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewModel
 {
-    private IAppointmentFactory _appointmentFactory;
-    private IAddAppointmentsViewFactory _addAppointmentsViewFactory;
-    private IAppointmentsRepository _appointmentsRepository;
+    private readonly IAddAppointmentsViewFactory _addAppointmentsViewFactory;
+    private readonly IAppointmentsRepository _appointmentsRepository;
+    private readonly ILogger _logger;
 
     [ObservableProperty]
     private AppointmentsCollection _appointments;
 
     public AppointmentsViewModel(
-        IAppointmentFactory appointmentFactory,
         IAppointmentsRepository appointmentsRepository,
-        IAddAppointmentsViewFactory addAppointmentsViewFactory
+        IAddAppointmentsViewFactory addAppointmentsViewFactory,
+        ILogger logger
     )
     {
-        _appointmentFactory = appointmentFactory;
         _appointmentsRepository = appointmentsRepository;
         _addAppointmentsViewFactory = addAppointmentsViewFactory;
+        _logger = logger;
 
         Appointments = new AppointmentsCollection();
 
@@ -31,13 +31,24 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
 
     void GetAppointments()
     {
-        Task.Run(async () =>
+        var _cancellationTokenSource = new CancellationTokenSource();
+        Task.Run(
+            async () =>
             {
-                await Application.Current.Dispatcher.InvokeAsync(
-                    () => Appointments.ReplaceRange(_appointmentsRepository.GetCollection())
-                );
-            })
-            .ContinueWith(_ => OnPropertyChanged(nameof(Appointments)));
+                while (!_cancellationTokenSource.IsCancellationRequested)
+                {
+                    var command = new SynchronizeCollectionCommand<
+                        Appointment,
+                        AppointmentsCollection
+                    >(ref _appointments, _appointmentsRepository.GetCollection());
+                    command.Execute();
+                    OnPropertyChanged();
+                    _logger.Log(this, "Synchronized appointments collection.");
+                    await Task.Delay(2000, _cancellationTokenSource.Token);
+                }
+            },
+            _cancellationTokenSource.Token
+        );
     }
 
     [RelayCommand]
@@ -45,12 +56,12 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     {
         Task.Run(async () =>
         {
-            await Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                _addAppointmentsViewFactory
-                    .Create(addAppointmentsView => addAppointmentsView.AsChild())
-                    .Show();
-            });
+            await DispatchHelper.UiInvokeAsync(
+                () =>
+                    _addAppointmentsViewFactory
+                        .Create(addAppointmentsView => addAppointmentsView.AsChild())
+                        .Show()
+            );
         });
     }
 }

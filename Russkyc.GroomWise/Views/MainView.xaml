@@ -135,6 +135,7 @@
             <russkyc:ModernRadioButton Width="40"
                                        Height="40"
                                        Margin="8"
+                                       Padding="4"
                                        HorizontalAlignment="Stretch"
                                        VerticalAlignment="Bottom"
                                        Command="{Binding Path=DataContext.OpenSettingsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type russkyc:ModernWindow}}}"

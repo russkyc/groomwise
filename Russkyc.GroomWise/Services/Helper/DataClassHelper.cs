@@ -7,26 +7,13 @@ namespace GroomWise.Services.Helper;
 
 public static class DataClassHelper
 {
-    public static bool HasSameValues(
-        this object source,
-        object target,
-        params string[] propertyNames
-    )
+    public static bool HasSameValues(this object source, object target, params string[] except)
     {
-        var properties = source.GetType().GetProperties();
-        foreach (var property in properties)
-        {
-            if (propertyNames.Any(prop => property.Name == prop))
-            {
-                var sourceValue = property.GetValue(source);
-                var targetValue = property.GetValue(target);
-                if (!Equals(sourceValue, targetValue))
-                {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+        return source
+            .GetType()
+            .GetProperties()
+            .Where(prop => !except.Contains(prop.Name))
+            .ToList()
+            .All(property => Equals(property.GetValue(source), property.GetValue(target)));
     }
 }

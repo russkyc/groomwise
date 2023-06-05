@@ -7,10 +7,10 @@ namespace GroomWise.Services.Factory;
 
 public class MaterialIconFactory : IMaterialIconFactory
 {
-    public MaterialIcon Create(Action<MaterialIcon> builder = null)
+    public MaterialIcon Create(Action<MaterialIcon>? builder = null)
     {
         var materialIcon = new MaterialIcon();
-        builder(materialIcon);
+        builder!(materialIcon);
         return materialIcon;
     }
 }
