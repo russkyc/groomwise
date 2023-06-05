@@ -7,19 +7,22 @@ namespace GroomWise.ViewModels;
 
 public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewModel
 {
-    private IAddAppointmentsViewFactory _addAppointmentsViewFactory;
-    private IAppointmentsRepository _appointmentsRepository;
+    private readonly IAddAppointmentsViewFactory _addAppointmentsViewFactory;
+    private readonly IAppointmentsRepository _appointmentsRepository;
+    private readonly ILogger _logger;
 
     [ObservableProperty]
     private AppointmentsCollection _appointments;
 
     public AppointmentsViewModel(
         IAppointmentsRepository appointmentsRepository,
-        IAddAppointmentsViewFactory addAppointmentsViewFactory
+        IAddAppointmentsViewFactory addAppointmentsViewFactory,
+        ILogger logger
     )
     {
         _appointmentsRepository = appointmentsRepository;
         _addAppointmentsViewFactory = addAppointmentsViewFactory;
+        _logger = logger;
 
         Appointments = new AppointmentsCollection();
 
@@ -28,12 +31,24 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
 
     void GetAppointments()
     {
-        Task.Run(async () =>
-        {
-            await DispatchHelper.UiInvokeAsync(
-                () => Appointments.AddRange(_appointmentsRepository.GetCollection())
-            );
-        });
+        var _cancellationTokenSource = new CancellationTokenSource();
+        Task.Run(
+            async () =>
+            {
+                while (!_cancellationTokenSource.IsCancellationRequested)
+                {
+                    var command = new SynchronizeCollectionCommand<
+                        Appointment,
+                        AppointmentsCollection
+                    >(ref _appointments, _appointmentsRepository.GetCollection());
+                    command.Execute();
+                    OnPropertyChanged();
+                    _logger.Log(this, "Synchronized appointments collection.");
+                    await Task.Delay(2000, _cancellationTokenSource.Token);
+                }
+            },
+            _cancellationTokenSource.Token
+        );
     }
 
     [RelayCommand]
