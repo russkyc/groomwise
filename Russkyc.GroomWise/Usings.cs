@@ -69,6 +69,7 @@ global using GroomWise.Views;
 global using GroomWise.Views.Pages;
 global using GroomWise.ViewModels;
 global using GroomWise.Models.Enums;
+global using GroomWise.Models.Commands;
 global using GroomWise.Models.Entities;
 global using GroomWise.Models.Interfaces;
 global using GroomWise.Models.Collections;
