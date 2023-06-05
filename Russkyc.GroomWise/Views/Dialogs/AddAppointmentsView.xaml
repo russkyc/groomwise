@@ -3,13 +3,15 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                      xmlns:local="clr-namespace:GroomWise.Views.Dialogs"
+                      xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-                      xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+                      xmlns:vm="clr-namespace:GroomWise.ViewModels"
                       Title="AddAppointmentsView"
                       Width="650"
-                      Height="398"
+                      Height="330"
+                      d:DataContext="{d:DesignInstance vm:AddAppointmentsViewModel,
+                                                       IsDesignTimeCreatable=True}"
                       NoDecorations="True"
                       ResizeMode="NoResize"
                       TitleBarHeight="0"
@@ -26,20 +28,19 @@
             <russkyc:ModernTextBox Margin="0,12,0,0"
                                    CornerRadius="5"
                                    HelperText="Max Length (200)"
-                                   Placeholder="Title" />
+                                   Placeholder="Title"
+                                   Text="{Binding NewAppointment.Title, UpdateSourceTrigger=PropertyChanged}" />
             <russkyc:ModernTextBox Margin="0,12,0,0"
                                    CornerRadius="5"
                                    HelperText="Max Length (200)"
-                                   Placeholder="Title" />
-            <russkyc:ModernTextBox Margin="0,12,0,0"
-                                   CornerRadius="5"
-                                   HelperText="Max Length (200)"
-                                   Placeholder="Title" />
-            <russkyc:ModernTextBox Margin="0,12,0,0"
-                                   CornerRadius="5"
-                                   HelperText="Max Length (200)"
-                                   Placeholder="Title" />
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                   Placeholder="Description"
+                                   Text="{Binding NewAppointment.Description, UpdateSourceTrigger=PropertyChanged}" />
+            <russkyc:ModernComboBox Margin="0,12,0,0"
+                                    CornerRadius="5"
+                                    Placeholder="Service" />
+            <StackPanel Margin="0,24,0,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
                 <russkyc:ModernButton Margin="0,0,12,0"
                                       HorizontalAlignment="Right"
                                       Content="Cancel"
@@ -59,7 +60,8 @@
                                       Command="{Binding AddAppointmentCommand}"
                                       Content="Save Appointment"
                                       CornerRadius="5"
-                                      FontWeight="Medium" />
+                                      FontWeight="Medium"
+                                      LeftCenterIcon="{icons:MaterialIconExt Kind=ContentSave}" />
             </StackPanel>
         </StackPanel>
     </Grid>
