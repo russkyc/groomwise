@@ -34,4 +34,5 @@
 - NetCoreEncrypt(Encryption)
 
 #### 2.5 Testing
+> Unit and integration testing framework
 - Xunit
