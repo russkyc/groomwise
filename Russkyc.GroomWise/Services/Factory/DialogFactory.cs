@@ -9,7 +9,7 @@ public class DialogFactory : IDialogFactory
 {
     public DialogView Create(Action<DialogView>? builder = null)
     {
-        var dialogView = new DialogView();
+        var dialogView = new DialogView().AsChild();
         builder!(dialogView);
         return dialogView;
     }
