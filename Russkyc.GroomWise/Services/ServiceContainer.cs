@@ -45,6 +45,7 @@ public static class ServiceContainer
             .AddSingleton<IEmployeeRepository, EmployeeRepository>()
             // Add ViewModels
             .AddSingleton<IAppointmentsViewModel, AppointmentsViewModel>()
+            .AddSingleton<IInventoryViewModel, InventoryViewModel>()
             .AddSingleton<IEmployeesViewModel, EmployeesViewModel>()
             .AddSingleton<ICustomersViewModel, CustomersViewModel>()
             .AddSingleton<IDashboardViewModel, DashboardViewModel>()
@@ -55,8 +56,9 @@ public static class ServiceContainer
             .AddSingleton<IPetsViewModel, PetsViewModel>()
             .AddSingleton<IMainViewModel, MainViewModel>()
             // Add Views
-            .AddTransient<IAddAppointmentsView, AddAppointmentsView>()
+            .AddSingleton<IAddAppointmentsView, AddAppointmentsView>()
             .AddSingleton<IAppointmentsView, AppointmentsView>()
+            .AddSingleton<IInventoryView, InventoryView>()
             .AddSingleton<ICustomersView, CustomersView>()
             .AddSingleton<IDashboardView, DashboardView>()
             .AddSingleton<IEmployeesView, EmployeesView>()
