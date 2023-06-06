@@ -524,7 +524,7 @@
                 <TextBlock Grid.Row="0"
                            Margin="0,20,0,12"
                            FontSize="16"
-                           Text="Upcoming Appointments" />
+                           Text="Upcoming" />
                 <ScrollViewer Grid.Row="1"
                               VerticalAlignment="Stretch"
                               HorizontalContentAlignment="Stretch"
