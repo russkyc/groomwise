@@ -8,7 +8,7 @@ namespace GroomWise.Models.Interfaces.Service;
 public interface ISchedulerService
 {
     void RunPeriodically(
-        Func<Task> action,
+        Action action,
         TimeSpan interval,
         CancellationToken cancellationToken = default
     );

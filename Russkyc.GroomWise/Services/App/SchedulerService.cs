@@ -8,7 +8,7 @@ namespace GroomWise.Services.App;
 public class SchedulerService : ISchedulerService
 {
     public void RunPeriodically(
-        Func<Task> action,
+        Action action,
         TimeSpan interval,
         CancellationToken cancellationToken = default
     )
@@ -18,8 +18,8 @@ public class SchedulerService : ISchedulerService
             {
                 while (true)
                 {
-                    await action();
-                    await Task.Delay(interval);
+                    action();
+                    await Task.Delay(interval, cancellationToken);
                 }
             },
             cancellationToken
