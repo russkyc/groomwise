@@ -13,9 +13,6 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     private IDialogFactory _dialogFactory;
 
     [ObservableProperty]
-    private IHotkeyListenerService _hotkeyListenerService;
-
-    [ObservableProperty]
     private ISessionManagerService _sessionManagerService;
 
     [ObservableProperty]
@@ -35,13 +32,11 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
         IContextManager contextManager,
         IApplicationService applicationService,
         IThemeManagerService themeManagerService,
-        ISessionManagerService sessionManagerService,
-        IHotkeyListenerService hotkeyListenerService
+        ISessionManagerService sessionManagerService
     )
     {
         _dialogFactory = dialogFactory;
         _contextManager = contextManager;
-        _hotkeyListenerService = hotkeyListenerService;
 
         ApplicationService = applicationService;
         ThemeManagerService = themeManagerService;
@@ -99,9 +94,8 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
             // Write changes to database
             _contextManager.WriteChanges();
 
-            HotkeyListenerService.UnregisterAll();
             SessionManagerService.EndSession();
-            BuilderServices.Resolve<ILoginView>().ClearFields("Password");
+            BuilderServices.Resolve<ILoginView>().ClearFields("Username", "Password");
             BuilderServices.Resolve<ILoginView>().Show();
             BuilderServices.Resolve<IMainView>().Hide();
         }
