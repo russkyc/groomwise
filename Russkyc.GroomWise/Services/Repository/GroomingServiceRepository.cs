@@ -5,8 +5,8 @@
 
 namespace GroomWise.Services.Repository;
 
-public class AccountsRepository : Repository<Account>
+public class GroomingServiceRepository : Repository<GroomingService>
 {
-    public AccountsRepository(IDatabaseServiceAsync databaseService)
+    public GroomingServiceRepository(IDatabaseServiceAsync databaseService)
         : base(databaseService) { }
 }

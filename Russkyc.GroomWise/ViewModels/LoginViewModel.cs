@@ -7,12 +7,12 @@ namespace GroomWise.ViewModels;
 
 public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 {
-    private readonly IAccountsRepository _accountsRepository;
-    private readonly IEmployeeRepository _employeeRepository;
-    private readonly IHotkeyListenerService _hotkeyListenerService;
-    private readonly ISessionManagerService _sessionManagerService;
-    private readonly IEncryptionService _encryptionService;
     private readonly ILogger _logger;
+    private readonly IEncryptionService _encryptionService;
+    private readonly ISessionManagerService _sessionManagerService;
+
+    private readonly AccountsRepository _accountsRepository;
+    private readonly EmployeeRepository _employeeRepository;
 
     [ObservableProperty]
     private IApplicationService _applicationService;
@@ -33,9 +33,8 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 
     public LoginViewModel(
         ISessionManagerService sessionManagerService,
-        IHotkeyListenerService hotkeyListenerService,
-        IAccountsRepository accountsRepository,
-        IEmployeeRepository employeeRepository,
+        AccountsRepository accountsRepository,
+        EmployeeRepository employeeRepository,
         IApplicationService applicationService,
         IEncryptionService encryptionService,
         ILogger logger
@@ -47,7 +46,6 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
         ApplicationService = applicationService;
         _encryptionService = encryptionService;
         _logger = logger;
-        _hotkeyListenerService = hotkeyListenerService;
 
         Notifications = new NotificationsCollection();
     }
@@ -68,10 +66,9 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
         if (HasErrors)
             return;
 
-        var hashedPassword = Password.SHA256();
-        var encryptedUsername = _encryptionService.Encrypt(Username!);
-
-        var account = _accountsRepository.Get(a => a.Username == encryptedUsername);
+        var account = _accountsRepository.Find(
+            a => a.Username == _encryptionService.Encrypt(Username!)
+        );
 
         if (account == null)
         {
@@ -81,7 +78,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
             return;
         }
 
-        if (hashedPassword != account.Password)
+        if (_encryptionService.Hash(Password!) != account.Password)
         {
             BuilderServices.Resolve<ILoginView>().ClearFields("Password");
             ShowNotification("Password is incorrect.", NotificationType.Danger);
@@ -89,7 +86,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
             return;
         }
 
-        var employee = _employeeRepository.Get(e => e.Id == account.EmployeeId);
+        var employee = _employeeRepository.Find(e => e.Id == account.EmployeeId);
 
         if (employee == null)
         {
@@ -109,7 +106,6 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 
         Task.Run(async () =>
         {
-            RegisterHotKeys();
             await DispatchHelper.UiInvokeAsync(() =>
             {
                 RemoveNotification();
@@ -132,23 +128,5 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
     private void RemoveNotification()
     {
         Notifications.Clear();
-    }
-
-    [RelayCommand]
-    void RegisterHotKeys()
-    {
-        _hotkeyListenerService.RegisterHotkey(
-            new Hotkey()
-                .WithModifier(Modifier.Control)
-                .WithModifier(Modifier.Alt)
-                .WithKey(Key.A)
-                .WithName("CreateAppointment"),
-            () =>
-            {
-                DispatchHelper.UiInvoke(
-                    () => BuilderServices.Resolve<IAddAppointmentsViewFactory>().Create().Show()
-                );
-            }
-        );
     }
 }

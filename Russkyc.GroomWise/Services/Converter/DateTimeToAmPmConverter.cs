@@ -5,18 +5,23 @@
 
 namespace GroomWise.Services.Converter;
 
-[ValueConversion(typeof(bool), typeof(bool))]
-public class InverseBooleanConverter : IValueConverter
+[ValueConversion(typeof(DateTime), typeof(string))]
+public class DateTimeToAmPmConverter : IValueConverter
 {
-    public static InverseBooleanConverter Instance = new InverseBooleanConverter();
+    public static DateTimeToAmPmConverter Instance => new DateTimeToAmPmConverter();
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return !(bool)value;
+        var date = value as DateTime? ?? default;
+        return date.Hour switch
+        {
+            <= 11 => "AM",
+            > 11 => "PM"
+        };
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return !(bool)value;
+        throw new NotImplementedException();
     }
 }

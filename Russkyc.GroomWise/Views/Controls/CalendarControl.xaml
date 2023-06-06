@@ -31,7 +31,7 @@
                                   Width="30"
                                   Height="30"
                                   Padding="5"
-                                  Command="{Binding GoPreviousMonthCommand}"
+                                  Click="GoPrevious"
                                   Content="{wpf:MaterialIconExt Kind=ChevronLeft}"
                                   DefaultBackground="{DynamicResource bg-100}"
                                   DefaultForeground="{DynamicResource fg-000}" />
@@ -40,12 +40,12 @@
                        VerticalAlignment="Center"
                        FontSize="16"
                        FontWeight="Medium"
-                       Text="{Binding CurrentMonth, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DateTimeToMonthConverter.Instance}}" />
+                       Text="{Binding CurrentMonth, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DateTimeToMonthConverter.Instance}}" />
             <russkyc:ModernButton Grid.Column="2"
                                   Width="30"
                                   Height="30"
                                   Padding="5"
-                                  Command="{Binding GoNextMonthCommand}"
+                                  Click="GoNext"
                                   Content="{wpf:MaterialIconExt Kind=ChevronRight}"
                                   DefaultBackground="{DynamicResource bg-100}"
                                   DefaultForeground="{DynamicResource fg-000}" />
@@ -98,7 +98,7 @@
         </UniformGrid>
         <ItemsControl Grid.Row="2"
                       Margin="5"
-                      ItemsSource="{Binding Dates, UpdateSourceTrigger=PropertyChanged}">
+                      ItemsSource="{Binding Dates, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="7" />
@@ -106,28 +106,33 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid Style="{StaticResource FadeInFromBottomAnimation}">
+                    <Grid Style="{StaticResource FadeInAnimation}">
                         <russkyc:ModernRadioButton Grid.Row="0"
                                                    Grid.Column="0"
                                                    Width="32"
                                                    Height="32"
                                                    Padding="3"
+                                                   Checked="ToggleButton_OnChecked"
                                                    FontSize="14"
                                                    GroupName="CalendarDay"
-                                                   IsHitTestVisible="False">
+                                                   IsHitTestVisible="{Binding IsEditable, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
                             <russkyc:ModernRadioButton.Resources>
                                 <Style BasedOn="{StaticResource {x:Type russkyc:ModernRadioButton}}" TargetType="{x:Type russkyc:ModernRadioButton}">
                                     <Setter Property="Margin" Value="3" />
                                     <Setter Property="CornerRadius" Value="7" />
+                                    <Setter Property="FontWeight" Value="Medium" />
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                                     <Setter Property="VerticalContentAlignment" Value="Center" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding}" Value="{x:Null}">
-                                            <Setter Property="DefaultBackground" Value="Transparent" />
+                                            <Setter Property="Visibility" Value="Hidden" />
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Selected, Mode=OneWay}" Value="True">
-                                            <Setter Property="FontWeight" Value="Medium" />
                                             <Setter Property="IsChecked" Value="True" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding CurrentDate, Mode=OneWay}" Value="True">
+                                            <Setter Property="DefaultForeground" Value="{DynamicResource primary-default}" />
+                                            <Setter Property="HoverForeground" Value="{DynamicResource primary-default}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

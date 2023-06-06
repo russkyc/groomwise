@@ -7,47 +7,49 @@ namespace GroomWise.ViewModels;
 
 public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewModel
 {
-    private readonly IAddAppointmentsViewFactory _addAppointmentsViewFactory;
-    private readonly IAppointmentsRepository _appointmentsRepository;
     private readonly ILogger _logger;
+    private readonly ISchedulerService _schedulerService;
+    private readonly IAddAppointmentsViewFactory _addAppointmentsViewFactory;
+
+    private readonly AppointmentsRepository _appointmentsRepository;
 
     [ObservableProperty]
     private AppointmentsCollection _appointments;
 
     public AppointmentsViewModel(
-        IAppointmentsRepository appointmentsRepository,
-        IAddAppointmentsViewFactory addAppointmentsViewFactory,
-        ILogger logger
+        ILogger logger,
+        ISchedulerService schedulerService,
+        AppointmentsRepository appointmentsRepository,
+        IAddAppointmentsViewFactory addAppointmentsViewFactory
     )
     {
+        _logger = logger;
+        _schedulerService = schedulerService;
         _appointmentsRepository = appointmentsRepository;
         _addAppointmentsViewFactory = addAppointmentsViewFactory;
-        _logger = logger;
 
         Appointments = new AppointmentsCollection();
 
         GetAppointments();
     }
 
+    [RelayCommand]
     void GetAppointments()
     {
-        var _cancellationTokenSource = new CancellationTokenSource();
-        Task.Run(
-            async () =>
+        _schedulerService.RunPeriodically(
+            () =>
             {
-                while (!_cancellationTokenSource.IsCancellationRequested)
-                {
-                    var command = new SynchronizeCollectionCommand<
-                        Appointment,
-                        AppointmentsCollection
-                    >(ref _appointments, _appointmentsRepository.GetCollection());
-                    command.Execute();
-                    OnPropertyChanged();
-                    _logger.Log(this, "Synchronized appointments collection.");
-                    await Task.Delay(2000, _cancellationTokenSource.Token);
-                }
+                var command = new SynchronizeCollectionCommand<Appointment, AppointmentsCollection>(
+                    ref _appointments,
+                    _appointmentsRepository
+                        .GetAll()
+                        .Where(appointment => appointment.Date.Value.Month >= DateTime.Now.Month)
+                        .ToList()
+                );
+                command.Execute();
+                _logger.Log(this, "Synchronized appointments collection");
             },
-            _cancellationTokenSource.Token
+            TimeSpan.FromSeconds(2)
         );
     }
 

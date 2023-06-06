@@ -7,11 +7,10 @@ namespace GroomWise.ViewModels;
 
 public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
-    [ObservableProperty]
-    private IDialogFactory _dialogFactory;
+    private readonly IContextManager _contextManager;
 
     [ObservableProperty]
-    private IHotkeyListenerService _hotkeyListenerService;
+    private IDialogFactory _dialogFactory;
 
     [ObservableProperty]
     private ISessionManagerService _sessionManagerService;
@@ -29,18 +28,20 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     private IPage? _view;
 
     public MainViewModel(
-        ISessionManagerService sessionManagerService,
+        IDialogFactory dialogFactory,
+        IContextManager contextManager,
         IApplicationService applicationService,
         IThemeManagerService themeManagerService,
-        IDialogFactory dialogFactory,
-        IHotkeyListenerService hotkeyListenerService
+        ISessionManagerService sessionManagerService
     )
     {
         _dialogFactory = dialogFactory;
-        _hotkeyListenerService = hotkeyListenerService;
-        SessionManagerService = sessionManagerService;
-        ThemeManagerService = themeManagerService;
+        _contextManager = contextManager;
+
         ApplicationService = applicationService;
+        ThemeManagerService = themeManagerService;
+        SessionManagerService = sessionManagerService;
+
         NavItems = ApplicationService.NavItems!;
     }
 
@@ -90,9 +91,11 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
                 .ShowDialog() == true
         )
         {
-            HotkeyListenerService.UnregisterAll();
+            // Write changes to database
+            _contextManager.WriteChanges();
+
             SessionManagerService.EndSession();
-            BuilderServices.Resolve<ILoginView>().ClearFields("Password");
+            BuilderServices.Resolve<ILoginView>().ClearFields("Username", "Password");
             BuilderServices.Resolve<ILoginView>().Show();
             BuilderServices.Resolve<IMainView>().Hide();
         }

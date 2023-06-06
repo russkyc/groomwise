@@ -7,8 +7,10 @@ namespace GroomWise.ViewModels;
 
 public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 {
+    private readonly AppointmentsRepository _appointmentsRepository;
     private readonly IAppointmentFactory _appointmentFactory;
     private readonly IEncryptionService _encryptionService;
+    private readonly ISchedulerService _schedulerService;
 
     [ObservableProperty]
     private ISessionManagerService _sessionManagerService;
@@ -25,12 +27,16 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
     public DashboardViewModel(
         IAppointmentFactory appointmentFactory,
         ISessionManagerService sessionManagerService,
-        IEncryptionService encryptionService
+        IEncryptionService encryptionService,
+        AppointmentsRepository appointmentsRepository,
+        ISchedulerService schedulerService
     )
     {
         _appointmentFactory = appointmentFactory;
         SessionManagerService = sessionManagerService;
         _encryptionService = encryptionService;
+        _appointmentsRepository = appointmentsRepository;
+        _schedulerService = schedulerService;
 
         Appointments = new AppointmentsCollection();
         GetNotifications();
@@ -45,30 +51,30 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 
     private void GetNotifications()
     {
-        Task.Run(async () =>
-        {
-            for (var i = 0; i < 50; i++)
+        _schedulerService.RunPeriodically(
+            () =>
             {
-                await DispatchHelper.UiInvokeAsync(
-                    () =>
-                        Appointments.Insert(
-                            0,
-                            _appointmentFactory.Create(appointment =>
-                            {
-                                appointment.Title = $"Appointment {i}";
-                                appointment.Description = "Service scheduled for today";
-                                appointment.Date = DateTime.Now;
-                            })
+                var command = new SynchronizeCollectionCommand<Appointment, AppointmentsCollection>(
+                    ref _appointments,
+                    _appointmentsRepository
+                        .FindAll(
+                            appointment =>
+                                appointment.Date!.Value.Day == DateTime.Today.Day
+                                && appointment.Date!.Value.Month == DateTime.Today.Month
+                                && appointment.Date!.Value.Hour >= DateTime.Today.Hour
                         )
+                        .OrderBy(appointment => appointment.Date!.Value.TimeOfDay)
+                        .ToList()
                 );
-                await Task.Delay(2500);
-            }
-        });
+                command.Execute();
+            },
+            TimeSpan.FromSeconds(2)
+        );
     }
 
     private void GetWelcomeMessage()
     {
-        User = _encryptionService.Decrypt(SessionManagerService.SessionUser!.FirstName!);
+        User = SessionManagerService.SessionUser!.FirstName;
     }
 
     private void GetTime()

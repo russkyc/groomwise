@@ -7,8 +7,11 @@ namespace GroomWise.ViewModels;
 
 public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
 {
-    private readonly IEmployeeRepository _employeeRepository;
     private readonly IEncryptionService _encryptionService;
+    private readonly ISchedulerService _schedulerService;
+    private readonly ILogger _logger;
+
+    private readonly EmployeeRepository _employeeRepository;
 
     [ObservableProperty]
     private string? _filter;
@@ -18,11 +21,15 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
 
     public EmployeesViewModel(
         IEncryptionService encryptionService,
-        IEmployeeRepository employeeRepository
+        EmployeeRepository employeeRepository,
+        ISchedulerService schedulerService,
+        ILogger logger
     )
     {
         _encryptionService = encryptionService;
         _employeeRepository = employeeRepository;
+        _schedulerService = schedulerService;
+        _logger = logger;
         Employees = new EmployeesCollection();
 
         GetEmployees();
@@ -30,17 +37,17 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
 
     void GetEmployees()
     {
-        Task.Run(async () =>
-        {
-            await DispatchHelper.UiInvokeAsync(
-                () =>
-                    Employees.AddRange(
-                        _employeeRepository
-                            .GetCollection()
-                            .Select(employee => _encryptionService.Decrypt(employee))
-                            .ToList()
-                    )
-            );
-        });
+        _schedulerService.RunPeriodically(
+            () =>
+            {
+                var command = new SynchronizeCollectionCommand<Employee, EmployeesCollection>(
+                    ref _employees,
+                    _employeeRepository.GetAll().ToList()
+                );
+                command.Execute();
+                _logger.Log(this, "Synchronized employees collection");
+            },
+            TimeSpan.FromSeconds(2)
+        );
     }
 }

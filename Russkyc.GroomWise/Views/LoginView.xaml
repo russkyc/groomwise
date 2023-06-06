@@ -1094,7 +1094,7 @@
                 <russkyc:ModernTextBox x:Name="UsernameBox"
                                        Margin="12,12,12,0"
                                        CornerRadius="5"
-                                       HelperText="No special characters except '_' and '-'"
+                                       HelperText="Required"
                                        LeftIcon="{icons:MaterialIconExt Kind=User}"
                                        Placeholder="Username"
                                        Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
@@ -1107,7 +1107,7 @@
                 <PasswordBox x:Name="PasswordBox"
                              Margin="12,5,12,0"
                              helpers:PasswordBoxHelper.CornerRadius="5"
-                             helpers:PasswordBoxHelper.HelperText="Required *"
+                             helpers:PasswordBoxHelper.HelperText="Required"
                              helpers:PasswordBoxHelper.LeftIcon="{icons:MaterialIconExt Kind=Password}"
                              helpers:PasswordBoxHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              helpers:PasswordBoxHelper.Placeholder="Password">

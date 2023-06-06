@@ -43,10 +43,10 @@
                                LineStackingStrategy="BlockLineHeight"
                                Text="{Binding Date, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DateTimeToTimeConverter.Instance}}"
                                TextAlignment="Center" />
-                    <TextBlock FontSize="10"
+                    <TextBlock FontSize="12"
                                FontWeight="Medium"
                                Foreground="{DynamicResource inverted-default}"
-                               Text="{Binding Date, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DateTimeToTimeOfDayConverter.Instance}}"
+                               Text="{Binding Date, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DateTimeToAmPmConverter.Instance}}"
                                TextAlignment="Center" />
                 </StackPanel>
             </Border>

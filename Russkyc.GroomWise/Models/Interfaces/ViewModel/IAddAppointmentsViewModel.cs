@@ -3,8 +3,9 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Models.Interfaces.Repository;
+namespace GroomWise.Models.Interfaces.ViewModel;
 
-public interface IAccountsRepository : IRepository<Account>
+public interface IAddAppointmentsViewModel
 {
+    
 }

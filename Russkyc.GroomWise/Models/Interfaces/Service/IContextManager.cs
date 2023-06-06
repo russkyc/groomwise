@@ -3,10 +3,9 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Services.Repository;
+namespace GroomWise.Models.Interfaces.Service;
 
-public class AccountsRepository : Repository<Account>
+public interface IContextManager
 {
-    public AccountsRepository(IDatabaseServiceAsync databaseService)
-        : base(databaseService) { }
+    void WriteChanges();
 }

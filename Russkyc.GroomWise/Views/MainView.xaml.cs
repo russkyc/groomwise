@@ -23,11 +23,18 @@ public partial class MainView : IMainView
         throw new NotImplementedException();
     }
 
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        BuilderServices.Resolve<ILogger>().Log(this, "Writing changes to database");
+        BuilderServices.Resolve<IContextManager>().WriteChanges();
+        base.OnClosing(e);
+    }
+
     protected override void OnClosed(EventArgs e)
     {
         BuilderServices.Resolve<ILogger>().Log(this, "Exiting application environment");
-        base.OnClosed(e);
         Application.Current.Shutdown();
         Environment.Exit(0);
+        base.OnClosed(e);
     }
 }

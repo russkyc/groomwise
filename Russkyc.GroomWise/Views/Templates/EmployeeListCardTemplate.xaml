@@ -4,12 +4,13 @@
              xmlns:converter="clr-namespace:GroomWise.Services.Converter"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:entities="clr-namespace:GroomWise.Models.Entities"
+             xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-             Height="68"
+             Height="78"
              d:DataContext="{d:DesignInstance entities:Employee,
                                               IsDesignTimeCreatable=True}"
-             d:DesignWidth="600"
+             d:DesignWidth="400"
              Background="Transparent"
              mc:Ignorable="d">
     <Grid Style="{StaticResource FadeInFromBottomAnimation}">
@@ -24,31 +25,32 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0"
-                        Width="40"
-                        Height="40"
+                        Width="50"
+                        Height="50"
                         Margin="12,0"
                         VerticalAlignment="Center"
                         Background="{DynamicResource primary-default}"
                         CornerRadius="40" />
-                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                    <TextBlock FontSize="14" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
-                    <TextBlock FontSize="10"
-                               Foreground="{DynamicResource bg-600}"
-                               Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
+                <StackPanel Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <TextBlock HorizontalAlignment="Left"
+                               FontSize="14"
+                               FontWeight="Medium"
+                               Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
+                    <Border Margin="0,4,0,0"
+                            Padding="10,3"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="{DynamicResource primary-default}"
+                            CornerRadius="10">
+                        <TextBlock HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="10"
+                                   Foreground="{DynamicResource inverted-default}"
+                                   Text="{Binding EmployeeType, Converter={x:Static converter:IntegerToRoleTypeConverter.Instance}}" />
+                    </Border>
                 </StackPanel>
-                <Border Grid.Column="4"
-                        Width="80"
-                        Margin="12,0"
-                        Padding="5"
-                        VerticalAlignment="Center"
-                        Background="{DynamicResource primary-default}"
-                        CornerRadius="12">
-                    <TextBlock HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               FontSize="12"
-                               Foreground="{DynamicResource inverted-default}"
-                               Text="{Binding EmployeeType, Converter={x:Static converter:IntegerToRoleTypeConverter.Instance}}" />
-                </Border>
                 <StackPanel Grid.Column="5"
                             Margin="12,0"
                             VerticalAlignment="Center"
@@ -58,8 +60,22 @@
                             <Setter Property="Margin" Value="5" />
                         </Style>
                     </StackPanel.Resources>
-                    <russkyc:ModernButton />
-                    <russkyc:ModernButton />
+                    <russkyc:ModernButton Width="30"
+                                          Height="30"
+                                          Padding="5"
+                                          Content="{icons:MaterialIconExt Kind=Alert,
+                                                                          Size=20}"
+                                          CornerRadius="5" />
+                    <russkyc:ModernButton Width="30"
+                                          Height="30"
+                                          Padding="5"
+                                          Content="{icons:MaterialIconExt Kind=Edit,
+                                                                          Size=20}"
+                                          CornerRadius="5"
+                                          DefaultBackground="Transparent"
+                                          DefaultForeground="{StaticResource fg-600}"
+                                          HoverBackground="Transparent"
+                                          PressedBackground="{StaticResource bg-000}" />
                 </StackPanel>
             </Grid>
         </Border>

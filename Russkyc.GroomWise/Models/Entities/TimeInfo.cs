@@ -3,10 +3,13 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Services.Repository;
+namespace GroomWise.Models.Entities;
 
-public class AccountsRepository : Repository<Account>
+public record TimeInfo
 {
-    public AccountsRepository(IDatabaseServiceAsync databaseService)
-        : base(databaseService) { }
+    public string? Time { get; init; }
+    public int AmHour { get; init; }
+    public int PmHour { get; init; }
+    public int Minutes { get; init; }
+    public bool IsAm { get; set; }
 }

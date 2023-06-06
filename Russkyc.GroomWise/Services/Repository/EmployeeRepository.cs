@@ -5,55 +5,21 @@
 
 namespace GroomWise.Services.Repository;
 
-public class EmployeeRepository : IEmployeeRepository
+public class EmployeeRepository : Repository<Employee>
 {
     private readonly IEncryptionService _encryptionService;
-    private IDatabaseServiceAsync _databaseService;
 
     public EmployeeRepository(
         IDatabaseServiceAsync databaseService,
         IEncryptionService encryptionService
     )
+        : base(databaseService)
     {
-        _databaseService = databaseService;
         _encryptionService = encryptionService;
     }
 
-    public bool Add(Employee item)
+    public new IEnumerable<Employee> GetAll()
     {
-        return Task.Run(async () => await _databaseService.Add(item)).Result;
-    }
-
-    public bool AddMultiple(ICollection<Employee> items)
-    {
-        return Task.Run(async () => await _databaseService.AddMultiple(items)).Result;
-    }
-
-    public Employee Get(Expression<Func<Employee, bool>> filter)
-    {
-        return Task.Run(async () => await _databaseService.Get(filter)).Result;
-    }
-
-    public ICollection<Employee> GetMultiple(Expression<Func<Employee, bool>> filter)
-    {
-        return Task.Run(async () => await _databaseService.GetMultiple(filter)).Result;
-    }
-
-    public ICollection<Employee> GetCollection()
-    {
-        return Task.Run(async () => await _databaseService.GetCollection<Employee>()).Result;
-    }
-
-    public bool Update(
-        Expression<Func<Employee, bool>> filter,
-        Expression<Func<Employee, Employee>> action
-    )
-    {
-        return Task.Run(async () => await _databaseService.Update(filter, action)).Result;
-    }
-
-    public bool Delete(Expression<Func<Employee, bool>> filter)
-    {
-        return Task.Run(async () => await _databaseService.Delete(filter)).Result;
+        return base.GetAll().Select(employee => _encryptionService.Decrypt(employee));
     }
 }
