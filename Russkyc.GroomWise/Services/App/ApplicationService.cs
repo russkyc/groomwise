@@ -135,7 +135,6 @@ public partial class ApplicationService : ObservableObject, IApplicationService
 
     public void BuildAppInfo()
     {
-        AppAuthor = "Russell Camo (@russkyc)";
         AppVersion = _configProvider.Version;
     }
 
