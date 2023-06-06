@@ -25,6 +25,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <KnownFrameworkReference Update="Microsoft.WindowsDesktop.App.WPF" IsWindowsOnly="false" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="CaseExtensions" Version="1.1.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
         <PackageReference Include="CredentialManagement" Version="1.0.2" />
