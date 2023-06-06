@@ -3,24 +3,24 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Services.Data;
+namespace GroomWise.Models.Data;
 
 public class ContextManager : IContextManager
 {
-    private readonly Repository<Pet> _petsRepository;
-    private readonly Repository<Account> _accountsRepository;
-    private readonly Repository<Employee> _employeesRepository;
-    private readonly Repository<Customer> _customersRepository;
-    private readonly Repository<Appointment> _appointmentsRepository;
-    private readonly Repository<GroomingService> _groomingServicesRepository;
+    private readonly PetRepository _petsRepository;
+    private readonly AccountsRepository _accountsRepository;
+    private readonly EmployeeRepository _employeesRepository;
+    private readonly CustomerRepository _customersRepository;
+    private readonly AppointmentsRepository _appointmentsRepository;
+    private readonly GroomingServiceRepository _groomingServicesRepository;
 
     public ContextManager(
-        Repository<Pet> petsRepository,
-        Repository<Account> accountsRepository,
-        Repository<Customer> customersRepository,
-        Repository<Employee> employeesRepository,
-        Repository<Appointment> appointmentsRepository,
-        Repository<GroomingService> groomingServicesRepository
+        PetRepository petsRepository,
+        AccountsRepository accountsRepository,
+        EmployeeRepository employeesRepository,
+        CustomerRepository customersRepository,
+        AppointmentsRepository appointmentsRepository,
+        GroomingServiceRepository groomingServicesRepository
     )
     {
         _petsRepository = petsRepository;
