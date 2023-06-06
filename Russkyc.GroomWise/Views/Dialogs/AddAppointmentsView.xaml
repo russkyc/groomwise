@@ -3,6 +3,8 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
                       xmlns:controls="clr-namespace:GroomWise.Views.Controls"
+                      xmlns:converter="clr-namespace:GroomWise.Services.Converter"
+                      xmlns:converters="clr-namespace:org.russkyc.moderncontrols.Converters;assembly=Russkyc.ModernControls.WPF"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -63,60 +65,56 @@
             <russkyc:ModernComboBox Margin="0,12,0,0"
                                     CornerRadius="5"
                                     Placeholder="Service" />
-            <ItemsControl Margin="-4,8,-4,-4" ItemsSource="{Binding Times, UpdateSourceTrigger=PropertyChanged}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="4" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <russkyc:ModernRadioButton Height="38"
-                                                   Padding="3"
-                                                   VerticalContentAlignment="Center"
-                                                   BorderThickness="1"
-                                                   Command="{Binding .DataContext.SetTimeCommand, RelativeSource={RelativeSource AncestorType=russkyc:ModernWindow}}"
-                                                   CommandParameter="{Binding}"
-                                                   Content="{Binding}"
-                                                   CornerRadius="7"
-                                                   FontSize="14"
-                                                   FontWeight="Medium"
-                                                   GroupName="Time" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="{x:Type FrameworkElement}">
-                        <Setter Property="Margin" Value="5" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
-            <ItemsControl Margin="-4,12,-4,-4" ItemsSource="{Binding TimeOfDay, UpdateSourceTrigger=PropertyChanged}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="2" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <russkyc:ModernRadioButton Height="38"
-                                                   Padding="2"
-                                                   VerticalContentAlignment="Center"
-                                                   BorderThickness="1"
-                                                   Command="{Binding .DataContext.SetTimeOfDayCommand, RelativeSource={RelativeSource AncestorType=russkyc:ModernWindow}}"
-                                                   CommandParameter="{Binding}"
-                                                   Content="{Binding}"
-                                                   CornerRadius="7"
-                                                   FontSize="14"
-                                                   FontWeight="Medium"
-                                                   GroupName="TimeOfDay" />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="{x:Type FrameworkElement}">
-                        <Setter Property="Margin" Value="5" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
+            <Grid Margin="0,12,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <russkyc:ModernComboBox Grid.Column="0"
+                                        CornerRadius="5"
+                                        DisplayMemberPath="Key"
+                                        FontSize="14"
+                                        FontWeight="Medium"
+                                        ItemsSource="{Binding Times, UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValue="{Binding Time, UpdateSourceTrigger=PropertyChanged}"
+                                        SelectedValuePath="Value">
+                    <russkyc:ModernComboBox.Resources>
+                        <Style TargetType="Popup">
+                            <Setter Property="MaxHeight" Value="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernComboBox}}" />
+                            <Setter Property="Width" Value="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernComboBox}}" />
+                        </Style>
+                    </russkyc:ModernComboBox.Resources>
+                </russkyc:ModernComboBox>
+                <russkyc:ModernRadioButton Grid.Column="1"
+                                           Width="100"
+                                           Margin="12,0,0,0"
+                                           Padding="2"
+                                           VerticalContentAlignment="Center"
+                                           BorderThickness="1"
+                                           Command="{Binding .DataContext.SetTimeOfDayCommand, RelativeSource={RelativeSource AncestorType=russkyc:ModernWindow}}"
+                                           CommandParameter="{StaticResource True}"
+                                           Content="AM"
+                                           CornerRadius="5"
+                                           FontSize="14"
+                                           FontWeight="Medium"
+                                           GroupName="TimeOfDay"
+                                           IsChecked="{Binding IsAm, UpdateSourceTrigger=PropertyChanged}" />
+                <russkyc:ModernRadioButton Grid.Column="2"
+                                           Width="100"
+                                           Margin="6,0,0,0"
+                                           Padding="2"
+                                           VerticalContentAlignment="Center"
+                                           BorderThickness="1"
+                                           Command="{Binding .DataContext.SetTimeOfDayCommand, RelativeSource={RelativeSource AncestorType=russkyc:ModernWindow}}"
+                                           CommandParameter="{StaticResource False}"
+                                           Content="PM"
+                                           CornerRadius="5"
+                                           FontSize="14"
+                                           FontWeight="Medium"
+                                           GroupName="TimeOfDay"
+                                           IsChecked="{Binding IsAm, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converter:InverseBooleanConverter.Instance}}" />
+            </Grid>
             <StackPanel Margin="0,24,0,0"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">

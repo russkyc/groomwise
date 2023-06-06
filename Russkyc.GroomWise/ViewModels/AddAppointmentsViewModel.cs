@@ -28,10 +28,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     private ObservableCollection<int> _days;
 
     [ObservableProperty]
-    private ObservableCollection<string> _times;
-
-    [ObservableProperty]
-    private ObservableCollection<string> _timeOfDay;
+    private ObservableCollection<KeyValuePair<string, TimeInfo>> _times;
 
     [ObservableProperty]
     private string _title;
@@ -40,7 +37,13 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     private string _description;
 
     [ObservableProperty]
-    private DateTime? _date;
+    private DateTime _date;
+
+    [ObservableProperty]
+    private TimeInfo _time;
+
+    [ObservableProperty]
+    private bool _isAm;
 
     public AddAppointmentsViewModel(
         ILogger logger,
@@ -61,9 +64,8 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
         Customers = new CustomersCollection();
         GroomigServices = new GroomingServiceCollection();
 
-        TimeOfDay = new ObservableCollection<string>();
         Months = new ObservableCollection<string>();
-        Times = new ObservableCollection<string>();
+        Times = new ObservableCollection<KeyValuePair<string, TimeInfo>>();
         Days = new ObservableCollection<int>();
 
         GetServices();
@@ -97,50 +99,55 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
                 Days.Add(i);
             }
 
-            int hour = 7;
+            int hour = 1;
             int minute = 00;
             while (hour < 11)
             {
                 if (minute == 00)
                 {
-                    Times.Add($"{hour}:{minute:00}");
+                    Times.Add(
+                        new KeyValuePair<string, TimeInfo>(
+                            $"{hour:00}:{minute:00}",
+                            new TimeInfo
+                            {
+                                Time = $"{hour:00}:{minute:00}",
+                                AmHour = hour,
+                                PmHour = hour + 12,
+                                Minutes = minute,
+                                IsAm = true
+                            }
+                        )
+                    );
                     minute = 30;
                 }
                 if (minute == 30)
                 {
-                    Times.Add($"{hour}:{minute:00}");
+                    Times.Add(
+                        new KeyValuePair<string, TimeInfo>(
+                            $"{hour:00}:{minute:00}",
+                            new TimeInfo
+                            {
+                                Time = $"{hour:00}:{minute:00}",
+                                AmHour = hour,
+                                PmHour = hour + 12,
+                                Minutes = minute,
+                                IsAm = true
+                            }
+                        )
+                    );
                     hour++;
                     minute = 0;
                 }
             }
-            TimeOfDay.Add("AM");
-            TimeOfDay.Add("PM");
+
+            Time = Times[0].Value;
         });
     }
 
-    [RelayCommand]
-    void SetTime(string time)
+    void ClearFields()
     {
-        var timeData = time.Split(":");
-        var hour = int.Parse(timeData[0]);
-        var minute = int.Parse(timeData[1]);
-        Date = new DateTime(Date!.Value.Year, Date.Value.Month, Date.Value.Day, hour, minute, 0);
-    }
-
-    [RelayCommand]
-    void SetTimeOfDay(string timeOfDay)
-    {
-        if (timeOfDay.Equals("PM"))
-        {
-            Date = new DateTime(
-                Date.Value.Year,
-                Date.Value.Month,
-                Date.Value.Day,
-                Date.Value.Hour + 12,
-                Date.Value.Minute,
-                0
-            );
-        }
+        Title = string.Empty;
+        Description = string.Empty;
     }
 
     [RelayCommand]
@@ -148,7 +155,14 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     {
         var appointment = _appointmentFactory.Create(appointment =>
         {
-            appointment.Date = Date;
+            appointment.Date = new DateTime(
+                Date.Year,
+                Date.Month,
+                Date.Day,
+                IsAm ? _time.AmHour : _time.PmHour,
+                _time.Minutes,
+                0
+            );
             appointment.Title = Title;
             appointment.Description = Description;
         });
@@ -163,5 +177,6 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
             })
             .AsChild()
             .ShowDialog();
+        ClearFields();
     }
 }
