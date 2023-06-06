@@ -16,4 +16,6 @@ public interface IRepository<TEntity>
 
     bool Remove(TEntity entity);
     int RemoveAll(Predicate<TEntity> filter);
+
+    void WriteToDb();
 }

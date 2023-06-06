@@ -8,21 +8,28 @@ namespace GroomWise.Models.Abstractions;
 public abstract class Repository<T> : Interfaces.Repository.IRepository<T>
     where T : class, new()
 {
-    private List<T> _collection;
+    private readonly IDatabaseServiceAsync _databaseService;
+    private readonly Queue<Task> _changes;
+    private readonly List<T> _collection;
 
     public Repository(IDatabaseServiceAsync databaseService)
     {
+        _changes = new Queue<Task>();
+        _databaseService = databaseService;
         _collection = Task.Run(databaseService.GetCollection<T>).Result.ToList();
     }
 
     public void Add(T entity)
     {
         _collection.Add(entity);
+        _changes.Enqueue(new Task(() => _databaseService.Add(entity)));
     }
 
     public void AddRange(IEnumerable<T> entities)
     {
-        _collection.AddRange(entities);
+        var collection = entities as T[] ?? entities.ToArray();
+        _collection.AddRange(collection);
+        _changes.Enqueue(new Task(() => _databaseService.AddMultiple(collection.ToList())));
     }
 
     public IEnumerable<T> GetAll()
@@ -35,18 +42,34 @@ public abstract class Repository<T> : Interfaces.Repository.IRepository<T>
         return _collection.Find(filter);
     }
 
-    public IEnumerable<T>? FindAll(Predicate<T> filter)
+    public IEnumerable<T> FindAll(Predicate<T> filter)
     {
         return _collection.FindAll(filter);
     }
 
     public bool Remove(T entity)
     {
-        return _collection.Remove(entity);
+        var result = _collection.Remove(entity);
+        if (result)
+            _changes.Enqueue(
+                new Task(() => _databaseService.Delete<T>(t => entity.HasSameValues(t)))
+            );
+        return result;
     }
 
     public int RemoveAll(Predicate<T> filter)
     {
-        return _collection.RemoveAll(filter);
+        var result = _collection.RemoveAll(filter);
+        if (result > 0)
+            _changes.Enqueue(new Task(() => _databaseService.Delete<T>(t => filter(t))));
+        return result;
+    }
+
+    public void WriteToDb()
+    {
+        while (_changes.Count != 0)
+        {
+            _changes.Dequeue().Start();
+        }
     }
 }

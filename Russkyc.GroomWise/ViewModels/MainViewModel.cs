@@ -7,6 +7,8 @@ namespace GroomWise.ViewModels;
 
 public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
+    private readonly IContextManager _contextManager;
+
     [ObservableProperty]
     private IDialogFactory _dialogFactory;
 
@@ -29,18 +31,22 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     private IPage? _view;
 
     public MainViewModel(
-        ISessionManagerService sessionManagerService,
+        IDialogFactory dialogFactory,
+        IContextManager contextManager,
         IApplicationService applicationService,
         IThemeManagerService themeManagerService,
-        IDialogFactory dialogFactory,
+        ISessionManagerService sessionManagerService,
         IHotkeyListenerService hotkeyListenerService
     )
     {
         _dialogFactory = dialogFactory;
+        _contextManager = contextManager;
         _hotkeyListenerService = hotkeyListenerService;
-        SessionManagerService = sessionManagerService;
-        ThemeManagerService = themeManagerService;
+
         ApplicationService = applicationService;
+        ThemeManagerService = themeManagerService;
+        SessionManagerService = sessionManagerService;
+
         NavItems = ApplicationService.NavItems!;
     }
 
@@ -90,6 +96,9 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
                 .ShowDialog() == true
         )
         {
+            // Write changes to database
+            _contextManager.WriteChanges();
+
             HotkeyListenerService.UnregisterAll();
             SessionManagerService.EndSession();
             BuilderServices.Resolve<ILoginView>().ClearFields("Password");
