@@ -1,13 +1,7 @@
 ﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
-// 
+//
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
-
-#region
-
-using System.Globalization;
-
-#endregion
 
 namespace GroomWise.Services.Converter;
 
@@ -23,6 +17,6 @@ public class InverseBooleanConverter : IValueConverter
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        throw new NotImplementedException();
+        return !(bool)value;
     }
 }
