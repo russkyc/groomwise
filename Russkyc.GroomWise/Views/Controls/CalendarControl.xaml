@@ -106,7 +106,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid Style="{StaticResource FadeInFromBottomAnimation}">
+                    <Grid Style="{StaticResource FadeInAnimation}">
                         <russkyc:ModernRadioButton Grid.Row="0"
                                                    Grid.Column="0"
                                                    Width="32"

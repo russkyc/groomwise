@@ -57,34 +57,40 @@ public partial class CalendarControl
             var firstDayOfWeek = (int)firstDayOfMonth.DayOfWeek + 1;
 
             Task.Run(() =>
-            {
-                var dayIndex = 1;
-                var dateIndex = 1;
-
-                while (dateIndex <= daysInMonth)
                 {
-                    if (dayIndex >= firstDayOfWeek)
+                    var dayIndex = 1;
+                    var dateIndex = 1;
+                    var tempDates = new List<CalendarDate>();
+
+                    while (dateIndex <= daysInMonth)
                     {
-                        Dates.Add(
-                            new CalendarDate()
-                                .SetDate(dateIndex)
-                                .SetDateInfo(CurrentMonth)
-                                .SetSelected(
-                                    CurrentMonth.Year == DateTime.Today.Year
-                                        && CurrentMonth.Month == DateTime.Today.Month
-                                        && dateIndex == DateTime.Now.Day
-                                )
-                        );
-                        dateIndex++;
-                    }
-                    else
-                    {
-                        Dates.Add(null!);
+                        if (dayIndex >= firstDayOfWeek)
+                        {
+                            tempDates.Add(
+                                new CalendarDate()
+                                    .SetDate(dateIndex)
+                                    .SetDateInfo(CurrentMonth)
+                                    .SetSelected(
+                                        CurrentMonth.Year == DateTime.Today.Year
+                                            && CurrentMonth.Month == DateTime.Today.Month
+                                            && dateIndex == DateTime.Now.Day
+                                    )
+                            );
+                            dateIndex++;
+                        }
+                        else
+                        {
+                            tempDates.Add(null!);
+                        }
+                        dayIndex++;
                     }
 
-                    dayIndex++;
-                }
-            });
+                    return tempDates;
+                })
+                .ContinueWith(async dates =>
+                {
+                    Dates.AddRange(await dates);
+                });
         }
     }
 }
