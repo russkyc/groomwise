@@ -31,9 +31,9 @@ public partial class SettingsViewModel : ViewModelBase, ISettingsViewModel
     }
 
     [RelayCommand]
-    private void SwitchBaseTheme(string theme)
+    private void SwitchBaseTheme(bool isDark)
     {
-        ThemeManagerService.UseDarkTheme(theme == "Dark");
+        ThemeManagerService.UseDarkTheme(isDark);
     }
 
     private void GetThemeItems()
