@@ -7,15 +7,16 @@ namespace GroomWise.ViewModels;
 
 public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewModel
 {
-    private readonly IAddAppointmentsViewFactory _addAppointmentsViewFactory;
-    private readonly IAppointmentsRepository _appointmentsRepository;
     private readonly ILogger _logger;
+    private readonly IAddAppointmentsViewFactory _addAppointmentsViewFactory;
+
+    private readonly Repository<Appointment> _appointmentsRepository;
 
     [ObservableProperty]
     private AppointmentsCollection _appointments;
 
     public AppointmentsViewModel(
-        IAppointmentsRepository appointmentsRepository,
+        Repository<Appointment> appointmentsRepository,
         IAddAppointmentsViewFactory addAppointmentsViewFactory,
         ILogger logger
     )
@@ -29,6 +30,7 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
         GetAppointments();
     }
 
+    [RelayCommand]
     void GetAppointments()
     {
         var _cancellationTokenSource = new CancellationTokenSource();
@@ -40,9 +42,8 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
                     var command = new SynchronizeCollectionCommand<
                         Appointment,
                         AppointmentsCollection
-                    >(ref _appointments, _appointmentsRepository.GetCollection());
+                    >(ref _appointments, _appointmentsRepository.GetAll().ToList());
                     command.Execute();
-                    OnPropertyChanged();
                     _logger.Log(this, "Synchronized appointments collection.");
                     await Task.Delay(2000, _cancellationTokenSource.Token);
                 }
