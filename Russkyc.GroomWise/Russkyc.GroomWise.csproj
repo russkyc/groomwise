@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net6.0-windows</TargetFramework>
+        <TargetFramework>net7.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <ApplicationIcon>Views\Resources\Icons\groomwise-multi.ico</ApplicationIcon>
@@ -38,12 +38,11 @@
         <PackageReference Include="Russkyc.Abstractions" Version="1.6.1" />
         <PackageReference Include="Russkyc.AttachedUtilities.FilestreamExtensions" Version="1.1.1" />
         <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.7" />
-        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.9.16" />
+        <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.9.18" />
         <PackageReference Include="Russkyc.Services.HotKeyListener" Version="0.11.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Services\Cache\" />
         <Folder Include="Views\Resources\Themes\BaseThemes\" />
         <Folder Include="Views\Resources\Themes\ColorThemes\" />
     </ItemGroup>
@@ -82,6 +81,7 @@
 
     <ItemGroup>
         <Compile Remove="Models\Helpers\FilterHelper.cs" />
+        <Compile Remove="Models\Entities\DateTimeInfo.cs" />
     </ItemGroup>
 
     <ItemGroup>
