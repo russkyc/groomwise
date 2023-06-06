@@ -75,15 +75,20 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
       
+    # Build Projects
     - name: Build
-      run: dotnet build
+      run: dotnet build --configuration ${{ matrix.configuration }}
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
       run: dotnet test --no-build --verbosity normal
-      
+    
+    - name: Publish
+      run: dotnet publish --self-contained true-c Release -r win-x64 --output ./latest-release
+    
+    #
     - name: Upload release
       uses: actions/upload-artifact@v3
       with:
         name: latest-release
-        path: Russkyc.GroomWise/bin/Release/net7.0-windows
+        path: ./latest-release
