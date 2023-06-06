@@ -76,8 +76,8 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
       
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build
 
     # Execute all unit tests in the solution
     - name: Execute unit tests
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test --no-build --verbosity normal
