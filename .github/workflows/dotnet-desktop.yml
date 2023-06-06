@@ -82,8 +82,8 @@ jobs:
     - name: Execute unit tests
       run: dotnet test --no-build --verbosity normal
       
-    - name: Upload dotnet test results
+    - name: Upload release
       uses: actions/upload-artifact@v3
       with:
-        name: dotnet-results-7.0.x
-        path: TestResults-7.0.x
+        name: latest-release
+        path: Russkyc.GroomWise/bin/Release/net7.0-windows
