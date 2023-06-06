@@ -11,6 +11,7 @@ public class CalendarDate
     public DateTime DateInfo { get; set; }
     public bool HasAppointment { get; set; }
     public bool Selected { get; set; }
+    public bool CurrentDate { get; set; }
 
     public CalendarDate SetDate(int date)
     {
@@ -33,6 +34,12 @@ public class CalendarDate
     public CalendarDate SetSelected(bool selected)
     {
         Selected = selected;
+        return this;
+    }
+
+    public CalendarDate SetCurrentDate(bool current)
+    {
+        CurrentDate = current;
         return this;
     }
 }

@@ -7,90 +7,116 @@ namespace GroomWise.Views.Controls;
 
 public partial class CalendarControl
 {
+    public static readonly DependencyProperty SelectedDateProperty = DependencyProperty.Register(
+        nameof(SelectedDate),
+        typeof(DateTime),
+        typeof(CalendarControl),
+        new FrameworkPropertyMetadata(
+            default(DateTime),
+            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault
+        )
+    );
+
+    public static readonly DependencyProperty IsEditableProperty = DependencyProperty.Register(
+        nameof(IsEditable),
+        typeof(bool),
+        typeof(CalendarControl),
+        new FrameworkPropertyMetadata(false)
+    );
+
+    public DateTime SelectedDate
+    {
+        get => (DateTime)GetValue(SelectedDateProperty);
+        set => SetValue(SelectedDateProperty, value);
+    }
+
+    public bool IsEditable
+    {
+        get => (bool)GetValue(IsEditableProperty);
+        set => SetValue(IsEditableProperty, value);
+    }
+    public static readonly DependencyProperty CurrentMonthProperty = DependencyProperty.Register(
+        nameof(CurrentMonth),
+        typeof(DateTime),
+        typeof(CalendarControl),
+        new FrameworkPropertyMetadata(
+            default(DateTime),
+            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault
+        )
+    );
+    public DateTime CurrentMonth
+    {
+        get => (DateTime)GetValue(CurrentMonthProperty);
+        set => SetValue(CurrentMonthProperty, value);
+    }
+
+    private readonly CalendarDatesCollection _dates;
+    public CalendarDatesCollection Dates => _dates;
+
     public CalendarControl()
     {
         InitializeComponent();
-        DataContext = new CalendarViewModel();
+        CurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+        _dates = new CalendarDatesCollection();
+        IsEditable = false;
+        DisplayDates();
     }
 
-    internal partial class CalendarViewModel : ViewModelBase
+    private async void DisplayDates()
     {
-        [ObservableProperty]
-        private DateTime _currentMonth;
-
-        [ObservableProperty]
-        private CalendarDatesCollection _dates;
-
-        public CalendarViewModel()
+        Dates.Clear();
+        var daysInMonth = DateTime.DaysInMonth(CurrentMonth.Year, CurrentMonth.Month);
+        var firstDayOfMonth = new DateTime(CurrentMonth.Year, CurrentMonth.Month, 1);
+        var firstDayOfWeek = (int)firstDayOfMonth.DayOfWeek + 1;
+        var tasks = new List<Task<CalendarDate>>();
+        var dayIndex = 1;
+        var dateIndex = 1;
+        while (dateIndex <= daysInMonth)
         {
-            CurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-            Dates = new CalendarDatesCollection();
-            DisplayDates();
+            if (dayIndex >= firstDayOfWeek)
+            {
+                var date = new DateTime(CurrentMonth.Year, CurrentMonth.Month, dateIndex);
+                var isCurrentDate =
+                    date.Month == DateTime.Today.Month
+                    && date.Year == DateTime.Today.Year
+                    && date.Day == DateTime.Today.Day;
+                var calendarDate = new CalendarDate()
+                    .SetDate(dateIndex)
+                    .SetDateInfo(date)
+                    .SetSelected(isCurrentDate)
+                    .SetCurrentDate(isCurrentDate);
+                tasks.Add(Task.FromResult(calendarDate));
+                dateIndex++;
+            }
+            else
+            {
+                tasks.Add(Task.FromResult<CalendarDate>(null!));
+            }
+            dayIndex++;
         }
 
-        [RelayCommand]
-        private void GoPreviousMonth()
-        {
-            CurrentMonth = CurrentMonth.AddMonths(-1);
-            DisplayDates();
-        }
+        var tempDates = await Task.WhenAll(tasks);
+        Dates.AddRange(tempDates);
+    }
 
-        [RelayCommand]
-        private void GoNextMonth()
-        {
-            CurrentMonth = CurrentMonth.AddMonths(1);
-            DisplayDates();
-        }
+    private void ToggleButton_OnChecked(object? sender, RoutedEventArgs e)
+    {
+        if (!(sender is ModernRadioButton control))
+            return;
+        if (!(control.DataContext is CalendarDate date))
+            return;
+        SelectedDate = date.DateInfo;
+    }
 
-        private void DisplayDates()
-        {
-            // Clear Dates
-            Dates.Clear();
+    private void GoPrevious(object sender, RoutedEventArgs e)
+    {
+        CurrentMonth = CurrentMonth.AddMonths(-1);
+        DisplayDates();
+    }
 
-            // Get the number of days in the current month
-            var daysInMonth = DateTime.DaysInMonth(CurrentMonth.Year, CurrentMonth.Month);
-
-            // Get the first day of the current month
-            var firstDayOfMonth = new DateTime(CurrentMonth.Year, CurrentMonth.Month, 1);
-
-            // Get the day of the week for the first day of the current month
-            var firstDayOfWeek = (int)firstDayOfMonth.DayOfWeek + 1;
-
-            Task.Run(() =>
-                {
-                    var dayIndex = 1;
-                    var dateIndex = 1;
-                    var tempDates = new List<CalendarDate>();
-
-                    while (dateIndex <= daysInMonth)
-                    {
-                        if (dayIndex >= firstDayOfWeek)
-                        {
-                            tempDates.Add(
-                                new CalendarDate()
-                                    .SetDate(dateIndex)
-                                    .SetDateInfo(CurrentMonth)
-                                    .SetSelected(
-                                        CurrentMonth.Year == DateTime.Today.Year
-                                            && CurrentMonth.Month == DateTime.Today.Month
-                                            && dateIndex == DateTime.Now.Day
-                                    )
-                            );
-                            dateIndex++;
-                        }
-                        else
-                        {
-                            tempDates.Add(null!);
-                        }
-                        dayIndex++;
-                    }
-
-                    return tempDates;
-                })
-                .ContinueWith(async dates =>
-                {
-                    Dates.AddRange(await dates);
-                });
-        }
+    private void GoNext(object sender, RoutedEventArgs e)
+    {
+        CurrentMonth = CurrentMonth.AddMonths(1);
+        DisplayDates();
     }
 }
