@@ -19,8 +19,6 @@ public static class ServiceContainer
             .AddSingleton<ISchedulerService, SchedulerService>()
             // Add Logger
             .AddSingleton<ILogger, DebugAndFileLogger>()
-            // Add Global Hotkey Listener
-            .AddSingleton<IHotkeyListenerService, HotKeyListenerService>()
             // Add Factory Services
             .AddSingleton<IAddAppointmentsViewFactory, AddAppointmentsViewFactory>()
             .AddSingleton<IMaterialIconFactory, MaterialIconFactory>()
@@ -40,11 +38,17 @@ public static class ServiceContainer
             .AddSingleton<IThemeManagerService, ThemeManagerService>()
             .AddSingleton<IApplicationService, ApplicationService>()
             // Add Repository Services
-            .AddSingleton<IAppointmentsRepository, AppointmentsRepository>()
-            .AddSingleton<IAccountsRepository, AccountsRepository>()
-            .AddSingleton<IEmployeeRepository, EmployeeRepository>()
+            .AddSingleton<GroomingServiceRepository>()
+            .AddSingleton<AppointmentsRepository>()
+            .AddSingleton<AccountsRepository>()
+            .AddSingleton<EmployeeRepository>()
+            .AddSingleton<CustomerRepository>()
+            .AddSingleton<PetRepository>()
+            // Context Manager
+            .AddSingleton<IContextManager, ContextManager>()
             // Add ViewModels
             .AddSingleton<IAppointmentsViewModel, AppointmentsViewModel>()
+            .AddSingleton<IAddAppointmentsViewModel, AddAppointmentsViewModel>()
             .AddSingleton<IInventoryViewModel, InventoryViewModel>()
             .AddSingleton<IEmployeesViewModel, EmployeesViewModel>()
             .AddSingleton<ICustomersViewModel, CustomersViewModel>()
@@ -56,7 +60,7 @@ public static class ServiceContainer
             .AddSingleton<IPetsViewModel, PetsViewModel>()
             .AddSingleton<IMainViewModel, MainViewModel>()
             // Add Views
-            .AddSingleton<IAddAppointmentsView, AddAppointmentsView>()
+            .AddTransient<IAddAppointmentsView, AddAppointmentsView>()
             .AddSingleton<IAppointmentsView, AppointmentsView>()
             .AddSingleton<IInventoryView, InventoryView>()
             .AddSingleton<ICustomersView, CustomersView>()

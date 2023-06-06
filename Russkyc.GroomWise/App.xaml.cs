@@ -16,12 +16,8 @@ public partial class App
     public App()
     {
         InitializeComponent();
-
         DarkObservableCollectionSettings.RegisterSynchronizer<DarkWpfSynchronizer>();
-
         BuilderServices.BuildWithContainer(ServiceContainer.ConfigureServices());
-
-        BuilderServices.Resolve<IHotkeyListenerService>().Start();
         BuilderServices.Resolve<ILoginView>().Show();
     }
 
@@ -33,6 +29,7 @@ public partial class App
         IntPtr maxWorkingSet = new IntPtr(
             (IntPtr.Size == 4) ? (int)(1.5 * 1024 * 1024 * 1024) : 4L * 1024L * 1024L * 1024L
         );
+
         Process.GetCurrentProcess().MaxWorkingSet = maxWorkingSet;
 
         // Set the thread pool minimum and maximum threads to the number of
