@@ -92,4 +92,41 @@ public class Program
             }
         ).Create();
     }
+
+    static void CreateCustomersMigration()
+    {
+        new Migration<Customer>(
+            "Customers",
+            new List<Customer>
+            {
+                new Customer
+                {
+                    Id = 0,
+                    FirstName = "",
+                    MiddleName = "",
+                    LastName = "",
+                    AddressId = 0,
+                    PetId = 0
+                },
+                new Customer
+                {
+                    Id = 0,
+                    FirstName = "",
+                    MiddleName = "",
+                    LastName = "",
+                    AddressId = 0,
+                    PetId = 0
+                },
+                new Customer
+                {
+                    Id = 0,
+                    FirstName = "",
+                    MiddleName = "",
+                    LastName = "",
+                    AddressId = 0,
+                    PetId = 0
+                }
+            }
+        ).Create();
+    }
 }
