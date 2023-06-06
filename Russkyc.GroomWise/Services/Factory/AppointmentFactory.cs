@@ -10,7 +10,11 @@ public class AppointmentFactory : IAppointmentFactory
     public Appointment Create(Action<Appointment>? builder = null)
     {
         var appointment = new Appointment();
-        builder!(appointment);
+        if (builder is not null)
+        {
+            builder!(appointment);
+            return appointment;
+        }
         return appointment;
     }
 }
