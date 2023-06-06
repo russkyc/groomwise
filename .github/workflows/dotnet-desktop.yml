@@ -81,3 +81,9 @@ jobs:
     # Execute all unit tests in the solution
     - name: Execute unit tests
       run: dotnet test --no-build --verbosity normal
+      
+    - name: Upload dotnet test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: dotnet-results-7.0.x
+        path: TestResults-7.0.x
