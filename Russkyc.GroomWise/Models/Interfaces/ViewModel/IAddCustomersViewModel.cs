@@ -3,9 +3,9 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Models.Interfaces.Entity;
+namespace GroomWise.Models.Interfaces.ViewModel;
 
-public interface IPetOwner
+public interface IAddCustomersViewModel
 {
-    int? PetId { get; set; }
+    
 }
