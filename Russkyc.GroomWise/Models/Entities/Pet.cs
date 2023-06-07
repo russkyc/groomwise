@@ -14,4 +14,5 @@ public class Pet : IPet
     public string? Type { get; set; }
     public string? Allergies { get; set; }
     public int? AppointmentId { get; set; }
+    public int? OwnerId { get; set; }
 }
