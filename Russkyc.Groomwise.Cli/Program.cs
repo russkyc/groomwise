@@ -105,8 +105,7 @@ public class Program
                     FirstName = "",
                     MiddleName = "",
                     LastName = "",
-                    AddressId = 0,
-                    PetId = 0
+                    AddressId = 0
                 },
                 new Customer
                 {
@@ -114,8 +113,7 @@ public class Program
                     FirstName = "",
                     MiddleName = "",
                     LastName = "",
-                    AddressId = 0,
-                    PetId = 0
+                    AddressId = 0
                 },
                 new Customer
                 {
@@ -123,8 +121,7 @@ public class Program
                     FirstName = "",
                     MiddleName = "",
                     LastName = "",
-                    AddressId = 0,
-                    PetId = 0
+                    AddressId = 0
                 }
             }
         ).Create();
