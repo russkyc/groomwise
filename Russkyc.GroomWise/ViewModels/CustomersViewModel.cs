@@ -5,4 +5,32 @@
 
 namespace GroomWise.ViewModels;
 
-public class CustomersViewModel : ViewModelBase, ICustomersViewModel { }
+public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
+{
+    private readonly ILogger _logger;
+    private readonly CustomerRepository _customerRepository;
+
+    [ObservableProperty]
+    private CustomersCollection _customers;
+
+    public CustomersViewModel(ILogger logger, CustomerRepository customerRepository)
+    {
+        _logger = logger;
+        _customerRepository = customerRepository;
+
+        Customers = new CustomersCollection();
+        GetCustomers();
+    }
+
+    void GetCustomers()
+    {
+        Task.Run(() =>
+        {
+            var command = new SynchronizeCollectionCommand<Customer, CustomersCollection>(
+                ref _customers,
+                _customerRepository.GetAll().ToList()
+            );
+            command.Execute();
+        });
+    }
+}
