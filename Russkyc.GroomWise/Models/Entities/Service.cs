@@ -5,13 +5,10 @@
 
 namespace GroomWise.Models.Entities;
 
-public class GroomingService : IGroomingService
+public class Service : IEntity
 {
     [Column(IsIdentity = true, IsPrimary = true)]
     public int Id { get; set; }
-    public string? ServiceId { get; set; }
     public string? ServiceName { get; set; }
     public string? ServiceDescription { get; set; }
-    public bool? ServiceAvailability { get; set; }
-    public double? ServicePrice { get; set; }
 }

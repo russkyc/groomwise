@@ -5,16 +5,11 @@
 
 namespace GroomWise.Models.Entities;
 
-public class Customer : ICustomer
+public class Customer : IEntity
 {
     [Column(IsIdentity = true, IsPrimary = true)]
     public int Id { get; set; }
     public string? FirstName { get; set; }
     public string? MiddleName { get; set; }
     public string? LastName { get; set; }
-    public int? AddressId { get; set; }
-    public string? FullName
-    {
-        get => $"{FirstName} {MiddleName?[0]} {LastName}";
-    }
 }

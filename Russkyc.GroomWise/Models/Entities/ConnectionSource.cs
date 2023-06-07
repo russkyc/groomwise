@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Entities;
 
-public class ConnectionSource : IConnectionSource
+public class ConnectionSource
 {
     public string? Path { get; set; }
     public string? Port { get; set; }

@@ -5,14 +5,12 @@
 
 namespace GroomWise.Models.Entities;
 
-public class Pet : IPet
+public class Pet : IEntity
 {
     [Column(IsIdentity = true, IsPrimary = true)]
     public int Id { get; set; }
-    public int? Age { get; set; }
     public string? Name { get; set; }
-    public string? Type { get; set; }
-    public string? Allergies { get; set; }
-    public int? AppointmentId { get; set; }
-    public int? OwnerId { get; set; }
+    public string? Breed { get; set; }
+    public int? Age { get; set; }
+    public int? Gender { get; set; }
 }
