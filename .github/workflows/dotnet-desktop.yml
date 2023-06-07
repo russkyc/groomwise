@@ -84,7 +84,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     
     - name: Publish
-      run: dotnet publish -c ${{ matrix.configuration }} -r win-x64 --output ./latest-release
+      run: dotnet publish -c ${{ matrix.configuration }} --output ./latest-release
     
     #
     - name: Upload release
