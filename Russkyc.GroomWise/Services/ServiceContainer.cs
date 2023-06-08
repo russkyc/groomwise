@@ -21,6 +21,7 @@ public static class ServiceContainer
             .AddSingleton<ILogger, DebugAndFileLogger>()
             // Add Factory Services
             .AddSingleton<AddAppointmentsViewFactory>()
+            .AddSingleton<CustomerCardViewModelFactory>()
             .AddSingleton<MaterialIconFactory>()
             .AddSingleton<NotificationFactory>()
             .AddSingleton<AppointmentFactory>()
