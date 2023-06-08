@@ -56,7 +56,8 @@
                                VerticalAlignment="Center"
                                FontSize="14"
                                FontWeight="Medium"
-                               Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
+                               Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
+                               TextTrimming="CharacterEllipsis" />
                 </Grid>
             </StackPanel>
             <StackPanel Grid.Column="3"
