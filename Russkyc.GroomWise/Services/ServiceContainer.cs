@@ -34,10 +34,6 @@ public static class ServiceContainer
             // Add Data Services
             .AddSingleton<IConnectionSourceProvider, ConnectionSourceProvider>()
             .AddSingleton<IDatabaseServiceAsync, DataServiceProviderAsync>()
-            // Add Application Services
-            .AddSingleton<ISessionManagerService, SessionManagerService>()
-            .AddSingleton<IThemeManagerService, ThemeManagerService>()
-            .AddSingleton<IApplicationService, ApplicationService>()
             // Add Repository Services
             .AddSingleton<AccountRepository>()
             .AddSingleton<AddressRepository>()
@@ -57,6 +53,10 @@ public static class ServiceContainer
             .AddSingleton<PetRepository>()
             .AddSingleton<ProductRepository>()
             .AddSingleton<RoleRepository>()
+            // Add Application Services
+            .AddSingleton<ISessionManagerService, SessionManagerService>()
+            .AddSingleton<IThemeManagerService, ThemeManagerService>()
+            .AddSingleton<IApplicationService, ApplicationService>()
             // Context Manager
             .AddSingleton<IContextManager, ContextManager>()
             // Add ViewModels
