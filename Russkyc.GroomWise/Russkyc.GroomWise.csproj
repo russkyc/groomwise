@@ -14,12 +14,12 @@
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DebugType>full</DebugType>
-        <Prefer32bit>true</Prefer32bit>
+        <Prefer32bit>false</Prefer32bit>
         <DebugSymbols>true</DebugSymbols>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-        <Prefer32bit>true</Prefer32bit>
+        <Prefer32bit>false</Prefer32bit>
         <DebugType>none</DebugType>
         <Optimize>false</Optimize>
     </PropertyGroup>
