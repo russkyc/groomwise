@@ -1095,15 +1095,10 @@
                                        Margin="12,12,12,0"
                                        CornerRadius="5"
                                        HelperText="Required"
+                                       KeyDown="UsernameBox_OnKeyDown"
                                        LeftIcon="{icons:MaterialIconExt Kind=User}"
                                        Placeholder="Username"
-                                       Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                    <russkyc:ModernTextBox.InputBindings>
-                        <KeyBinding Key="Enter"
-                                    Command="{Binding SwitchFocusCommand}"
-                                    CommandParameter="{Binding ElementName=PasswordBox}" />
-                    </russkyc:ModernTextBox.InputBindings>
-                </russkyc:ModernTextBox>
+                                       Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                 <PasswordBox x:Name="PasswordBox"
                              Margin="12,5,12,0"
                              helpers:PasswordBoxHelper.CornerRadius="5"
