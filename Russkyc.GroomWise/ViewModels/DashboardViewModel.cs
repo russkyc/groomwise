@@ -7,7 +7,7 @@ namespace GroomWise.ViewModels;
 
 public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 {
-    private readonly AppointmentsRepository _appointmentsRepository;
+    private readonly AppointmentRepository _appointmentRepository;
     private readonly AppointmentFactory _appointmentFactory;
     private readonly IEncryptionService _encryptionService;
     private readonly ISchedulerService _schedulerService;
@@ -28,14 +28,14 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
         AppointmentFactory appointmentFactory,
         ISessionManagerService sessionManagerService,
         IEncryptionService encryptionService,
-        AppointmentsRepository appointmentsRepository,
+        AppointmentRepository appointmentRepository,
         ISchedulerService schedulerService
     )
     {
         _appointmentFactory = appointmentFactory;
         SessionManagerService = sessionManagerService;
         _encryptionService = encryptionService;
-        _appointmentsRepository = appointmentsRepository;
+        _appointmentRepository = appointmentRepository;
         _schedulerService = schedulerService;
 
         Appointments = new SynchronizedObservableCollection<Appointment>();
@@ -59,7 +59,7 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
                     SynchronizedObservableCollection<Appointment>
                 >(
                     ref _appointments,
-                    _appointmentsRepository
+                    _appointmentRepository
                         .FindAll(
                             appointment =>
                                 appointment.Date!.Value.Day == DateTime.Today.Day

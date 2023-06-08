@@ -11,7 +11,7 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     private readonly ISchedulerService _schedulerService;
     private readonly AddAppointmentsViewFactory _addAppointmentsViewFactory;
 
-    private readonly AppointmentsRepository _appointmentsRepository;
+    private readonly AppointmentRepository _appointmentRepository;
 
     [ObservableProperty]
     private SynchronizedObservableCollection<Appointment> _appointments;
@@ -19,13 +19,13 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     public AppointmentsViewModel(
         ILogger logger,
         ISchedulerService schedulerService,
-        AppointmentsRepository appointmentsRepository,
+        AppointmentRepository appointmentRepository,
         AddAppointmentsViewFactory addAppointmentsViewFactory
     )
     {
         _logger = logger;
         _schedulerService = schedulerService;
-        _appointmentsRepository = appointmentsRepository;
+        _appointmentRepository = appointmentRepository;
         _addAppointmentsViewFactory = addAppointmentsViewFactory;
 
         Appointments = new SynchronizedObservableCollection<Appointment>();
@@ -44,7 +44,7 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
                     SynchronizedObservableCollection<Appointment>
                 >(
                     ref _appointments,
-                    _appointmentsRepository
+                    _appointmentRepository
                         .GetAll()
                         .Where(appointment => appointment.Date.Value.Month >= DateTime.Now.Month)
                         .ToList()

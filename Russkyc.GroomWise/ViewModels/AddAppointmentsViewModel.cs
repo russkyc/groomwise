@@ -12,7 +12,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     private readonly AppointmentFactory _appointmentFactory;
 
     private readonly CustomerRepository _customerRepository;
-    private readonly AppointmentsRepository _appointmentsRepository;
+    private readonly AppointmentRepository _appointmentRepository;
     private readonly GroomingServiceRepository _groomingServiceRepository;
 
     [ObservableProperty]
@@ -50,7 +50,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
         DialogFactory dialogFactory,
         AppointmentFactory appointmentFactory,
         CustomerRepository customerRepository,
-        AppointmentsRepository appointmentsRepository,
+        AppointmentRepository appointmentRepository,
         GroomingServiceRepository groomingServiceRepository
     )
     {
@@ -58,7 +58,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
         _dialogFactory = dialogFactory;
         _customerRepository = customerRepository;
         _appointmentFactory = appointmentFactory;
-        _appointmentsRepository = appointmentsRepository;
+        _appointmentRepository = appointmentRepository;
         _groomingServiceRepository = groomingServiceRepository;
 
         Customers = new SynchronizedObservableCollection<Customer>();
@@ -166,7 +166,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
             appointment.Title = Title;
             appointment.Description = Description;
         });
-        _appointmentsRepository.Add(appointment);
+        _appointmentRepository.Add(appointment);
         _logger.Log(this, $"Scheduled {appointment.Title} on {appointment.Date:f}");
         BuilderServices.Resolve<IAddAppointmentsView>().Hide();
         _dialogFactory

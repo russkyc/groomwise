@@ -11,7 +11,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
     private readonly IEncryptionService _encryptionService;
     private readonly ISessionManagerService _sessionManagerService;
 
-    private readonly AccountsRepository _accountsRepository;
+    private readonly AccountRepository _accountRepository;
     private readonly EmployeeRepository _employeeRepository;
 
     [ObservableProperty]
@@ -33,14 +33,14 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 
     public LoginViewModel(
         ISessionManagerService sessionManagerService,
-        AccountsRepository accountsRepository,
+        AccountRepository accountRepository,
         EmployeeRepository employeeRepository,
         IApplicationService applicationService,
         IEncryptionService encryptionService,
         ILogger logger
     )
     {
-        _accountsRepository = accountsRepository;
+        _accountRepository = accountRepository;
         _employeeRepository = employeeRepository;
         _sessionManagerService = sessionManagerService;
         ApplicationService = applicationService;
@@ -66,7 +66,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
         if (HasErrors)
             return;
 
-        var account = _accountsRepository.Find(
+        var account = _accountRepository.Find(
             a => a.Username == _encryptionService.Encrypt(Username!)
         );
 
