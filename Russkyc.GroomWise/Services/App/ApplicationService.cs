@@ -10,15 +10,10 @@ public partial class ApplicationService : ObservableObject, IApplicationService
     private readonly IConfigProvider _configProvider;
     private readonly ISessionManagerService _sessionManagerService;
 
-    private readonly RoleRepository _roleRepository;
+    private readonly List<NavItem> _nav;
 
-    private List<NavItem> _nav;
-
-    [ObservableProperty]
-    private string? _appAuthor;
-
-    [ObservableProperty]
-    private string? _appVersion;
+    public string? AppAuthor { get; set; }
+    public string? AppVersion { get; set; }
 
     [ObservableProperty]
     private SynchronizedObservableCollection<NavItem> _navItems;
@@ -33,8 +28,8 @@ public partial class ApplicationService : ObservableObject, IApplicationService
     {
         _sessionManagerService = sessionManagerService;
         _configProvider = configProvider;
-        _roleRepository = roleRepository;
 
+        var roles = roleRepository.GetAll();
         _nav = new List<NavItem>
         {
             navItemFactory.Create(navItem =>
@@ -45,9 +40,10 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.ViewDashboard
                 );
                 navItem.Selected = true;
-                navItem.Roles = _roleRepository
-                    .FindAll(role => role.Id == 0 || role.Id == 1 || role.Id == 2)
+                navItem.Roles = roles
+                    .Where(role => role.Id == 1 || role.Id == 2 || role.Id == 3)
                     .ToArray();
+                navItem.Selected = true;
             }),
             navItemFactory.Create(navItem =>
             {
@@ -57,8 +53,8 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.EventAvailable
                 );
                 navItem.Selected = false;
-                navItem.Roles = _roleRepository
-                    .FindAll(role => role.Id == 0 || role.Id == 1 || role.Id == 2)
+                navItem.Roles = roles
+                    .Where(role => role.Id == 1 || role.Id == 2 || role.Id == 3)
                     .ToArray();
             }),
             navItemFactory.Create(navItem =>
@@ -69,9 +65,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.BubbleChart
                 );
                 navItem.Selected = false;
-                navItem.Roles = _roleRepository
-                    .FindAll(role => role.Id == 0 || role.Id == 1)
-                    .ToArray();
+                navItem.Roles = roles.Where(role => role.Id == 1 || role.Id == 2).ToArray();
             }),
             navItemFactory.Create(navItem =>
             {
@@ -81,9 +75,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.Pets
                 );
                 navItem.Selected = false;
-                navItem.Roles = _roleRepository
-                    .FindAll(role => role.Id == 1 || role.Id == 2)
-                    .ToArray();
+                navItem.Roles = roles.Where(role => role.Id == 2 || role.Id == 3).ToArray();
             }),
             navItemFactory.Create(navItem =>
             {
@@ -93,9 +85,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.People
                 );
                 navItem.Selected = false;
-                navItem.Roles = _roleRepository
-                    .FindAll(role => role.Id == 1 || role.Id == 2)
-                    .ToArray();
+                navItem.Roles = roles.Where(role => role.Id == 2 || role.Id == 3).ToArray();
             }),
             navItemFactory.Create(navItem =>
             {
@@ -105,7 +95,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.AccountGroup
                 );
                 navItem.Selected = false;
-                navItem.Roles = _roleRepository.FindAll(role => role.Id == 1).ToArray();
+                navItem.Roles = roles.Where(role => role.Id == 2).ToArray();
             }),
             navItemFactory.Create(navItem =>
             {
@@ -115,9 +105,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.Table
                 );
                 navItem.Selected = false;
-                navItem.Roles = _roleRepository
-                    .FindAll(role => role.Id == 1 || role.Id == 2)
-                    .ToArray();
+                navItem.Roles = roles.Where(role => role.Id == 2 || role.Id == 3).ToArray();
             }),
             navItemFactory.Create(navItem =>
             {
@@ -127,9 +115,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.BarChart
                 );
                 navItem.Selected = false;
-                navItem.Roles = _roleRepository
-                    .FindAll(role => role.Id == 0 || role.Id == 1)
-                    .ToArray();
+                navItem.Roles = roles.Where(role => role.Id == 1 || role.Id == 2).ToArray();
             })
         };
         NavItems = new SynchronizedObservableCollection<NavItem>();
@@ -143,17 +129,26 @@ public partial class ApplicationService : ObservableObject, IApplicationService
 
     public void BuildNavItems()
     {
-        Task.Run(async () => {
-            /*var currentUserType = (Roles)_sessionManagerService.Session!.Roles!;
-            await Application.Current.Dispatcher.InvokeAsync(() => NavItems.Clear());
+        // Check for session
+        var session = _sessionManagerService.Session;
+        if (session == null)
+            return;
 
-            _nav.Where(navItem => navItem.Roles!.Contains(currentUserType))
-                .ToList()
-                .ForEach(async navItem =>
-                {
-                    navItem.Selected = navItem is { Name: "Dashboard" };
-                    await Application.Current.Dispatcher.InvokeAsync(() => NavItems.Add(navItem));
-                });*/
-        });
+        // Check for role
+        var role = session.SessionRole;
+        if (role == null)
+            return;
+
+        // Build Nav Items
+        Application.Current.Dispatcher.BeginInvoke(() => NavItems.Clear());
+        Application.Current.Dispatcher.BeginInvoke(
+            () =>
+                NavItems.AddRange(
+                    _nav.Where(
+                            navItem => navItem.Roles!.Any(navItemRole => navItemRole.Id == role.Id)
+                        )
+                        .ToList()
+                )
+        );
     }
 }
