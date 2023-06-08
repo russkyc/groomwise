@@ -7,6 +7,6 @@ namespace GroomWise.Models.Entities;
 
 public record Session
 {
-    public Employee SessionUser { get; set; }
-    public Role SessionRole { get; set; }
+    public Employee? SessionUser { get; set; }
+    public Role? SessionRole { get; set; }
 }

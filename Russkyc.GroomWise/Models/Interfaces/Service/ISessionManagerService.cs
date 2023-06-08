@@ -8,6 +8,6 @@ namespace GroomWise.Models.Interfaces.Service;
 public interface ISessionManagerService
 {
     public Session? Session { get; set; }
-    void StartSession(Employee account);
+    void StartSession(Session employee);
     void EndSession();
 }
