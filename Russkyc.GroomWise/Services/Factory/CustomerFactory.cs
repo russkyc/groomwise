@@ -3,14 +3,8 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using Russkyc.Abstractions.Abstractions;
+
 namespace GroomWise.Services.Factory;
 
-public class CustomerFactory : ICustomerFactory
-{
-    public Customer Create(Action<Customer>? builder = null)
-    {
-        var customer = new Customer();
-        builder!(customer);
-        return customer;
-    }
-}
+public class CustomerFactory : Factory<Customer> { }

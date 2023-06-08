@@ -16,7 +16,7 @@ public class DataServiceProviderAsync : IDatabaseServiceAsync
             .UseConnectionString(
                 FreeSql.DataType.Sqlite,
                 new ConnectionSourceProvider().Build(
-                    new ConnectionSource().WithPath(configProvider.Path),
+                    new ConnectionSource { Path = configProvider.Path },
                     DbProvider.Sqlite
                 )
             )
@@ -25,11 +25,13 @@ public class DataServiceProviderAsync : IDatabaseServiceAsync
             .UseConnectionString(
                 FreeSql.DataType.MySql,
                 new ConnectionSourceProvider().Build(
-                    new ConnectionSource()
-                        .WithPath(configProvider.Path)
-                        .WithDatabase(configProvider.Database)
-                        .WithUsername(configProvider.Username)
-                        .WithPassword(configProvider.Password),
+                    new ConnectionSource
+                    {
+                        Path = configProvider.Path,
+                        Database = configProvider.Database,
+                        Username = configProvider.Username,
+                        Password = configProvider.Password
+                    },
                     DbProvider.MySql
                 )
             )

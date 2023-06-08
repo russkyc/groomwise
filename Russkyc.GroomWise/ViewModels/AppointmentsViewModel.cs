@@ -9,26 +9,26 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
 {
     private readonly ILogger _logger;
     private readonly ISchedulerService _schedulerService;
-    private readonly IAddAppointmentsViewFactory _addAppointmentsViewFactory;
+    private readonly AddAppointmentsViewFactory _addAppointmentsViewFactory;
 
-    private readonly AppointmentsRepository _appointmentsRepository;
+    private readonly AppointmentRepository _appointmentRepository;
 
     [ObservableProperty]
-    private AppointmentsCollection _appointments;
+    private SynchronizedObservableCollection<Appointment> _appointments;
 
     public AppointmentsViewModel(
         ILogger logger,
         ISchedulerService schedulerService,
-        AppointmentsRepository appointmentsRepository,
-        IAddAppointmentsViewFactory addAppointmentsViewFactory
+        AppointmentRepository appointmentRepository,
+        AddAppointmentsViewFactory addAppointmentsViewFactory
     )
     {
         _logger = logger;
         _schedulerService = schedulerService;
-        _appointmentsRepository = appointmentsRepository;
+        _appointmentRepository = appointmentRepository;
         _addAppointmentsViewFactory = addAppointmentsViewFactory;
 
-        Appointments = new AppointmentsCollection();
+        Appointments = new SynchronizedObservableCollection<Appointment>();
 
         GetAppointments();
     }
@@ -39,9 +39,12 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
         _schedulerService.RunPeriodically(
             () =>
             {
-                var command = new SynchronizeCollectionCommand<Appointment, AppointmentsCollection>(
+                var command = new SynchronizeCollectionCommand<
+                    Appointment,
+                    SynchronizedObservableCollection<Appointment>
+                >(
                     ref _appointments,
-                    _appointmentsRepository
+                    _appointmentRepository
                         .GetAll()
                         .Where(appointment => appointment.Date.Value.Month >= DateTime.Now.Month)
                         .ToList()

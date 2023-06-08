@@ -48,7 +48,7 @@
                                    VerticalAlignment="Center"
                                    FontSize="10"
                                    Foreground="{DynamicResource inverted-default}"
-                                   Text="{Binding EmployeeType, Converter={x:Static converter:IntegerToRoleTypeConverter.Instance}}" />
+                                   Text="{Binding EmployeeType}" />
                     </Border>
                 </StackPanel>
                 <StackPanel Grid.Column="5"

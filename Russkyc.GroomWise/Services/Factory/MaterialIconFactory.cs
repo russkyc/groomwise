@@ -3,14 +3,8 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using Russkyc.Abstractions.Abstractions;
+
 namespace GroomWise.Services.Factory;
 
-public class MaterialIconFactory : IMaterialIconFactory
-{
-    public MaterialIcon Create(Action<MaterialIcon>? builder = null)
-    {
-        var materialIcon = new MaterialIcon();
-        builder!(materialIcon);
-        return materialIcon;
-    }
-}
+public class MaterialIconFactory : Factory<MaterialIcon> { }

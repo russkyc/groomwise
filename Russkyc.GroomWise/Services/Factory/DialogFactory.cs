@@ -3,14 +3,17 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using Russkyc.Abstractions.Abstractions;
+
 namespace GroomWise.Services.Factory;
 
-public class DialogFactory : IDialogFactory
+public class DialogFactory : Factory<DialogView>
 {
-    public DialogView Create(Action<DialogView>? builder = null)
+    public new DialogView Create(Action<DialogView>? builder = null)
     {
         var dialogView = new DialogView().AsChild();
-        builder!(dialogView);
+        if (builder != null)
+            builder(dialogView);
         return dialogView;
     }
 }

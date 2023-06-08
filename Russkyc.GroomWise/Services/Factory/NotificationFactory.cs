@@ -3,14 +3,8 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using Russkyc.Abstractions.Abstractions;
+
 namespace GroomWise.Services.Factory;
 
-public class NotificationFactory : INotificationFactory
-{
-    public Notification Create(Action<Notification>? builder = null)
-    {
-        var notification = new Notification();
-        builder!(notification);
-        return notification;
-    }
-}
+public class NotificationFactory : Factory<Notification> { }

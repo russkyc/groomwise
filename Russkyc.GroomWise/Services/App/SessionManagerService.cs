@@ -10,22 +10,24 @@ public partial class SessionManagerService : ObservableObject, ISessionManagerSe
     private readonly ILogger _logger;
 
     [ObservableProperty]
-    private IEmployee? _sessionUser;
+    private Session? _sessionUser;
 
     public SessionManagerService(ILogger logger)
     {
         _logger = logger;
     }
 
-    public void StartSession(IEmployee account)
+    public Session? Session { get; set; }
+
+    public void StartSession(Session employee)
     {
-        SessionUser = account;
+        Session = employee;
         _logger.Log(this, $"Started user session");
     }
 
     public void EndSession()
     {
-        SessionUser = null;
+        Session = null;
         _logger.Log(this, "Ended user session");
     }
 }

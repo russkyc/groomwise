@@ -7,7 +7,7 @@ namespace GroomWise.Models.Data;
 
 public class ConnectionSourceProvider : IConnectionSourceProvider
 {
-    public string Build(IConnectionSource connectionSource, DbProvider provider)
+    public string Build(ConnectionSource connectionSource, DbProvider provider)
     {
         return provider switch
         {

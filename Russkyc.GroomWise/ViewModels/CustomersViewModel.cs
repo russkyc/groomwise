@@ -11,14 +11,14 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
     private readonly CustomerRepository _customerRepository;
 
     [ObservableProperty]
-    private CustomersCollection _customers;
+    private SynchronizedObservableCollection<Customer> _customers;
 
     public CustomersViewModel(ILogger logger, CustomerRepository customerRepository)
     {
         _logger = logger;
         _customerRepository = customerRepository;
 
-        Customers = new CustomersCollection();
+        Customers = new SynchronizedObservableCollection<Customer>();
         GetCustomers();
     }
 
@@ -26,10 +26,10 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
     {
         Task.Run(() =>
         {
-            var command = new SynchronizeCollectionCommand<Customer, CustomersCollection>(
-                ref _customers,
-                _customerRepository.GetAll().ToList()
-            );
+            var command = new SynchronizeCollectionCommand<
+                Customer,
+                SynchronizedObservableCollection<Customer>
+            >(ref _customers, _customerRepository.GetAll().ToList());
             command.Execute();
         });
     }
