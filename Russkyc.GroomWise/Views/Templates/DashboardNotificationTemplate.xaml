@@ -14,16 +14,17 @@
              IsTabStop="False"
              Style="{StaticResource FadeInFromBottomAnimation}"
              mc:Ignorable="d">
-    <russkyc:ModernButton Padding="5"
-                          HorizontalContentAlignment="Stretch"
-                          CornerRadius="10"
-                          DefaultBackground="{DynamicResource bg-100}"
-                          DefaultForeground="{DynamicResource fg-000}"
-                          HoverBackground="{DynamicResource bg-100}"
-                          HoverForeground="{DynamicResource fg-000}"
-                          PressedBackground="{DynamicResource bg-200}"
-                          PressedForeground="{DynamicResource fg-000}">
-        <Grid HorizontalAlignment="Stretch">
+    <Grid IsHitTestVisible="False">
+        <russkyc:ModernButton Padding="5"
+                              HorizontalContentAlignment="Stretch"
+                              CornerRadius="10"
+                              DefaultBackground="{DynamicResource bg-100}"
+                              DefaultForeground="{DynamicResource fg-000}"
+                              HoverBackground="{DynamicResource bg-100}"
+                              HoverForeground="{DynamicResource fg-000}"
+                              PressedBackground="{DynamicResource bg-200}"
+                              PressedForeground="{DynamicResource fg-000}" />
+        <Grid Margin="5" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -52,15 +53,19 @@
             </Border>
             <StackPanel Grid.Column="1"
                         Margin="12"
+                        HorizontalAlignment="Stretch"
                         VerticalAlignment="Center">
                 <TextBlock FontSize="14"
                            FontWeight="Medium"
                            Foreground="{DynamicResource fg-000}"
                            Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBlock FontSize="11"
+                <TextBlock Margin="0,6,0,0"
+                           HorizontalAlignment="Stretch"
+                           FontSize="12"
                            Foreground="{DynamicResource bg-600}"
-                           Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
+                           Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                           TextTrimming="CharacterEllipsis" />
             </StackPanel>
         </Grid>
-    </russkyc:ModernButton>
+    </Grid>
 </UserControl>

@@ -11,14 +11,18 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
     private readonly IEncryptionService _encryptionService;
     private readonly ISessionManagerService _sessionManagerService;
 
-    private readonly AccountsRepository _accountsRepository;
+    private readonly SessionFactory _sessionFactory;
+    private readonly RoleRepository _roleRepository;
+    private readonly AccountRepository _accountRepository;
     private readonly EmployeeRepository _employeeRepository;
+    private readonly EmployeeRoleRepository _employeeRoleRepository;
+    private readonly EmployeeAccountRepository _employeeAccountRepository;
 
     [ObservableProperty]
     private IApplicationService _applicationService;
 
     [ObservableProperty]
-    private NotificationsCollection _notifications;
+    private SynchronizedObservableCollection<Notification> _notifications;
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
@@ -32,28 +36,30 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
     private string? _username;
 
     public LoginViewModel(
+        ILogger logger,
         ISessionManagerService sessionManagerService,
-        AccountsRepository accountsRepository,
+        EmployeeAccountRepository employeeAccountRepository,
         EmployeeRepository employeeRepository,
         IApplicationService applicationService,
         IEncryptionService encryptionService,
-        ILogger logger
+        AccountRepository accountRepository,
+        EmployeeRoleRepository employeeRoleRepository,
+        RoleRepository roleRepository,
+        SessionFactory sessionFactory
     )
     {
-        _accountsRepository = accountsRepository;
+        _logger = logger;
         _employeeRepository = employeeRepository;
         _sessionManagerService = sessionManagerService;
         ApplicationService = applicationService;
         _encryptionService = encryptionService;
-        _logger = logger;
+        _accountRepository = accountRepository;
+        _employeeRoleRepository = employeeRoleRepository;
+        _roleRepository = roleRepository;
+        _sessionFactory = sessionFactory;
+        _employeeAccountRepository = employeeAccountRepository;
 
-        Notifications = new NotificationsCollection();
-    }
-
-    [RelayCommand]
-    private void SwitchFocus(object element)
-    {
-        element.GetType().GetMethod("Focus")?.Invoke(element, null);
+        Notifications = new SynchronizedObservableCollection<Notification>();
     }
 
     [RelayCommand]
@@ -62,46 +68,82 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
         // Force data validation of all fields
         ValidateAllProperties();
 
-        // Dont Continue if field validation has errors
+        // Check if validation has errors
         if (HasErrors)
             return;
 
-        var account = _accountsRepository.Find(
+        var account = _accountRepository.Find(
             a => a.Username == _encryptionService.Encrypt(Username!)
         );
 
-        if (account == null)
+        // Check if account is null
+        if (account is null)
         {
             BuilderServices.Resolve<ILoginView>().ClearFields();
-            ShowNotification("Account does not exist.", NotificationType.Danger);
-            _logger.Log(this, "Unsuccessful login attempt, Account does not exist");
+            ShowNotification("Account does not exist", NotificationType.Danger);
+            _logger.Log(this, "unsuccessful login attempt, account does not exist");
             return;
         }
 
+        // Check if account password is equal to input password
         if (_encryptionService.Hash(Password!) != account.Password)
         {
             BuilderServices.Resolve<ILoginView>().ClearFields("Password");
-            ShowNotification("Password is incorrect.", NotificationType.Danger);
-            _logger.Log(this, "Unsuccessful login attempt, Wrong Username or Password");
+            ShowNotification("Password is incorrect", NotificationType.Danger);
+            _logger.Log(this, "Unsuccessful login attempt, wrong password");
             return;
         }
 
-        var employee = _employeeRepository.Find(e => e.Id == account.EmployeeId);
+        var employeeAccount = _employeeAccountRepository.Find(e => e.AccountId == account.Id);
 
-        if (employee == null)
+        // Check if employee account is null
+        if (employeeAccount == null)
         {
-            ShowNotification(
-                "Account does not match any employee record.",
-                NotificationType.Danger
-            );
+            ShowNotification("Account does not match any employee record", NotificationType.Danger);
             _logger.Log(
                 this,
-                "Unsuccessful login attempt, Account does not match any employee record"
+                "Unsuccessful login attempt, account does not match any employee record"
             );
             return;
         }
 
-        _sessionManagerService.StartSession(employee);
+        var employee = _employeeRepository.Find(
+            employee => employee.Id == employeeAccount.EmployeeId
+        );
+
+        // Check if employee is null
+        if (employee == null)
+        {
+            ShowNotification("Employee does not exist", NotificationType.Danger);
+            _logger.Log(this, "Unsuccessful login attempt, employee does not exist");
+            return;
+        }
+
+        var employeeRole = _employeeRoleRepository.Find(
+            employeeRole => employeeRole.EmployeeId == employee.Id
+        );
+        if (employeeRole == null)
+        {
+            _logger.Log(this, "Employee is not assigned any role");
+            return;
+        }
+
+        var role = _roleRepository.Find(role => role.Id == employeeRole.RoleId);
+
+        // Check if role is null
+        if (role == null)
+        {
+            _logger.Log(this, "Role is non-existent");
+            return;
+        }
+
+        var session = _sessionFactory.Create(session =>
+        {
+            session.SessionUser = employee;
+            session.SessionRole = role;
+        });
+
+        _sessionManagerService.StartSession(session);
         ApplicationService.BuildNavItems();
 
         Task.Run(async () =>
@@ -113,20 +155,20 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
                 BuilderServices.Resolve<ILoginView>().Hide();
             });
         });
-
-        void ShowNotification(string description, NotificationType type)
-        {
-            var notification = new Notification { Description = description, Type = type };
-            if (Notifications.Count > 0)
-                Notifications[0] = notification;
-            else
-                Notifications.Add(notification);
-        }
     }
 
     [RelayCommand]
-    private void RemoveNotification()
+    void RemoveNotification()
     {
         Notifications.Clear();
+    }
+
+    void ShowNotification(string description, NotificationType type)
+    {
+        var notification = new Notification { Description = description, Type = type };
+        if (Notifications.Count > 0)
+            Notifications[0] = notification;
+        else
+            Notifications.Add(notification);
     }
 }

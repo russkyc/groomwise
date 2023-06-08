@@ -5,16 +5,12 @@
 
 namespace GroomWise.Models.Entities;
 
-public class Appointment : IAppointment
+public record Appointment : IEntity
 {
     [Column(IsIdentity = true, IsPrimary = true)]
     public int Id { get; set; }
     public string? Title { get; set; }
     public string? Description { get; set; }
     public DateTime? Date { get; set; }
-    public int? PetId { get; set; }
-    public int? CustomerId { get; set; }
-    public int? EmployeeId { get; set; }
-    public int? GroomingServiceId { get; set; }
-    public int? AppointmentStatus { get; set; }
+    public int? Status { get; set; }
 }

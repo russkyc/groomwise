@@ -5,12 +5,4 @@
 
 namespace GroomWise.Services.Factory;
 
-public class NotificationFactory : INotificationFactory
-{
-    public Notification Create(Action<Notification>? builder = null)
-    {
-        var notification = new Notification();
-        builder!(notification);
-        return notification;
-    }
-}
+public class NotificationFactory : Factory<Notification> { }

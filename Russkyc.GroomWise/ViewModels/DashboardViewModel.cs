@@ -7,8 +7,8 @@ namespace GroomWise.ViewModels;
 
 public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 {
-    private readonly AppointmentsRepository _appointmentsRepository;
-    private readonly IAppointmentFactory _appointmentFactory;
+    private readonly AppointmentRepository _appointmentRepository;
+    private readonly AppointmentFactory _appointmentFactory;
     private readonly IEncryptionService _encryptionService;
     private readonly ISchedulerService _schedulerService;
 
@@ -16,7 +16,7 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
     private ISessionManagerService _sessionManagerService;
 
     [ObservableProperty]
-    private AppointmentsCollection _appointments;
+    private SynchronizedObservableCollection<Appointment> _appointments;
 
     [ObservableProperty]
     private string? _user;
@@ -25,20 +25,20 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
     private DateTime _date;
 
     public DashboardViewModel(
-        IAppointmentFactory appointmentFactory,
+        AppointmentFactory appointmentFactory,
         ISessionManagerService sessionManagerService,
         IEncryptionService encryptionService,
-        AppointmentsRepository appointmentsRepository,
+        AppointmentRepository appointmentRepository,
         ISchedulerService schedulerService
     )
     {
         _appointmentFactory = appointmentFactory;
         SessionManagerService = sessionManagerService;
         _encryptionService = encryptionService;
-        _appointmentsRepository = appointmentsRepository;
+        _appointmentRepository = appointmentRepository;
         _schedulerService = schedulerService;
 
-        Appointments = new AppointmentsCollection();
+        Appointments = new SynchronizedObservableCollection<Appointment>();
         GetNotifications();
     }
 
@@ -54,9 +54,12 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
         _schedulerService.RunPeriodically(
             () =>
             {
-                var command = new SynchronizeCollectionCommand<Appointment, AppointmentsCollection>(
+                var command = new SynchronizeCollectionCommand<
+                    Appointment,
+                    SynchronizedObservableCollection<Appointment>
+                >(
                     ref _appointments,
-                    _appointmentsRepository
+                    _appointmentRepository
                         .FindAll(
                             appointment =>
                                 appointment.Date!.Value.Day == DateTime.Today.Day
@@ -74,7 +77,7 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 
     private void GetWelcomeMessage()
     {
-        User = SessionManagerService.SessionUser!.FirstName;
+        User = SessionManagerService.Session!.SessionUser.FirstName;
     }
 
     private void GetTime()

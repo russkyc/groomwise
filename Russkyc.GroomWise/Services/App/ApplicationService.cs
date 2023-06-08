@@ -10,28 +10,27 @@ public partial class ApplicationService : ObservableObject, IApplicationService
     private readonly IConfigProvider _configProvider;
     private readonly ISessionManagerService _sessionManagerService;
 
-    private List<INavItem> _nav;
+    private readonly List<NavItem> _nav;
+
+    public string? AppAuthor { get; set; }
+    public string? AppVersion { get; set; }
 
     [ObservableProperty]
-    private string? _appAuthor;
-
-    [ObservableProperty]
-    private string? _appVersion;
-
-    [ObservableProperty]
-    private NavItemsCollection _navItems;
+    private SynchronizedObservableCollection<NavItem> _navItems;
 
     public ApplicationService(
         ISessionManagerService sessionManagerService,
         IConfigProvider configProvider,
-        IMaterialIconFactory materialIconFactory,
-        INavItemFactory navItemFactory
+        MaterialIconFactory materialIconFactory,
+        NavItemFactory navItemFactory,
+        RoleRepository roleRepository
     )
     {
         _sessionManagerService = sessionManagerService;
         _configProvider = configProvider;
 
-        _nav = new List<INavItem>
+        var roles = roleRepository.GetAll();
+        _nav = new List<NavItem>
         {
             navItemFactory.Create(navItem =>
             {
@@ -41,12 +40,10 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.ViewDashboard
                 );
                 navItem.Selected = true;
-                navItem.AccountTypes = new[]
-                {
-                    EmployeeType.Admin,
-                    EmployeeType.Groomer,
-                    EmployeeType.Manager
-                };
+                navItem.Roles = roles
+                    .Where(role => role.Id == 1 || role.Id == 2 || role.Id == 3)
+                    .ToArray();
+                navItem.Selected = true;
             }),
             navItemFactory.Create(navItem =>
             {
@@ -56,12 +53,9 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.EventAvailable
                 );
                 navItem.Selected = false;
-                navItem.AccountTypes = new[]
-                {
-                    EmployeeType.Admin,
-                    EmployeeType.Groomer,
-                    EmployeeType.Manager
-                };
+                navItem.Roles = roles
+                    .Where(role => role.Id == 1 || role.Id == 2 || role.Id == 3)
+                    .ToArray();
             }),
             navItemFactory.Create(navItem =>
             {
@@ -71,7 +65,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.BubbleChart
                 );
                 navItem.Selected = false;
-                navItem.AccountTypes = new[] { EmployeeType.Admin, EmployeeType.Manager };
+                navItem.Roles = roles.Where(role => role.Id == 1 || role.Id == 2).ToArray();
             }),
             navItemFactory.Create(navItem =>
             {
@@ -81,12 +75,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.Pets
                 );
                 navItem.Selected = false;
-                navItem.AccountTypes = new[]
-                {
-                    EmployeeType.Admin,
-                    EmployeeType.Groomer,
-                    EmployeeType.Manager
-                };
+                navItem.Roles = roles.Where(role => role.Id == 2 || role.Id == 3).ToArray();
             }),
             navItemFactory.Create(navItem =>
             {
@@ -96,7 +85,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.People
                 );
                 navItem.Selected = false;
-                navItem.AccountTypes = new[] { EmployeeType.Admin, EmployeeType.Manager };
+                navItem.Roles = roles.Where(role => role.Id == 2 || role.Id == 3).ToArray();
             }),
             navItemFactory.Create(navItem =>
             {
@@ -106,7 +95,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.AccountGroup
                 );
                 navItem.Selected = false;
-                navItem.AccountTypes = new[] { EmployeeType.Manager };
+                navItem.Roles = roles.Where(role => role.Id == 2).ToArray();
             }),
             navItemFactory.Create(navItem =>
             {
@@ -116,7 +105,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.Table
                 );
                 navItem.Selected = false;
-                navItem.AccountTypes = new[] { EmployeeType.Groomer, EmployeeType.Manager };
+                navItem.Roles = roles.Where(role => role.Id == 2 || role.Id == 3).ToArray();
             }),
             navItemFactory.Create(navItem =>
             {
@@ -126,10 +115,10 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                     icon => icon.Kind = MaterialIconKind.BarChart
                 );
                 navItem.Selected = false;
-                navItem.AccountTypes = new[] { EmployeeType.Admin, EmployeeType.Manager };
+                navItem.Roles = roles.Where(role => role.Id == 1 || role.Id == 2).ToArray();
             })
         };
-        NavItems = new NavItemsCollection();
+        NavItems = new SynchronizedObservableCollection<NavItem>();
         BuildAppInfo();
     }
 
@@ -140,18 +129,26 @@ public partial class ApplicationService : ObservableObject, IApplicationService
 
     public void BuildNavItems()
     {
-        Task.Run(async () =>
-        {
-            var currentUserType = (EmployeeType)_sessionManagerService.SessionUser!.EmployeeType!;
-            await Application.Current.Dispatcher.InvokeAsync(() => NavItems.Clear());
+        // Check for session
+        var session = _sessionManagerService.Session;
+        if (session == null)
+            return;
 
-            _nav.Where(navItem => navItem.AccountTypes!.Contains(currentUserType))
-                .ToList()
-                .ForEach(async navItem =>
-                {
-                    navItem.Selected = navItem is { Name: "Dashboard" };
-                    await Application.Current.Dispatcher.InvokeAsync(() => NavItems.Add(navItem));
-                });
-        });
+        // Check for role
+        var role = session.SessionRole;
+        if (role == null)
+            return;
+
+        // Build Nav Items
+        Application.Current.Dispatcher.BeginInvoke(() => NavItems.Clear());
+        Application.Current.Dispatcher.BeginInvoke(
+            () =>
+                NavItems.AddRange(
+                    _nav.Where(
+                            navItem => navItem.Roles!.Any(navItemRole => navItemRole.Id == role.Id)
+                        )
+                        .ToList()
+                )
+        );
     }
 }

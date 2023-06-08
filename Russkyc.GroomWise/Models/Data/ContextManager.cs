@@ -8,36 +8,36 @@ namespace GroomWise.Models.Data;
 public class ContextManager : IContextManager
 {
     private readonly PetRepository _petsRepository;
-    private readonly AccountsRepository _accountsRepository;
+    private readonly AccountRepository _accountRepository;
     private readonly EmployeeRepository _employeesRepository;
     private readonly CustomerRepository _customersRepository;
-    private readonly AppointmentsRepository _appointmentsRepository;
+    private readonly AppointmentRepository _appointmentRepository;
     private readonly GroomingServiceRepository _groomingServicesRepository;
 
     public ContextManager(
         PetRepository petsRepository,
-        AccountsRepository accountsRepository,
+        AccountRepository accountRepository,
         EmployeeRepository employeesRepository,
         CustomerRepository customersRepository,
-        AppointmentsRepository appointmentsRepository,
+        AppointmentRepository appointmentRepository,
         GroomingServiceRepository groomingServicesRepository
     )
     {
         _petsRepository = petsRepository;
-        _accountsRepository = accountsRepository;
+        _accountRepository = accountRepository;
         _customersRepository = customersRepository;
         _employeesRepository = employeesRepository;
-        _appointmentsRepository = appointmentsRepository;
+        _appointmentRepository = appointmentRepository;
         _groomingServicesRepository = groomingServicesRepository;
     }
 
     public void WriteChanges()
     {
         _petsRepository.WriteToDb();
-        _accountsRepository.WriteToDb();
+        _accountRepository.WriteToDb();
         _customersRepository.WriteToDb();
         _employeesRepository.WriteToDb();
-        _appointmentsRepository.WriteToDb();
+        _appointmentRepository.WriteToDb();
         _groomingServicesRepository.WriteToDb();
     }
 }

@@ -5,4 +5,35 @@
 
 namespace GroomWise.ViewModels;
 
-public class PetsViewModel : ViewModelBase, IPetsViewModel { }
+public partial class PetsViewModel : ViewModelBase, IPetsViewModel
+{
+    private readonly ILogger _logger;
+    private readonly PetFactory _petFactory;
+    private readonly PetRepository _petsRepository;
+
+    [ObservableProperty]
+    private SynchronizedObservableCollection<Pet> _petsCollection;
+
+    public PetsViewModel(ILogger logger, PetFactory petFactory, PetRepository petsRepository)
+    {
+        _logger = logger;
+        _petFactory = petFactory;
+        _petsRepository = petsRepository;
+
+        PetsCollection = new SynchronizedObservableCollection<Pet>();
+
+        GetPets();
+    }
+
+    void GetPets()
+    {
+        Task.Run(() =>
+        {
+            var command = new SynchronizeCollectionCommand<
+                Pet,
+                SynchronizedObservableCollection<Pet>
+            >(ref _petsCollection, _petsRepository.GetAll().ToList());
+            command.Execute();
+        });
+    }
+}

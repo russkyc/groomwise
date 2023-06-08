@@ -5,16 +5,4 @@
 
 namespace GroomWise.Services.Factory;
 
-public class AppointmentFactory : IAppointmentFactory
-{
-    public Appointment Create(Action<Appointment>? builder = null)
-    {
-        var appointment = new Appointment();
-        if (builder is not null)
-        {
-            builder!(appointment);
-            return appointment;
-        }
-        return appointment;
-    }
-}
+public class AppointmentFactory : Factory<Appointment> { }

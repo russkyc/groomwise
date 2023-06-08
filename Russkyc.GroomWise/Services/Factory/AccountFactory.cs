@@ -5,12 +5,4 @@
 
 namespace GroomWise.Services.Factory;
 
-public class AccountFactory : IAccountFactory
-{
-    public Account Create(Action<Account>? builder = null)
-    {
-        var account = new Account();
-        builder!(account);
-        return account;
-    }
-}
+public class AccountFactory : Factory<Account> { }

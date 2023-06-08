@@ -4,36 +4,20 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using System.Windows.Controls;
-using GroomWise.Models.Enums;
 
 namespace Russkyc.GroomWise.Tests.Factories;
 
 public class NavItemFactoryTests
 {
     [Theory]
-    [InlineData(
-        0,
-        "dashboard",
-        typeof(UserControl),
-        true,
-        "dashboard",
-        new[] { EmployeeType.Admin, EmployeeType.Manager }
-    )]
-    [InlineData(
-        1,
-        "employees",
-        typeof(UserControl),
-        true,
-        "employees",
-        new[] { EmployeeType.Manager }
-    )]
+    [InlineData(0, "dashboard", typeof(UserControl), true, "dashboard")]
+    [InlineData(1, "employees", typeof(UserControl), true, "employees")]
     void Create_Returns_New_NavItem_WithModifications(
         int id,
         string name,
         Type page,
         bool selected,
-        string shortName,
-        EmployeeType[] accountTypes
+        string shortName
     )
     {
         // Setup
@@ -47,7 +31,6 @@ public class NavItemFactoryTests
             navItem.Page = page;
             navItem.Selected = selected;
             navItem.ShortName = shortName;
-            navItem.AccountTypes = accountTypes;
         });
 
         // Assert
@@ -56,6 +39,5 @@ public class NavItemFactoryTests
         Assert.Equal(page, result.Page);
         Assert.Equal(selected, result.Selected);
         Assert.Equal(shortName, result.ShortName);
-        Assert.Equal(accountTypes, result.AccountTypes);
     }
 }

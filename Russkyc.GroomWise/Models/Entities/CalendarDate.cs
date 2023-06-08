@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Entities;
 
-public class CalendarDate
+public record CalendarDate
 {
     public int Date { get; set; }
     public DateTime DateInfo { get; set; }

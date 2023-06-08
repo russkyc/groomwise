@@ -5,12 +5,13 @@
 
 namespace GroomWise.Services.Factory;
 
-public class DialogFactory : IDialogFactory
+public class DialogFactory : Factory<DialogView>
 {
-    public DialogView Create(Action<DialogView>? builder = null)
+    public new DialogView Create(Action<DialogView>? builder = null)
     {
         var dialogView = new DialogView().AsChild();
-        builder!(dialogView);
+        if (builder != null)
+            builder(dialogView);
         return dialogView;
     }
 }

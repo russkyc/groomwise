@@ -5,12 +5,4 @@
 
 namespace GroomWise.Services.Factory;
 
-public class CustomerFactory : ICustomerFactory
-{
-    public Customer Create(Action<Customer>? builder = null)
-    {
-        var customer = new Customer();
-        builder!(customer);
-        return customer;
-    }
-}
+public class CustomerFactory : Factory<Customer> { }

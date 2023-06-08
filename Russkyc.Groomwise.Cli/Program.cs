@@ -33,24 +33,21 @@ public class Program
                     Id = 0,
                     Username = _encryptionService.Encrypt("russkyc"),
                     Password = _encryptionService.Hash("1234"),
-                    Email = _encryptionService.Encrypt("russkyc@groomwise.com"),
-                    EmployeeId = 0
+                    Email = _encryptionService.Encrypt("russkyc@groomwise.com")
                 },
                 new Account
                 {
                     Id = 1,
                     Username = _encryptionService.Encrypt("manager"),
                     Password = _encryptionService.Hash("manager"),
-                    Email = _encryptionService.Encrypt("manager@groomwise.com"),
-                    EmployeeId = 1
+                    Email = _encryptionService.Encrypt("manager@groomwise.com")
                 },
                 new Account
                 {
                     Id = 2,
                     Username = _encryptionService.Encrypt("groomer"),
                     Password = _encryptionService.Hash("groomer"),
-                    Email = _encryptionService.Encrypt("groomer@groomwise.com"),
-                    EmployeeId = 2
+                    Email = _encryptionService.Encrypt("groomer@groomwise.com")
                 },
             }
         ).Create();
@@ -67,27 +64,21 @@ public class Program
                     Id = 0,
                     FirstName = _encryptionService.Encrypt("John Russell"),
                     MiddleName = _encryptionService.Encrypt("Casabuena"),
-                    LastName = _encryptionService.Encrypt("Camo"),
-                    AddressId = 0,
-                    EmployeeType = 0
+                    LastName = _encryptionService.Encrypt("Camo")
                 },
                 new Employee
                 {
                     Id = 1,
                     FirstName = _encryptionService.Encrypt("John"),
                     MiddleName = _encryptionService.Encrypt("Williams"),
-                    LastName = _encryptionService.Encrypt("Doe"),
-                    AddressId = 1,
-                    EmployeeType = 1
+                    LastName = _encryptionService.Encrypt("Doe")
                 },
                 new Employee
                 {
                     Id = 2,
                     FirstName = _encryptionService.Encrypt("Karen"),
                     MiddleName = _encryptionService.Encrypt("Karen"),
-                    LastName = _encryptionService.Encrypt("Karen"),
-                    AddressId = 2,
-                    EmployeeType = 2
+                    LastName = _encryptionService.Encrypt("Karen")
                 }
             }
         ).Create();
@@ -104,27 +95,21 @@ public class Program
                     Id = 0,
                     FirstName = "",
                     MiddleName = "",
-                    LastName = "",
-                    AddressId = 0,
-                    PetId = 0
+                    LastName = ""
                 },
                 new Customer
                 {
                     Id = 0,
                     FirstName = "",
                     MiddleName = "",
-                    LastName = "",
-                    AddressId = 0,
-                    PetId = 0
+                    LastName = ""
                 },
                 new Customer
                 {
                     Id = 0,
                     FirstName = "",
                     MiddleName = "",
-                    LastName = "",
-                    AddressId = 0,
-                    PetId = 0
+                    LastName = ""
                 }
             }
         ).Create();

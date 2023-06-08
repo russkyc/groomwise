@@ -37,4 +37,11 @@ public partial class LoginView : ILoginView
         Environment.Exit(0);
         base.OnClosed(e);
     }
+
+    private void UsernameBox_OnKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
+            PasswordBox.Focus();
+    }
+
 }

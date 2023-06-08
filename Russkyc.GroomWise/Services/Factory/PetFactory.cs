@@ -5,12 +5,4 @@
 
 namespace GroomWise.Services.Factory;
 
-public class PetFactory : IPetFactory
-{
-    public Pet Create(Action<Pet>? builder = null)
-    {
-        var pet = new Pet();
-        builder!(pet);
-        return pet;
-    }
-}
+public class PetFactory : Factory<Pet> { }
