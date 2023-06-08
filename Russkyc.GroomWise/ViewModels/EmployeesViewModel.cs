@@ -17,7 +17,7 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
     private string? _filter;
 
     [ObservableProperty]
-    private EmployeesCollection _employees;
+    private SynchronizedObservableCollection<Employee> _employees;
 
     public EmployeesViewModel(
         IEncryptionService encryptionService,
@@ -30,7 +30,7 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
         _employeeRepository = employeeRepository;
         _schedulerService = schedulerService;
         _logger = logger;
-        Employees = new EmployeesCollection();
+        Employees = new SynchronizedObservableCollection<Employee>();
 
         GetEmployees();
     }
@@ -39,10 +39,10 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
     {
         Task.Run(() =>
         {
-            var command = new SynchronizeCollectionCommand<Employee, EmployeesCollection>(
-                ref _employees,
-                _employeeRepository.GetAll().ToList()
-            );
+            var command = new SynchronizeCollectionCommand<
+                Employee,
+                SynchronizedObservableCollection<Employee>
+            >(ref _employees, _employeeRepository.GetAll().ToList());
             command.Execute();
             _logger.Log(this, "Synchronized employees collection");
         });

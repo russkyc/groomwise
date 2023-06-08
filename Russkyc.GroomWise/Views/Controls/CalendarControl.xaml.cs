@@ -50,14 +50,13 @@ public partial class CalendarControl
         set => SetValue(CurrentMonthProperty, value);
     }
 
-    private readonly CalendarDatesCollection _dates;
-    public CalendarDatesCollection Dates => _dates;
+    public SynchronizedObservableCollection<CalendarDate> Dates;
 
     public CalendarControl()
     {
         InitializeComponent();
         CurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-        _dates = new CalendarDatesCollection();
+        Dates = new SynchronizedObservableCollection<CalendarDate>();
         IsEditable = false;
         DisplayDates();
     }

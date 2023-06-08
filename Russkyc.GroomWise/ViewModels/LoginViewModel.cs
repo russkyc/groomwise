@@ -18,7 +18,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
     private IApplicationService _applicationService;
 
     [ObservableProperty]
-    private NotificationsCollection _notifications;
+    private SynchronizedObservableCollection<Notification> _notifications;
 
     [ObservableProperty]
     [NotifyDataErrorInfo]
@@ -47,7 +47,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
         _encryptionService = encryptionService;
         _logger = logger;
 
-        Notifications = new NotificationsCollection();
+        Notifications = new SynchronizedObservableCollection<Notification>();
     }
 
     [RelayCommand]

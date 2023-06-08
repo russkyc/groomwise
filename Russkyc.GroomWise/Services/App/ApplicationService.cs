@@ -19,7 +19,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
     private string? _appVersion;
 
     [ObservableProperty]
-    private NavItemsCollection _navItems;
+    private SynchronizedObservableCollection<NavItem> _navItems;
 
     public ApplicationService(
         ISessionManagerService sessionManagerService,
@@ -129,7 +129,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                 navItem.AccountTypes = new[] { EmployeeType.Admin, EmployeeType.Manager };
             })
         };
-        NavItems = new NavItemsCollection();
+        NavItems = new SynchronizedObservableCollection<NavItem>();
         BuildAppInfo();
     }
 

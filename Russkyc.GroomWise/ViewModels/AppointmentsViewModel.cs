@@ -14,7 +14,7 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     private readonly AppointmentsRepository _appointmentsRepository;
 
     [ObservableProperty]
-    private AppointmentsCollection _appointments;
+    private SynchronizedObservableCollection<Appointment> _appointments;
 
     public AppointmentsViewModel(
         ILogger logger,
@@ -28,7 +28,7 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
         _appointmentsRepository = appointmentsRepository;
         _addAppointmentsViewFactory = addAppointmentsViewFactory;
 
-        Appointments = new AppointmentsCollection();
+        Appointments = new SynchronizedObservableCollection<Appointment>();
 
         GetAppointments();
     }
@@ -39,7 +39,10 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
         _schedulerService.RunPeriodically(
             () =>
             {
-                var command = new SynchronizeCollectionCommand<Appointment, AppointmentsCollection>(
+                var command = new SynchronizeCollectionCommand<
+                    Appointment,
+                    SynchronizedObservableCollection<Appointment>
+                >(
                     ref _appointments,
                     _appointmentsRepository
                         .GetAll()

@@ -3,8 +3,6 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using Service = GroomWise.Models.Entities.Service;
-
 namespace GroomWise.ViewModels;
 
 public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsViewModel
@@ -18,10 +16,10 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     private readonly GroomingServiceRepository _groomingServiceRepository;
 
     [ObservableProperty]
-    private CustomersCollection _customers;
+    private SynchronizedObservableCollection<Customer> _customers;
 
     [ObservableProperty]
-    private GroomingServiceCollection _groomigServices;
+    private SynchronizedObservableCollection<GroomingService> _services;
 
     [ObservableProperty]
     private ObservableCollection<string> _months;
@@ -33,16 +31,16 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     private ObservableCollection<KeyValuePair<string, TimeInfo>> _times;
 
     [ObservableProperty]
-    private string _title;
+    private string? _title;
 
     [ObservableProperty]
-    private string _description;
+    private string? _description;
 
     [ObservableProperty]
     private DateTime _date;
 
     [ObservableProperty]
-    private TimeInfo _time;
+    private TimeInfo? _time;
 
     [ObservableProperty]
     private bool _isAm;
@@ -63,8 +61,8 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
         _appointmentsRepository = appointmentsRepository;
         _groomingServiceRepository = groomingServiceRepository;
 
-        Customers = new CustomersCollection();
-        GroomigServices = new GroomingServiceCollection();
+        Customers = new SynchronizedObservableCollection<Customer>();
+        Services = new SynchronizedObservableCollection<GroomingService>();
 
         Months = new ObservableCollection<string>();
         Times = new ObservableCollection<KeyValuePair<string, TimeInfo>>();
@@ -76,10 +74,10 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
 
     void GetServices()
     {
-        var command = new SynchronizeCollectionCommand<Service, GroomingServiceCollection>(
-            ref _groomigServices,
-            _groomingServiceRepository.GetAll().ToList()
-        );
+        var command = new SynchronizeCollectionCommand<
+            GroomingService,
+            SynchronizedObservableCollection<GroomingService>
+        >(ref _services, _groomingServiceRepository.GetAll().ToList());
         command.Execute();
     }
 
@@ -161,8 +159,8 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
                 Date.Year,
                 Date.Month,
                 Date.Day,
-                IsAm ? _time.AmHour : _time.PmHour,
-                _time.Minutes,
+                IsAm ? Time!.AmHour : Time!.PmHour,
+                Time.Minutes,
                 0
             );
             appointment.Title = Title;

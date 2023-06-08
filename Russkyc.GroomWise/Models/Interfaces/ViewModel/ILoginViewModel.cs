@@ -11,7 +11,7 @@ public interface ILoginViewModel
     IApplicationService ApplicationService { get; set; }
 
     /// <inheritdoc cref="LoginViewModel._notifications"/>
-    NotificationsCollection Notifications { get; set; }
+    SynchronizedObservableCollection<Notification> Notifications { get; set; }
 
     /// <inheritdoc cref="LoginViewModel._password"/>
     string? Password { get; set; }

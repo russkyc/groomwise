@@ -22,7 +22,7 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     private IApplicationService _applicationService;
 
     [ObservableProperty]
-    private NavItemsCollection _navItems;
+    private SynchronizedObservableCollection<NavItem> _navItems;
 
     [ObservableProperty]
     private IPage? _view;

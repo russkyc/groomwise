@@ -3,11 +3,9 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using Service = GroomWise.Models.Entities.Service;
-
 namespace GroomWise.Services.Repository;
 
-public class GroomingServiceRepository : Repository<Service>
+public class GroomingServiceRepository : Repository<GroomingService>
 {
     public GroomingServiceRepository(IDatabaseServiceAsync databaseService)
         : base(databaseService) { }

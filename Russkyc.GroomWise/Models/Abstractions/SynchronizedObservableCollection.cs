@@ -11,4 +11,4 @@ namespace GroomWise.Models.Abstractions;
 /// A thread-safe dynamic data collection based on <see cref="ObservableCollection{T}"/>
 /// </summary>
 /// <typeparam name="T">The type of elements in the collection</typeparam>
-public abstract class SynchronizedObservableCollection<T> : DarkObservableCollection<T> { }
+public class SynchronizedObservableCollection<T> : DarkObservableCollection<T> { }

@@ -12,7 +12,7 @@ public partial class PetsViewModel : ViewModelBase, IPetsViewModel
     private readonly PetRepository _petsRepository;
 
     [ObservableProperty]
-    private PetsCollection _petsCollection;
+    private SynchronizedObservableCollection<Pet> _petsCollection;
 
     public PetsViewModel(ILogger logger, PetFactory petFactory, PetRepository petsRepository)
     {
@@ -20,7 +20,7 @@ public partial class PetsViewModel : ViewModelBase, IPetsViewModel
         _petFactory = petFactory;
         _petsRepository = petsRepository;
 
-        PetsCollection = new PetsCollection();
+        PetsCollection = new SynchronizedObservableCollection<Pet>();
 
         GetPets();
     }
@@ -29,10 +29,10 @@ public partial class PetsViewModel : ViewModelBase, IPetsViewModel
     {
         Task.Run(() =>
         {
-            var command = new SynchronizeCollectionCommand<Pet, PetsCollection>(
-                ref _petsCollection,
-                _petsRepository.GetAll().ToList()
-            );
+            var command = new SynchronizeCollectionCommand<
+                Pet,
+                SynchronizedObservableCollection<Pet>
+            >(ref _petsCollection, _petsRepository.GetAll().ToList());
             command.Execute();
         });
     }

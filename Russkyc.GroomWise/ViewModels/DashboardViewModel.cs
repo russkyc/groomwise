@@ -16,7 +16,7 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
     private ISessionManagerService _sessionManagerService;
 
     [ObservableProperty]
-    private AppointmentsCollection _appointments;
+    private SynchronizedObservableCollection<Appointment> _appointments;
 
     [ObservableProperty]
     private string? _user;
@@ -38,7 +38,7 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
         _appointmentsRepository = appointmentsRepository;
         _schedulerService = schedulerService;
 
-        Appointments = new AppointmentsCollection();
+        Appointments = new SynchronizedObservableCollection<Appointment>();
         GetNotifications();
     }
 
@@ -54,7 +54,10 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
         _schedulerService.RunPeriodically(
             () =>
             {
-                var command = new SynchronizeCollectionCommand<Appointment, AppointmentsCollection>(
+                var command = new SynchronizeCollectionCommand<
+                    Appointment,
+                    SynchronizedObservableCollection<Appointment>
+                >(
                     ref _appointments,
                     _appointmentsRepository
                         .FindAll(
