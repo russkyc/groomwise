@@ -11,9 +11,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     private readonly DialogFactory _dialogFactory;
     private readonly AppointmentFactory _appointmentFactory;
 
-    private readonly CustomerRepository _customerRepository;
-    private readonly AppointmentRepository _appointmentRepository;
-    private readonly GroomingServiceRepository _groomingServiceRepository;
+    private readonly UnitOfWork _dbContext;
 
     [ObservableProperty]
     private SynchronizedObservableCollection<Customer> _customers;
@@ -49,17 +47,13 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
         ILogger logger,
         DialogFactory dialogFactory,
         AppointmentFactory appointmentFactory,
-        CustomerRepository customerRepository,
-        AppointmentRepository appointmentRepository,
-        GroomingServiceRepository groomingServiceRepository
+        UnitOfWork dbContext
     )
     {
         _logger = logger;
         _dialogFactory = dialogFactory;
-        _customerRepository = customerRepository;
         _appointmentFactory = appointmentFactory;
-        _appointmentRepository = appointmentRepository;
-        _groomingServiceRepository = groomingServiceRepository;
+        _dbContext = dbContext;
 
         Customers = new SynchronizedObservableCollection<Customer>();
         Services = new SynchronizedObservableCollection<GroomingService>();
@@ -77,7 +71,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
         var command = new SynchronizeCollectionCommand<
             GroomingService,
             SynchronizedObservableCollection<GroomingService>
-        >(ref _services, _groomingServiceRepository.GetAll().ToList());
+        >(ref _services, _dbContext.GroomingServiceRepository.GetAll().ToList());
         command.Execute();
     }
 
@@ -166,7 +160,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
             appointment.Title = Title;
             appointment.Description = Description;
         });
-        _appointmentRepository.Add(appointment);
+        _dbContext.AppointmentRepository.Add(appointment);
         _logger.Log(this, $"Scheduled {appointment.Title} on {appointment.Date:f}");
         BuilderServices.Resolve<IAddAppointmentsView>().Hide();
         _dialogFactory

@@ -23,13 +23,13 @@ public partial class ApplicationService : ObservableObject, IApplicationService
         IConfigProvider configProvider,
         MaterialIconFactory materialIconFactory,
         NavItemFactory navItemFactory,
-        RoleRepository roleRepository
+        UnitOfWork _dbContext
     )
     {
         _sessionManagerService = sessionManagerService;
         _configProvider = configProvider;
 
-        var roles = roleRepository.GetAll();
+        var roles = _dbContext.RoleRepository.GetAll();
         _nav = new List<NavItem>
         {
             navItemFactory.Create(navItem =>

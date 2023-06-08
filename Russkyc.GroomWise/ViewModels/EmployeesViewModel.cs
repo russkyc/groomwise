@@ -11,7 +11,7 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
     private readonly ISchedulerService _schedulerService;
     private readonly ILogger _logger;
 
-    private readonly EmployeeRepository _employeeRepository;
+    private readonly UnitOfWork _dbContext;
 
     [ObservableProperty]
     private string? _filter;
@@ -21,15 +21,15 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
 
     public EmployeesViewModel(
         IEncryptionService encryptionService,
-        EmployeeRepository employeeRepository,
         ISchedulerService schedulerService,
-        ILogger logger
+        ILogger logger,
+        UnitOfWork dbContext
     )
     {
         _encryptionService = encryptionService;
-        _employeeRepository = employeeRepository;
         _schedulerService = schedulerService;
         _logger = logger;
+        _dbContext = dbContext;
         Employees = new SynchronizedObservableCollection<Employee>();
 
         GetEmployees();
@@ -42,7 +42,7 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
             var command = new SynchronizeCollectionCommand<
                 Employee,
                 SynchronizedObservableCollection<Employee>
-            >(ref _employees, _employeeRepository.GetAll().ToList());
+            >(ref _employees, _dbContext.EmployeeRepository.GetAll().ToList());
             command.Execute();
             _logger.Log(this, "Synchronized employees collection");
         });

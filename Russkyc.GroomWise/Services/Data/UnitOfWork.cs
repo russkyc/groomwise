@@ -7,7 +7,7 @@ namespace GroomWise.Services.Data;
 
 public class UnitOfWork
 {
-    private UnitOfWork(IDatabaseServiceAsync databaseService, IEncryptionService encryptionService)
+    public UnitOfWork(IDatabaseServiceAsync databaseService, IEncryptionService encryptionService)
     {
         _databaseService = databaseService;
         _encryptionService = encryptionService;
@@ -33,8 +33,8 @@ public class UnitOfWork
         _roleRepository = new RoleRepository(databaseService);
     }
 
-    private IDatabaseServiceAsync _databaseService;
-    private IEncryptionService _encryptionService;
+    private readonly IDatabaseServiceAsync _databaseService;
+    private readonly IEncryptionService _encryptionService;
 
     private AccountRepository? _accountsRepository;
 
@@ -148,5 +148,26 @@ public class UnitOfWork
     public RoleRepository RoleRepository
     {
         get => _roleRepository ??= new RoleRepository(_databaseService);
+    }
+
+    public void SaveChanges()
+    {
+        _addressRepository?.WriteToDb();
+        _appointmentEmployeeRepository?.WriteToDb();
+        _appointmentPetRepository?.WriteToDb();
+        _appointmentRepository?.WriteToDb();
+        _appointmentServiceProductRepository?.WriteToDb();
+        _appointmentServiceRepository?.WriteToDb();
+        _customerAddressRepository?.WriteToDb();
+        _customerPetRepository?.WriteToDb();
+        _customerRepository?.WriteToDb();
+        _employeeAccountRepository?.WriteToDb();
+        _employeeAddressRepository?.WriteToDb();
+        _employeeRepository?.WriteToDb();
+        _employeeRoleRepository?.WriteToDb();
+        _groomingServiceRepository?.WriteToDb();
+        _petRepository?.WriteToDb();
+        _productRepository?.WriteToDb();
+        _roleRepository?.WriteToDb();
     }
 }

@@ -11,12 +11,8 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
     private readonly IEncryptionService _encryptionService;
     private readonly ISessionManagerService _sessionManagerService;
 
+    private readonly UnitOfWork _dbContext;
     private readonly SessionFactory _sessionFactory;
-    private readonly RoleRepository _roleRepository;
-    private readonly AccountRepository _accountRepository;
-    private readonly EmployeeRepository _employeeRepository;
-    private readonly EmployeeRoleRepository _employeeRoleRepository;
-    private readonly EmployeeAccountRepository _employeeAccountRepository;
 
     [ObservableProperty]
     private IApplicationService _applicationService;
@@ -38,26 +34,18 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
     public LoginViewModel(
         ILogger logger,
         ISessionManagerService sessionManagerService,
-        EmployeeAccountRepository employeeAccountRepository,
-        EmployeeRepository employeeRepository,
         IApplicationService applicationService,
         IEncryptionService encryptionService,
-        AccountRepository accountRepository,
-        EmployeeRoleRepository employeeRoleRepository,
-        RoleRepository roleRepository,
-        SessionFactory sessionFactory
+        SessionFactory sessionFactory,
+        UnitOfWork dbContext
     )
     {
         _logger = logger;
-        _employeeRepository = employeeRepository;
         _sessionManagerService = sessionManagerService;
         ApplicationService = applicationService;
         _encryptionService = encryptionService;
-        _accountRepository = accountRepository;
-        _employeeRoleRepository = employeeRoleRepository;
-        _roleRepository = roleRepository;
         _sessionFactory = sessionFactory;
-        _employeeAccountRepository = employeeAccountRepository;
+        _dbContext = dbContext;
 
         Notifications = new SynchronizedObservableCollection<Notification>();
     }
@@ -72,7 +60,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
         if (HasErrors)
             return;
 
-        var account = _accountRepository.Find(
+        var account = _dbContext.AccountsRepository.Find(
             a => a.Username == _encryptionService.Encrypt(Username!)
         );
 
@@ -94,7 +82,9 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
             return;
         }
 
-        var employeeAccount = _employeeAccountRepository.Find(e => e.AccountId == account.Id);
+        var employeeAccount = _dbContext.EmployeeAccountRepository.Find(
+            e => e.AccountId == account.Id
+        );
 
         // Check if employee account is null
         if (employeeAccount == null)
@@ -107,7 +97,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
             return;
         }
 
-        var employee = _employeeRepository.Find(
+        var employee = _dbContext.EmployeeRepository.Find(
             employee => employee.Id == employeeAccount.EmployeeId
         );
 
@@ -119,7 +109,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
             return;
         }
 
-        var employeeRole = _employeeRoleRepository.Find(
+        var employeeRole = _dbContext.EmployeeRoleRepository.Find(
             employeeRole => employeeRole.EmployeeId == employee.Id
         );
         if (employeeRole == null)
@@ -128,7 +118,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
             return;
         }
 
-        var role = _roleRepository.Find(role => role.Id == employeeRole.RoleId);
+        var role = _dbContext.RoleRepository.Find(role => role.Id == employeeRole.RoleId);
 
         // Check if role is null
         if (role == null)

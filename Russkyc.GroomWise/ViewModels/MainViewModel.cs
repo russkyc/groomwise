@@ -7,7 +7,7 @@ namespace GroomWise.ViewModels;
 
 public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
-    private readonly IContextManager _contextManager;
+    private readonly UnitOfWork _dbContext;
 
     [ObservableProperty]
     private DialogFactory _dialogFactory;
@@ -29,14 +29,14 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
 
     public MainViewModel(
         DialogFactory dialogFactory,
-        IContextManager contextManager,
         IApplicationService applicationService,
         IThemeManagerService themeManagerService,
-        ISessionManagerService sessionManagerService
+        ISessionManagerService sessionManagerService,
+        UnitOfWork dbContext
     )
     {
         _dialogFactory = dialogFactory;
-        _contextManager = contextManager;
+        _dbContext = dbContext;
 
         ApplicationService = applicationService;
         ThemeManagerService = themeManagerService;
@@ -92,7 +92,7 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
         )
         {
             // Write changes to database
-            _contextManager.WriteChanges();
+            _dbContext.SaveChanges();
 
             SessionManagerService.EndSession();
             BuilderServices.Resolve<ILoginView>().ClearFields("Username", "Password");

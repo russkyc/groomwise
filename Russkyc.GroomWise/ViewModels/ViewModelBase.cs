@@ -5,7 +5,4 @@
 
 namespace GroomWise.ViewModels;
 
-public class ViewModelBase : ObservableValidator
-{
-    
-}
+public class ViewModelBase : ObservableValidator { }

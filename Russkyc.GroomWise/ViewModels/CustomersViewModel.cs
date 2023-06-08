@@ -8,11 +8,7 @@ namespace GroomWise.ViewModels;
 public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
 {
     private readonly ILogger _logger;
-    private readonly CustomerRepository _customerRepository;
-    private readonly CustomerPetRepository _customerPetRepository;
-    private readonly CustomerAddressRepository _customerAddressRepository;
-    private readonly AddressRepository _addressRepository;
-    private readonly PetRepository _petRepository;
+    private readonly UnitOfWork _dbContext;
     private readonly CustomerCardViewModelFactory _customerCardViewModelFactory;
 
     [ObservableProperty]
@@ -20,20 +16,12 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
 
     public CustomersViewModel(
         ILogger logger,
-        CustomerRepository customerRepository,
-        PetRepository petRepository,
-        CustomerPetRepository customerPetRepository,
-        CustomerAddressRepository customerAddressRepository,
-        AddressRepository addressRepository,
+        UnitOfWork dbContext,
         CustomerCardViewModelFactory customerCardViewModelFactory
     )
     {
         _logger = logger;
-        _customerRepository = customerRepository;
-        _petRepository = petRepository;
-        _customerPetRepository = customerPetRepository;
-        _customerAddressRepository = customerAddressRepository;
-        _addressRepository = addressRepository;
+        _dbContext = dbContext;
         _customerCardViewModelFactory = customerCardViewModelFactory;
 
         Customers = new SynchronizedObservableCollection<CustomerCardViewModel>();
@@ -45,7 +33,7 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
         Task.Run(() =>
         {
             var customers = new List<CustomerCardViewModel>();
-            _customerRepository
+            _dbContext.CustomerRepository
                 .GetAll()
                 .ToList()
                 .ForEach(customer =>
@@ -57,14 +45,14 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
 
                             customervm.Name = $"{customer.FirstName} {customer.LastName}";
 
-                            var customerAddress = _customerAddressRepository.Find(
+                            var customerAddress = _dbContext.CustomerAddressRepository.Find(
                                 address => address.CustomerId == customer.Id
                             );
 
                             if (customerAddress == null)
                                 return;
 
-                            var address = _addressRepository.Find(
+                            var address = _dbContext.AddressRepository.Find(
                                 address => address.Id == customerAddress.AddressId
                             );
 
@@ -74,7 +62,7 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
                             customervm.Address =
                                 $"{address.Barangay}, {address.City}, {address.Province}";
 
-                            var customerPets = _customerPetRepository
+                            var customerPets = _dbContext.CustomerPetRepository
                                 .FindAll(pet => pet.OwnerId == customer.Id)
                                 .ToList();
 
@@ -83,7 +71,9 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
 
                             customerPets.ForEach(customerPet =>
                             {
-                                var pet = _petRepository.Find(pet => pet.Id == customerPet.PetId);
+                                var pet = _dbContext.PetRepository.Find(
+                                    pet => pet.Id == customerPet.PetId
+                                );
 
                                 if (pet == null)
                                     return;

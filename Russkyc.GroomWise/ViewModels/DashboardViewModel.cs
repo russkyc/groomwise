@@ -7,7 +7,7 @@ namespace GroomWise.ViewModels;
 
 public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 {
-    private readonly AppointmentRepository _appointmentRepository;
+    private readonly UnitOfWork _dbContext;
     private readonly AppointmentFactory _appointmentFactory;
     private readonly IEncryptionService _encryptionService;
     private readonly ISchedulerService _schedulerService;
@@ -28,15 +28,15 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
         AppointmentFactory appointmentFactory,
         ISessionManagerService sessionManagerService,
         IEncryptionService encryptionService,
-        AppointmentRepository appointmentRepository,
-        ISchedulerService schedulerService
+        ISchedulerService schedulerService,
+        UnitOfWork dbContext
     )
     {
         _appointmentFactory = appointmentFactory;
         SessionManagerService = sessionManagerService;
         _encryptionService = encryptionService;
-        _appointmentRepository = appointmentRepository;
         _schedulerService = schedulerService;
+        _dbContext = dbContext;
 
         Appointments = new SynchronizedObservableCollection<Appointment>();
         GetNotifications();
@@ -59,7 +59,7 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
                     SynchronizedObservableCollection<Appointment>
                 >(
                     ref _appointments,
-                    _appointmentRepository
+                    _dbContext.AppointmentRepository
                         .FindAll(
                             appointment =>
                                 appointment.Date!.Value.Day == DateTime.Today.Day
@@ -77,7 +77,7 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 
     private void GetWelcomeMessage()
     {
-        User = SessionManagerService.Session!.SessionUser.FirstName;
+        User = SessionManagerService.Session!.SessionUser?.FirstName;
     }
 
     private void GetTime()

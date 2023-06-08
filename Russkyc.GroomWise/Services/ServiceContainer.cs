@@ -41,8 +41,6 @@ public static class ServiceContainer
             .AddSingleton<ISessionManagerService, SessionManagerService>()
             .AddSingleton<IThemeManagerService, ThemeManagerService>()
             .AddSingleton<IApplicationService, ApplicationService>()
-            // Context Manager
-            .AddSingleton<IContextManager, ContextManager>()
             // Add ViewModels
             .AddSingleton<IAppointmentsViewModel, AppointmentsViewModel>()
             .AddSingleton<IAddAppointmentsViewModel, AddAppointmentsViewModel>()
