@@ -6,7 +6,7 @@
 namespace GroomWise.Models.Abstractions;
 
 public abstract class Repository<T> : Interfaces.Repository.IRepository<T>
-    where T : class, new()
+    where T : class, IEquatable<T>, new()
 {
     private readonly IDatabaseServiceAsync _databaseService;
     private readonly Queue<Task> _changes;
@@ -51,9 +51,7 @@ public abstract class Repository<T> : Interfaces.Repository.IRepository<T>
     {
         var result = _collection.Remove(entity);
         if (result)
-            _changes.Enqueue(
-                new Task(() => _databaseService.Delete<T>(t => entity.HasSameValues(t)))
-            );
+            _changes.Enqueue(new Task(() => _databaseService.Delete<T>(t => entity == t)));
         return result;
     }
 
