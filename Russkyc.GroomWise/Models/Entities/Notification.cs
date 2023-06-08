@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Entities;
 
-public class Notification
+public record Notification
 {
     public object? Icon { get; set; }
     public string? Title { get; set; }

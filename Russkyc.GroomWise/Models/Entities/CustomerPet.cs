@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Entities;
 
-public class CustomerPet
+public record CustomerPet
 {
     public int PetId { get; set; }
     public int OwnerId { get; set; }

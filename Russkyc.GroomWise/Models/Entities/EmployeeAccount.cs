@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Entities;
 
-public class EmployeeAccount
+public record EmployeeAccount
 {
     public int AccountId { get; set; }
     public int EmployeeId { get; set; }

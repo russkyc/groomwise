@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Entities;
 
-public class Customer : IEntity
+public record Customer : IEntity
 {
     [Column(IsIdentity = true, IsPrimary = true)]
     public int Id { get; set; }

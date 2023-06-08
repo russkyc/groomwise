@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Entities;
 
-public class AppointmentServiceProduct
+public record AppointmentServiceProduct
 {
     public int ProductId { get; set; }
     public int ServiceId { get; set; }

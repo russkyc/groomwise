@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Entities;
 
-public class NavItem : IEntity
+public record NavItem : IEntity
 {
     public int Id { get; set; }
     public string? Name { get; set; }
