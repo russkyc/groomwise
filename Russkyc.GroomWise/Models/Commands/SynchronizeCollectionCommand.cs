@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Commands;
 
-public class SynchronizeCollectionCommand<T, TCollection> : ICommand
+public class SynchronizeCollectionCommand<T, TCollection> : Interfaces.ICommand
     where TCollection : SynchronizedObservableCollection<T>
     where T : IEntity
 {
