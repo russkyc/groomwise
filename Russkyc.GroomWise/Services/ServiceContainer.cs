@@ -35,25 +35,8 @@ public static class ServiceContainer
             // Add Data Services
             .AddSingleton<IConnectionSourceProvider, ConnectionSourceProvider>()
             .AddSingleton<IDatabaseServiceAsync, DataServiceProviderAsync>()
-            // Add Repository Services
-            .AddSingleton<AccountRepository>()
-            .AddSingleton<AddressRepository>()
-            .AddSingleton<AppointmentEmployeeRepository>()
-            .AddSingleton<AppointmentPetRepository>()
-            .AddSingleton<AppointmentRepository>()
-            .AddSingleton<AppointmentServiceProductRepository>()
-            .AddSingleton<AppointmentServiceRepository>()
-            .AddSingleton<CustomerAddressRepository>()
-            .AddSingleton<CustomerPetRepository>()
-            .AddSingleton<CustomerRepository>()
-            .AddSingleton<EmployeeAccountRepository>()
-            .AddSingleton<EmployeeAddressRepository>()
-            .AddSingleton<EmployeeRepository>()
-            .AddSingleton<EmployeeRoleRepository>()
-            .AddSingleton<GroomingServiceRepository>()
-            .AddSingleton<PetRepository>()
-            .AddSingleton<ProductRepository>()
-            .AddSingleton<RoleRepository>()
+            // Unit of Work
+            .AddSingleton<UnitOfWork>()
             // Add Application Services
             .AddSingleton<ISessionManagerService, SessionManagerService>()
             .AddSingleton<IThemeManagerService, ThemeManagerService>()
