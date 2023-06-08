@@ -8,7 +8,7 @@ namespace GroomWise.ViewModels;
 public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 {
     private readonly AppointmentsRepository _appointmentsRepository;
-    private readonly IAppointmentFactory _appointmentFactory;
+    private readonly AppointmentFactory _appointmentFactory;
     private readonly IEncryptionService _encryptionService;
     private readonly ISchedulerService _schedulerService;
 
@@ -25,7 +25,7 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
     private DateTime _date;
 
     public DashboardViewModel(
-        IAppointmentFactory appointmentFactory,
+        AppointmentFactory appointmentFactory,
         ISessionManagerService sessionManagerService,
         IEncryptionService encryptionService,
         AppointmentsRepository appointmentsRepository,

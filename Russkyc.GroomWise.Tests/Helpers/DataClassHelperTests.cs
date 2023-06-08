@@ -17,15 +17,13 @@ public class DataClassHelperTests
         {
             Username = "username",
             Password = "password",
-            Email = "email",
-            EmployeeId = 0
+            Email = "email"
         };
         var subject = new Account
         {
             Username = "username",
             Password = "password",
-            Email = "email",
-            EmployeeId = 0
+            Email = "email"
         };
 
         // Execute
@@ -43,15 +41,13 @@ public class DataClassHelperTests
         {
             Username = "username",
             Password = "password",
-            Email = "email",
-            EmployeeId = 0
+            Email = "email"
         };
         var subject = new Account
         {
             Username = "username",
             Password = "password",
-            Email = "email",
-            EmployeeId = 2
+            Email = "email"
         };
 
         // Execute

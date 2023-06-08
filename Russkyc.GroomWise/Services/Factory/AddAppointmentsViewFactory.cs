@@ -3,18 +3,21 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using Russkyc.Abstractions.Abstractions;
+
 namespace GroomWise.Services.Factory;
 
-public class AddAppointmentsViewFactory : IAddAppointmentsViewFactory
+public class AddAppointmentsViewFactory : Factory<AddAppointmentsView>
 {
-    public AddAppointmentsView Create(Action<AddAppointmentsView>? builder = null)
+    public new AddAppointmentsView Create(Action<AddAppointmentsView>? builder = null)
     {
         var addAppointmentsView = (
             (AddAppointmentsView)BuilderServices.Resolve<IAddAppointmentsView>()
         )
             .AsChild()
             .HideOnParentMouseDown();
-        builder!(addAppointmentsView);
+        if (builder != null)
+            builder(addAppointmentsView);
         return addAppointmentsView;
     }
 }

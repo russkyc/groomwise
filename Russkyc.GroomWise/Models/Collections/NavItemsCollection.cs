@@ -8,4 +8,4 @@ namespace GroomWise.Models.Collections;
 /// <summary>
 /// <inheritdoc cref="SynchronizedObservableCollection{T}"/>
 /// </summary>
-public class NavItemsCollection : SynchronizedObservableCollection<INavItem> { }
+public class NavItemsCollection : SynchronizedObservableCollection<NavItem> { }

@@ -3,14 +3,8 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using Russkyc.Abstractions.Abstractions;
+
 namespace GroomWise.Services.Factory;
 
-public class NavItemFactory : INavItemFactory
-{
-    public NavItem Create(Action<NavItem>? builder = null)
-    {
-        var navItem = new NavItem();
-        builder!(navItem);
-        return navItem;
-    }
-}
+public class NavItemFactory : Factory<NavItem> { }

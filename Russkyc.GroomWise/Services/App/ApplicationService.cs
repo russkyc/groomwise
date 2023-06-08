@@ -10,7 +10,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
     private readonly IConfigProvider _configProvider;
     private readonly ISessionManagerService _sessionManagerService;
 
-    private List<INavItem> _nav;
+    private List<NavItem> _nav;
 
     [ObservableProperty]
     private string? _appAuthor;
@@ -24,14 +24,14 @@ public partial class ApplicationService : ObservableObject, IApplicationService
     public ApplicationService(
         ISessionManagerService sessionManagerService,
         IConfigProvider configProvider,
-        IMaterialIconFactory materialIconFactory,
-        INavItemFactory navItemFactory
+        MaterialIconFactory materialIconFactory,
+        NavItemFactory navItemFactory
     )
     {
         _sessionManagerService = sessionManagerService;
         _configProvider = configProvider;
 
-        _nav = new List<INavItem>
+        _nav = new List<NavItem>
         {
             navItemFactory.Create(navItem =>
             {
@@ -140,9 +140,8 @@ public partial class ApplicationService : ObservableObject, IApplicationService
 
     public void BuildNavItems()
     {
-        Task.Run(async () =>
-        {
-            var currentUserType = (EmployeeType)_sessionManagerService.SessionUser!.EmployeeType!;
+        Task.Run(async () => {
+            /*var currentUserType = (EmployeeType)_sessionManagerService.SessionUser!.EmployeeType!;
             await Application.Current.Dispatcher.InvokeAsync(() => NavItems.Clear());
 
             _nav.Where(navItem => navItem.AccountTypes!.Contains(currentUserType))
@@ -151,7 +150,7 @@ public partial class ApplicationService : ObservableObject, IApplicationService
                 {
                     navItem.Selected = navItem is { Name: "Dashboard" };
                     await Application.Current.Dispatcher.InvokeAsync(() => NavItems.Add(navItem));
-                });
+                });*/
         });
     }
 }

@@ -10,7 +10,7 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     private readonly IContextManager _contextManager;
 
     [ObservableProperty]
-    private IDialogFactory _dialogFactory;
+    private DialogFactory _dialogFactory;
 
     [ObservableProperty]
     private ISessionManagerService _sessionManagerService;
@@ -28,7 +28,7 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     private IPage? _view;
 
     public MainViewModel(
-        IDialogFactory dialogFactory,
+        DialogFactory dialogFactory,
         IContextManager contextManager,
         IApplicationService applicationService,
         IThemeManagerService themeManagerService,
@@ -52,7 +52,7 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     }
 
     [RelayCommand]
-    private async void GetView(INavItem? navItem)
+    private async void GetView(NavItem? navItem)
     {
         if (ApplicationService.NavItems?.Count > 0 && navItem is { Selected: true })
         {

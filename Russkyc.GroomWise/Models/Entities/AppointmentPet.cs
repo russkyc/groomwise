@@ -3,9 +3,10 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Models.Interfaces.Factory;
+namespace GroomWise.Models.Entities;
 
-public interface IDialogFactory : IFactory<DialogView>
+public class AppointmentPet
 {
-    
+    public int AppointmentId { get; set; }
+    public int PetId { get; set; }
 }

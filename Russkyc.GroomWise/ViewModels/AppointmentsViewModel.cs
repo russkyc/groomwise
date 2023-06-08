@@ -9,7 +9,7 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
 {
     private readonly ILogger _logger;
     private readonly ISchedulerService _schedulerService;
-    private readonly IAddAppointmentsViewFactory _addAppointmentsViewFactory;
+    private readonly AddAppointmentsViewFactory _addAppointmentsViewFactory;
 
     private readonly AppointmentsRepository _appointmentsRepository;
 
@@ -20,7 +20,7 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
         ILogger logger,
         ISchedulerService schedulerService,
         AppointmentsRepository appointmentsRepository,
-        IAddAppointmentsViewFactory addAppointmentsViewFactory
+        AddAppointmentsViewFactory addAppointmentsViewFactory
     )
     {
         _logger = logger;

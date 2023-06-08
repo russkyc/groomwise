@@ -3,6 +3,8 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using Service = GroomWise.Models.Entities.Service;
+
 namespace GroomWise.Models.Collections;
 
-public class GroomingServiceCollection : SynchronizedObservableCollection<GroomingService> { }
+public class GroomingServiceCollection : SynchronizedObservableCollection<Service> { }

@@ -7,7 +7,7 @@ namespace GroomWise.Models.Interfaces.Service;
 
 public interface ISessionManagerService
 {
-    public IEmployee? SessionUser { get; set; }
-    void StartSession(IEmployee account);
+    public Employee? SessionUser { get; set; }
+    void StartSession(Employee account);
     void EndSession();
 }

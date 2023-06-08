@@ -86,7 +86,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
             return;
         }
 
-        var employee = _employeeRepository.Find(e => e.Id == account.EmployeeId);
+        var employee = new Employee(); // _employeeRepository.Find(e => e.Id == account.EmployeeId);
 
         if (employee == null)
         {

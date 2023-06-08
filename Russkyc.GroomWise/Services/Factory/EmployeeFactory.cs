@@ -3,14 +3,8 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using Russkyc.Abstractions.Abstractions;
+
 namespace GroomWise.Services.Factory;
 
-public class EmployeeFactory : IEmployeeFactory
-{
-    public Employee Create(Action<Employee>? builder = null)
-    {
-        var employee = new Employee();
-        builder!(employee);
-        return employee;
-    }
-}
+public class EmployeeFactory : Factory<Employee> { }

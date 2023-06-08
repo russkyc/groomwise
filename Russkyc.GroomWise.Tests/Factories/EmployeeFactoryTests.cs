@@ -29,8 +29,6 @@ public class EmployeeFactoryTests
             account.FirstName = firstName;
             account.MiddleName = middleName;
             account.LastName = lastName;
-            account.AddressId = addressId;
-            account.EmployeeType = employeeType;
         });
 
         // Assert
@@ -38,7 +36,5 @@ public class EmployeeFactoryTests
         Assert.Equal(firstName, result.FirstName);
         Assert.Equal(middleName, result.MiddleName);
         Assert.Equal(lastName, result.LastName);
-        Assert.Equal(addressId, result.AddressId);
-        Assert.Equal(employeeType, result.EmployeeType);
     }
 }

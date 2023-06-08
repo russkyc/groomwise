@@ -3,13 +3,15 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using Service = GroomWise.Models.Entities.Service;
+
 namespace GroomWise.ViewModels;
 
 public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsViewModel
 {
     private readonly ILogger _logger;
-    private readonly IDialogFactory _dialogFactory;
-    private readonly IAppointmentFactory _appointmentFactory;
+    private readonly DialogFactory _dialogFactory;
+    private readonly AppointmentFactory _appointmentFactory;
 
     private readonly CustomerRepository _customerRepository;
     private readonly AppointmentsRepository _appointmentsRepository;
@@ -47,8 +49,8 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
 
     public AddAppointmentsViewModel(
         ILogger logger,
-        IDialogFactory dialogFactory,
-        IAppointmentFactory appointmentFactory,
+        DialogFactory dialogFactory,
+        AppointmentFactory appointmentFactory,
         CustomerRepository customerRepository,
         AppointmentsRepository appointmentsRepository,
         GroomingServiceRepository groomingServiceRepository
@@ -74,7 +76,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
 
     void GetServices()
     {
-        var command = new SynchronizeCollectionCommand<GroomingService, GroomingServiceCollection>(
+        var command = new SynchronizeCollectionCommand<Service, GroomingServiceCollection>(
             ref _groomigServices,
             _groomingServiceRepository.GetAll().ToList()
         );
