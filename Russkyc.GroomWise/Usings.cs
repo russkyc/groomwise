@@ -47,6 +47,7 @@ global using Russkyc.DependencyInjection.Interfaces;
 
 // Russkyc.Abstractions
 global using Russkyc.Abstractions.Interfaces;
+global using Russkyc.Abstractions.Abstractions;
 
 // Russkyc.ModernControls
 global using org.russkyc.moderncontrols;
