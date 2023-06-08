@@ -17,23 +17,16 @@ public class NavItemFactoryTests
         typeof(UserControl),
         true,
         "dashboard",
-        new[] { EmployeeType.Admin, EmployeeType.Manager }
+        new[] { Roles.Admin, Roles.Manager }
     )]
-    [InlineData(
-        1,
-        "employees",
-        typeof(UserControl),
-        true,
-        "employees",
-        new[] { EmployeeType.Manager }
-    )]
+    [InlineData(1, "employees", typeof(UserControl), true, "employees", new[] { Roles.Manager })]
     void Create_Returns_New_NavItem_WithModifications(
         int id,
         string name,
         Type page,
         bool selected,
         string shortName,
-        EmployeeType[] accountTypes
+        Roles[] accountTypes
     )
     {
         // Setup
@@ -47,7 +40,7 @@ public class NavItemFactoryTests
             navItem.Page = page;
             navItem.Selected = selected;
             navItem.ShortName = shortName;
-            navItem.AccountTypes = accountTypes;
+            navItem.Roles = accountTypes;
         });
 
         // Assert
@@ -56,6 +49,6 @@ public class NavItemFactoryTests
         Assert.Equal(page, result.Page);
         Assert.Equal(selected, result.Selected);
         Assert.Equal(shortName, result.ShortName);
-        Assert.Equal(accountTypes, result.AccountTypes);
+        Assert.Equal(accountTypes, result.Roles);
     }
 }

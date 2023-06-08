@@ -77,7 +77,7 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 
     private void GetWelcomeMessage()
     {
-        User = SessionManagerService.SessionUser!.FirstName;
+        User = SessionManagerService.Session!.SessionUser.FirstName;
     }
 
     private void GetTime()

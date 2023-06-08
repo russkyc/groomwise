@@ -3,11 +3,8 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Models.Interfaces.Service;
+using Russkyc.Abstractions.Abstractions;
 
-public interface ISessionManagerService
-{
-    public Session? Session { get; set; }
-    void StartSession(Employee account);
-    void EndSession();
-}
+namespace GroomWise.Services.Factory;
+
+public class RoleFactory : Factory<Role> { }

@@ -13,6 +13,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 
     private readonly AccountRepository _accountRepository;
     private readonly EmployeeRepository _employeeRepository;
+    private readonly EmployeeAccountRepository _employeeAccountRepository;
 
     [ObservableProperty]
     private IApplicationService _applicationService;
@@ -37,8 +38,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
         EmployeeRepository employeeRepository,
         IApplicationService applicationService,
         IEncryptionService encryptionService,
-        ILogger logger
-    )
+        ILogger logger, EmployeeAccountRepository employeeAccountRepository)
     {
         _accountRepository = accountRepository;
         _employeeRepository = employeeRepository;
@@ -46,6 +46,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
         ApplicationService = applicationService;
         _encryptionService = encryptionService;
         _logger = logger;
+        _employeeAccountRepository = employeeAccountRepository;
 
         Notifications = new SynchronizedObservableCollection<Notification>();
     }

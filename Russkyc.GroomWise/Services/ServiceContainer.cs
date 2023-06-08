@@ -30,6 +30,7 @@ public static class ServiceContainer
             .AddSingleton<AccountFactory>()
             .AddSingleton<DialogFactory>()
             .AddSingleton<PetFactory>()
+            .AddSingleton<SessionFactory>()
             // Add Data Services
             .AddSingleton<IConnectionSourceProvider, ConnectionSourceProvider>()
             .AddSingleton<IDatabaseServiceAsync, DataServiceProviderAsync>()

@@ -8,18 +8,39 @@ namespace GroomWise.Services.App;
 public partial class SessionManagerService : ObservableObject, ISessionManagerService
 {
     private readonly ILogger _logger;
+    private readonly SessionFactory _sessionFactory;
+    private readonly RoleRepository _roleRepository;
+    private readonly EmployeeRoleRepository _employeeRoleRepository;
 
     [ObservableProperty]
-    private Employee? _sessionUser;
+    private Session? _sessionUser;
 
-    public SessionManagerService(ILogger logger)
+    public SessionManagerService(
+        ILogger logger,
+        SessionFactory sessionFactory,
+        EmployeeRoleRepository employeeRoleRepository,
+        RoleRepository roleRepository
+    )
     {
         _logger = logger;
+        _sessionFactory = sessionFactory;
+        _roleRepository = roleRepository;
+        _employeeRoleRepository = employeeRoleRepository;
     }
+
+    public Session? Session { get; set; }
 
     public void StartSession(Employee account)
     {
-        SessionUser = account;
+        var employeeRole = _employeeRoleRepository.Find(
+            employeeRole => employeeRole.EmployeeId == account.Id
+        );
+        var role = _roleRepository.Find(role => role.Id == employeeRole!.RoleId);
+        SessionUser = _sessionFactory.Create(session =>
+        {
+            session.SessionUser = account;
+            session.SessionRole = role!;
+        });
         _logger.Log(this, $"Started user session");
     }
 
