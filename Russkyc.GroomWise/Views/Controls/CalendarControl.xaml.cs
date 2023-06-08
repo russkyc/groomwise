@@ -64,38 +64,41 @@ public partial class CalendarControl
 
     private async void DisplayDates()
     {
-        Dates.Clear();
-        var daysInMonth = DateTime.DaysInMonth(CurrentMonth.Year, CurrentMonth.Month);
-        var firstDayOfMonth = new DateTime(CurrentMonth.Year, CurrentMonth.Month, 1);
+        var currentMonth = CurrentMonth;
+        var daysInMonth = DateTime.DaysInMonth(currentMonth.Year, currentMonth.Month);
+        var firstDayOfMonth = new DateTime(currentMonth.Year, currentMonth.Month, 1);
         var firstDayOfWeek = (int)firstDayOfMonth.DayOfWeek + 1;
         var tasks = new List<Task<CalendarDate>>();
-        var dayIndex = 1;
         var dateIndex = 1;
-        while (dateIndex <= daysInMonth)
+        await Task.Run(() =>
         {
-            if (dayIndex >= firstDayOfWeek)
+            for (int dayIndex = 1; dateIndex <= daysInMonth; dayIndex++)
             {
-                var date = new DateTime(CurrentMonth.Year, CurrentMonth.Month, dateIndex);
-                var isCurrentDate =
-                    date.Month == DateTime.Today.Month
-                    && date.Year == DateTime.Today.Year
-                    && date.Day == DateTime.Today.Day;
-                var calendarDate = new CalendarDate()
-                    .SetDate(dateIndex)
-                    .SetDateInfo(date)
-                    .SetSelected(isCurrentDate)
-                    .SetCurrentDate(isCurrentDate);
-                tasks.Add(Task.FromResult(calendarDate));
-                dateIndex++;
+                if (dayIndex >= firstDayOfWeek)
+                {
+                    var date = new DateTime(currentMonth.Year, currentMonth.Month, dateIndex);
+                    var isCurrentDate =
+                        date.Month == DateTime.Today.Month
+                        && date.Year == DateTime.Today.Year
+                        && date.Day == DateTime.Today.Day;
+                    var calendarDate = new CalendarDate()
+                        .SetDate(dateIndex)
+                        .SetDateInfo(date)
+                        .SetSelected(isCurrentDate)
+                        .SetCurrentDate(isCurrentDate);
+                    tasks.Add(Task.FromResult(calendarDate));
+                    dateIndex++;
+                }
+                else
+                {
+                    tasks.Add(Task.FromResult<CalendarDate>(null!));
+                }
             }
-            else
-            {
-                tasks.Add(Task.FromResult<CalendarDate>(null!));
-            }
-            dayIndex++;
-        }
+        });
 
         var tempDates = await Task.WhenAll(tasks);
+
+        Dates.Clear();
         Dates.AddRange(tempDates);
     }
 
