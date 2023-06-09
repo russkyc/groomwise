@@ -7,7 +7,9 @@ namespace GroomWise.ViewModels;
 
 public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
-    private readonly UnitOfWork _dbContext;
+    private readonly IUnitOfWork _dbContext;
+    private readonly IConfigProvider _configProvider;
+    private readonly IApplicationService _applicationService;
 
     [ObservableProperty]
     private DialogFactory _dialogFactory;
@@ -19,9 +21,6 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     private IThemeManagerService _themeManagerService;
 
     [ObservableProperty]
-    private IApplicationService _applicationService;
-
-    [ObservableProperty]
     private SynchronizedObservableCollection<NavItem> _navItems;
 
     [ObservableProperty]
@@ -29,20 +28,22 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
 
     public MainViewModel(
         DialogFactory dialogFactory,
+        IUnitOfWork dbContext,
+        IConfigProvider configProvider,
         IApplicationService applicationService,
         IThemeManagerService themeManagerService,
-        ISessionManagerService sessionManagerService,
-        UnitOfWork dbContext
+        ISessionManagerService sessionManagerService
     )
     {
-        _dialogFactory = dialogFactory;
         _dbContext = dbContext;
+        _dialogFactory = dialogFactory;
+        _configProvider = configProvider;
+        _applicationService = applicationService;
 
-        ApplicationService = applicationService;
         ThemeManagerService = themeManagerService;
         SessionManagerService = sessionManagerService;
 
-        NavItems = ApplicationService.NavItems!;
+        NavItems = _applicationService.NavItems!;
     }
 
     [RelayCommand]
@@ -54,14 +55,14 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     [RelayCommand]
     private async void GetView(NavItem? navItem)
     {
-        if (ApplicationService.NavItems?.Count > 0 && navItem is { Selected: true })
+        if (_applicationService.NavItems?.Count > 0 && navItem is { Selected: true })
         {
             await Task.Run(async () =>
             {
                 await DispatchHelper.UiInvokeAsync(() =>
                 {
                     View = BuilderServices.Resolve(navItem.Page) as IPage;
-                    ApplicationService.NavItems.First(item => item == navItem).Selected = true;
+                    _applicationService.NavItems.First(item => item == navItem).Selected = true;
                 });
             });
         }
