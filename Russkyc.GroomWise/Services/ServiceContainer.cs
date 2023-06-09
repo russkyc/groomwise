@@ -37,7 +37,7 @@ public static class ServiceContainer
             .AddSingleton<IConnectionSourceProvider, ConnectionSourceProvider>()
             .AddSingleton<IDatabaseServiceAsync, DataServiceProviderAsync>()
             // Unit of Work
-            .AddSingleton<UnitOfWork>()
+            .AddSingleton<IUnitOfWork, UnitOfWork>()
             // Add Application Services
             .AddSingleton<ISessionManagerService, SessionManagerService>()
             .AddSingleton<IThemeManagerService, ThemeManagerService>()

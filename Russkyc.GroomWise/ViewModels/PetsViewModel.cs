@@ -8,14 +8,13 @@ namespace GroomWise.ViewModels;
 public partial class PetsViewModel : ViewModelBase, IPetsViewModel
 {
     private readonly ILogger _logger;
+    private readonly IUnitOfWork _dbContext;
     private readonly PetFactory _petFactory;
-
-    private readonly UnitOfWork _dbContext;
 
     [ObservableProperty]
     private SynchronizedObservableCollection<Pet> _petsCollection;
 
-    public PetsViewModel(ILogger logger, PetFactory petFactory, UnitOfWork dbContext)
+    public PetsViewModel(ILogger logger, PetFactory petFactory, IUnitOfWork dbContext)
     {
         _logger = logger;
         _petFactory = petFactory;

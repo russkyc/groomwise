@@ -11,7 +11,7 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
     private readonly ISchedulerService _schedulerService;
     private readonly ILogger _logger;
 
-    private readonly UnitOfWork _dbContext;
+    private readonly IUnitOfWork _dbContext;
 
     [ObservableProperty]
     private string? _filter;
@@ -22,14 +22,15 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
     public EmployeesViewModel(
         IEncryptionService encryptionService,
         ISchedulerService schedulerService,
-        ILogger logger,
-        UnitOfWork dbContext
+        IUnitOfWork dbContext,
+        ILogger logger
     )
     {
         _encryptionService = encryptionService;
         _schedulerService = schedulerService;
-        _logger = logger;
         _dbContext = dbContext;
+        _logger = logger;
+        
         Employees = new SynchronizedObservableCollection<Employee>();
 
         GetEmployees();

@@ -8,9 +8,9 @@ namespace GroomWise.ViewModels;
 public class AddCustomersViewModel : ViewModelBase, IAddCustomersViewModel
 {
     private readonly ILogger _logger;
-    private readonly UnitOfWork _dbContext;
+    private readonly IUnitOfWork _dbContext;
 
-    public AddCustomersViewModel(ILogger logger, UnitOfWork dbContext)
+    public AddCustomersViewModel(ILogger logger, IUnitOfWork dbContext)
     {
         _logger = logger;
         _dbContext = dbContext;

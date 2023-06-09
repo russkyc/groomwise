@@ -5,7 +5,7 @@
 
 namespace GroomWise.Services.Data;
 
-public class UnitOfWork
+public class UnitOfWork : IUnitOfWork
 {
     public UnitOfWork(IDatabaseServiceAsync databaseService, IEncryptionService encryptionService)
     {

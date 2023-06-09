@@ -8,7 +8,7 @@ namespace GroomWise.ViewModels;
 public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
 {
     private readonly ILogger _logger;
-    private readonly UnitOfWork _dbContext;
+    private readonly IUnitOfWork _dbContext;
     private readonly CustomerCardViewModelFactory _customerCardViewModelFactory;
 
     [ObservableProperty]
@@ -19,7 +19,7 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
 
     public CustomersViewModel(
         ILogger logger,
-        UnitOfWork dbContext,
+        IUnitOfWork dbContext,
         CustomerCardViewModelFactory customerCardViewModelFactory
     )
     {

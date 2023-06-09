@@ -12,7 +12,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     private readonly AppointmentFactory _appointmentFactory;
     private readonly AppointmentServiceFactory _appointmentServiceFactory;
 
-    private readonly UnitOfWork _dbContext;
+    private readonly IUnitOfWork _dbContext;
 
     [ObservableProperty]
     private SynchronizedObservableCollection<Customer> _customers;
@@ -27,7 +27,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     private ObservableCollection<int> _days;
 
     [ObservableProperty]
-    private ObservableCollection<KeyValuePair<string, TimeInfo>> _times;
+    private ObservableCollection<TimeInfo> _times;
 
     [ObservableProperty]
     private string? _title;
@@ -49,9 +49,9 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
 
     public AddAppointmentsViewModel(
         ILogger logger,
+        IUnitOfWork dbContext,
         DialogFactory dialogFactory,
         AppointmentFactory appointmentFactory,
-        UnitOfWork dbContext,
         AppointmentServiceFactory appointmentServiceFactory
     )
     {
@@ -65,7 +65,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
         Services = new SynchronizedObservableCollection<GroomingService>();
 
         Months = new ObservableCollection<string>();
-        Times = new ObservableCollection<KeyValuePair<string, TimeInfo>>();
+        Times = new ObservableCollection<TimeInfo>();
         Days = new ObservableCollection<int>();
 
         GetServices();
@@ -107,41 +107,35 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
                 if (minute == 00)
                 {
                     Times.Add(
-                        new KeyValuePair<string, TimeInfo>(
-                            $"{hour:00}:{minute:00}",
-                            new TimeInfo
-                            {
-                                Time = $"{hour:00}:{minute:00}",
-                                AmHour = hour,
-                                PmHour = hour + 12,
-                                Minutes = minute,
-                                IsAm = true
-                            }
-                        )
+                        new TimeInfo
+                        {
+                            Time = $"{hour:00}:{minute:00}",
+                            AmHour = hour,
+                            PmHour = hour + 12,
+                            Minutes = minute,
+                            IsAm = true
+                        }
                     );
                     minute = 30;
                 }
                 if (minute == 30)
                 {
                     Times.Add(
-                        new KeyValuePair<string, TimeInfo>(
-                            $"{hour:00}:{minute:00}",
-                            new TimeInfo
-                            {
-                                Time = $"{hour:00}:{minute:00}",
-                                AmHour = hour,
-                                PmHour = hour + 12,
-                                Minutes = minute,
-                                IsAm = true
-                            }
-                        )
+                        new TimeInfo
+                        {
+                            Time = $"{hour:00}:{minute:00}",
+                            AmHour = hour,
+                            PmHour = hour + 12,
+                            Minutes = minute,
+                            IsAm = true
+                        }
                     );
                     hour++;
                     minute = 0;
                 }
             }
 
-            Time = Times[0].Value;
+            Time = Times[0];
         });
     }
 

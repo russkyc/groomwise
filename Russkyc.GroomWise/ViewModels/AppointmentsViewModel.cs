@@ -11,22 +11,22 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     private readonly ISchedulerService _schedulerService;
     private readonly AddAppointmentsViewFactory _addAppointmentsViewFactory;
 
-    private readonly UnitOfWork _dbContext;
+    private readonly IUnitOfWork _dbContext;
 
     [ObservableProperty]
     private SynchronizedObservableCollection<Appointment> _appointments;
 
     public AppointmentsViewModel(
         ILogger logger,
+        IUnitOfWork dbContext,
         ISchedulerService schedulerService,
-        AddAppointmentsViewFactory addAppointmentsViewFactory,
-        UnitOfWork dbContext
+        AddAppointmentsViewFactory addAppointmentsViewFactory
     )
     {
         _logger = logger;
+        _dbContext = dbContext;
         _schedulerService = schedulerService;
         _addAppointmentsViewFactory = addAppointmentsViewFactory;
-        _dbContext = dbContext;
 
         Appointments = new SynchronizedObservableCollection<Appointment>();
 
@@ -59,14 +59,8 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     [RelayCommand]
     void AddAppointment()
     {
-        Task.Run(async () =>
-        {
-            await DispatchHelper.UiInvokeAsync(
-                () =>
-                    _addAppointmentsViewFactory
-                        .Create(addAppointmentsView => addAppointmentsView.AsChild())
-                        .Show()
-            );
-        });
+        _addAppointmentsViewFactory
+            .Create(addAppointmentsView => addAppointmentsView.AsChild())
+            .Show();
     }
 }
