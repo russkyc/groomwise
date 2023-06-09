@@ -10,6 +10,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     private readonly ILogger _logger;
     private readonly DialogFactory _dialogFactory;
     private readonly AppointmentFactory _appointmentFactory;
+    private readonly AppointmentServiceFactory _appointmentServiceFactory;
 
     private readonly UnitOfWork _dbContext;
 
@@ -43,17 +44,22 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     [ObservableProperty]
     private bool _isAm;
 
+    [ObservableProperty]
+    private GroomingService _service;
+
     public AddAppointmentsViewModel(
         ILogger logger,
         DialogFactory dialogFactory,
         AppointmentFactory appointmentFactory,
-        UnitOfWork dbContext
+        UnitOfWork dbContext,
+        AppointmentServiceFactory appointmentServiceFactory
     )
     {
         _logger = logger;
         _dialogFactory = dialogFactory;
         _appointmentFactory = appointmentFactory;
         _dbContext = dbContext;
+        _appointmentServiceFactory = appointmentServiceFactory;
 
         Customers = new SynchronizedObservableCollection<Customer>();
         Services = new SynchronizedObservableCollection<GroomingService>();
@@ -73,6 +79,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
             SynchronizedObservableCollection<GroomingService>
         >(ref _services, _dbContext.GroomingServiceRepository.GetAll().ToList());
         command.Execute();
+        Service = Services[0];
     }
 
     void GetSchedules()
@@ -147,20 +154,29 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     [RelayCommand]
     void AddAppointment()
     {
+        var id = _dbContext.AppointmentRepository.GetLastId().Increment();
+        var date = new DateTime(
+            Date.Year,
+            Date.Month,
+            Date.Day,
+            IsAm ? Time!.AmHour : Time!.PmHour,
+            Time.Minutes,
+            0
+        );
         var appointment = _appointmentFactory.Create(appointment =>
         {
-            appointment.Date = new DateTime(
-                Date.Year,
-                Date.Month,
-                Date.Day,
-                IsAm ? Time!.AmHour : Time!.PmHour,
-                Time.Minutes,
-                0
-            );
+            appointment.Id = id;
+            appointment.Date = date;
             appointment.Title = Title;
             appointment.Description = Description;
         });
+        var appointmentService = _appointmentServiceFactory.Create(appointmentService =>
+        {
+            appointmentService.AppointmentId = id;
+            appointmentService.ServiceId = Service.Id;
+        });
         _dbContext.AppointmentRepository.Add(appointment);
+        _dbContext.AppointmentServiceRepository.Add(appointmentService);
         _logger.Log(this, $"Scheduled {appointment.Title} on {appointment.Date:f}");
         BuilderServices.Resolve<IAddAppointmentsView>().Hide();
         _dialogFactory
