@@ -55,43 +55,37 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     [RelayCommand]
     private async void GetView(NavItem? navItem)
     {
-        if (_applicationService.NavItems?.Count > 0 && navItem is { Selected: true })
+        if (_applicationService.NavItems?.Count == 0 || navItem is { Selected: false })
+            return;
+        await DispatchHelper.UiInvokeAsync(() =>
         {
-            await Task.Run(async () =>
-            {
-                await DispatchHelper.UiInvokeAsync(() =>
-                {
-                    View = BuilderServices.Resolve(navItem.Page) as IPage;
-                    _applicationService.NavItems.First(item => item == navItem).Selected = true;
-                });
-            });
-        }
+            View = BuilderServices.Resolve(navItem.Page) as IPage;
+            _applicationService.NavItems.First(item => item == navItem).Selected = true;
+        });
     }
 
     [RelayCommand]
     private async void OpenSettings()
     {
-        await Task.Run(async () =>
-        {
-            await DispatchHelper.UiInvokeAsync(
-                () => View = BuilderServices.Resolve<ISettingsView>()
-            );
-        });
+        await DispatchHelper.UiInvokeAsync(() => View = BuilderServices.Resolve<ISettingsView>());
     }
 
     [RelayCommand]
-    private void Logout()
+    private async void Logout()
     {
-        if (
-            DialogFactory
-                .Create(dialog =>
-                {
-                    dialog.MessageBoxText = "Are you sure?";
-                    dialog.Caption = "Do you want to log out? You can log back in anytime.";
-                })
-                .ShowDialog() == true
-        )
+        await DispatchHelper.UiInvokeAsync(() =>
         {
+            if (
+                DialogFactory
+                    .Create(dialog =>
+                    {
+                        dialog.MessageBoxText = "Are you sure?";
+                        dialog.Caption = "Do you want to log out? You can log back in anytime.";
+                    })
+                    .ShowDialog() == false
+            )
+                return;
+
             // Write changes to database
             _dbContext.SaveChanges();
 
@@ -99,6 +93,6 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
             BuilderServices.Resolve<ILoginView>().ClearFields("Username", "Password");
             BuilderServices.Resolve<ILoginView>().Show();
             BuilderServices.Resolve<IMainView>().Hide();
-        }
+        });
     }
 }
