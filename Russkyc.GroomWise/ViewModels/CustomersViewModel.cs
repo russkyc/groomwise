@@ -12,6 +12,9 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
     private readonly CustomerCardViewModelFactory _customerCardViewModelFactory;
 
     [ObservableProperty]
+    private CustomerCardViewModel _customerInfo;
+
+    [ObservableProperty]
     private SynchronizedObservableCollection<CustomerCardViewModel> _customers;
 
     public CustomersViewModel(
@@ -26,6 +29,12 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
 
         Customers = new SynchronizedObservableCollection<CustomerCardViewModel>();
         GetCustomers();
+    }
+
+    [RelayCommand]
+    void GetCustomerInfo(CustomerCardViewModel customer)
+    {
+        CustomerInfo = customer;
     }
 
     void GetCustomers()
