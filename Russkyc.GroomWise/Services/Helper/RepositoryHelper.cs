@@ -24,4 +24,16 @@ public static class RepositoryHelper
     {
         return repository.FindAll(filter).Count();
     }
+
+    public static void Clear<T>(this Repository<T> repository)
+        where T : class, IEquatable<T>, IEntity, new()
+    {
+        repository.RemoveAll(_ => true);
+    }
+
+    public static void Migrate<T>(this Repository<T> repository, IEnumerable<T> migration)
+        where T : class, IEquatable<T>, IEntity, new()
+    {
+        repository.AddRange(migration);
+    }
 }
