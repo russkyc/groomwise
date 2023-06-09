@@ -76,12 +76,11 @@
                 </Grid.ColumnDefinitions>
                 <russkyc:ModernComboBox Grid.Column="0"
                                         CornerRadius="5"
-                                        DisplayMemberPath="Key"
+                                        DisplayMemberPath="Time"
                                         FontSize="14"
                                         FontWeight="Medium"
                                         ItemsSource="{Binding Times, UpdateSourceTrigger=PropertyChanged}"
-                                        SelectedValue="{Binding Time, UpdateSourceTrigger=PropertyChanged}"
-                                        SelectedValuePath="Value">
+                                        SelectedValue="{Binding Time, UpdateSourceTrigger=PropertyChanged}">
                     <russkyc:ModernComboBox.Resources>
                         <Style TargetType="Popup">
                             <Setter Property="MaxHeight" Value="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernComboBox}}" />
