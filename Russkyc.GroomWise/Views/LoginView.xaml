@@ -1075,9 +1075,8 @@
                     VerticalAlignment="Bottom"
                     Orientation="Horizontal">
             <TextBlock Foreground="{DynamicResource bg-600}" Text="Version " />
-            <TextBlock Foreground="{DynamicResource bg-600}" Text="{Binding ApplicationService.AppVersion}" />
-            <TextBlock Foreground="{DynamicResource bg-600}" Text=" © 2023, " />
-            <TextBlock Foreground="{DynamicResource bg-600}" Text="{Binding ApplicationService.AppAuthor}" />
+            <TextBlock Foreground="{DynamicResource bg-600}" Text="{Binding AppVersion}" />
+            <TextBlock Foreground="{DynamicResource bg-600}" Text=" © 2023 Russell Camo, Neil Ivan Nabol" />
         </StackPanel>
         <Grid Grid.Column="1">
             <StackPanel Margin="12,18" VerticalAlignment="Center">

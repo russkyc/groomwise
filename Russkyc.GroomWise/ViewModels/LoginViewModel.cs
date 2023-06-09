@@ -8,14 +8,15 @@ namespace GroomWise.ViewModels;
 public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 {
     private readonly ILogger _logger;
+    private readonly IUnitOfWork _dbContext;
+    private readonly IConfigProvider _configProvider;
     private readonly IEncryptionService _encryptionService;
+    private readonly IApplicationService _applicationService;
     private readonly ISessionManagerService _sessionManagerService;
 
-    private readonly UnitOfWork _dbContext;
     private readonly SessionFactory _sessionFactory;
 
-    [ObservableProperty]
-    private IApplicationService _applicationService;
+    public string AppVersion => _configProvider.Version;
 
     [ObservableProperty]
     private SynchronizedObservableCollection<Notification> _notifications;
@@ -33,18 +34,20 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 
     public LoginViewModel(
         ILogger logger,
+        IUnitOfWork dbContext,
         ISessionManagerService sessionManagerService,
         IApplicationService applicationService,
         IEncryptionService encryptionService,
-        SessionFactory sessionFactory,
-        UnitOfWork dbContext
+        IConfigProvider configProvider,
+        SessionFactory sessionFactory
     )
     {
         _logger = logger;
         _sessionManagerService = sessionManagerService;
-        ApplicationService = applicationService;
+        _applicationService = applicationService;
         _encryptionService = encryptionService;
         _sessionFactory = sessionFactory;
+        _configProvider = configProvider;
         _dbContext = dbContext;
 
         Notifications = new SynchronizedObservableCollection<Notification>();
@@ -134,7 +137,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
         });
 
         _sessionManagerService.StartSession(session);
-        ApplicationService.BuildNavItems();
+        _applicationService.BuildNavItems();
 
         Task.Run(async () =>
         {
