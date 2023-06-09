@@ -59,15 +59,9 @@
         <None Remove="Views\Resources\Icons\groomwise-multi.ico" />
         <Resource Include="Views\Resources\Icons\groomwise-multi.ico" />
     </ItemGroup>
-    
-    <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <None Update="appconfig-indev.ini">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-    <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ItemGroup>
         <None Update="appconfig.ini">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 

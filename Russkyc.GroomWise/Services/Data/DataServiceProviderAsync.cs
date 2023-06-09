@@ -11,7 +11,6 @@ public class DataServiceProviderAsync : IDatabaseServiceAsync
 
     public DataServiceProviderAsync(IConfigProvider configProvider)
     {
-#if (DEBUG)
         _db = new FreeSqlBuilder()
             .UseConnectionString(
                 FreeSql.DataType.Sqlite,
@@ -20,22 +19,6 @@ public class DataServiceProviderAsync : IDatabaseServiceAsync
                     DbProvider.Sqlite
                 )
             )
-#else
-        _db = new FreeSqlBuilder()
-            .UseConnectionString(
-                FreeSql.DataType.MySql,
-                new ConnectionSourceProvider().Build(
-                    new ConnectionSource
-                    {
-                        Path = configProvider.Path,
-                        Database = configProvider.Database,
-                        Username = configProvider.Username,
-                        Password = configProvider.Password
-                    },
-                    DbProvider.MySql
-                )
-            )
-# endif
             .UseAutoSyncStructure(true)
             .UseLazyLoading(true)
             .Build();
