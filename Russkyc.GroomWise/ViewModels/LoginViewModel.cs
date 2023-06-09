@@ -139,15 +139,9 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
         _sessionManagerService.StartSession(session);
         _applicationService.BuildNavItems();
 
-        Task.Run(async () =>
-        {
-            await DispatchHelper.UiInvokeAsync(() =>
-            {
-                RemoveNotification();
-                BuilderServices.Resolve<IMainView>().Show();
-                BuilderServices.Resolve<ILoginView>().Hide();
-            });
-        });
+        RemoveNotification();
+        BuilderServices.Resolve<IMainView>().Show();
+        BuilderServices.Resolve<ILoginView>().Hide();
     }
 
     [RelayCommand]
