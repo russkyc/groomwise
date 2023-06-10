@@ -24,12 +24,40 @@ public class SynchronizeCollectionCommand<T, TCollection> : Interfaces.ICommand
     {
         if (CanExecute)
         {
-            _target.RemoveRange(_target.Except(_source));
-            _target.AddRange(
-                _source.Where(
-                    sourceItem => !(_target.Any(targetItem => targetItem.Id == sourceItem.Id))
-                )
-            );
+            // remove items from _target that are not in _source
+            var itemsToRemove = _target
+                .Where(targetItem => !_source.Any(sourceItem => sourceItem.Id == targetItem.Id))
+                .ToList();
+            foreach (var itemToRemove in itemsToRemove)
+            {
+                _target.Remove(itemToRemove);
+            }
+
+            // update items in _target with corresponding items from _source
+            foreach (var sourceItem in _source)
+            {
+                var targetItem = _target.FirstOrDefault(t => t.Id == sourceItem.Id);
+                if (targetItem != null)
+                {
+                    // update existing item
+                    _target.Remove(targetItem);
+                    _target.Add(sourceItem);
+                }
+                else
+                {
+                    // add new item
+                    _target.Add(sourceItem);
+                }
+            }
+
+            // add new items from _source that don't exist in _target
+            var itemsToAdd = _source
+                .Where(sourceItem => !_target.Any(targetItem => targetItem.Id == sourceItem.Id))
+                .ToList();
+            foreach (var itemToAdd in itemsToAdd)
+            {
+                _target.Add(itemToAdd);
+            }
         }
     }
 }

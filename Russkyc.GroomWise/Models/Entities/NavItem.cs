@@ -14,5 +14,5 @@ public record NavItem : IEntity
     public Type? Page { get; set; }
     public bool Selected { get; set; }
     public object? Icon { get; set; }
-    public Role[]? Roles { get; set; }
+    public int[]? Roles { get; set; }
 }

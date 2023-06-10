@@ -8,12 +8,7 @@ namespace GroomWise.Services.App;
 public class ConfigProvider : IConfigProvider
 {
     // Ini Config File
-
-#if (DEBUG)
-    private IniFile _settings => new IniFile("appconfig-indev.ini");
-#else
     private IniFile _settings => new IniFile("appconfig.ini");
-#endif
 
     // App Settings
     public bool DarkMode

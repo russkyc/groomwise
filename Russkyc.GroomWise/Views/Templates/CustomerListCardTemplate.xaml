@@ -1,12 +1,13 @@
 ﻿<UserControl x:Class="GroomWise.Views.Templates.CustomerListCardTemplate"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:customers="clr-namespace:GroomWise.ViewModels.Customers"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pages="clr-namespace:GroomWise.Views.Pages"
              xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-             xmlns:viewModels="clr-namespace:GroomWise.ViewModels"
              Height="78"
-             d:DataContext="{d:DesignInstance viewModels:CustomerCardViewModel,
+             d:DataContext="{d:DesignInstance customers:CustomerCardViewModel,
                                               IsDesignTimeCreatable=True}"
              d:DesignWidth="700"
              Background="Transparent"
@@ -15,6 +16,8 @@
         <russkyc:ModernButton x:Name="CardButton"
                               Padding="5"
                               HorizontalContentAlignment="Stretch"
+                              Command="{Binding DataContext.GetCustomerInfoCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
+                              CommandParameter="{Binding}"
                               CornerRadius="10"
                               DefaultBackground="{DynamicResource bg-100}"
                               DefaultForeground="{DynamicResource fg-000}"
@@ -56,7 +59,8 @@
                                VerticalAlignment="Center"
                                FontSize="14"
                                FontWeight="Medium"
-                               Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
+                               Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
+                               TextTrimming="CharacterEllipsis" />
                 </Grid>
             </StackPanel>
             <StackPanel Grid.Column="3"
@@ -84,7 +88,7 @@
                            HorizontalAlignment="Center"
                            Foreground="{DynamicResource fg-600}"
                            Text="Pets" />
-                <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding Pets, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding Pets.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel Height="30"

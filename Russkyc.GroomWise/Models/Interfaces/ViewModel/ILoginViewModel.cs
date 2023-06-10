@@ -7,9 +7,6 @@ namespace GroomWise.Models.Interfaces.ViewModel;
 
 public interface ILoginViewModel
 {
-    /// <inheritdoc cref="LoginViewModel._applicationService"/>
-    IApplicationService ApplicationService { get; set; }
-
     /// <inheritdoc cref="LoginViewModel._notifications"/>
     SynchronizedObservableCollection<Notification> Notifications { get; set; }
 

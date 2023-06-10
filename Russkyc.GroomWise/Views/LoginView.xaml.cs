@@ -7,9 +7,12 @@ namespace GroomWise.Views;
 
 public partial class LoginView : ILoginView
 {
-    public LoginView(ILoginViewModel viewModel)
+    private readonly ILogger _logger;
+
+    public LoginView(ILoginViewModel viewModel, ILogger logger)
     {
         InitializeComponent();
+        _logger = logger;
         DataContext = viewModel;
         ClearFields();
     }
@@ -32,7 +35,7 @@ public partial class LoginView : ILoginView
 
     protected override void OnClosed(EventArgs e)
     {
-        BuilderServices.Resolve<ILogger>().Log(this, "Exiting application environment");
+        _logger.Log(this, "Exiting application environment");
         Application.Current.Shutdown();
         Environment.Exit(0);
         base.OnClosed(e);
@@ -43,5 +46,4 @@ public partial class LoginView : ILoginView
         if (e.Key == Key.Enter)
             PasswordBox.Focus();
     }
-
 }

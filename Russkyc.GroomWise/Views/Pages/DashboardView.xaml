@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:controls="clr-namespace:GroomWise.Views.Controls"
-             xmlns:converters="clr-namespace:GroomWise.Services.Converter"
+             xmlns:converters="clr-namespace:GroomWise.Models.Converter"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dashboard="clr-namespace:GroomWise.ViewModels.Dashboard"
              xmlns:icon="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
              xmlns:templates="clr-namespace:GroomWise.Views.Templates"
-             xmlns:viewModels="clr-namespace:GroomWise.ViewModels"
              HorizontalAlignment="Stretch"
-             d:DataContext="{d:DesignInstance viewModels:DashboardViewModel,
+             d:DataContext="{d:DesignInstance dashboard:DashboardViewModel,
                                               IsDesignTimeCreatable=True}"
              d:DesignHeight="720"
              d:DesignWidth="1280"
@@ -529,7 +529,7 @@
                               VerticalAlignment="Stretch"
                               HorizontalContentAlignment="Stretch"
                               VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Appointments, UpdateSourceTrigger=PropertyChanged}">
+                    <ItemsControl ItemsSource="{Binding Appointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />

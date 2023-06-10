@@ -10,18 +10,21 @@
         <RootNamespace>GroomWise</RootNamespace>
         <EnableWindowsTargeting>true</EnableWindowsTargeting>
         <PreserveCompilationContext>false</PreserveCompilationContext>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DebugType>full</DebugType>
         <Prefer32bit>false</Prefer32bit>
         <DebugSymbols>true</DebugSymbols>
+        <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <Prefer32bit>false</Prefer32bit>
         <DebugType>none</DebugType>
         <Optimize>false</Optimize>
+        <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>
 
     <ItemGroup>
@@ -32,7 +35,6 @@
         <PackageReference Include="CaseExtensions" Version="1.1.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
         <PackageReference Include="CredentialManagement" Version="1.0.2" />
-        <PackageReference Include="Divis.DarkHelpers.WPF" Version="1.0.0" />
         <PackageReference Include="FreeSql" Version="3.2.697-preview20230530" />
         <PackageReference Include="FreeSql.Provider.MySql" Version="3.2.697-preview20230530" />
         <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.2.697-preview20230530" />
@@ -45,9 +47,13 @@
         <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.7" />
         <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.9.18" />
         <PackageReference Include="Russkyc.Services.HotKeyListener" Version="0.11.1" />
+        <PackageReference Include="Swordfish.NET.CollectionsV3" Version="3.3.12" />
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Services\Converter\" />
+        <Folder Include="Services\Helper\" />
+        <Folder Include="ViewModels\Services\" />
         <Folder Include="Views\Resources\Themes\BaseThemes\" />
         <Folder Include="Views\Resources\Themes\ColorThemes\" />
     </ItemGroup>
@@ -59,15 +65,9 @@
         <None Remove="Views\Resources\Icons\groomwise-multi.ico" />
         <Resource Include="Views\Resources\Icons\groomwise-multi.ico" />
     </ItemGroup>
-    
-    <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <None Update="appconfig-indev.ini">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-    <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ItemGroup>
         <None Update="appconfig.ini">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 
