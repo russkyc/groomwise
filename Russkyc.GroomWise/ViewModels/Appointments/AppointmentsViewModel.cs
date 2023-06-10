@@ -36,24 +36,19 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     [RelayCommand]
     void GetAppointments()
     {
-        _schedulerService.RunPeriodically(
-            () =>
-            {
-                var command = new SynchronizeCollectionCommand<
-                    Appointment,
-                    SynchronizedObservableCollection<Appointment>
-                >(
-                    ref _appointments,
-                    _dbContext.AppointmentRepository
-                        .GetAll()
-                        .Where(appointment => appointment.Date.Value.Month >= DateTime.Now.Month)
-                        .ToList()
-                );
-                command.Execute();
-                _logger.Log(this, "Synchronized appointments collection");
-            },
-            TimeSpan.FromSeconds(2)
+        var command = new SynchronizeCollectionCommand<
+            Appointment,
+            SynchronizedObservableCollection<Appointment>
+        >(
+            ref _appointments,
+            _dbContext.AppointmentRepository
+                .GetAll()
+                .Where(appointment => appointment.Date.Value.Month >= DateTime.Now.Month)
+                .OrderBy(appointment => appointment.Date)
+                .ToList()
         );
+        command.Execute();
+        _logger.Log(this, "Synchronized appointments collection");
     }
 
     [RelayCommand]

@@ -51,28 +51,22 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
 
     private void GetNotifications()
     {
-        _schedulerService.RunPeriodically(
-            () =>
-            {
-                var command = new SynchronizeCollectionCommand<
-                    Appointment,
-                    SynchronizedObservableCollection<Appointment>
-                >(
-                    ref _appointments,
-                    _dbContext.AppointmentRepository
-                        .FindAll(
-                            appointment =>
-                                appointment.Date!.Value.Day == DateTime.Today.Day
-                                && appointment.Date!.Value.Month == DateTime.Today.Month
-                                && appointment.Date!.Value.Hour >= DateTime.Today.Hour
-                        )
-                        .OrderBy(appointment => appointment.Date!.Value.TimeOfDay)
-                        .ToList()
-                );
-                command.Execute();
-            },
-            TimeSpan.FromSeconds(2)
+        var command = new SynchronizeCollectionCommand<
+            Appointment,
+            SynchronizedObservableCollection<Appointment>
+        >(
+            ref _appointments,
+            _dbContext.AppointmentRepository
+                .FindAll(
+                    appointment =>
+                        appointment.Date!.Value.Day == DateTime.Today.Day
+                        && appointment.Date!.Value.Month == DateTime.Today.Month
+                        && appointment.Date!.Value.Hour >= DateTime.Today.Hour
+                )
+                .OrderBy(appointment => appointment.Date!.Value.TimeOfDay)
+                .ToList()
         );
+        command.Execute();
     }
 
     private void GetWelcomeMessage()

@@ -15,13 +15,6 @@
              d:DesignWidth="1280"
              Style="{StaticResource FadeInFromBottomAnimation}"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <CollectionViewSource x:Key="filteredAppointments" Source="{Binding Appointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
-            <CollectionViewSource.SortDescriptions>
-                <componentModel:SortDescription PropertyName="Date" />
-            </CollectionViewSource.SortDescriptions>
-        </CollectionViewSource>
-    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300" />
@@ -43,7 +36,7 @@
                               VerticalAlignment="Stretch"
                               HorizontalContentAlignment="Stretch"
                               VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Source={StaticResource filteredAppointments}}">
+                    <ItemsControl ItemsSource="{Binding Appointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
