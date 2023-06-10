@@ -1,6 +1,7 @@
 ﻿<russkyc:ModernWindow x:Class="GroomWise.Views.Dialogs.AddAppointmentsView"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:appointments="clr-namespace:GroomWise.ViewModels.Appointments"
                       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
                       xmlns:controls="clr-namespace:GroomWise.Views.Controls"
                       xmlns:converter="clr-namespace:GroomWise.Services.Converter"
@@ -12,7 +13,7 @@
                       xmlns:vm="clr-namespace:GroomWise.ViewModels"
                       Title="AddAppointmentsView"
                       Width="600"
-                      d:DataContext="{d:DesignInstance vm:AddAppointmentsViewModel,
+                      d:DataContext="{d:DesignInstance appointments:AddAppointmentsViewModel,
                                                        IsDesignTimeCreatable=True}"
                       NoDecorations="True"
                       ResizeMode="NoResize"

@@ -5,6 +5,7 @@
              xmlns:controls="clr-namespace:GroomWise.Views.Controls"
              xmlns:converters="clr-namespace:GroomWise.Services.Converter"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:employees="clr-namespace:GroomWise.ViewModels.Employees"
              xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
              xmlns:local="clr-namespace:GroomWise.Views.Pages"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -12,7 +13,7 @@
              xmlns:templates="clr-namespace:GroomWise.Views.Templates"
              xmlns:viewModels="clr-namespace:GroomWise.ViewModels"
              HorizontalAlignment="Stretch"
-             d:DataContext="{d:DesignInstance viewModels:EmployeesViewModel,
+             d:DataContext="{d:DesignInstance employees:EmployeesViewModel,
                                               IsDesignTimeCreatable=True}"
              d:DesignHeight="720"
              d:DesignWidth="1280"

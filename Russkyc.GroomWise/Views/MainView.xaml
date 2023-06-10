@@ -1,6 +1,7 @@
 ﻿<russkyc:ModernWindow x:Class="GroomWise.Views.MainView"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:app="clr-namespace:GroomWise.ViewModels.App"
                       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
@@ -13,7 +14,7 @@
                       Height="720"
                       MinWidth="950"
                       MinHeight="650"
-                      d:DataContext="{d:DesignInstance viewModels:MainViewModel,
+                      d:DataContext="{d:DesignInstance app:MainViewModel,
                                                        IsDesignTimeCreatable=True}"
                       d:DesignHeight="864"
                       d:DesignWidth="1546"
