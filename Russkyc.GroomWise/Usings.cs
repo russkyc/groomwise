@@ -28,6 +28,7 @@ global using CaseExtensions;
 
 // Swordfish Concurrent Collections
 global using Swordfish.NET.Collections;
+global using Swordfish.NET.Collections.Auxiliary;
 
 // NetCore.Encrypt
 global using NETCore.Encrypt;
@@ -66,7 +67,6 @@ global using FreeSql.DataAnnotations;
 // GroomWise
 global using GroomWise.Views;
 global using GroomWise.Views.Pages;
-global using GroomWise.ViewModels;
 global using GroomWise.ViewModels.App;
 global using GroomWise.ViewModels.Appointments;
 global using GroomWise.ViewModels.Customers;
@@ -79,7 +79,6 @@ global using GroomWise.ViewModels.Services;
 global using GroomWise.Models.Data;
 global using GroomWise.Models.Enums;
 global using GroomWise.Models.Helper;
-global using GroomWise.Models.Converter;
 global using GroomWise.Models.Commands;
 global using GroomWise.Models.Entities;
 global using GroomWise.Models.Interfaces;

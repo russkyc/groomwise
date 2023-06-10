@@ -17,7 +17,7 @@ public class SynchronizeCollectionCommand<T, TCollection> : Interfaces.ICommand
     {
         _target = target;
         _source = source;
-        CanExecute = true;
+        CanExecute = !source.IsEmpty();
     }
 
     public void Execute()
