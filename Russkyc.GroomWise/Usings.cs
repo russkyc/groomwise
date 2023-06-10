@@ -26,9 +26,8 @@ global using Ini.Net;
 // Case Extensions
 global using CaseExtensions;
 
-// DarkHelpers
-global using DarkHelpers.Collections;
-global using DarkHelpers.WPF;
+// Swordfish Concurrent Collections
+global using Swordfish.NET.Collections;
 
 // NetCore.Encrypt
 global using NETCore.Encrypt;

@@ -16,10 +16,10 @@ public partial class CustomerCardViewModel : ObservableObject, IEntity
     private string? _address;
 
     [ObservableProperty]
-    private ObservableCollection<Pet> _pets;
+    private SynchronizedObservableCollection<Pet> _pets;
 
     public CustomerCardViewModel()
     {
-        Pets = new ObservableCollection<Pet>();
+        Pets = new SynchronizedObservableCollection<Pet>();
     }
 }

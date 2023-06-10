@@ -3,12 +3,10 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using DarkHelpers;
-
 namespace GroomWise.Models.Abstractions;
 
 /// <summary>
 /// A thread-safe dynamic data collection based on <see cref="ObservableCollection{T}"/>
 /// </summary>
 /// <typeparam name="T">The type of elements in the collection</typeparam>
-public class SynchronizedObservableCollection<T> : DarkObservableCollection<T> { }
+public class SynchronizedObservableCollection<T> : ConcurrentObservableCollection<T> { }

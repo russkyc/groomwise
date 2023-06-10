@@ -35,7 +35,6 @@
         <PackageReference Include="CaseExtensions" Version="1.1.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
         <PackageReference Include="CredentialManagement" Version="1.0.2" />
-        <PackageReference Include="Divis.DarkHelpers.WPF" Version="1.0.0" />
         <PackageReference Include="FreeSql" Version="3.2.697-preview20230530" />
         <PackageReference Include="FreeSql.Provider.MySql" Version="3.2.697-preview20230530" />
         <PackageReference Include="FreeSql.Provider.Sqlite" Version="3.2.697-preview20230530" />
@@ -48,6 +47,7 @@
         <PackageReference Include="Russkyc.DependencyInjection" Version="0.9.7" />
         <PackageReference Include="Russkyc.ModernControls.WPF" Version="1.9.18" />
         <PackageReference Include="Russkyc.Services.HotKeyListener" Version="0.11.1" />
+        <PackageReference Include="Swordfish.NET.CollectionsV3" Version="3.3.12" />
     </ItemGroup>
 
     <ItemGroup>

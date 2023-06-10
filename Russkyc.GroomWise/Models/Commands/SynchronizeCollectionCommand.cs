@@ -24,11 +24,13 @@ public class SynchronizeCollectionCommand<T, TCollection> : Interfaces.ICommand
     {
         if (CanExecute)
         {
-            _target.RemoveRange(_target.Except(_source));
+            _target.RemoveRange(_target.Except(_source).ToList());
             _target.AddRange(
-                _source.Where(
-                    sourceItem => !(_target.Any(targetItem => targetItem.Id == sourceItem.Id))
-                )
+                _source
+                    .Where(
+                        sourceItem => !(_target.Any(targetItem => targetItem.Id == sourceItem.Id))
+                    )
+                    .ToList()
             );
         }
     }

@@ -69,7 +69,7 @@
                           VerticalAlignment="Stretch"
                           HorizontalContentAlignment="Stretch"
                           VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Customers, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl ItemsSource="{Binding Customers.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />

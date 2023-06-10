@@ -56,7 +56,7 @@
                           VerticalAlignment="Stretch"
                           HorizontalContentAlignment="Stretch"
                           VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Employees, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl ItemsSource="{Binding Employees.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
@@ -103,7 +103,7 @@
                               VerticalAlignment="Stretch"
                               HorizontalContentAlignment="Stretch"
                               VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Employees, UpdateSourceTrigger=PropertyChanged}">
+                    <ItemsControl ItemsSource="{Binding Employees.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />

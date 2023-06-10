@@ -16,7 +16,7 @@
              Style="{StaticResource FadeInFromBottomAnimation}"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="filteredAppointments" Source="{Binding Appointments, UpdateSourceTrigger=PropertyChanged}">
+        <CollectionViewSource x:Key="filteredAppointments" Source="{Binding Appointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
             <CollectionViewSource.SortDescriptions>
                 <componentModel:SortDescription PropertyName="Date" />
             </CollectionViewSource.SortDescriptions>

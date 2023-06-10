@@ -88,7 +88,7 @@
                            HorizontalAlignment="Center"
                            Foreground="{DynamicResource fg-600}"
                            Text="Pets" />
-                <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding Pets, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding Pets.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel Height="30"
