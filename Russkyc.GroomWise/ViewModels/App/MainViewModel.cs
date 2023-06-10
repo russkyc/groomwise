@@ -12,7 +12,7 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     private readonly IApplicationService _applicationService;
 
     [ObservableProperty]
-    private DialogFactory _dialogFactory;
+    private IFactory<DialogView> _dialogFactory;
 
     [ObservableProperty]
     private ISessionManagerService _sessionManagerService;
@@ -27,7 +27,7 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     private IPage? _view;
 
     public MainViewModel(
-        DialogFactory dialogFactory,
+        IFactory<DialogView> dialogFactory,
         IUnitOfWork dbContext,
         IConfigProvider configProvider,
         IApplicationService applicationService,

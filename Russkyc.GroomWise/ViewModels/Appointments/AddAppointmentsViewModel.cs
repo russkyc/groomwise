@@ -8,9 +8,9 @@ namespace GroomWise.ViewModels.Appointments;
 public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsViewModel
 {
     private readonly ILogger _logger;
-    private readonly DialogFactory _dialogFactory;
-    private readonly AppointmentFactory _appointmentFactory;
-    private readonly AppointmentServiceFactory _appointmentServiceFactory;
+    private readonly IFactory<DialogView> _dialogFactory;
+    private readonly IFactory<Appointment> _appointmentFactory;
+    private readonly IFactory<AppointmentService> _appointmentServiceFactory;
 
     private readonly IUnitOfWork _dbContext;
 
@@ -50,9 +50,9 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     public AddAppointmentsViewModel(
         ILogger logger,
         IUnitOfWork dbContext,
-        DialogFactory dialogFactory,
-        AppointmentFactory appointmentFactory,
-        AppointmentServiceFactory appointmentServiceFactory
+        IFactory<DialogView> dialogFactory,
+        IFactory<Appointment> appointmentFactory,
+        IFactory<AppointmentService> appointmentServiceFactory
     )
     {
         _logger = logger;

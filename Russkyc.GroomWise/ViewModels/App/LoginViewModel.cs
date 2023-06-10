@@ -14,7 +14,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
     private readonly IApplicationService _applicationService;
     private readonly ISessionManagerService _sessionManagerService;
 
-    private readonly SessionFactory _sessionFactory;
+    private readonly IFactory<Session> _sessionFactory;
 
     public string AppVersion => _configProvider.Version;
 
@@ -39,7 +39,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
         IApplicationService applicationService,
         IEncryptionService encryptionService,
         IConfigProvider configProvider,
-        SessionFactory sessionFactory
+        IFactory<Session> sessionFactory
     )
     {
         _logger = logger;

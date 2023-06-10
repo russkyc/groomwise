@@ -9,7 +9,7 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
 {
     private readonly ILogger _logger;
     private readonly IUnitOfWork _dbContext;
-    private readonly CustomerCardViewModelFactory _customerCardViewModelFactory;
+    private readonly IFactory<CustomerCardViewModel> _customerCardViewModelFactory;
 
     [ObservableProperty]
     private CustomerCardViewModel _customerInfo;
@@ -20,7 +20,7 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
     public CustomersViewModel(
         ILogger logger,
         IUnitOfWork dbContext,
-        CustomerCardViewModelFactory customerCardViewModelFactory
+        IFactory<CustomerCardViewModel> customerCardViewModelFactory
     )
     {
         _logger = logger;

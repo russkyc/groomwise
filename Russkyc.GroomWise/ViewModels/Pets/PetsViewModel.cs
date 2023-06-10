@@ -9,12 +9,12 @@ public partial class PetsViewModel : ViewModelBase, IPetsViewModel
 {
     private readonly ILogger _logger;
     private readonly IUnitOfWork _dbContext;
-    private readonly PetFactory _petFactory;
+    private readonly IFactory<Pet> _petFactory;
 
     [ObservableProperty]
     private SynchronizedObservableCollection<Pet> _petsCollection;
 
-    public PetsViewModel(ILogger logger, PetFactory petFactory, IUnitOfWork dbContext)
+    public PetsViewModel(ILogger logger, IFactory<Pet> petFactory, IUnitOfWork dbContext)
     {
         _logger = logger;
         _petFactory = petFactory;

@@ -10,7 +10,7 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
     private readonly IUnitOfWork _dbContext;
     private readonly ISchedulerService _schedulerService;
     private readonly IEncryptionService _encryptionService;
-    private readonly AppointmentFactory _appointmentFactory;
+    private readonly IFactory<Appointment> _appointmentFactory;
 
     [ObservableProperty]
     private ISessionManagerService _sessionManagerService;
@@ -25,7 +25,7 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
     private DateTime _date;
 
     public DashboardViewModel(
-        AppointmentFactory appointmentFactory,
+        IFactory<Appointment> appointmentFactory,
         ISessionManagerService sessionManagerService,
         IEncryptionService encryptionService,
         ISchedulerService schedulerService,
