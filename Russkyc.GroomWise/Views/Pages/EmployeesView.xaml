@@ -17,7 +17,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="400" />
+            <ColumnDefinition Width="320" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Margin="16,20,16,16">
             <Grid.RowDefinitions>
@@ -75,21 +75,35 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
-        <Grid Grid.Column="1" Margin="0,20,0,16">
+        <Grid Grid.Column="1" Margin="0,20,16,16">
             <Grid Margin="0,0,0,0" VerticalAlignment="Stretch">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0"
-                           Margin="0,0,0,12"
-                           FontSize="16"
-                           Text="Employee Roles" />
+                <Grid Grid.Row="0" Margin="0,0,0,12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               Text="Roles" />
+                    <russkyc:ModernButton Grid.Column="2"
+                                          HorizontalAlignment="Right"
+                                          Content="Add Employee"
+                                          CornerRadius="5"
+                                          FontWeight="Medium"
+                                          IconSize="18"
+                                          LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
+                </Grid>
                 <ScrollViewer Grid.Row="1"
                               VerticalAlignment="Stretch"
                               HorizontalContentAlignment="Stretch"
                               VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Appointments, UpdateSourceTrigger=PropertyChanged}">
+                    <ItemsControl ItemsSource="{Binding Employees, UpdateSourceTrigger=PropertyChanged}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
