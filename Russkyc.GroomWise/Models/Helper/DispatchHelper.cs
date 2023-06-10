@@ -5,7 +5,7 @@
 
 using System.Windows.Threading;
 
-namespace GroomWise.Services.Helper;
+namespace GroomWise.Models.Helper;
 
 public static class DispatchHelper
 {

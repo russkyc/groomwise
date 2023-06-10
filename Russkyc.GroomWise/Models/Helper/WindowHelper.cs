@@ -3,7 +3,7 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Services.Helper;
+namespace GroomWise.Models.Helper;
 
 public static class WindowHelper
 {

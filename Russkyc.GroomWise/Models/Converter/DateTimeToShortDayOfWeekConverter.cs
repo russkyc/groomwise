@@ -3,19 +3,18 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Services.Converter;
+namespace GroomWise.Models.Converter;
 
 [ValueConversion(typeof(DateTime), typeof(string))]
-public class DateTimeToShortMonthConverter : IValueConverter
+public class DateTimeToShortDayOfWeekConverter : IValueConverter
 {
-
-    public static DateTimeToShortMonthConverter Instance = new DateTimeToShortMonthConverter();
+    public static DateTimeToShortDayOfWeekConverter Instance = new DateTimeToShortDayOfWeekConverter();
     
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         var date = value is DateTime
             ? (DateTime)value : default;
-        return date.ToString("MMM");
+        return date.ToString("ddd");
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

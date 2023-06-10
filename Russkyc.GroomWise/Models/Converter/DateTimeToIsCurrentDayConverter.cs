@@ -1,22 +1,19 @@
 ﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
-// 
+//
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Services.Converter;
+namespace GroomWise.Models.Converter;
 
-[ValueConversion(typeof(DateTime),typeof(string))]
-public class DateTimeToDayOfMonthConverter : IValueConverter
+[ValueConversion(typeof(DateTime), typeof(bool))]
+public class DateTimeToIsCurrentDayConverter : IValueConverter
 {
+    public static DateTimeToIsCurrentDayConverter Instance = new DateTimeToIsCurrentDayConverter();
 
-    public static DateTimeToDayOfMonthConverter Instance = new DateTimeToDayOfMonthConverter();
-    
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var date = value is DateTime
-            ? (DateTime)value : default;
-        return date.Day
-            .ToString();
+        var date = value as DateTime? ?? default;
+        return date.Day == DateTime.Today.Day;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

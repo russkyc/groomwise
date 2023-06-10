@@ -1,23 +1,21 @@
 ﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
-//
+// 
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Services.Converter;
+namespace GroomWise.Models.Converter;
 
-[ValueConversion(typeof(DateTime), typeof(string))]
-public class DateTimeToAmPmConverter : IValueConverter
+[ValueConversion(typeof(DateTime),typeof(string))]
+public class DateTimeToTimeConverter : IValueConverter
 {
-    public static DateTimeToAmPmConverter Instance => new DateTimeToAmPmConverter();
 
+    public static DateTimeToTimeConverter Instance = new DateTimeToTimeConverter();
+    
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var date = value as DateTime? ?? default;
-        return date.Hour switch
-        {
-            <= 11 => "AM",
-            > 11 => "PM"
-        };
+        var date = value is DateTime
+            ? (DateTime)value : default;
+        return date.ToString("h:mm");;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

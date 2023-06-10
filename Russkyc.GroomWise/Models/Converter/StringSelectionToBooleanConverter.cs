@@ -1,20 +1,19 @@
 ﻿// Copyright (C) 2023 Russell Camo (Russkyc).- All Rights Reserved
-// 
+//
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Services.Converter;
+namespace GroomWise.Models.Converter;
 
-[ValueConversion(typeof(DateTime), typeof(string))]
-public class DateTimeToShortDayOfWeekConverter : IValueConverter
+[ValueConversion(typeof(string), typeof(bool))]
+public class StringSelectionToBooleanConverter : IValueConverter
 {
-    public static DateTimeToShortDayOfWeekConverter Instance = new DateTimeToShortDayOfWeekConverter();
-    
+    public static StringSelectionToBooleanConverter Instance =
+        new StringSelectionToBooleanConverter();
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var date = value is DateTime
-            ? (DateTime)value : default;
-        return date.ToString("ddd");
+        return (string)value == (string)parameter;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

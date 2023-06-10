@@ -4,7 +4,7 @@
                       xmlns:appointments="clr-namespace:GroomWise.ViewModels.Appointments"
                       xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
                       xmlns:controls="clr-namespace:GroomWise.Views.Controls"
-                      xmlns:converter="clr-namespace:GroomWise.Services.Converter"
+                      xmlns:converter="clr-namespace:GroomWise.Models.Converter"
                       xmlns:converters="clr-namespace:org.russkyc.moderncontrols.Converters;assembly=Russkyc.ModernControls.WPF"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
