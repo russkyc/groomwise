@@ -55,7 +55,7 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     void AddAppointment()
     {
         _addAppointmentsViewFactory
-            .Create(addAppointmentsView => addAppointmentsView.AsChild())
+            .Create()
             .Show();
     }
 }
