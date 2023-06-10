@@ -6,7 +6,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pages="clr-namespace:GroomWise.Views.Pages"
              xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-             xmlns:viewModels="clr-namespace:GroomWise.ViewModels"
              Height="78"
              d:DataContext="{d:DesignInstance customers:CustomerCardViewModel,
                                               IsDesignTimeCreatable=True}"

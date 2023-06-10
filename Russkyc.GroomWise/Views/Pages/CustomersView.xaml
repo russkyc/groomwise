@@ -7,7 +7,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
              xmlns:templates="clr-namespace:GroomWise.Views.Templates"
-             xmlns:viewModels="clr-namespace:GroomWise.ViewModels"
              HorizontalAlignment="Stretch"
              d:DataContext="{d:DesignInstance customers:CustomersViewModel,
                                               IsDesignTimeCreatable=True}"

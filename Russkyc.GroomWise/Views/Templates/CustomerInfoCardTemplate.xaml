@@ -5,9 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:GroomWise.Views.Templates"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:moderncontrols="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
              xmlns:pages="clr-namespace:GroomWise.Views.Pages"
-             xmlns:viewModels="clr-namespace:GroomWise.ViewModels"
              MinHeight="600"
              d:DataContext="{d:DesignInstance customers:CustomerCardViewModel,
                                               IsDesignTimeCreatable=True}"
