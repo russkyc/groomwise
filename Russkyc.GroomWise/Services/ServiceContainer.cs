@@ -23,6 +23,7 @@ public static class ServiceContainer
             .AddSingleton<IFactory<AppointmentService>, AppointmentServiceFactory>()
             .AddSingleton<IFactory<AddAppointmentsView>, AddAppointmentsViewFactory>()
             .AddSingleton<IFactory<CustomerCardViewModel>, CustomerCardViewModelFactory>()
+            .AddSingleton<IFactory<EmployeeCardViewModel>, EmployeeCardViewModelFactory>()
             .AddSingleton<IFactory<MaterialIcon>, MaterialIconFactory>()
             .AddSingleton<IFactory<Notification>, NotificationFactory>()
             .AddSingleton<IFactory<Appointment>, AppointmentFactory>()

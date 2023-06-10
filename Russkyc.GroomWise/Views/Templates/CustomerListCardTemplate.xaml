@@ -6,7 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pages="clr-namespace:GroomWise.Views.Pages"
              xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-             Height="78"
+             Height="70"
              d:DataContext="{d:DesignInstance customers:CustomerCardViewModel,
                                               IsDesignTimeCreatable=True}"
              d:DesignWidth="700"
@@ -34,8 +34,8 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Border Grid.Column="0"
-                    Width="50"
-                    Height="50"
+                    Width="40"
+                    Height="40"
                     VerticalAlignment="Center"
                     Background="{DynamicResource primary-default}"
                     CornerRadius="40" />
@@ -46,71 +46,44 @@
                        FontSize="14"
                        FontWeight="Medium"
                        Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-            <StackPanel Grid.Column="2"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                <TextBlock Margin="10,0,0,0"
-                           HorizontalAlignment="Center"
-                           Foreground="{DynamicResource fg-600}"
-                           Text="Address" />
-                <Grid Height="30">
-                    <TextBlock Margin="10,0,0,0"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               FontSize="14"
-                               FontWeight="Medium"
-                               Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
-                               TextTrimming="CharacterEllipsis" />
-                </Grid>
-            </StackPanel>
-            <StackPanel Grid.Column="3"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                <TextBlock Margin="10,0,0,0"
-                           HorizontalAlignment="Center"
-                           Foreground="{DynamicResource fg-600}"
-                           Text="Email" />
-                <Grid Height="30">
-                    <TextBlock Margin="10,0,0,0"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Center"
-                               FontSize="14"
-                               FontWeight="Medium"
-                               Text="Email Test"
-                               TextAlignment="Left" />
-                </Grid>
-            </StackPanel>
-            <StackPanel Grid.Column="4"
-                        Margin="12,0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                <TextBlock Margin="10,0,0,0"
-                           HorizontalAlignment="Center"
-                           Foreground="{DynamicResource fg-600}"
-                           Text="Pets" />
-                <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding Pets.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel Height="30"
-                                                    HorizontalAlignment="Center"
-                                                    Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Width="30"
-                                    Height="30"
-                                    Margin="0,0,-10,0"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Background="{DynamicResource primary-default}"
-                                    BorderBrush="{Binding Background, ElementName=CardButton}"
-                                    BorderThickness="3"
-                                    CornerRadius="40" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+            <TextBlock Grid.Column="2"
+                       Margin="12,0,0,0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
+                       TextTrimming="CharacterEllipsis" />
+            <TextBlock Grid.Column="3"
+                       Margin="12,0,0,0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Text="Email Test"
+                       TextAlignment="Left" />
+            <ItemsControl Grid.Column="4"
+                          Margin="12,0,12,0"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          ItemsSource="{Binding Pets.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Height="30"
+                                                HorizontalAlignment="Center"
+                                                Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Width="30"
+                                Height="30"
+                                Margin="0,0,-10,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Background="{DynamicResource primary-default}"
+                                BorderBrush="{Binding Background, ElementName=CardButton}"
+                                BorderThickness="3"
+                                CornerRadius="40" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </Grid>
     </Grid>
 </UserControl>

@@ -7,14 +7,12 @@ namespace GroomWise.Services.Data;
 
 public class UnitOfWork : IUnitOfWork
 {
-    public UnitOfWork(IDatabaseServiceAsync databaseService, IEncryptionService encryptionService)
+    private readonly IDatabaseServiceAsync _databaseService;
+
+    public UnitOfWork(IDatabaseServiceAsync databaseService)
     {
         _databaseService = databaseService;
-        _encryptionService = encryptionService;
     }
-
-    private readonly IDatabaseServiceAsync _databaseService;
-    private readonly IEncryptionService _encryptionService;
 
     private AccountRepository? _accountsRepository;
     public AccountRepository AccountsRepository => _accountsRepository ??= new AccountRepository(_databaseService);
@@ -53,7 +51,7 @@ public class UnitOfWork : IUnitOfWork
     public EmployeeAddressRepository EmployeeAddressRepository => _employeeAddressRepository ??= new EmployeeAddressRepository(_databaseService);
 
     private EmployeeRepository? _employeeRepository;
-    public EmployeeRepository EmployeeRepository => _employeeRepository ??= new EmployeeRepository(_databaseService, _encryptionService);
+    public EmployeeRepository EmployeeRepository => _employeeRepository ??= new EmployeeRepository(_databaseService);
 
     private EmployeeRoleRepository? _employeeRoleRepository;
     public EmployeeRoleRepository EmployeeRoleRepository => _employeeRoleRepository ??= new EmployeeRoleRepository(_databaseService);

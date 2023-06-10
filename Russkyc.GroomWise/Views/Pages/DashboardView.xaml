@@ -453,7 +453,6 @@
                                        Foreground="{DynamicResource inverted-lighten-3}"
                                        LineHeight="32"
                                        LineStackingStrategy="BlockLineHeight"
-                                       Style="{StaticResource FadeInFromBottomAnimation}"
                                        Text="Make Every Pet Grooming Appointment a Breeze"
                                        TextWrapping="Wrap" />
                             <russkyc:ModernButton Margin="0,35,0,0"

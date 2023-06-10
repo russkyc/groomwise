@@ -21,13 +21,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     private SynchronizedObservableCollection<GroomingService> _services;
 
     [ObservableProperty]
-    private ObservableCollection<string> _months;
-
-    [ObservableProperty]
-    private ObservableCollection<int> _days;
-
-    [ObservableProperty]
-    private ObservableCollection<TimeInfo> _times;
+    private SynchronizedObservableCollection<TimeInfo> _times;
 
     [ObservableProperty]
     private string? _title;
@@ -64,9 +58,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
         Customers = new SynchronizedObservableCollection<Customer>();
         Services = new SynchronizedObservableCollection<GroomingService>();
 
-        Months = new ObservableCollection<string>();
-        Times = new ObservableCollection<TimeInfo>();
-        Days = new ObservableCollection<int>();
+        Times = new SynchronizedObservableCollection<TimeInfo>();
 
         GetServices();
         GetSchedules();
@@ -86,20 +78,6 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     {
         Task.Run(() =>
         {
-            int month = DateTime.Now.Month;
-            int advanceMonth = 4;
-            while (advanceMonth > 0)
-            {
-                DateTime monthDate = new DateTime(2023, month, 1);
-                Months.Add(monthDate.ToString("MMMM"));
-                month = month == 12 ? 1 : month + 1;
-                advanceMonth--;
-            }
-            for (int i = 1; i <= 31; i++)
-            {
-                Days.Add(i);
-            }
-
             int hour = 1;
             int minute = 00;
             while (hour < 11)

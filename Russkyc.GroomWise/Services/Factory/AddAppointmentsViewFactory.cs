@@ -5,9 +5,9 @@
 
 namespace GroomWise.Services.Factory;
 
-public class AddAppointmentsViewFactory : Factory<AddAppointmentsView>
+public class AddAppointmentsViewFactory : IFactory<AddAppointmentsView>
 {
-    public new AddAppointmentsView Create(Action<AddAppointmentsView>? builder = null)
+    public AddAppointmentsView Create(Action<AddAppointmentsView>? builder = null)
     {
         var addAppointmentsView = (
             (AddAppointmentsView)BuilderServices.Resolve<IAddAppointmentsView>()

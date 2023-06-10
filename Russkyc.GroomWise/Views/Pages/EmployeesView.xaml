@@ -12,14 +12,15 @@
                                               IsDesignTimeCreatable=True}"
              d:DesignHeight="720"
              d:DesignWidth="1280"
-             Style="{StaticResource FadeInFromBottomAnimation}"
              mc:Ignorable="d">
-    <Grid>
+    <Grid Style="{StaticResource FadeInFromBottomAnimation}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="320" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Margin="16,20,16,16">
+        <Grid Grid.Column="0"
+              Margin="16,20,16,16"
+              Style="{StaticResource FadeInFromBottomAnimation}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -75,7 +76,9 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
-        <Grid Grid.Column="1" Margin="0,20,16,16">
+        <Grid Grid.Column="1"
+              Margin="0,20,16,16"
+              Style="{StaticResource FadeInFromBottomAnimation}">
             <Grid Margin="0,0,0,0" VerticalAlignment="Stretch">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

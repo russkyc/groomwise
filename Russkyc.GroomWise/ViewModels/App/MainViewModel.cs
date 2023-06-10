@@ -8,7 +8,6 @@ namespace GroomWise.ViewModels.App;
 public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
     private readonly IUnitOfWork _dbContext;
-    private readonly IConfigProvider _configProvider;
     private readonly IApplicationService _applicationService;
 
     [ObservableProperty]
@@ -27,9 +26,8 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     private IPage? _view;
 
     public MainViewModel(
-        IFactory<DialogView> dialogFactory,
         IUnitOfWork dbContext,
-        IConfigProvider configProvider,
+        IFactory<DialogView> dialogFactory,
         IApplicationService applicationService,
         IThemeManagerService themeManagerService,
         ISessionManagerService sessionManagerService
@@ -37,7 +35,6 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     {
         _dbContext = dbContext;
         _dialogFactory = dialogFactory;
-        _configProvider = configProvider;
         _applicationService = applicationService;
 
         ThemeManagerService = themeManagerService;
@@ -59,8 +56,8 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
             return;
         await DispatchHelper.UiInvokeAsync(() =>
         {
-            View = BuilderServices.Resolve(navItem.Page) as IPage;
-            _applicationService.NavItems.First(item => item == navItem).Selected = true;
+            View = BuilderServices.Resolve(navItem!.Page) as IPage;
+            _applicationService.NavItems!.First(item => item == navItem).Selected = true;
         });
     }
 
@@ -89,7 +86,10 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
             // Write changes to database
             _dbContext.SaveChanges();
 
+            // End Session
             SessionManagerService.EndSession();
+
+            // Open Login
             BuilderServices.Resolve<ILoginView>().ClearFields("Username", "Password");
             BuilderServices.Resolve<ILoginView>().Show();
             BuilderServices.Resolve<IMainView>().Hide();

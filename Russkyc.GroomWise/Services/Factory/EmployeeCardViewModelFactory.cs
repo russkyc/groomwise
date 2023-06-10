@@ -3,10 +3,6 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Models.Entities;
+namespace GroomWise.Services.Factory;
 
-public record EmployeeAddress
-{
-    public int AddressId { get; set; }
-    public int EmployeeId { get; set; }
-}
+public class EmployeeCardViewModelFactory : Factory<EmployeeCardViewModel> { }
