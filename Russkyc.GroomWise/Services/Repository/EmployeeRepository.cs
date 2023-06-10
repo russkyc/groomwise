@@ -7,19 +7,6 @@ namespace GroomWise.Services.Repository;
 
 public class EmployeeRepository : Repository<Employee>
 {
-    private readonly IEncryptionService _encryptionService;
-
-    public EmployeeRepository(
-        IDatabaseServiceAsync databaseService,
-        IEncryptionService encryptionService
-    )
-        : base(databaseService)
-    {
-        _encryptionService = encryptionService;
-    }
-
-    public new IEnumerable<Employee> GetAll()
-    {
-        return base.GetAll().Select(employee => _encryptionService.Decrypt(employee));
-    }
+    public EmployeeRepository(IDatabaseServiceAsync databaseService)
+        : base(databaseService) { }
 }
