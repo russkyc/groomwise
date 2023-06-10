@@ -10,18 +10,21 @@
         <RootNamespace>GroomWise</RootNamespace>
         <EnableWindowsTargeting>true</EnableWindowsTargeting>
         <PreserveCompilationContext>false</PreserveCompilationContext>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DebugType>full</DebugType>
         <Prefer32bit>false</Prefer32bit>
         <DebugSymbols>true</DebugSymbols>
+        <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <Prefer32bit>false</Prefer32bit>
         <DebugType>none</DebugType>
         <Optimize>false</Optimize>
+        <PlatformTarget>AnyCPU</PlatformTarget>
     </PropertyGroup>
 
     <ItemGroup>
