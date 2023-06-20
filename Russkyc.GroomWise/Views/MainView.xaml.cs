@@ -26,7 +26,7 @@ public partial class MainView : IMainView
     protected override void OnClosing(CancelEventArgs e)
     {
         BuilderServices.Resolve<ILogger>().Log(this, "Writing changes to database");
-        BuilderServices.Resolve<IUnitOfWork>().SaveChanges();
+        BuilderServices.Resolve<IDbContext>().SaveChanges();
         base.OnClosing(e);
     }
 

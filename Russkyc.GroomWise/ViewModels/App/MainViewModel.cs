@@ -7,7 +7,7 @@ namespace GroomWise.ViewModels.App;
 
 public partial class MainViewModel : ViewModelBase, IMainViewModel
 {
-    private readonly IUnitOfWork _dbContext;
+    private readonly IDbContext _dbContext;
     private readonly IApplicationService _applicationService;
 
     [ObservableProperty]
@@ -26,7 +26,7 @@ public partial class MainViewModel : ViewModelBase, IMainViewModel
     private IPage? _view;
 
     public MainViewModel(
-        IUnitOfWork dbContext,
+        IDbContext dbContext,
         IFactory<DialogView> dialogFactory,
         IApplicationService applicationService,
         IThemeManagerService themeManagerService,

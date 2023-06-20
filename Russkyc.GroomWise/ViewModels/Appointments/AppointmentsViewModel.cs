@@ -11,14 +11,14 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
     private readonly ISchedulerService _schedulerService;
     private readonly IFactory<AddAppointmentsView> _addAppointmentsViewFactory;
 
-    private readonly IUnitOfWork _dbContext;
+    private readonly IDbContext _dbContext;
 
     [ObservableProperty]
     private SynchronizedObservableCollection<Appointment> _appointments;
 
     public AppointmentsViewModel(
         ILogger logger,
-        IUnitOfWork dbContext,
+        IDbContext dbContext,
         ISchedulerService schedulerService,
         IFactory<AddAppointmentsView> addAppointmentsViewFactory
     )

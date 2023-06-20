@@ -5,7 +5,7 @@
 
 namespace GroomWise.Models.Interfaces.Service;
 
-public interface IUnitOfWork
+public interface IDbContext
 {
     AccountRepository AccountsRepository { get; }
     AddressRepository AddressRepository { get; }

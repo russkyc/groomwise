@@ -12,7 +12,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
     private readonly IFactory<Appointment> _appointmentFactory;
     private readonly IFactory<AppointmentService> _appointmentServiceFactory;
 
-    private readonly IUnitOfWork _dbContext;
+    private readonly IDbContext _dbContext;
 
     [ObservableProperty]
     private SynchronizedObservableCollection<Customer> _customers;
@@ -43,7 +43,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
 
     public AddAppointmentsViewModel(
         ILogger logger,
-        IUnitOfWork dbContext,
+        IDbContext dbContext,
         IFactory<DialogView> dialogFactory,
         IFactory<Appointment> appointmentFactory,
         IFactory<AppointmentService> appointmentServiceFactory

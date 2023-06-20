@@ -59,6 +59,7 @@
                                        Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" />
                 <russkyc:ModernButton Grid.Column="3"
                                       HorizontalAlignment="Right"
+                                      Command="{Binding AddCustomerCommand}"
                                       Content="Add Customer"
                                       CornerRadius="5"
                                       FontWeight="Medium"

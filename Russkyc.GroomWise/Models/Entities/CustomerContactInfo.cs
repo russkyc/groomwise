@@ -5,10 +5,8 @@
 
 namespace GroomWise.Models.Entities;
 
-public record Address : IEntity
+public class CustomerContactInfo
 {
-    [Column(IsIdentity = true, IsPrimary = true)]
-    public int Id { get; set; }
-    public string PrimaryAddress { get; set; }
-    public string SecondaryAddress { get; set; }
+    public int CustomerId { get; set; }
+    public int ContactInfoId { get; set; }
 }

@@ -8,7 +8,7 @@ namespace GroomWise.ViewModels.App;
 public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 {
     private readonly ILogger _logger;
-    private readonly IUnitOfWork _dbContext;
+    private readonly IDbContext _dbContext;
     private readonly IConfigProvider _configProvider;
     private readonly IEncryptionService _encryptionService;
     private readonly IApplicationService _applicationService;
@@ -34,7 +34,7 @@ public partial class LoginViewModel : ViewModelBase, ILoginViewModel
 
     public LoginViewModel(
         ILogger logger,
-        IUnitOfWork dbContext,
+        IDbContext dbContext,
         ISessionManagerService sessionManagerService,
         IApplicationService applicationService,
         IEncryptionService encryptionService,

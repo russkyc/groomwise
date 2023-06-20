@@ -8,7 +8,8 @@ namespace GroomWise.ViewModels.Customers;
 public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
 {
     private readonly ILogger _logger;
-    private readonly IUnitOfWork _dbContext;
+    private readonly IDbContext _dbContext;
+    private readonly IFactory<AddCustomersView> _addCustomersViewFactory;
     private readonly IFactory<CustomerCardViewModel> _customerCardViewModelFactory;
 
     [ObservableProperty]
@@ -19,13 +20,15 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
 
     public CustomersViewModel(
         ILogger logger,
-        IUnitOfWork dbContext,
-        IFactory<CustomerCardViewModel> customerCardViewModelFactory
+        IDbContext dbContext,
+        IFactory<CustomerCardViewModel> customerCardViewModelFactory,
+        IFactory<AddCustomersView> addCustomersViewFactory
     )
     {
         _logger = logger;
         _dbContext = dbContext;
         _customerCardViewModelFactory = customerCardViewModelFactory;
+        _addCustomersViewFactory = addCustomersViewFactory;
 
         Customers = new SynchronizedObservableCollection<CustomerCardViewModel>();
         GetCustomers();
@@ -68,8 +71,7 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
                             if (address == null)
                                 return;
 
-                            customervm.Address =
-                                $"{address.Barangay}, {address.City}, {address.Province}";
+                            customervm.Address = address.PrimaryAddress;
 
                             var customerPets = _dbContext.CustomerPetRepository
                                 .FindAll(pet => pet.OwnerId == customer.Id)
@@ -98,5 +100,11 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
             >(ref _customers, customers);
             command.Execute();
         });
+    }
+
+    [RelayCommand]
+    void AddCustomer()
+    {
+        _addCustomersViewFactory.Create().Show();
     }
 }

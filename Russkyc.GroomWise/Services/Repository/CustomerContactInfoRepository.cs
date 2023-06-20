@@ -3,12 +3,10 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Models.Entities;
+namespace GroomWise.Services.Repository;
 
-public record Address : IEntity
+public class CustomerContactInfoRepository : Repository<ContactInfo>
 {
-    [Column(IsIdentity = true, IsPrimary = true)]
-    public int Id { get; set; }
-    public string PrimaryAddress { get; set; }
-    public string SecondaryAddress { get; set; }
+    public CustomerContactInfoRepository(IDatabaseServiceAsync databaseService)
+        : base(databaseService) { }
 }

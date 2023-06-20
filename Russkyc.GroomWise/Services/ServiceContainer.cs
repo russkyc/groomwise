@@ -20,6 +20,7 @@ public static class ServiceContainer
             // Add Logger
             .AddSingleton<ILogger, DebugAndFileLogger>()
             // Add Factory Services
+            .AddSingleton<IFactory<AddCustomersView>, AddCustomersViewFactory>()
             .AddSingleton<IFactory<AppointmentService>, AppointmentServiceFactory>()
             .AddSingleton<IFactory<AddAppointmentsView>, AddAppointmentsViewFactory>()
             .AddSingleton<IFactory<CustomerCardViewModel>, CustomerCardViewModelFactory>()
@@ -38,7 +39,7 @@ public static class ServiceContainer
             .AddSingleton<IConnectionSourceProvider, ConnectionSourceProvider>()
             .AddSingleton<IDatabaseServiceAsync, DataServiceProviderAsync>()
             // Unit of Work
-            .AddSingleton<IUnitOfWork, UnitOfWork>()
+            .AddSingleton<IDbContext, DbContext>()
             // Add Application Services
             .AddSingleton<ISessionManagerService, SessionManagerService>()
             .AddSingleton<IThemeManagerService, ThemeManagerService>()
@@ -60,6 +61,7 @@ public static class ServiceContainer
             .AddTransient<IAddAppointmentsView, AddAppointmentsView>()
             .AddSingleton<IAppointmentsView, AppointmentsView>()
             .AddSingleton<IInventoryView, InventoryView>()
+            .AddTransient<IAddCustomersView, AddCustomersView>()
             .AddSingleton<ICustomersView, CustomersView>()
             .AddSingleton<IDashboardView, DashboardView>()
             .AddSingleton<IEmployeesView, EmployeesView>()

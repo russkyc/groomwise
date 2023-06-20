@@ -8,7 +8,7 @@ namespace GroomWise.ViewModels.Employees;
 public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
 {
     private readonly ILogger _logger;
-    private readonly IUnitOfWork _dbContext;
+    private readonly IDbContext _dbContext;
     private readonly IFactory<EmployeeCardViewModel> _employeeCardViewModelFactory;
 
     [ObservableProperty]
@@ -18,7 +18,7 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
     private SynchronizedObservableCollection<EmployeeCardViewModel> _employees;
 
     public EmployeesViewModel(
-        IUnitOfWork dbContext,
+        IDbContext dbContext,
         ILogger logger,
         IFactory<EmployeeCardViewModel> employeeCardViewModelFactory
     )
@@ -63,8 +63,7 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
                             if (address == null)
                                 return;
 
-                            employeevm.Address =
-                                $"{address.Barangay}, {address.City}, {address.Province}";
+                            employeevm.Address = address.PrimaryAddress;
 
                             var employeeRoles = _dbContext.EmployeeRoleRepository.FindAll(
                                 role => role.EmployeeId == employee.Id

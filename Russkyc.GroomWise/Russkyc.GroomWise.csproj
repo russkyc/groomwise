@@ -51,8 +51,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Services\Converter\" />
-        <Folder Include="Services\Helper\" />
         <Folder Include="ViewModels\Services\" />
         <Folder Include="Views\Resources\Themes\BaseThemes\" />
         <Folder Include="Views\Resources\Themes\ColorThemes\" />
