@@ -77,7 +77,11 @@ public partial class AddCustomersViewModel : ViewModelBase, IAddCustomersViewMod
             Email = Email
         };
 
-        var customerContactInfo = new CustomerContactInfo();
+        var customerContactInfo = new CustomerContactInfo
+        {
+            CustomerId = customerId,
+            ContactInfoId = contactInfoId
+        };
 
         _dbContext.CustomerRepository.Add(customer);
         _dbContext.AddressRepository.Add(address);

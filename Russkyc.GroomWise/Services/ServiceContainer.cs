@@ -50,6 +50,7 @@ public static class ServiceContainer
             .AddSingleton<IInventoryViewModel, InventoryViewModel>()
             .AddSingleton<IEmployeesViewModel, EmployeesViewModel>()
             .AddSingleton<ICustomersViewModel, CustomersViewModel>()
+            .AddSingleton<IAddCustomersViewModel, AddCustomersViewModel>()
             .AddSingleton<IDashboardViewModel, DashboardViewModel>()
             .AddSingleton<IServicesViewModel, ServicesViewModel>()
             .AddSingleton<ISettingsViewModel, SettingsViewModel>()

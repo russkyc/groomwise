@@ -10,6 +10,11 @@ public static class RepositoryHelper
     public static int GetLastId<T>(this Repository<T> repository)
         where T : class, IEquatable<T>, IEntity, new()
     {
+        var item = repository.GetAll().MaxBy(saved => saved.Id);
+
+        if (item == null)
+            return 1;
+
         return repository.GetAll().OrderByDescending(saved => saved.Id).First().Id;
     }
 
