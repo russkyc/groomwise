@@ -56,9 +56,10 @@
                        Margin="12,0,0,0"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
-                       Text="Email Test"
+                       Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
                        TextAlignment="Left" />
             <ItemsControl Grid.Column="4"
+                          Width="120"
                           Margin="12,0,12,0"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center"

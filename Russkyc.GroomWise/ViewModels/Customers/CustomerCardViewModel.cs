@@ -16,6 +16,12 @@ public partial class CustomerCardViewModel : ObservableObject, IEntity
     private string? _address;
 
     [ObservableProperty]
+    private string? _email;
+
+    [ObservableProperty]
+    private string? _contactNumber;
+
+    [ObservableProperty]
     private SynchronizedObservableCollection<Pet> _pets;
 
     public CustomerCardViewModel()

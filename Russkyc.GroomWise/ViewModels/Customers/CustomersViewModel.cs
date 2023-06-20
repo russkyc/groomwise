@@ -73,6 +73,23 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
 
                             customervm.Address = address.PrimaryAddress;
 
+                            var customerContactInfo = _dbContext.CustomerContactInfoRepository.Find(
+                                address => address.CustomerId == customer.Id
+                            );
+
+                            if (customerContactInfo == null)
+                                return;
+
+                            var contactInfo = _dbContext.ContactInfoRepository.Find(
+                                contactInfo => contactInfo.Id == customerContactInfo.ContactInfoId
+                            );
+
+                            if (contactInfo == null)
+                                return;
+
+                            customervm.ContactNumber = contactInfo.ContactNumber;
+                            customervm.Email = contactInfo.Email;
+
                             var customerPets = _dbContext.CustomerPetRepository
                                 .FindAll(pet => pet.OwnerId == customer.Id)
                                 .ToList();
