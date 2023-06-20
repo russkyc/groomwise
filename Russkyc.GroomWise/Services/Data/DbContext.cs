@@ -104,6 +104,8 @@ public class DbContext : IDbContext
         _appointmentRepository?.WriteToDb();
         _appointmentServiceProductRepository?.WriteToDb();
         _appointmentServiceRepository?.WriteToDb();
+        _contactInfoRepository?.WriteToDb();
+        _customerContactInfoRepository?.WriteToDb();
         _customerAddressRepository?.WriteToDb();
         _customerPetRepository?.WriteToDb();
         _customerRepository?.WriteToDb();

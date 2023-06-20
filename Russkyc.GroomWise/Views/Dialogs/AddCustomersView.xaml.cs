@@ -7,8 +7,9 @@ namespace GroomWise.Views.Dialogs;
 
 public partial class AddCustomersView : IAddCustomersView
 {
-    public AddCustomersView()
+    public AddCustomersView(IAddCustomersViewModel viewModel)
     {
+        DataContext = viewModel;
         InitializeComponent();
     }
 

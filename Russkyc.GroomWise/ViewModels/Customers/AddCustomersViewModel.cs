@@ -9,6 +9,8 @@ public partial class AddCustomersViewModel : ViewModelBase, IAddCustomersViewMod
 {
     private readonly ILogger _logger;
     private readonly IDbContext _dbContext;
+    private readonly IFactory<Customer> _customerFactory;
+    private readonly IFactory<DialogView> _dialogFactory;
 
     [ObservableProperty]
     private string _firstName;
@@ -20,23 +22,80 @@ public partial class AddCustomersViewModel : ViewModelBase, IAddCustomersViewMod
     private string _lastName;
 
     [ObservableProperty]
-    private string _province;
+    private string _primaryAddress;
 
     [ObservableProperty]
-    private string _city;
+    private string _secondaryAddress;
 
     [ObservableProperty]
-    private string _barangay;
+    private string _contactNumber;
 
     [ObservableProperty]
-    private string _houseNumber;
+    private string _email;
 
-    [ObservableProperty]
-    private string _zipCode;
-
-    public AddCustomersViewModel(ILogger logger, IDbContext dbContext)
+    public AddCustomersViewModel(
+        ILogger logger,
+        IDbContext dbContext,
+        IFactory<DialogView> dialogFactory,
+        IFactory<Customer> customerFactory
+    )
     {
         _logger = logger;
         _dbContext = dbContext;
+        _dialogFactory = dialogFactory;
+        _customerFactory = customerFactory;
+    }
+
+    [RelayCommand]
+    void AddCustomer()
+    {
+        var customerId = _dbContext.CustomerRepository.GetLastId().Increment();
+        var customer = _customerFactory.Create(customer =>
+        {
+            customer.Id = customerId;
+            customer.FirstName = FirstName;
+            customer.MiddleName = MiddleName;
+            customer.LastName = LastName;
+        });
+        var addressId = _dbContext.AddressRepository.GetLastId().Increment();
+        var address = new Address
+        {
+            Id = addressId,
+            PrimaryAddress = PrimaryAddress,
+            SecondaryAddress = SecondaryAddress
+        };
+        var customerAddress = new CustomerAddress
+        {
+            CustomerId = customerId,
+            AddressId = addressId
+        };
+        var contactInfoId = _dbContext.ContactInfoRepository.GetLastId().Increment();
+        var contactInfo = new ContactInfo
+        {
+            Id = contactInfoId,
+            ContactNumber = ContactNumber,
+            Email = Email
+        };
+
+        var customerContactInfo = new CustomerContactInfo();
+
+        _dbContext.CustomerRepository.Add(customer);
+        _dbContext.AddressRepository.Add(address);
+        _dbContext.CustomerAddressRepository.Add(customerAddress);
+        _dbContext.ContactInfoRepository.Add(contactInfo);
+        _dbContext.CustomerContactInfoRepository.Add(customerContactInfo);
+
+        ClearFields();
+    }
+
+    void ClearFields()
+    {
+        FirstName = string.Empty;
+        MiddleName = string.Empty;
+        LastName = string.Empty;
+        Email = string.Empty;
+        ContactNumber = string.Empty;
+        PrimaryAddress = string.Empty;
+        SecondaryAddress = string.Empty;
     }
 }

@@ -5,7 +5,7 @@
 
 namespace GroomWise.Services.Repository;
 
-public class CustomerContactInfoRepository : Repository<ContactInfo>
+public class CustomerContactInfoRepository : Repository<CustomerContactInfo>
 {
     public CustomerContactInfoRepository(IDatabaseServiceAsync databaseService)
         : base(databaseService) { }

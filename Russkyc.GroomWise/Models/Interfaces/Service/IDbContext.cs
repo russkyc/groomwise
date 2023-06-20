@@ -17,6 +17,8 @@ public interface IDbContext
     CustomerAddressRepository CustomerAddressRepository { get; }
     CustomerPetRepository CustomerPetRepository { get; }
     CustomerRepository CustomerRepository { get; }
+    ContactInfoRepository ContactInfoRepository { get; }
+    CustomerContactInfoRepository CustomerContactInfoRepository { get; }
     EmployeeAccountRepository EmployeeAccountRepository { get; }
     EmployeeAddressRepository EmployeeAddressRepository { get; }
     EmployeeRepository EmployeeRepository { get; }

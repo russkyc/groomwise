@@ -60,66 +60,35 @@
                                        Placeholder="Last Name"
                                        Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
+            <Grid Margin="0,12,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="350" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <russkyc:ModernTextBox Grid.Column="0"
+                                       Margin="0,0,0,0"
+                                       CornerRadius="5"
+                                       HelperText="Max Length (200)"
+                                       Placeholder="Email"
+                                       Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
+                <russkyc:ModernTextBox Grid.Column="1"
+                                       Margin="12,0,0,0"
+                                       CornerRadius="5"
+                                       HelperText="Max Length (200)"
+                                       Placeholder="Contact Number"
+                                       Text="{Binding ContactNumber, UpdateSourceTrigger=PropertyChanged}" />
+
+            </Grid>
             <russkyc:ModernTextBox Margin="0,12,0,0"
                                    CornerRadius="5"
                                    HelperText="Max Length (200)"
-                                   Placeholder="Description"
-                                   Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" />
-            <russkyc:ModernComboBox Margin="0,12,0,0"
-                                    CornerRadius="5"
-                                    DisplayMemberPath="ServiceName"
-                                    ItemsSource="{Binding Services.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}"
-                                    Placeholder="Service"
-                                    SelectedValue="{Binding Service.ServiceDescription, UpdateSourceTrigger=PropertyChanged}" />
-            <Grid Margin="0,12,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <russkyc:ModernComboBox Grid.Column="0"
-                                        CornerRadius="5"
-                                        DisplayMemberPath="Time"
-                                        FontSize="14"
-                                        FontWeight="Medium"
-                                        ItemsSource="{Binding Times.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}"
-                                        SelectedValue="{Binding Time, UpdateSourceTrigger=PropertyChanged}">
-                    <russkyc:ModernComboBox.Resources>
-                        <Style TargetType="Popup">
-                            <Setter Property="MaxHeight" Value="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernComboBox}}" />
-                            <Setter Property="Width" Value="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernComboBox}}" />
-                        </Style>
-                    </russkyc:ModernComboBox.Resources>
-                </russkyc:ModernComboBox>
-                <russkyc:ModernRadioButton Grid.Column="1"
-                                           Width="70"
-                                           Margin="12,0,0,0"
-                                           Padding="2"
-                                           VerticalContentAlignment="Center"
-                                           BorderThickness="1"
-                                           Command="{Binding DataContext.SetTimeOfDayCommand, RelativeSource={RelativeSource AncestorType=russkyc:ModernWindow}}"
-                                           CommandParameter="{StaticResource True}"
-                                           Content="AM"
-                                           CornerRadius="5"
-                                           FontSize="14"
-                                           FontWeight="Medium"
-                                           GroupName="TimeOfDay"
-                                           IsChecked="{Binding IsAm, UpdateSourceTrigger=PropertyChanged}" />
-                <russkyc:ModernRadioButton Grid.Column="2"
-                                           Width="70"
-                                           Margin="6,0,0,0"
-                                           Padding="2"
-                                           VerticalContentAlignment="Center"
-                                           BorderThickness="1"
-                                           Command="{Binding .DataContext.SetTimeOfDayCommand, RelativeSource={RelativeSource AncestorType=russkyc:ModernWindow}}"
-                                           CommandParameter="{StaticResource False}"
-                                           Content="PM"
-                                           CornerRadius="5"
-                                           FontSize="14"
-                                           FontWeight="Medium"
-                                           GroupName="TimeOfDay"
-                                           IsChecked="{Binding IsAm, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converter:InverseBooleanConverter.Instance}}" />
-            </Grid>
+                                   Placeholder="Primary Address"
+                                   Text="{Binding PrimaryAddress, UpdateSourceTrigger=PropertyChanged}" />
+            <russkyc:ModernTextBox Margin="0,12,0,0"
+                                   CornerRadius="5"
+                                   HelperText="Max Length (200)"
+                                   Placeholder="Secondary Address"
+                                   Text="{Binding SecondaryAddress, UpdateSourceTrigger=PropertyChanged}" />
             <StackPanel Margin="0,24,0,0"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
@@ -139,8 +108,8 @@
                     </b:Interaction.Triggers>
                 </russkyc:ModernButton>
                 <russkyc:ModernButton HorizontalAlignment="Right"
-                                      Command="{Binding AddAppointmentCommand}"
-                                      Content="Save Appointment"
+                                      Command="{Binding AddCustomerCommand}"
+                                      Content="Save Customer"
                                       CornerRadius="5"
                                       FontWeight="Medium"
                                       LeftCenterIcon="{wpf:MaterialIconExt Kind=ContentSave}" />
