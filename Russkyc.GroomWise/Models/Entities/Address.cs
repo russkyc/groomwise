@@ -9,6 +9,6 @@ public record Address : IEntity
 {
     [Column(IsIdentity = true, IsPrimary = true)]
     public int Id { get; set; }
-    public string PrimaryAddress { get; set; }
-    public string SecondaryAddress { get; set; }
+    public string? PrimaryAddress { get; set; }
+    public string? SecondaryAddress { get; set; }
 }

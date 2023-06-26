@@ -9,7 +9,7 @@ public record ContactInfo : IEntity
 {
     [Column(IsIdentity = true, IsPrimary = true)]
     public int Id { get; set; }
-    public string ContactNumber { get; set; }
-    public string Telephone { get; set; }
-    public string Email { get; set; }
+    public string? ContactNumber { get; set; }
+    public string? Telephone { get; set; }
+    public string? Email { get; set; }
 }
