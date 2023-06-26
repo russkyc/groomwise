@@ -8,7 +8,7 @@
              Height="70"
              d:DataContext="{d:DesignInstance employees:EmployeeCardViewModel,
                                               IsDesignTimeCreatable=True}"
-             d:DesignWidth="400"
+             d:DesignWidth="700"
              Background="Transparent"
              mc:Ignorable="d">
     <Grid Style="{StaticResource FadeInFromBottomAnimation}">

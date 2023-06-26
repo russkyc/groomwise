@@ -18,9 +18,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="320" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0"
-              Margin="16,20,16,16"
-              Style="{StaticResource FadeInFromBottomAnimation}">
+        <Grid Grid.Column="0" Margin="16,20,16,16">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -76,9 +74,7 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
-        <Grid Grid.Column="1"
-              Margin="0,20,16,16"
-              Style="{StaticResource FadeInFromBottomAnimation}">
+        <Grid Grid.Column="1" Margin="0,20,16,16">
             <Grid Margin="0,0,0,0" VerticalAlignment="Stretch">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -96,7 +92,7 @@
                                Text="Roles" />
                     <russkyc:ModernButton Grid.Column="2"
                                           HorizontalAlignment="Right"
-                                          Content="Add Employee"
+                                          Content="Add Role"
                                           CornerRadius="5"
                                           FontWeight="Medium"
                                           IconSize="18"
@@ -106,7 +102,7 @@
                               VerticalAlignment="Stretch"
                               HorizontalContentAlignment="Stretch"
                               VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Employees.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                    <ItemsControl ItemsSource="{Binding Roles.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
@@ -114,7 +110,7 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <templates:AppointmentCardTemplate />
+                                <templates:RoleListCardTemplate />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemContainerStyle>

@@ -10,5 +10,5 @@
              mc:Ignorable="d">
     <TextBlock HorizontalAlignment="Center"
                VerticalAlignment="Center"
-               Text="Pets" />
+               Text="Inventory" />
 </UserControl>
