@@ -13,7 +13,7 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
     private readonly IFactory<CustomerCardViewModel> _customerCardViewModelFactory;
 
     [ObservableProperty]
-    private CustomerCardViewModel _customerInfo;
+    private CustomerCardViewModel? _customerInfo;
 
     [ObservableProperty]
     private SynchronizedObservableCollection<CustomerCardViewModel> _customers;
@@ -31,7 +31,7 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
         _addCustomersViewFactory = addCustomersViewFactory;
 
         Customers = new SynchronizedObservableCollection<CustomerCardViewModel>();
-        GetCustomers();
+        ReloadCustomers();
     }
 
     [RelayCommand]
@@ -40,7 +40,7 @@ public partial class CustomersViewModel : ViewModelBase, ICustomersViewModel
         CustomerInfo = customer;
     }
 
-    void GetCustomers()
+    public void ReloadCustomers()
     {
         Task.Run(() =>
         {

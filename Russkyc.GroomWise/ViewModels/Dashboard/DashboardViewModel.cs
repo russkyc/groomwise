@@ -39,7 +39,7 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
         _dbContext = dbContext;
 
         Appointments = new SynchronizedObservableCollection<Appointment>();
-        GetNotifications();
+        ReloadNotifications();
     }
 
     [RelayCommand]
@@ -49,7 +49,7 @@ public partial class DashboardViewModel : ViewModelBase, IDashboardViewModel
         GetTime();
     }
 
-    private void GetNotifications()
+    public void ReloadNotifications()
     {
         var command = new SynchronizeCollectionCommand<
             Appointment,

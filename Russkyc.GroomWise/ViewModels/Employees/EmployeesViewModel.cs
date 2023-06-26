@@ -15,6 +15,9 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
     private string? _filter;
 
     [ObservableProperty]
+    private SynchronizedObservableCollection<Role> _roles;
+
+    [ObservableProperty]
     private SynchronizedObservableCollection<EmployeeCardViewModel> _employees;
 
     public EmployeesViewModel(
@@ -27,9 +30,23 @@ public partial class EmployeesViewModel : ViewModelBase, IEmployeesViewModel
         _dbContext = dbContext;
         _employeeCardViewModelFactory = employeeCardViewModelFactory;
 
+        Roles = new SynchronizedObservableCollection<Role>();
         Employees = new SynchronizedObservableCollection<EmployeeCardViewModel>();
 
         GetEmployees();
+        GetRoles();
+    }
+
+    void GetRoles()
+    {
+        Task.Run(() =>
+        {
+            var command = new SynchronizeCollectionCommand<
+                Role,
+                SynchronizedObservableCollection<Role>
+            >(ref _roles, _dbContext.RoleRepository.GetAll().ToList());
+            command.Execute();
+        });
     }
 
     void GetEmployees()

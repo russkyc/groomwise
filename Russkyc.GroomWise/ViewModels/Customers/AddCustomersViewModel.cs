@@ -13,25 +13,25 @@ public partial class AddCustomersViewModel : ViewModelBase, IAddCustomersViewMod
     private readonly IFactory<DialogView> _dialogFactory;
 
     [ObservableProperty]
-    private string _firstName;
+    private string? _firstName;
 
     [ObservableProperty]
-    private string _middleName;
+    private string? _middleName;
 
     [ObservableProperty]
-    private string _lastName;
+    private string? _lastName;
 
     [ObservableProperty]
-    private string _primaryAddress;
+    private string? _primaryAddress;
 
     [ObservableProperty]
-    private string _secondaryAddress;
+    private string? _secondaryAddress;
 
     [ObservableProperty]
-    private string _contactNumber;
+    private string? _contactNumber;
 
     [ObservableProperty]
-    private string _email;
+    private string? _email;
 
     public AddCustomersViewModel(
         ILogger logger,
@@ -88,6 +88,8 @@ public partial class AddCustomersViewModel : ViewModelBase, IAddCustomersViewMod
         _dbContext.CustomerAddressRepository.Add(customerAddress);
         _dbContext.ContactInfoRepository.Add(contactInfo);
         _dbContext.CustomerContactInfoRepository.Add(customerContactInfo);
+
+        BuilderServices.Resolve<ICustomersViewModel>().ReloadCustomers();
 
         ClearFields();
     }

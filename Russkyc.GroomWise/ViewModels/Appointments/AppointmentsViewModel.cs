@@ -43,7 +43,7 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
             ref _appointments,
             _dbContext.AppointmentRepository
                 .GetAll()
-                .Where(appointment => appointment.Date.Value.Month >= DateTime.Now.Month)
+                .Where(appointment => appointment.Date!.Value.Month >= DateTime.Now.Month)
                 .OrderBy(appointment => appointment.Date)
                 .ToList()
         );
@@ -51,11 +51,14 @@ public partial class AppointmentsViewModel : ViewModelBase, IAppointmentsViewMod
         _logger.Log(this, "Synchronized appointments collection");
     }
 
+    public void ReloadAppointments()
+    {
+        GetAppointments();
+    }
+
     [RelayCommand]
     void AddAppointment()
     {
-        _addAppointmentsViewFactory
-            .Create()
-            .Show();
+        _addAppointmentsViewFactory.Create().Show();
     }
 }

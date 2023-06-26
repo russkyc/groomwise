@@ -160,5 +160,7 @@ public partial class AddAppointmentsViewModel : ViewModelBase, IAddAppointmentsV
             .AsChild()
             .ShowDialog();
         ClearFields();
+        BuilderServices.Resolve<IAppointmentsViewModel>().ReloadAppointments();
+        BuilderServices.Resolve<IDashboardViewModel>().ReloadNotifications();
     }
 }
