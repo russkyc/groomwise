@@ -103,30 +103,7 @@ namespace GroomWise.ViewModels.App
                 e => e.AccountId == account.Id
             );
 
-            if (employeeAccount != null)
-            {
-                var employee = _dbContext.EmployeeRepository.Find(
-                    e => e.Id == employeeAccount.EmployeeId
-                );
-
-                if (employee != null)
-                {
-                    var employeeRole = _dbContext.EmployeeRoleRepository.Find(
-                        er => er.EmployeeId == employee.Id
-                    );
-
-                    if (employeeRole != null)
-                        StartSession(employee, employeeRole);
-                    else
-                        _logger.Log(this, "Employee is not assigned any role");
-                }
-                else
-                {
-                    ShowNotification("Employee does not exist", NotificationType.Danger);
-                    _logger.Log(this, "Unsuccessful login attempt, employee does not exist");
-                }
-            }
-            else
+            if (employeeAccount == null)
             {
                 ShowNotification(
                     "Account does not match any employee record",
@@ -136,7 +113,31 @@ namespace GroomWise.ViewModels.App
                     this,
                     "Unsuccessful login attempt, account does not match any employee record"
                 );
+                return;
             }
+
+            var employee = _dbContext.EmployeeRepository.Find(
+                e => e.Id == employeeAccount.EmployeeId
+            );
+
+            if (employee == null)
+            {
+                ShowNotification("Employee does not exist", NotificationType.Danger);
+                _logger.Log(this, "Unsuccessful login attempt, employee does not exist");
+                return;
+            }
+
+            var employeeRole = _dbContext.EmployeeRoleRepository.Find(
+                er => er.EmployeeId == employee.Id
+            );
+
+            if (employeeRole == null)
+            {
+                _logger.Log(this, "Employee is not assigned any role");
+                return;
+            }
+
+            StartSession(employee, employeeRole);
         }
 
         private void StartSession(Employee employee, EmployeeRole employeeRole)
