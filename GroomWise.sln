@@ -6,10 +6,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6DF2E646
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Russkyc.GroomWise", "Russkyc.GroomWise\Russkyc.GroomWise.csproj", "{A82F86AC-0A28-486F-AB47-E62563AA7330}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Russkyc.GroomWise.Tests", "Russkyc.GroomWise.Tests\Russkyc.GroomWise.Tests.csproj", "{2D9EE5B5-7354-4524-88DB-BD2C4BF8C8E9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Russkyc.GroomWise.Integration.Tests", "Russkyc.GroomWise.Integration.Tests\Russkyc.GroomWise.Integration.Tests.csproj", "{B53D7A17-0266-46BA-AD8D-49A64ADB69C0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Russkyc.Groomwise.Cli", "Russkyc.Groomwise.Cli\Russkyc.Groomwise.Cli.csproj", "{0A95CE16-46C0-42B5-8EA9-C6B885D6ED49}"
 EndProject
 Global
@@ -19,8 +15,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A82F86AC-0A28-486F-AB47-E62563AA7330} = {9527855B-A10B-46BC-84CD-1FB1F68E191F}
-		{2D9EE5B5-7354-4524-88DB-BD2C4BF8C8E9} = {6DF2E646-7D53-4C60-81F3-53D6A69B7AE0}
-		{B53D7A17-0266-46BA-AD8D-49A64ADB69C0} = {6DF2E646-7D53-4C60-81F3-53D6A69B7AE0}
 		{0A95CE16-46C0-42B5-8EA9-C6B885D6ED49} = {9527855B-A10B-46BC-84CD-1FB1F68E191F}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
@@ -28,14 +22,6 @@ Global
 		{A82F86AC-0A28-486F-AB47-E62563AA7330}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A82F86AC-0A28-486F-AB47-E62563AA7330}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A82F86AC-0A28-486F-AB47-E62563AA7330}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D9EE5B5-7354-4524-88DB-BD2C4BF8C8E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D9EE5B5-7354-4524-88DB-BD2C4BF8C8E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D9EE5B5-7354-4524-88DB-BD2C4BF8C8E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D9EE5B5-7354-4524-88DB-BD2C4BF8C8E9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B53D7A17-0266-46BA-AD8D-49A64ADB69C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B53D7A17-0266-46BA-AD8D-49A64ADB69C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B53D7A17-0266-46BA-AD8D-49A64ADB69C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B53D7A17-0266-46BA-AD8D-49A64ADB69C0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A95CE16-46C0-42B5-8EA9-C6B885D6ED49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A95CE16-46C0-42B5-8EA9-C6B885D6ED49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A95CE16-46C0-42B5-8EA9-C6B885D6ED49}.Release|Any CPU.ActiveCfg = Release|Any CPU
