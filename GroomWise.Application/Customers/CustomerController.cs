@@ -6,7 +6,6 @@
 using System.Linq.Expressions;
 using GroomWise.Application.Customers.Interfaces;
 using GroomWise.Domain.Entities;
-using GroomWise.Domain.Extensions;
 using GroomWise.Infrastructure.Data.Interfaces;
 
 namespace GroomWise.Application.Customers;
