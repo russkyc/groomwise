@@ -19,7 +19,7 @@ public interface IDataAccessProvider
     int DeleteMany<TEntity>(Expression<Func<TEntity, bool>> filter);
     TEntity? Find<TEntity>(Expression<Func<TEntity, bool>> filter);
     IEnumerable<TEntity> FindMany<TEntity>(
-        Expression<Func<TEntity, bool>> filter,
+        Expression<Func<TEntity, bool>>? filter,
         int skip = 0,
         int limit = Int32.MaxValue
     );

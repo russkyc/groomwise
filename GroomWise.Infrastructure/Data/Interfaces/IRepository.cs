@@ -22,7 +22,7 @@ public interface IRepository<TEntity>
     int DeleteRange(Expression<Func<TEntity, bool>> filter);
     TEntity? Search(Expression<Func<TEntity, bool>> filter);
     IEnumerable<TEntity>? FindAll(
-        Expression<Func<TEntity, bool>> filter,
+        Expression<Func<TEntity, bool>>? filter,
         int skip = 0,
         int limit = Int32.MaxValue
     );

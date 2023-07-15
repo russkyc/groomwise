@@ -53,13 +53,10 @@ public class CustomerController : ICustomerController
         _repository.Delete(customer.Id);
     }
 
-    public IEnumerable<Customer>? GetAll()
+    public IEnumerable<Customer>? GetAll(Expression<Func<Customer, bool>>? filter)
     {
-        return _repository.GetAll();
-    }
-
-    public IEnumerable<Customer>? GetAll(Expression<Func<Customer, bool>> filter)
-    {
+        if (filter is null)
+            return _repository.GetAll();
         return _repository.FindAll(filter);
     }
 }

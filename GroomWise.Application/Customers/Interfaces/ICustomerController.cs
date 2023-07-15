@@ -14,6 +14,5 @@ public interface ICustomerController
     Customer? Find(Expression<Func<Customer, bool>> filter);
     void Update(Customer? customer, Action<Customer> set);
     void Delete(Customer? customer);
-    IEnumerable<Customer>? GetAll();
-    IEnumerable<Customer>? GetAll(Expression<Func<Customer, bool>> filter);
+    IEnumerable<Customer>? GetAll(Expression<Func<Customer, bool>>? filter = null);
 }

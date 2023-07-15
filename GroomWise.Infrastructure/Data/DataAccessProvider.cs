@@ -65,7 +65,7 @@ public class DataAccessProvider : IDataAccessProvider
     }
 
     public IEnumerable<T> FindMany<T>(
-        Expression<Func<T, bool>> filter,
+        Expression<Func<T, bool>>? filter,
         int skip = 0,
         int limit = Int32.MaxValue
     )
