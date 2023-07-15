@@ -23,7 +23,7 @@ public class CustomerControllerTests
         _customerController.Add(firstName: "fn", middleName: "mn", lastName: "ln", suffix: "jr");
 
         // Assert
-        Assert.NotNull(_customerController.FindByName(firstName: "fn"));
+        Assert.NotNull(_customerController.Find(customer => customer.FirstName!.Equals("fn")));
     }
 
     [Fact]
@@ -70,12 +70,12 @@ public class CustomerControllerTests
 
         // Act
         _customerController.Update(
-            customer: _customerController.FindByName("fn"),
+            customer: _customerController.Find(customer => customer.FirstName!.Equals("fn")),
             set: customer => customer.FirstName = "nf"
         );
 
         // Assert
-        Assert.NotNull(_customerController.FindByName(firstName: "nf"));
+        Assert.NotNull(_customerController.Find(customer => customer.FirstName!.Equals("nf")));
     }
 
     [Fact]
@@ -85,9 +85,11 @@ public class CustomerControllerTests
         _customerController.Add(firstName: "fn", middleName: "mn", lastName: "ln", suffix: "jr");
 
         // Act
-        _customerController.Delete(customer: _customerController.FindByName("fn"));
+        _customerController.Delete(
+            customer: _customerController.Find(customer => customer.FirstName!.Equals("fn"))
+        );
 
         // Assert
-        Assert.Null(_customerController.FindByName(firstName: "nf"));
+        Assert.Null(_customerController.Find(customer => customer.FirstName!.Equals("fn")));
     }
 }

@@ -11,12 +11,7 @@ namespace GroomWise.Application.Customers.Interfaces;
 public interface ICustomerController
 {
     void Add(string firstName, string middleName, string lastName, string suffix = "");
-    Customer? FindByName(
-        string firstName = "",
-        string middleName = "",
-        string lastName = "",
-        string suffix = ""
-    );
+    Customer? Find(Expression<Func<Customer, bool>> filter);
     void Update(Customer? customer, Action<Customer> set);
     void Delete(Customer? customer);
     IEnumerable<Customer>? GetAll();

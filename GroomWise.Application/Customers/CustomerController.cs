@@ -33,20 +33,9 @@ public class CustomerController : ICustomerController
         );
     }
 
-    public Customer? FindByName(
-        string firstName = "",
-        string middleName = "",
-        string lastName = "",
-        string suffix = ""
-    )
+    public Customer? Find(Expression<Func<Customer, bool>> filter)
     {
-        return _repository.Search(
-            customer =>
-                (firstName.IsNullOrEmpty() || customer.FirstName!.Equals(firstName))
-                && (middleName.IsNullOrEmpty() || customer.MiddleName!.Equals(middleName))
-                && (lastName.IsNullOrEmpty() || customer.LastName!.Equals(lastName))
-                && (suffix.IsNullOrEmpty() || customer.Suffix!.Equals(suffix))
-        );
+        return _repository.Search(filter);
     }
 
     public void Update(Customer? customer, Action<Customer> set)
