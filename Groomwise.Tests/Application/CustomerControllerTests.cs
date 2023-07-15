@@ -19,14 +19,11 @@ public class CustomerControllerTests
     [Fact]
     private void Add_And_Get_Customer_By_Name()
     {
-        // Arrange
+        // Arrange and Act
         _customerController.Add(firstName: "fn", middleName: "mn", lastName: "ln", suffix: "jr");
 
-        // Act
-        var savedCustomer = _customerController.FindByName(firstName: "fn");
-
         // Assert
-        Assert.NotNull(savedCustomer);
+        Assert.NotNull(_customerController.FindByName(firstName: "fn"));
     }
 
     [Fact]
@@ -41,10 +38,8 @@ public class CustomerControllerTests
             set: customer => customer.FirstName = "nf"
         );
 
-        var savedCustomer = _customerController.FindByName(firstName: "nf");
-
         // Assert
-        Assert.NotNull(savedCustomer);
+        Assert.NotNull(_customerController.FindByName(firstName: "nf"));
     }
 
     [Fact]
@@ -56,9 +51,7 @@ public class CustomerControllerTests
         // Act
         _customerController.Delete(customer: _customerController.FindByName("fn"));
 
-        var savedCustomer = _customerController.FindByName(firstName: "nf");
-
         // Assert
-        Assert.Null(savedCustomer);
+        Assert.Null(_customerController.FindByName(firstName: "nf"));
     }
 }
