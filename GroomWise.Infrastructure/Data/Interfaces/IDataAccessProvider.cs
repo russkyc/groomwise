@@ -9,17 +9,17 @@ namespace GroomWise.Infrastructure.Data.Interfaces;
 
 public interface IDataAccessProvider
 {
-    Guid Add<T>(T entity);
-    T Get<T>(Guid id);
-    IEnumerable<T>? GetAll<T>();
-    int AddMany<T>(IEnumerable<T> collection);
-    bool Update<T>(T entity);
-    int UpdateMany<T>(Expression<Func<T, T>> action, Expression<Func<T, bool>> filter);
-    bool Delete<T>(Guid id);
-    int DeleteMany<T>(Expression<Func<T, bool>> filter);
-    T? Find<T>(Expression<Func<T, bool>> filter);
-    IEnumerable<T> FindMany<T>(
-        Expression<Func<T, bool>> filter,
+    Guid Add<TEntity>(TEntity entity);
+    TEntity Get<TEntity>(Guid id);
+    IEnumerable<TEntity>? GetAll<TEntity>();
+    int AddMany<TEntity>(IEnumerable<TEntity> collection);
+    bool Update<TEntity>(TEntity entity);
+    int UpdateMany<TEntity>(Expression<Func<TEntity, TEntity>> action, Expression<Func<TEntity, bool>> filter);
+    bool Delete<TEntity>(Guid id);
+    int DeleteMany<TEntity>(Expression<Func<TEntity, bool>> filter);
+    TEntity? Find<TEntity>(Expression<Func<TEntity, bool>> filter);
+    IEnumerable<TEntity> FindMany<TEntity>(
+        Expression<Func<TEntity, bool>> filter,
         int skip = 0,
         int limit = Int32.MaxValue
     );
