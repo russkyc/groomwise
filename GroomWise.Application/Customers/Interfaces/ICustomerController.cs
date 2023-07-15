@@ -3,6 +3,7 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using System.Linq.Expressions;
 using GroomWise.Domain.Entities;
 
 namespace GroomWise.Application.Customers.Interfaces;
@@ -19,4 +20,5 @@ public interface ICustomerController
     void Update(Customer? customer, Action<Customer> set);
     void Delete(Customer? customer);
     IEnumerable<Customer>? GetAll();
+    IEnumerable<Customer>? GetAll(Expression<Func<Customer, bool>> filter);
 }

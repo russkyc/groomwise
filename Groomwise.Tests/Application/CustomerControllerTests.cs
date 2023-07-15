@@ -43,7 +43,7 @@ public class CustomerControllerTests
             suffix: "jr2"
         );
         _customerController.Add(
-            firstName: "fn3",
+            firstName: "bn3",
             middleName: "mn3",
             lastName: "ln3",
             suffix: "jr3"
@@ -51,10 +51,15 @@ public class CustomerControllerTests
 
         // Act
         var entities = _customerController.GetAll();
+        var entitiesFiltered = _customerController.GetAll(
+            filter: customer => customer.FirstName!.Contains("fn")
+        );
 
         // Assert
         Assert.NotNull(entities);
+        Assert.NotNull(entitiesFiltered);
         Assert.Equal(3, entities.Count());
+        Assert.Equal(2, entitiesFiltered.Count());
     }
 
     [Fact]

@@ -62,7 +62,7 @@ public class RepositoryProvider<TEntity> : IRepository<TEntity>
         return _dataAccessProvider.Find(filter);
     }
 
-    public IEnumerable<TEntity> FindAll(
+    public IEnumerable<TEntity>? FindAll(
         Expression<Func<TEntity, bool>> filter,
         int skip = 0,
         int limit = Int32.MaxValue)

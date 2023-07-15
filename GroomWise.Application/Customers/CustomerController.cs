@@ -3,6 +3,7 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using System.Linq.Expressions;
 using GroomWise.Application.Customers.Interfaces;
 using GroomWise.Domain.Entities;
 using GroomWise.Domain.Extensions;
@@ -66,5 +67,10 @@ public class CustomerController : ICustomerController
     public IEnumerable<Customer>? GetAll()
     {
         return _repository.GetAll();
+    }
+
+    public IEnumerable<Customer>? GetAll(Expression<Func<Customer, bool>> filter)
+    {
+        return _repository.FindAll(filter);
     }
 }
