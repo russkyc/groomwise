@@ -8,8 +8,5 @@
 
 
 
-    <ItemGroup>
-      <Folder Include="Enums\" />
-    </ItemGroup>
 
 </Project>
