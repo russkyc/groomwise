@@ -6,4 +6,19 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+
+
+    <ItemGroup>
+      <Folder Include="Appointments\Modules\" />
+      <Folder Include="Customers\Modules\" />
+      <Folder Include="Employees\Modules\" />
+      <Folder Include="Inventory\Modules\" />
+      <Folder Include="Pets\Modules\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GroomWise.Domain\GroomWise.Domain.csproj" />
+      <ProjectReference Include="..\GroomWise.Infrastructure\GroomWise.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>

@@ -23,10 +23,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application\" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <ProjectReference Include="..\GroomWise.Application\GroomWise.Application.csproj" />
+      <ProjectReference Include="..\GroomWise.Domain\GroomWise.Domain.csproj" />
       <ProjectReference Include="..\GroomWise.Infrastructure\GroomWise.Infrastructure.csproj" />
     </ItemGroup>
 
