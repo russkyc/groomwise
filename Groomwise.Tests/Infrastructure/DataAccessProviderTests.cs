@@ -5,7 +5,7 @@
 
 using GroomWise.Infrastructure.Data;
 
-namespace GroomWise.Infrastructure.Tests;
+namespace Groomwise.Tests.Infrastructure;
 
 public class DataAccessProviderTests
 {

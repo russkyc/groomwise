@@ -8,15 +8,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Russkyc.GroomWise", "Russky
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Russkyc.Groomwise.Cli", "Russkyc.Groomwise.Cli\Russkyc.Groomwise.Cli.csproj", "{0A95CE16-46C0-42B5-8EA9-C6B885D6ED49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Groomwise.Application.Tests", "Groomwise.Application.Tests\Groomwise.Application.Tests.csproj", "{D81FE671-E924-4C08-B3B4-04668E3AF275}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.Application", "GroomWise.Application\GroomWise.Application.csproj", "{B0BF0016-C23A-4ABA-874E-415A2AE76BD1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.Domain", "GroomWise.Domain\GroomWise.Domain.csproj", "{E66484F2-0EB2-436A-9F71-BC72FCF57387}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.Infrastructure", "GroomWise.Infrastructure\GroomWise.Infrastructure.csproj", "{4248B35E-4245-4E1A-9874-2BEB63D79DEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.Infrastructure.Tests", "GroomWise.Infrastructure.Tests\GroomWise.Infrastructure.Tests.csproj", "{21C6392B-4CB3-4707-9484-27F6EBADB80D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Groomwise.Tests", "Groomwise.Tests\Groomwise.Tests.csproj", "{FF8A36CD-FC96-4F39-8969-3669125E4A22}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,11 +24,10 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A82F86AC-0A28-486F-AB47-E62563AA7330} = {9527855B-A10B-46BC-84CD-1FB1F68E191F}
 		{0A95CE16-46C0-42B5-8EA9-C6B885D6ED49} = {9527855B-A10B-46BC-84CD-1FB1F68E191F}
-		{D81FE671-E924-4C08-B3B4-04668E3AF275} = {6DF2E646-7D53-4C60-81F3-53D6A69B7AE0}
 		{B0BF0016-C23A-4ABA-874E-415A2AE76BD1} = {9527855B-A10B-46BC-84CD-1FB1F68E191F}
 		{E66484F2-0EB2-436A-9F71-BC72FCF57387} = {9527855B-A10B-46BC-84CD-1FB1F68E191F}
 		{4248B35E-4245-4E1A-9874-2BEB63D79DEA} = {9527855B-A10B-46BC-84CD-1FB1F68E191F}
-		{21C6392B-4CB3-4707-9484-27F6EBADB80D} = {6DF2E646-7D53-4C60-81F3-53D6A69B7AE0}
+		{FF8A36CD-FC96-4F39-8969-3669125E4A22} = {6DF2E646-7D53-4C60-81F3-53D6A69B7AE0}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A82F86AC-0A28-486F-AB47-E62563AA7330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -41,10 +38,6 @@ Global
 		{0A95CE16-46C0-42B5-8EA9-C6B885D6ED49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A95CE16-46C0-42B5-8EA9-C6B885D6ED49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A95CE16-46C0-42B5-8EA9-C6B885D6ED49}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D81FE671-E924-4C08-B3B4-04668E3AF275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D81FE671-E924-4C08-B3B4-04668E3AF275}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D81FE671-E924-4C08-B3B4-04668E3AF275}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D81FE671-E924-4C08-B3B4-04668E3AF275}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B0BF0016-C23A-4ABA-874E-415A2AE76BD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B0BF0016-C23A-4ABA-874E-415A2AE76BD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0BF0016-C23A-4ABA-874E-415A2AE76BD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,9 +50,9 @@ Global
 		{4248B35E-4245-4E1A-9874-2BEB63D79DEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4248B35E-4245-4E1A-9874-2BEB63D79DEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4248B35E-4245-4E1A-9874-2BEB63D79DEA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{21C6392B-4CB3-4707-9484-27F6EBADB80D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21C6392B-4CB3-4707-9484-27F6EBADB80D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21C6392B-4CB3-4707-9484-27F6EBADB80D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21C6392B-4CB3-4707-9484-27F6EBADB80D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF8A36CD-FC96-4F39-8969-3669125E4A22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF8A36CD-FC96-4F39-8969-3669125E4A22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF8A36CD-FC96-4F39-8969-3669125E4A22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF8A36CD-FC96-4F39-8969-3669125E4A22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -22,4 +22,12 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Application\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GroomWise.Infrastructure\GroomWise.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
