@@ -27,6 +27,37 @@ public class CustomerControllerTests
     }
 
     [Fact]
+    private void Get_All_Customers()
+    {
+        // Arrange
+        _customerController.Add(
+            firstName: "fn1",
+            middleName: "mn1",
+            lastName: "ln1",
+            suffix: "jr1"
+        );
+        _customerController.Add(
+            firstName: "fn2",
+            middleName: "mn2",
+            lastName: "ln2",
+            suffix: "jr2"
+        );
+        _customerController.Add(
+            firstName: "fn3",
+            middleName: "mn3",
+            lastName: "ln3",
+            suffix: "jr3"
+        );
+
+        // Act
+        var entities = _customerController.GetAll();
+
+        // Assert
+        Assert.NotNull(entities);
+        Assert.Equal(3, entities.Count());
+    }
+
+    [Fact]
     private void Update_Customer_Entity()
     {
         // Arrange

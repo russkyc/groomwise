@@ -18,4 +18,5 @@ public interface ICustomerController
     );
     void Update(Customer? customer, Action<Customer> set);
     void Delete(Customer? customer);
+    IEnumerable<Customer>? GetAll();
 }

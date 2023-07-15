@@ -62,4 +62,9 @@ public class CustomerController : ICustomerController
             return;
         _repository.Delete(customer.Id);
     }
+
+    public IEnumerable<Customer>? GetAll()
+    {
+        return _repository.GetAll();
+    }
 }
