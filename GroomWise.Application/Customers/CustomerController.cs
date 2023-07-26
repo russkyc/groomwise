@@ -40,7 +40,10 @@ public class CustomerController : ICustomerController
     public void Update(Customer? customer, Action<Customer> set)
     {
         if (customer is null)
+        {
             return;
+        }
+
         set(customer);
         _repository.Update(customer);
     }
@@ -48,14 +51,18 @@ public class CustomerController : ICustomerController
     public void Delete(Customer? customer)
     {
         if (customer is null)
+        {
             return;
+        }
         _repository.Delete(customer.Id);
     }
 
     public IEnumerable<Customer>? GetAll(Expression<Func<Customer, bool>>? filter)
     {
         if (filter is null)
+        {
             return _repository.GetAll();
+        }
         return _repository.FindAll(filter);
     }
 }

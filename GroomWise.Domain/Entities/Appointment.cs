@@ -10,8 +10,10 @@ namespace GroomWise.Domain.Entities;
 public record Appointment : IEntity
 {
     public Guid Id { get; set; }
-    public string? Title { get; set; }
-    public string? Description { get; set; }
     public DateTime? Date { get; set; }
     public int? Status { get; set; }
+    public Pet? Pet { get; set; }
+    public Customer? Customer { get; set; }
+    public GroomingService? Service { get; set; }
+    public IEnumerable<Employee>? Employees { get; set; }
 }
