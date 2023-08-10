@@ -11,10 +11,13 @@
     <ItemGroup>
       <Folder Include="Appointments\Modules\" />
       <Folder Include="Customers\Modules\" />
+      <Folder Include="Employees\Interfaces\" />
       <Folder Include="Employees\Modules\" />
       <Folder Include="Inventory\Modules\" />
+      <Folder Include="Pets\Interfaces\" />
       <Folder Include="Pets\Modules\" />
       <Folder Include="Services\Interfaces\" />
+      <Folder Include="Services\Modules\" />
     </ItemGroup>
 
     <ItemGroup>

@@ -12,16 +12,20 @@ namespace GroomWise.Application.Customers;
 
 public class CustomerController : ICustomerController
 {
-    private readonly IRepository<Customer> _repository;
+    private readonly IRepository<Customer> _customerRepository;
+    private readonly IRepository<Pet> _petRepository;
+    private readonly IRepository<Appointment> _appointmentRepository;
 
-    public CustomerController(IRepository<Customer> repository)
+    public CustomerController(IRepository<Customer> customerRepository, IRepository<Pet> petRepository, IRepository<Appointment> appointmentRepository)
     {
-        _repository = repository;
+        _customerRepository = customerRepository;
+        _petRepository = petRepository;
+        _appointmentRepository = appointmentRepository;
     }
 
     public void Add(string firstName, string middleName, string lastName, string suffix = "")
     {
-        _repository.Create(
+        _customerRepository.Create(
             new Customer
             {
                 FirstName = firstName,
@@ -34,7 +38,15 @@ public class CustomerController : ICustomerController
 
     public Customer? Find(Expression<Func<Customer, bool>> filter)
     {
-        return _repository.Search(filter);
+        var customer = _customerRepository.Search(filter);
+
+        if (customer is not null)
+        {
+            customer.Pets = _petRepository.FindAll(pet => pet.Owner == customer.Id);
+            customer.Appointments =
+                _appointmentRepository.FindAll(appointment => appointment.Customer!.Id == customer.Id);
+        }
+        return customer;
     }
 
     public void Update(Customer? customer, Action<Customer> set)
@@ -45,7 +57,7 @@ public class CustomerController : ICustomerController
         }
 
         set(customer);
-        _repository.Update(customer);
+        _customerRepository.Update(customer);
     }
 
     public void Delete(Customer? customer)
@@ -54,15 +66,15 @@ public class CustomerController : ICustomerController
         {
             return;
         }
-        _repository.Delete(customer.Id);
+        _customerRepository.Delete(customer.Id);
     }
 
     public IEnumerable<Customer>? GetAll(Expression<Func<Customer, bool>>? filter)
     {
         if (filter is null)
         {
-            return _repository.GetAll();
+            return _customerRepository.GetAll();
         }
-        return _repository.FindAll(filter);
+        return _customerRepository.FindAll(filter);
     }
 }

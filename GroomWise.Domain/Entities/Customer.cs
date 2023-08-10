@@ -14,4 +14,11 @@ public record Customer : IEntity
     public string? MiddleName { get; set; }
     public string? LastName { get; set; }
     public string? Suffix { get; set; }
+    public string? ContactNumber { get; set; }
+    public string? Telephone { get; set; }
+    public string? Email { get; set; }
+    public string? PrimaryAddress { get; set; }
+    public string? SecondaryAddress { get; set; }
+    public IEnumerable<Pet>? Pets { get; set; }
+    public IEnumerable<Appointment>? Appointments { get; set; }
 }
