@@ -30,11 +30,5 @@ public partial class App
         );
 
         Process.GetCurrentProcess().MaxWorkingSet = maxWorkingSet;
-
-        // Set the thread pool minimum and maximum threads to the number of
-        // processor cores to improve the performance of parallel tasks.
-        int processorCount = Environment.ProcessorCount;
-        ThreadPool.SetMinThreads(processorCount, processorCount);
-        ThreadPool.SetMaxThreads(processorCount, processorCount);
     }
 }
