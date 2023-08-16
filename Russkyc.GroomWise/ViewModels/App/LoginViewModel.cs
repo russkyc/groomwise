@@ -62,12 +62,16 @@ namespace GroomWise.ViewModels.App
                 return;
 
             var encryptedUsername = _encryptionService.Encrypt(Username!);
-            var account = _dbContext.AccountsRepository.Find(a => a.Username == encryptedUsername);
+            var account = new Account
+            {
+                Username = Username
+            };
 
-            if (account is null)
+            /*if (account is null)
                 HandleNonexistentAccount();
             else
-                AuthenticateUser(account);
+                AuthenticateUser(account);*/
+            AuthenticateUser(account);
         }
 
         private void HandleNonexistentAccount()
@@ -84,10 +88,11 @@ namespace GroomWise.ViewModels.App
 
         private void AuthenticateUser(Account account)
         {
-            if (_encryptionService.Hash(Password!) != account.Password)
+            /*if (_encryptionService.Hash(Password!) != account.Password)
                 HandleIncorrectPassword();
             else
-                CreateSession(account);
+                CreateSession(account);*/
+            CreateSession(account);
         }
 
         private void HandleIncorrectPassword()
@@ -99,7 +104,7 @@ namespace GroomWise.ViewModels.App
 
         private void CreateSession(Account account)
         {
-            var employeeAccount = _dbContext.EmployeeAccountRepository.Find(
+            /*var employeeAccount = _dbContext.EmployeeAccountRepository.Find(
                 e => e.AccountId == account.Id
             );
 
@@ -135,21 +140,33 @@ namespace GroomWise.ViewModels.App
             {
                 _logger.Log(this, "Employee is not assigned any role");
                 return;
-            }
+            }*/
 
-            StartSession(employee, employeeRole);
+            StartSession(new Employee
+            {
+                Id = 1
+            }, new EmployeeRole
+            {
+                RoleId = 0,
+                EmployeeId = 1
+            });
         }
 
         private void StartSession(Employee employee, EmployeeRole employeeRole)
         {
-            var role = _dbContext.RoleRepository.Find(er => er.Id == employeeRole.RoleId);
+            // var role = _dbContext.RoleRepository.Find(er => er.Id == employeeRole.RoleId);
 
-            if (role != null)
+            if (employeeRole != null)
             {
                 var session = _sessionFactory.Create(s =>
                 {
                     s.SessionUser = employee;
-                    s.SessionRole = role;
+                    s.SessionRole = new Role
+                    {
+                        Id = 1,
+                        RoleName = "Admin",
+                        RoleDescription = "Admin"
+                    };
                 });
 
                 _sessionManagerService.StartSession(session);

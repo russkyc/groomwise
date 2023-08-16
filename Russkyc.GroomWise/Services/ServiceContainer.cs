@@ -9,7 +9,7 @@ public static class ServiceContainer
 {
     public static IServicesContainer ConfigureServices()
     {
-        return new ServicesCollection()
+        return new ServicesContainer()
             // Security
             .AddSingleton<ICredentialStore, CredentialStore>()
             .AddSingleton<IEncryptionService, EncryptionService>()
