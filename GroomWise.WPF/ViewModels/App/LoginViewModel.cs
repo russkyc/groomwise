@@ -147,7 +147,7 @@ namespace GroomWise.ViewModels.App
                 Id = 1
             }, new EmployeeRole
             {
-                RoleId = 0,
+                RoleId = 3,
                 EmployeeId = 1
             });
         }
@@ -163,7 +163,7 @@ namespace GroomWise.ViewModels.App
                     s.SessionUser = employee;
                     s.SessionRole = new Role
                     {
-                        Id = 1,
+                        Id = 3,
                         RoleName = "Admin",
                         RoleDescription = "Admin"
                     };
