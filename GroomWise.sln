@@ -8,11 +8,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.WPF", "GroomWise.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.Domain", "GroomWise.Domain\GroomWise.Domain.csproj", "{E66484F2-0EB2-436A-9F71-BC72FCF57387}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.ViewModels", "GroomWise.ViewModels\GroomWise.ViewModels.csproj", "{A5F9BB1C-9299-4948-8E8C-A50230F11B81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.ViewModel", "GroomWise.ViewModel\GroomWise.ViewModel.csproj", "{A5F9BB1C-9299-4948-8E8C-A50230F11B81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.Services", "GroomWise.Services\GroomWise.Services.csproj", "{F6CAC5A5-78CB-4D39-A93A-97B182D6989D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.Service", "GroomWise.Service\GroomWise.Service.csproj", "{F6CAC5A5-78CB-4D39-A93A-97B182D6989D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.Infrastructure", "GroomWise.Infrastructure\GroomWise.Infrastructure.csproj", "{A0A6C080-7E4F-4272-A27E-413CB525A070}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroomWise.Application", "GroomWise.Application\GroomWise.Application.csproj", "{B63765F8-69A9-4B85-96B2-15C233BE00C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Groomwise.Tests", "Groomwise.Tests\Groomwise.Tests.csproj", "{7EC6832E-2151-4E87-8F7E-E64AEE8B81CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,7 +26,8 @@ Global
 		{E66484F2-0EB2-436A-9F71-BC72FCF57387} = {9527855B-A10B-46BC-84CD-1FB1F68E191F}
 		{A5F9BB1C-9299-4948-8E8C-A50230F11B81} = {9527855B-A10B-46BC-84CD-1FB1F68E191F}
 		{F6CAC5A5-78CB-4D39-A93A-97B182D6989D} = {9527855B-A10B-46BC-84CD-1FB1F68E191F}
-		{A0A6C080-7E4F-4272-A27E-413CB525A070} = {9527855B-A10B-46BC-84CD-1FB1F68E191F}
+		{B63765F8-69A9-4B85-96B2-15C233BE00C4} = {9527855B-A10B-46BC-84CD-1FB1F68E191F}
+		{7EC6832E-2151-4E87-8F7E-E64AEE8B81CB} = {6DF2E646-7D53-4C60-81F3-53D6A69B7AE0}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A82F86AC-0A28-486F-AB47-E62563AA7330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -43,9 +46,13 @@ Global
 		{F6CAC5A5-78CB-4D39-A93A-97B182D6989D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6CAC5A5-78CB-4D39-A93A-97B182D6989D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6CAC5A5-78CB-4D39-A93A-97B182D6989D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A0A6C080-7E4F-4272-A27E-413CB525A070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A0A6C080-7E4F-4272-A27E-413CB525A070}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A0A6C080-7E4F-4272-A27E-413CB525A070}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A0A6C080-7E4F-4272-A27E-413CB525A070}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B63765F8-69A9-4B85-96B2-15C233BE00C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B63765F8-69A9-4B85-96B2-15C233BE00C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B63765F8-69A9-4B85-96B2-15C233BE00C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B63765F8-69A9-4B85-96B2-15C233BE00C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EC6832E-2151-4E87-8F7E-E64AEE8B81CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EC6832E-2151-4E87-8F7E-E64AEE8B81CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EC6832E-2151-4E87-8F7E-E64AEE8B81CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EC6832E-2151-4E87-8F7E-E64AEE8B81CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

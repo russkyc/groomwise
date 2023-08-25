@@ -4,7 +4,6 @@
 // without written, signed consent from the author is strictly prohibited.
 
 namespace GroomWise;
-
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
