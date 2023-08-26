@@ -41,45 +41,20 @@ public class EncryptionService : IEncryptionService
         );
     }
 
-    public T Encrypt<T>(T item)
-    {
-        // Get fields in item
-        item?.GetType()
-            .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-            // where field is type(String)
-            .Where(field => field.FieldType == typeof(string))
-            .ToList()
-            .ForEach(f =>
-            {
-                var currentValue = (string)f.GetValue(item)!;
-                f.SetValue(
-                    item,
-                    string.IsNullOrEmpty(currentValue)
-                        ? string.Empty
-                        : EncryptProvider.AESEncrypt(
-                            currentValue,
-                            CredentialStore.Instance.Get("AesKey"),
-                            CredentialStore.Instance.Get("AesIv")
-                        )
-                );
-            });
-        return item;
-    }
-
     public T Encrypt<T>(T item, params string[] ignore)
     {
         item?.GetType()
             .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
             .Where(field => field.FieldType == typeof(string))
             .ToList()
-            .ForEach(f =>
+            .ForEach(fieldInfo =>
             {
-                var currentValue = (string)f.GetValue(item)!;
+                var currentValue = (string)fieldInfo.GetValue(item)!;
                 if (
                     !string.IsNullOrEmpty(currentValue)
-                    && !ignore.ToList().Any(fieldName => f.Name.Contains(fieldName))
+                    && !ignore.ToList().Any(fieldName => fieldInfo.Name.Contains(fieldName))
                 )
-                    f.SetValue(
+                    fieldInfo.SetValue(
                         item,
                         string.IsNullOrEmpty(currentValue)
                             ? string.Empty
@@ -102,7 +77,7 @@ public class EncryptionService : IEncryptionService
         );
     }
 
-    public T Decrypt<T>(T item)
+    public T Decrypt<T>(T item, params string[] ignore)
     {
         // Get fields in item
         item?.GetType()
@@ -110,45 +85,32 @@ public class EncryptionService : IEncryptionService
             // where field is type(String)
             .Where(field => field.FieldType == typeof(string))
             .ToList()
-            .ForEach(f =>
+            .ForEach(fieldInfo =>
             {
-                var currentValue = (string)f.GetValue(item)!;
-                f.SetValue(
-                    item,
-                    string.IsNullOrEmpty(currentValue)
-                        ? string.Empty
-                        : EncryptProvider.AESDecrypt(
-                            currentValue,
-                            CredentialStore.Instance.Get("AesKey"),
-                            CredentialStore.Instance.Get("AesIv")
-                        )
-                );
+                var currentValue = (string)fieldInfo.GetValue(item)!;
+                if (
+                    !string.IsNullOrEmpty(currentValue)
+                    && !ignore.ToList().Any(fieldName => fieldInfo.Name.Contains(fieldName))
+                )
+                {
+                    fieldInfo.SetValue(
+                        item,
+                        string.IsNullOrEmpty(currentValue)
+                            ? string.Empty
+                            : EncryptProvider.AESDecrypt(
+                                currentValue,
+                                CredentialStore.Instance.Get("AesKey"),
+                                CredentialStore.Instance.Get("AesIv")
+                            )
+                    );
+                }
             });
         return item;
     }
 
-    public string Hash(string item)
+    public string Hash(string toDecrypt)
     {
-        return item.SHA256();
-    }
-
-    public T Hash<T>(T item)
-    {
-        // Get fields in item
-        item?.GetType()
-            .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
-            // where field is type(String)
-            .Where(field => field.FieldType == typeof(string))
-            .ToList()
-            .ForEach(f =>
-            {
-                var currentValue = (string)f.GetValue(item)!;
-                f.SetValue(
-                    item,
-                    string.IsNullOrEmpty(currentValue) ? string.Empty : currentValue.SHA256()
-                );
-            });
-        return item;
+        return toDecrypt.SHA256();
     }
 
     public T Hash<T>(T item, params string[] ignore)
