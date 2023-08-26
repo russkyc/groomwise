@@ -23,13 +23,14 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="ApplicationTests\" />
       <Folder Include="DomainTests\" />
       <Folder Include="ViewModelTests\" />
     </ItemGroup>
 
 
     <ItemGroup>
-      <ProjectReference Include="..\GroomWise.Service\GroomWise.Service.csproj" />
+      <ProjectReference Include="..\GroomWise.Infrastructure\GroomWise.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

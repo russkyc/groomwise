@@ -4,18 +4,26 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Domain.Interfaces;
+using LiteDB;
 
 namespace GroomWise.Domain.Entities;
 
-public record Customer : IEntity
+public partial record Customer : IEntity
 {
     public Guid Id { get; set; }
+
+    public string? Prefix { get; set; }
     public string? FirstName { get; set; }
     public string? MiddleName { get; set; }
     public string? LastName { get; set; }
     public string? Suffix { get; set; }
+
+    [BsonRef("contactInfos")]
     public ContactInfo ContactInfo { get; set; }
-    public Address Address { get; set; }
-    public IEnumerable<Pet>? Pets { get; set; }
-    public IEnumerable<Appointment>? Appointments { get; set; }
+
+    [BsonRef("pets")]
+    public IList<Pet>? Pets { get; set; }
+
+    [BsonRef("appointments")]
+    public IList<Appointment>? Appointments { get; set; }
 }

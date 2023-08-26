@@ -4,7 +4,7 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Domain.Entities;
-using GroomWise.Service.Database;
+using GroomWise.Infrastructure.Database;
 
 namespace Groomwise.Tests.ServiceTests;
 

@@ -3,14 +3,15 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using GroomWise.Domain.Entities;
 using GroomWise.Domain.Interfaces;
+using LiteDB;
 
-namespace GroomWise.Domain.Entities;
+namespace GroomWise.Infrastructure.Session.Entities;
 
-public record ContactInfo : IEntity
+public record SessionInfo
 {
     public Guid Id { get; set; }
-    public IList<string>? Address { get; set; }
-    public IList<string>? ContactNumber { get; set; }
-    public IList<string>? Email { get; set; }
+    public string? FirstName { get; set; }
+    public IList<Role> Roles { get; set; }
 }

@@ -3,13 +3,9 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using GroomWise.Domain.Interfaces;
+namespace GroomWise.Infrastructure.Logging.Interfaces;
 
-namespace GroomWise.Domain.Entities;
-
-public record Role : IEntity
+public interface ILogger
 {
-    public Guid Id { get; set; }
-    public string? Name { get; set; }
-    public string? Description { get; set; }
+    void Log(string message, string? sender = null);
 }

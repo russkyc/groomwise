@@ -4,6 +4,7 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Domain.Interfaces;
+using LiteDB;
 
 namespace GroomWise.Domain.Entities;
 
@@ -11,8 +12,10 @@ public record Pet : IEntity
 {
     public Guid Id { get; set; }
     public string? Name { get; set; }
-    public string? Breed { get; set; }
     public int? Age { get; set; }
+    public string? Breed { get; set; }
     public int? Gender { get; set; }
-    public Guid Owner { get; set; }
+
+    [BsonRef("customers")]
+    public IList<Customer> Owner { get; set; }
 }

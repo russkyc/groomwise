@@ -9,8 +9,8 @@ namespace GroomWise.Domain.Entities;
 
 public record Product : IEntity
 {
+    public Guid Id { get; set; }
     public string? ProductName { get; set; }
     public string? ProductDescription { get; set; }
     public int Quantity { get; set; }
-    public Guid Id { get; set; }
 }

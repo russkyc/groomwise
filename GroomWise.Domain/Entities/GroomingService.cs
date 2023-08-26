@@ -10,6 +10,7 @@ namespace GroomWise.Domain.Entities;
 public record GroomingService : IEntity
 {
     public Guid Id { get; set; }
-    public string? ServiceName { get; set; }
-    public string? ServiceDescription { get; set; }
+    public string? Type { get; set; }
+    public TimeSpan? TimeSpan { get; set; }
+    public string? Description { get; set; }
 }

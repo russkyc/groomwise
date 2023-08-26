@@ -4,6 +4,7 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Domain.Interfaces;
+using LiteDB;
 
 namespace GroomWise.Domain.Entities;
 
@@ -12,5 +13,7 @@ public record Account : IEntity
     public Guid Id { get; set; }
     public string? Username { get; set; }
     public string? Password { get; set; }
-    public Role Role { get; set; }
+
+    [BsonRef("employees")]
+    public Employee Employee { get; set; }
 }
