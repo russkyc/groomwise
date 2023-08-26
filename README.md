@@ -2,6 +2,8 @@
 
 <h2 align="center">GroomWise - A Pet Grooming CRM</h2>
 
+---
+
 ### 1.0 GroomWise
 #### 1.1 What is GroomWise
 
@@ -21,36 +23,3 @@ In addition to these features, GroomWise also has:
 
 - A Clean and Modern UI: GroomWise has a modern, clean user interface that is easy to use and navigate.
 - Global app theming: Customize the look and feel of GroomWise to match your branding or preferences.
-
-#### 1.3 Screenshots
-### 2.0 Technologies and Frameworks
-#### 2.1 Platform and Design
-> Platform, UX design and user interaction behaviors
-- WPF (Windows Presentation Framework)
-- Russkyc.ModernControls.WPF
-- Microsoft.Xaml.Behaviors
-- Material.Icons.Wpf
-
-#### 2.2 Core
-> Packages used for MVVM-S, Dependency Injection, App Services
-- Russkyc.AttachedUtilities.FileStreamExtensions
-- Russkyc.Services.HotkeyListener
-- Russkyc.DependencyInjection
-- Russkyc.Abstractions
-- CommunityToolkit.MVVM
-- Swordfish.NET.CollectionsV3
-
-#### 2.3 Database, Entity Mapping, and Datastore
-> Object-Relational-Mapping (ORM), Datastore, Database
-- Sqlite
-- FreeSql
-- JsonFlatFileDataStore
-
-#### 2.4 Security
-> Encryption and Secure Storage
-- CredentialManagement(Windows Credential Manager)
-- NetCoreEncrypt(Encryption)
-
-#### 2.5 Testing
-> Unit and integration testing framework
-- Xunit

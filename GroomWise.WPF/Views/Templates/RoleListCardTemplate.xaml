@@ -1,0 +1,53 @@
+﻿<UserControl
+    x:Class="GroomWise.Views.Templates.RoleListCardTemplate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
+    xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    Height="75"
+    d:DataContext="{d:DesignInstance observables:ObservableRole,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignWidth="300"
+    Style="{StaticResource FadeInFromBottomAnimation}"
+    mc:Ignorable="d">
+    <Grid IsHitTestVisible="False">
+        <russkyc:ModernButton
+            Padding="5"
+            HorizontalContentAlignment="Stretch"
+            CornerRadius="10"
+            DefaultBackground="{DynamicResource bg-100}"
+            DefaultForeground="{DynamicResource fg-000}"
+            HoverBackground="{DynamicResource bg-100}"
+            HoverForeground="{DynamicResource fg-000}"
+            PressedBackground="{DynamicResource bg-200}"
+            PressedForeground="{DynamicResource fg-000}" />
+        <Grid Margin="5" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel
+                Grid.Column="1"
+                Margin="12"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center">
+                <TextBlock
+                    FontSize="14"
+                    FontWeight="Medium"
+                    Foreground="{DynamicResource fg-000}"
+                    Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock
+                    Margin="0,6,0,0"
+                    HorizontalAlignment="Stretch"
+                    FontSize="12"
+                    Foreground="{DynamicResource bg-600}"
+                    Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                    TextTrimming="CharacterEllipsis" />
+            </StackPanel>
+            <russkyc:ModernButton Grid.Column="2" />
+        </Grid>
+    </Grid>
+</UserControl>

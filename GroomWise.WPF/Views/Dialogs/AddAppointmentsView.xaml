@@ -1,0 +1,148 @@
+﻿<russkyc:ModernWindow
+    x:Class="GroomWise.Views.Dialogs.AddAppointmentsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:controls="clr-namespace:GroomWise.Views.Controls"
+    xmlns:converter="clr-namespace:GroomWise.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
+    Title="AddAppointmentsView"
+    Width="600"
+    d:DataContext="{d:DesignInstance viewModels:AppointmentViewModel,
+                                     IsDesignTimeCreatable=True}"
+    NoDecorations="True"
+    ResizeMode="NoResize"
+    SizeToContent="Height"
+    TitleBarHeight="0"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
+    <Grid Style="{StaticResource FadeInAnimation}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="20,16,0,12"
+            HorizontalAlignment="Left"
+            FontSize="16"
+            Text="New Appointment" />
+        <Border
+            Grid.Row="1"
+            Grid.Column="0"
+            MinHeight="290"
+            Margin="20,0,0,20"
+            VerticalAlignment="Top"
+            Background="{DynamicResource bg-100}"
+            CornerRadius="10">
+            <controls:CalendarControl
+                Margin="5"
+                VerticalAlignment="Top"
+                IsEditable="True"
+                SelectedDate="{Binding ActiveAppointment.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Border>
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="20,0,16,20"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Top">
+            <russkyc:ModernComboBox
+                Margin="0,12,0,0"
+                CornerRadius="5"
+                DisplayMemberPath="ServiceName"
+                ItemsSource="{Binding GroomingServices, UpdateSourceTrigger=PropertyChanged}"
+                Placeholder="Service"
+                SelectedValue="{Binding ActiveAppointment.Service, UpdateSourceTrigger=PropertyChanged}" />
+            <Grid Margin="0,12,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <russkyc:ModernComboBox
+                    Grid.Column="0"
+                    CornerRadius="5"
+                    DisplayMemberPath="Time"
+                    FontSize="14"
+                    FontWeight="Medium"
+                    ItemsSource="{Binding Times.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedValue="{Binding Time, UpdateSourceTrigger=PropertyChanged}">
+                    <russkyc:ModernComboBox.Resources>
+                        <Style TargetType="Popup">
+                            <Setter Property="MaxHeight" Value="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernComboBox}}" />
+                            <Setter Property="Width" Value="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernComboBox}}" />
+                        </Style>
+                    </russkyc:ModernComboBox.Resources>
+                </russkyc:ModernComboBox>
+                <russkyc:ModernRadioButton
+                    Grid.Column="1"
+                    Width="70"
+                    Margin="12,0,0,0"
+                    Padding="2"
+                    VerticalContentAlignment="Center"
+                    BorderThickness="1"
+                    Command="{Binding DataContext.SetTimeOfDayCommand, RelativeSource={RelativeSource AncestorType=russkyc:ModernWindow}}"
+                    CommandParameter="{StaticResource True}"
+                    Content="AM"
+                    CornerRadius="5"
+                    FontSize="14"
+                    FontWeight="Medium"
+                    GroupName="TimeOfDay"
+                    IsChecked="{Binding IsAm, UpdateSourceTrigger=PropertyChanged}" />
+                <russkyc:ModernRadioButton
+                    Grid.Column="2"
+                    Width="70"
+                    Margin="6,0,0,0"
+                    Padding="2"
+                    VerticalContentAlignment="Center"
+                    BorderThickness="1"
+                    Command="{Binding .DataContext.SetTimeOfDayCommand, RelativeSource={RelativeSource AncestorType=russkyc:ModernWindow}}"
+                    CommandParameter="{StaticResource False}"
+                    Content="PM"
+                    CornerRadius="5"
+                    FontSize="14"
+                    FontWeight="Medium"
+                    GroupName="TimeOfDay"
+                    IsChecked="{Binding IsAm, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converter:InverseBooleanConverter.Instance}}" />
+            </Grid>
+            <StackPanel
+                Margin="0,24,0,0"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <russkyc:ModernButton
+                    Margin="0,0,12,0"
+                    HorizontalAlignment="Right"
+                    Content="Cancel"
+                    CornerRadius="5"
+                    DefaultBackground="{DynamicResource bg-000}"
+                    FontWeight="Medium"
+                    Foreground="{DynamicResource fg-600}"
+                    HoverBackground="{DynamicResource bg-000}"
+                    PressedBackground="{DynamicResource bg-100}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:CallMethodAction MethodName="Hide" TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=russkyc:ModernWindow}}" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </russkyc:ModernButton>
+                <russkyc:ModernButton
+                    HorizontalAlignment="Right"
+                    Command="{Binding AddAppointmentCommand}"
+                    Content="Save Appointment"
+                    CornerRadius="5"
+                    FontWeight="Medium"
+                    LeftCenterIcon="{icons:MaterialIconExt Kind=ContentSave}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</russkyc:ModernWindow>
