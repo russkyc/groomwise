@@ -2,8 +2,6 @@
 
 <h2 align="center">GroomWise - A Pet Grooming CRM</h2>
 
----
-
 ### 1.0 GroomWise
 #### 1.1 What is GroomWise
 
