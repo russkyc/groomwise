@@ -1,22 +1,23 @@
-﻿<UserControl x:Class="GroomWise.Views.Pages.DashboardView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:controls="clr-namespace:GroomWise.Views.Controls"
-             xmlns:converters="clr-namespace:GroomWise.Models.Converter"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dashboard="clr-namespace:GroomWise.ViewModels.Dashboard"
-             xmlns:icon="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-             xmlns:templates="clr-namespace:GroomWise.Views.Templates"
-             HorizontalAlignment="Stretch"
-             d:DataContext="{d:DesignInstance dashboard:DashboardViewModel,
-                                              IsDesignTimeCreatable=True}"
-             d:DesignHeight="720"
-             d:DesignWidth="1280"
-             Style="{StaticResource FadeInFromBottomAnimation}"
-             mc:Ignorable="d">
+﻿<UserControl
+    x:Class="GroomWise.Views.Pages.DashboardView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:controls="clr-namespace:GroomWise.Views.Controls"
+    xmlns:converters="clr-namespace:GroomWise.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icon="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:templates="clr-namespace:GroomWise.Views.Templates"
+    xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
+    HorizontalAlignment="Stretch"
+    d:DataContext="{d:DesignInstance viewModels:DashboardViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="720"
+    d:DesignWidth="1280"
+    Style="{StaticResource FadeInFromBottomAnimation}"
+    mc:Ignorable="d">
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Loaded">
             <b:InvokeCommandAction Command="{Binding InvalidateCommand}" />
@@ -37,10 +38,11 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0"
-                           Margin="0,0,0,12"
-                           FontSize="16"
-                           Text="Dashboard" />
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="0,0,0,12"
+                    FontSize="16"
+                    Text="Dashboard" />
                 <Border Grid.Row="1" CornerRadius="10">
                     <Border.Background>
                         <ImageBrush ImageSource="{Binding Source, ElementName=Image}" Stretch="UniformToFill" />
@@ -50,11 +52,12 @@
                             <ColumnDefinition Width="550" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Image x:Name="Image"
-                               Grid.Column="0"
-                               Grid.ColumnSpan="2"
-                               Stretch="Uniform"
-                               Visibility="Collapsed">
+                        <Image
+                            x:Name="Image"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Stretch="Uniform"
+                            Visibility="Collapsed">
                             <Image.Source>
                                 <DrawingImage>
                                     <DrawingImage.Drawing>
@@ -85,12 +88,13 @@
                                                                 </DrawingGroup.Transform>
                                                                 <GeometryDrawing Geometry="F0 M5166.66 739.258C5243.88 680.631 5376.67 695.421 5415.3 778.333C5439.14 829.507 5410.98 847.626 5392.65 840.768C5373.28 833.525 5369.92 795.783 5412.3 772.708C5458.11 747.758 5511.44 766.07 5544.28 827.92C5604.15 940.692 5686.81 930.776 5735.7 871.709C5760.58 841.648 5757.51 795.39 5732.45 779.283C5707.28 763.1 5666.22 797.755 5695.12 843.347C5740.84 915.476 5835.36 830.133 5855.73 747.946C5881.34 644.594 5900.22 516.687 6068.11 530.126C6176.41 538.796 6282.16 703.428 6386.6 546.348C6406.85 515.903 6394.77 482.765 6369.9 483.519C6336.81 484.522 6325.21 529.408 6355.73 573.91C6483.44 760.159 6658.36 572.586 6805.62 578.422C6952.88 584.258 7279.04 923.525 6887.96 1036.79C6496.88 1150.05 6289.37 1105.67 6169.49 1399.91">
                                                                     <GeometryDrawing.Pen>
-                                                                        <Pen Brush="#FFFEFEFF"
-                                                                             EndLineCap="Round"
-                                                                             LineJoin="Round"
-                                                                             MiterLimit="1.5"
-                                                                             StartLineCap="Round"
-                                                                             Thickness="9.31" />
+                                                                        <Pen
+                                                                            Brush="#FFFEFEFF"
+                                                                            EndLineCap="Round"
+                                                                            LineJoin="Round"
+                                                                            MiterLimit="1.5"
+                                                                            StartLineCap="Round"
+                                                                            Thickness="9.31" />
                                                                     </GeometryDrawing.Pen>
                                                                 </GeometryDrawing>
                                                             </DrawingGroup>
@@ -100,12 +104,13 @@
                                                                 </DrawingGroup.Transform>
                                                                 <GeometryDrawing Geometry="F0 M5166.66 739.258C5243.88 680.631 5376.67 695.421 5415.3 778.333C5439.14 829.507 5410.98 847.626 5392.65 840.768C5373.28 833.525 5369.92 795.783 5412.3 772.708C5458.11 747.758 5511.44 766.07 5544.28 827.92C5604.15 940.692 5686.81 930.776 5735.7 871.709C5760.58 841.648 5757.51 795.39 5732.45 779.283C5707.28 763.1 5666.22 797.755 5695.12 843.347C5740.84 915.476 5835.36 830.133 5855.73 747.946C5881.34 644.594 5900.22 516.687 6068.11 530.126C6176.41 538.796 6282.16 703.428 6386.6 546.348C6406.85 515.903 6394.77 482.765 6369.9 483.519C6336.81 484.522 6325.21 529.408 6355.73 573.91C6483.44 760.159 6658.36 572.586 6805.62 578.422C6952.88 584.258 7279.04 923.525 6887.96 1036.79C6496.88 1150.05 6289.37 1105.67 6169.49 1399.91">
                                                                     <GeometryDrawing.Pen>
-                                                                        <Pen Brush="#FFFEFEFF"
-                                                                             EndLineCap="Round"
-                                                                             LineJoin="Round"
-                                                                             MiterLimit="1.5"
-                                                                             StartLineCap="Round"
-                                                                             Thickness="9.31" />
+                                                                        <Pen
+                                                                            Brush="#FFFEFEFF"
+                                                                            EndLineCap="Round"
+                                                                            LineJoin="Round"
+                                                                            MiterLimit="1.5"
+                                                                            StartLineCap="Round"
+                                                                            Thickness="9.31" />
                                                                     </GeometryDrawing.Pen>
                                                                 </GeometryDrawing>
                                                             </DrawingGroup>
@@ -137,12 +142,13 @@
                                                                     </DrawingGroup.Transform>
                                                                     <GeometryDrawing Geometry="F0 M7074.95 1836.38C7074.95 1836.38 7041.67 1881.85 7073.06 1914.42">
                                                                         <GeometryDrawing.Pen>
-                                                                            <Pen Brush="#FF221334"
-                                                                                 EndLineCap="Round"
-                                                                                 LineJoin="Round"
-                                                                                 MiterLimit="1.5"
-                                                                                 StartLineCap="Round"
-                                                                                 Thickness="2.13" />
+                                                                            <Pen
+                                                                                Brush="#FF221334"
+                                                                                EndLineCap="Round"
+                                                                                LineJoin="Round"
+                                                                                MiterLimit="1.5"
+                                                                                StartLineCap="Round"
+                                                                                Thickness="2.13" />
                                                                         </GeometryDrawing.Pen>
                                                                     </GeometryDrawing>
                                                                 </DrawingGroup>
@@ -182,12 +188,13 @@
                                                                     </DrawingGroup.Transform>
                                                                     <GeometryDrawing Geometry="F0 M6997.43 1800C6997.43 1800 7019.69 1830.42 7005.05 1862.72C6990.92 1893.88 6939.65 1888.56 6939.65 1888.56">
                                                                         <GeometryDrawing.Pen>
-                                                                            <Pen Brush="#FF221334"
-                                                                                 EndLineCap="Round"
-                                                                                 LineJoin="Round"
-                                                                                 MiterLimit="1.5"
-                                                                                 StartLineCap="Round"
-                                                                                 Thickness="2.13" />
+                                                                            <Pen
+                                                                                Brush="#FF221334"
+                                                                                EndLineCap="Round"
+                                                                                LineJoin="Round"
+                                                                                MiterLimit="1.5"
+                                                                                StartLineCap="Round"
+                                                                                Thickness="2.13" />
                                                                         </GeometryDrawing.Pen>
                                                                     </GeometryDrawing>
                                                                 </DrawingGroup>
@@ -197,12 +204,13 @@
                                                                     </DrawingGroup.Transform>
                                                                     <GeometryDrawing Geometry="F0 M6907.65 1827.28L6872.43 1827.28">
                                                                         <GeometryDrawing.Pen>
-                                                                            <Pen Brush="#FF221334"
-                                                                                 EndLineCap="Round"
-                                                                                 LineJoin="Round"
-                                                                                 MiterLimit="1.5"
-                                                                                 StartLineCap="Round"
-                                                                                 Thickness="1.84" />
+                                                                            <Pen
+                                                                                Brush="#FF221334"
+                                                                                EndLineCap="Round"
+                                                                                LineJoin="Round"
+                                                                                MiterLimit="1.5"
+                                                                                StartLineCap="Round"
+                                                                                Thickness="1.84" />
                                                                         </GeometryDrawing.Pen>
                                                                     </GeometryDrawing>
                                                                 </DrawingGroup>
@@ -212,12 +220,13 @@
                                                                     </DrawingGroup.Transform>
                                                                     <GeometryDrawing Geometry="F0 M6907.65 1827.28L6872.43 1827.28">
                                                                         <GeometryDrawing.Pen>
-                                                                            <Pen Brush="#FF221334"
-                                                                                 EndLineCap="Round"
-                                                                                 LineJoin="Round"
-                                                                                 MiterLimit="1.5"
-                                                                                 StartLineCap="Round"
-                                                                                 Thickness="1.84" />
+                                                                            <Pen
+                                                                                Brush="#FF221334"
+                                                                                EndLineCap="Round"
+                                                                                LineJoin="Round"
+                                                                                MiterLimit="1.5"
+                                                                                StartLineCap="Round"
+                                                                                Thickness="1.84" />
                                                                         </GeometryDrawing.Pen>
                                                                     </GeometryDrawing>
                                                                 </DrawingGroup>
@@ -227,12 +236,13 @@
                                                                     </DrawingGroup.Transform>
                                                                     <GeometryDrawing Geometry="F0 M6907.65 1827.28L6872.43 1827.28">
                                                                         <GeometryDrawing.Pen>
-                                                                            <Pen Brush="#FF221334"
-                                                                                 EndLineCap="Round"
-                                                                                 LineJoin="Round"
-                                                                                 MiterLimit="1.5"
-                                                                                 StartLineCap="Round"
-                                                                                 Thickness="1.84" />
+                                                                            <Pen
+                                                                                Brush="#FF221334"
+                                                                                EndLineCap="Round"
+                                                                                LineJoin="Round"
+                                                                                MiterLimit="1.5"
+                                                                                StartLineCap="Round"
+                                                                                Thickness="1.84" />
                                                                         </GeometryDrawing.Pen>
                                                                     </GeometryDrawing>
                                                                 </DrawingGroup>
@@ -242,12 +252,13 @@
                                                                     </DrawingGroup.Transform>
                                                                     <GeometryDrawing Geometry="F0 M6907.65 1827.28L6872.43 1827.28">
                                                                         <GeometryDrawing.Pen>
-                                                                            <Pen Brush="#FF221334"
-                                                                                 EndLineCap="Round"
-                                                                                 LineJoin="Round"
-                                                                                 MiterLimit="1.5"
-                                                                                 StartLineCap="Round"
-                                                                                 Thickness="1.84" />
+                                                                            <Pen
+                                                                                Brush="#FF221334"
+                                                                                EndLineCap="Round"
+                                                                                LineJoin="Round"
+                                                                                MiterLimit="1.5"
+                                                                                StartLineCap="Round"
+                                                                                Thickness="1.84" />
                                                                         </GeometryDrawing.Pen>
                                                                     </GeometryDrawing>
                                                                 </DrawingGroup>
@@ -263,12 +274,13 @@
                                                                     </DrawingGroup.Transform>
                                                                     <GeometryDrawing Geometry="F0 M6901.24 1844.32C6904.59 1855.96 6927.79 1857.74 6933.53 1847.46">
                                                                         <GeometryDrawing.Pen>
-                                                                            <Pen Brush="#FF221334"
-                                                                                 EndLineCap="Round"
-                                                                                 LineJoin="Round"
-                                                                                 MiterLimit="1.5"
-                                                                                 StartLineCap="Round"
-                                                                                 Thickness="3.52" />
+                                                                            <Pen
+                                                                                Brush="#FF221334"
+                                                                                EndLineCap="Round"
+                                                                                LineJoin="Round"
+                                                                                MiterLimit="1.5"
+                                                                                StartLineCap="Round"
+                                                                                Thickness="3.52" />
                                                                         </GeometryDrawing.Pen>
                                                                     </GeometryDrawing>
                                                                 </DrawingGroup>
@@ -384,12 +396,13 @@
                                                                 </DrawingGroup.Transform>
                                                                 <GeometryDrawing Geometry="F0 M7121.39 1737.83C7121.39 1737.83 7138.41 1732.16 7141.36 1701.76">
                                                                     <GeometryDrawing.Pen>
-                                                                        <Pen Brush="#FF221334"
-                                                                             EndLineCap="Round"
-                                                                             LineJoin="Round"
-                                                                             MiterLimit="1.5"
-                                                                             StartLineCap="Round"
-                                                                             Thickness="2.13" />
+                                                                        <Pen
+                                                                            Brush="#FF221334"
+                                                                            EndLineCap="Round"
+                                                                            LineJoin="Round"
+                                                                            MiterLimit="1.5"
+                                                                            StartLineCap="Round"
+                                                                            Thickness="2.13" />
                                                                     </GeometryDrawing.Pen>
                                                                 </GeometryDrawing>
                                                             </DrawingGroup>
@@ -399,12 +412,13 @@
                                                                 </DrawingGroup.Transform>
                                                                 <GeometryDrawing Geometry="F0 M6864.88 1895.64C6864.88 1895.64 6872.82 1918.32 6891.73 1930.42">
                                                                     <GeometryDrawing.Pen>
-                                                                        <Pen Brush="#FF221334"
-                                                                             EndLineCap="Round"
-                                                                             LineJoin="Round"
-                                                                             MiterLimit="1.5"
-                                                                             StartLineCap="Round"
-                                                                             Thickness="2.13" />
+                                                                        <Pen
+                                                                            Brush="#FF221334"
+                                                                            EndLineCap="Round"
+                                                                            LineJoin="Round"
+                                                                            MiterLimit="1.5"
+                                                                            StartLineCap="Round"
+                                                                            Thickness="2.13" />
                                                                     </GeometryDrawing.Pen>
                                                                 </GeometryDrawing>
                                                             </DrawingGroup>
@@ -417,75 +431,85 @@
                                 </DrawingImage>
                             </Image.Source>
                         </Image>
-                        <StackPanel Grid.Column="0"
-                                    Margin="24"
-                                    VerticalAlignment="Center"
-                                    Orientation="Vertical">
+                        <StackPanel
+                            Grid.Column="0"
+                            Margin="24"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock FontSize="22"
-                                           FontWeight="Medium"
-                                           Foreground="{DynamicResource inverted-lighten-2}"
-                                           LineHeight="32"
-                                           LineStackingStrategy="BlockLineHeight"
-                                           Text="Good " />
-                                <TextBlock FontSize="22"
-                                           FontWeight="Medium"
-                                           Foreground="{DynamicResource inverted-lighten-2}"
-                                           LineHeight="32"
-                                           LineStackingStrategy="BlockLineHeight"
-                                           Text="{Binding Date, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DateTimeToTimeOfDayConverter.Instance}}" />
-                                <TextBlock FontSize="22"
-                                           FontWeight="Medium"
-                                           Foreground="{DynamicResource inverted-lighten-2}"
-                                           LineHeight="32"
-                                           LineStackingStrategy="BlockLineHeight"
-                                           Text=", " />
-                                <TextBlock FontSize="22"
-                                           FontWeight="Medium"
-                                           Foreground="{DynamicResource inverted-lighten-2}"
-                                           LineHeight="32"
-                                           LineStackingStrategy="BlockLineHeight"
-                                           Text="{Binding User, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock
+                                    FontSize="22"
+                                    FontWeight="Medium"
+                                    Foreground="{DynamicResource inverted-lighten-2}"
+                                    LineHeight="32"
+                                    LineStackingStrategy="BlockLineHeight"
+                                    Text="Good " />
+                                <TextBlock
+                                    FontSize="22"
+                                    FontWeight="Medium"
+                                    Foreground="{DynamicResource inverted-lighten-2}"
+                                    LineHeight="32"
+                                    LineStackingStrategy="BlockLineHeight"
+                                    Text="{Binding Date, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DateTimeToTimeOfDayConverter.Instance}}" />
+                                <TextBlock
+                                    FontSize="22"
+                                    FontWeight="Medium"
+                                    Foreground="{DynamicResource inverted-lighten-2}"
+                                    LineHeight="32"
+                                    LineStackingStrategy="BlockLineHeight"
+                                    Text=", " />
+                                <TextBlock
+                                    FontSize="22"
+                                    FontWeight="Medium"
+                                    Foreground="{DynamicResource inverted-lighten-2}"
+                                    LineHeight="32"
+                                    LineStackingStrategy="BlockLineHeight"
+                                    Text="{Binding User, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
-                            <TextBlock Margin="0,20,0,0"
-                                       FontSize="34"
-                                       FontWeight="Bold"
-                                       Foreground="{DynamicResource inverted-lighten-3}"
-                                       LineHeight="32"
-                                       LineStackingStrategy="BlockLineHeight"
-                                       Text="Make Every Pet Grooming Appointment a Breeze"
-                                       TextWrapping="Wrap" />
-                            <russkyc:ModernButton Margin="0,35,0,0"
-                                                  HorizontalAlignment="Left"
-                                                  Content="Customize Widgets"
-                                                  CornerRadius="5"
-                                                  DefaultBackground="{DynamicResource inverted-lighten-3}"
-                                                  DefaultForeground="{DynamicResource primary-default}"
-                                                  FontWeight="Medium"
-                                                  HoverBackground="{DynamicResource inverted-lighten-1}"
-                                                  HoverForeground="{DynamicResource primary-default}"
-                                                  IconSize="18"
-                                                  LeftIcon="{icon:MaterialIconExt Kind=Edit}"
-                                                  PressedBackground="{DynamicResource inverted-darken-1}"
-                                                  PressedForeground="{DynamicResource primary-default}" />
+                            <TextBlock
+                                Margin="0,20,0,0"
+                                FontSize="34"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource inverted-lighten-3}"
+                                LineHeight="32"
+                                LineStackingStrategy="BlockLineHeight"
+                                Text="Make Every Pet Grooming Appointment a Breeze"
+                                TextWrapping="Wrap" />
+                            <russkyc:ModernButton
+                                Margin="0,35,0,0"
+                                HorizontalAlignment="Left"
+                                Content="Customize Widgets"
+                                CornerRadius="5"
+                                DefaultBackground="{DynamicResource inverted-lighten-3}"
+                                DefaultForeground="{DynamicResource primary-default}"
+                                FontWeight="Medium"
+                                HoverBackground="{DynamicResource inverted-lighten-1}"
+                                HoverForeground="{DynamicResource primary-default}"
+                                IconSize="18"
+                                LeftIcon="{icon:MaterialIconExt Kind=Edit}"
+                                PressedBackground="{DynamicResource inverted-darken-1}"
+                                PressedForeground="{DynamicResource primary-default}" />
                         </StackPanel>
                     </Grid>
                 </Border>
             </Grid>
-            <Grid Grid.Row="1"
-                  Margin="0,20,0,0"
-                  Style="{StaticResource FadeInFromBottomAnimation}">
+            <Grid
+                Grid.Row="1"
+                Margin="0,20,0,0"
+                Style="{StaticResource FadeInFromBottomAnimation}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0"
-                           Margin="0,0,0,12"
-                           FontSize="16"
-                           Text="Status" />
-                <Border Grid.Row="1"
-                        Background="{DynamicResource bg-100}"
-                        CornerRadius="10">
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="0,0,0,12"
+                    FontSize="16"
+                    Text="Status" />
+                <Border
+                    Grid.Row="1"
+                    Background="{DynamicResource bg-100}"
+                    CornerRadius="10">
                     <Grid Height="200" HorizontalAlignment="Stretch" />
                 </Border>
             </Grid>
@@ -500,34 +524,39 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0"
-                           Margin="0,0,0,12"
-                           FontSize="16"
-                           Text="Calendar" />
-                <Border Grid.Row="1"
-                        Background="{DynamicResource bg-100}"
-                        CornerRadius="10">
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="0,0,0,12"
+                    FontSize="16"
+                    Text="Calendar" />
+                <Border
+                    Grid.Row="1"
+                    Background="{DynamicResource bg-100}"
+                    CornerRadius="10">
                     <Grid MinHeight="300" HorizontalAlignment="Stretch">
                         <controls:CalendarControl Margin="4" />
                     </Grid>
                 </Border>
             </Grid>
-            <Grid Grid.Row="1"
-                  Margin="0,0,0,0"
-                  VerticalAlignment="Stretch"
-                  Style="{StaticResource FadeInFromBottomAnimation}">
+            <Grid
+                Grid.Row="1"
+                Margin="0,0,0,0"
+                VerticalAlignment="Stretch"
+                Style="{StaticResource FadeInFromBottomAnimation}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0"
-                           Margin="0,20,0,12"
-                           FontSize="16"
-                           Text="Upcoming" />
-                <ScrollViewer Grid.Row="1"
-                              VerticalAlignment="Stretch"
-                              HorizontalContentAlignment="Stretch"
-                              VerticalScrollBarVisibility="Auto">
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="0,20,0,12"
+                    FontSize="16"
+                    Text="Upcoming" />
+                <ScrollViewer
+                    Grid.Row="1"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Appointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>

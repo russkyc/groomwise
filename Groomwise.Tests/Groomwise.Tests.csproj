@@ -23,14 +23,21 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ApplicationTests\" />
       <Folder Include="DomainTests\" />
       <Folder Include="ViewModelTests\" />
     </ItemGroup>
 
 
     <ItemGroup>
+      <ProjectReference Include="..\GroomWise.Application\GroomWise.Application.csproj" />
       <ProjectReference Include="..\GroomWise.Infrastructure\GroomWise.Infrastructure.csproj" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Reference Include="GroomWise.Domain">
+        <HintPath>..\GroomWise.Domain\bin\Debug\net7.0\GroomWise.Domain.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

@@ -11,6 +11,9 @@ namespace GroomWise.Application.Observables;
 public partial class ObservableProduct
 {
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    private Guid _id;
+
+    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
     private string? _productName;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]

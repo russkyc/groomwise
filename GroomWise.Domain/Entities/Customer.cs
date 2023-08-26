@@ -8,7 +8,7 @@ using LiteDB;
 
 namespace GroomWise.Domain.Entities;
 
-public partial record Customer : IEntity
+public class Customer : IEntity
 {
     public Guid Id { get; set; }
 
@@ -17,9 +17,9 @@ public partial record Customer : IEntity
     public string? MiddleName { get; set; }
     public string? LastName { get; set; }
     public string? Suffix { get; set; }
-
-    [BsonRef("contactInfos")]
-    public ContactInfo ContactInfo { get; set; }
+    public string? Address { get; set; }
+    public string? ContactNumber { get; set; }
+    public string? Email { get; set; }
 
     [BsonRef("pets")]
     public IList<Pet>? Pets { get; set; }

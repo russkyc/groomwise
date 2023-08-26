@@ -9,7 +9,7 @@ using LiteDB;
 
 namespace GroomWise.Domain.Entities;
 
-public record Appointment : IEntity
+public class Appointment : IEntity
 {
     public Guid Id { get; set; }
     public DateTime? Date { get; set; }

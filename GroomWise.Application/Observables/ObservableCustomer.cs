@@ -12,7 +12,9 @@ namespace GroomWise.Application.Observables;
 [NotifyPropertyChanged]
 public partial class ObservableCustomer
 {
-    public string FullName => $"{FirstName} {MiddleName[0]}. {LastName}";
+    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    private Guid _id;
+    public string FullName => $"{FirstName} {LastName}";
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
     private string _firstName;
@@ -24,13 +26,13 @@ public partial class ObservableCustomer
     private string _lastName;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    private string _address;
+
+    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
     private string _contactNumber;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
     private string _email;
-
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private string _address;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
     private ObservableCollection<Appointment> _appointments;

@@ -4,7 +4,6 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Domain.Entities;
-using GroomWise.Infrastructure.Database.Interfaces;
 using Russkyc.DependencyInjection.Attributes;
 using Russkyc.DependencyInjection.Enums;
 
@@ -13,8 +12,7 @@ namespace GroomWise.Infrastructure.Database;
 [Service(Scope.Singleton)]
 public class GroomWiseDbContext : DbContext
 {
-    public GroomWiseDbContext(IDbStore dataStore)
-        : base(dataStore)
+    public GroomWiseDbContext()
     {
         Pets = new(DataStore);
         Roles = new(DataStore);
@@ -22,7 +20,6 @@ public class GroomWiseDbContext : DbContext
         Accounts = new(DataStore);
         Employees = new(DataStore);
         Customers = new(DataStore);
-        ContactInfos = new(DataStore);
         Appointments = new(DataStore);
         GroomingServices = new(DataStore);
     }
@@ -34,6 +31,5 @@ public class GroomWiseDbContext : DbContext
     public readonly DbSet<Customer> Customers;
     public readonly DbSet<Employee> Employees;
     public readonly DbSet<Appointment> Appointments;
-    public readonly DbSet<ContactInfo> ContactInfos;
     public readonly DbSet<GroomingService> GroomingServices;
 }

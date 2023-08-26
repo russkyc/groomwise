@@ -1,20 +1,22 @@
-﻿<UserControl x:Class="GroomWise.Views.Templates.LoginNotificationTemplate"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:entities="clr-namespace:GroomWise.Models.Entities"
-             xmlns:enums="clr-namespace:GroomWise.Models.Enums"
-             xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-             Height="38"
-             d:DataContext="{d:DesignInstance entities:Notification,
-                                              IsDesignTimeCreatable=True}"
-             d:DesignWidth="200"
-             Background="Transparent"
-             IsTabStop="False"
-             Style="{StaticResource FadeInFromBottomAnimation}"
-             mc:Ignorable="d">
+﻿<UserControl
+    x:Class="GroomWise.Views.Templates.LoginNotificationTemplate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enums="clr-namespace:GroomWise.Domain.Enums;assembly=GroomWise.Domain"
+    xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
+    xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
+    Height="38"
+    d:DataContext="{d:DesignInstance observables:ObservableNotification,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignWidth="200"
+    Background="Transparent"
+    IsTabStop="False"
+    Style="{StaticResource FadeInFromBottomAnimation}"
+    mc:Ignorable="d">
     <Border CornerRadius="5">
         <Border.Style>
             <Style>
@@ -39,16 +41,19 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0"
-                        Margin="12"
-                        VerticalAlignment="Center">
+            <StackPanel
+                Grid.Column="0"
+                Margin="12"
+                VerticalAlignment="Center">
                 <TextBlock Foreground="{DynamicResource inverted-lighten-3}" Text="{Binding Description}" />
             </StackPanel>
-            <russkyc:ModernButton Grid.Column="1"
-                                  Margin="7"
-                                  Padding="5"
-                                  Command="{Binding .DataContext.RemoveNotificationCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernWindow}}"
-                                  Content="{icons:MaterialIconExt Kind=Close}">
+            <russkyc:ModernButton
+                Grid.Column="1"
+                Margin="7"
+                Padding="5"
+                Command="{Binding ((viewModels:LoginViewModel)DataContext).RemoveNotificationCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernWindow}}"
+                CommandParameter="{Binding}"
+                Content="{icons:MaterialIconExt Kind=Close}">
                 <russkyc:ModernButton.Style>
                     <Style BasedOn="{StaticResource {x:Type russkyc:ModernButton}}" TargetType="{x:Type russkyc:ModernButton}">
                         <Style.Triggers>

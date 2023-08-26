@@ -3,6 +3,15 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows;
+using Lombok.NET;
+using org.russkyc.moderncontrols;
+using Swordfish.NET.Collections.Auxiliary;
+
 namespace GroomWise.Views.Controls;
 
 public partial class CalendarControl
@@ -50,14 +59,14 @@ public partial class CalendarControl
         set => SetValue(CurrentMonthProperty, value);
     }
 
-    private readonly SynchronizedObservableCollection<CalendarDate> _dates;
-    public SynchronizedObservableCollection<CalendarDate> Dates => _dates;
+    private readonly ObservableCollection<CalendarDate> _dates;
+    public ObservableCollection<CalendarDate> Dates => _dates;
 
     public CalendarControl()
     {
         InitializeComponent();
         CurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-        _dates = new SynchronizedObservableCollection<CalendarDate>();
+        _dates = new ObservableCollection<CalendarDate>();
         IsEditable = false;
         DisplayDates();
     }
@@ -82,10 +91,10 @@ public partial class CalendarControl
                         && date.Year == DateTime.Today.Year
                         && date.Day == DateTime.Today.Day;
                     var calendarDate = new CalendarDate()
-                        .SetDate(dateIndex)
-                        .SetDateInfo(date)
-                        .SetSelected(isCurrentDate)
-                        .SetCurrentDate(isCurrentDate);
+                        .WithDate(dateIndex)
+                        .WithDateInfo(date)
+                        .WithSelected(isCurrentDate)
+                        .WithCurrentDate(isCurrentDate);
                     tasks.Add(Task.FromResult(calendarDate));
                     dateIndex++;
                 }
@@ -122,4 +131,23 @@ public partial class CalendarControl
         CurrentMonth = CurrentMonth.AddMonths(1);
         DisplayDates();
     }
+}
+
+[With]
+public partial class CalendarDate
+{
+    [Property]
+    private int _date;
+
+    [Property]
+    private DateTime _dateInfo;
+
+    [Property]
+    private bool _hasAppointment;
+
+    [Property]
+    private bool _selected;
+
+    [Property]
+    private bool _currentDate;
 }

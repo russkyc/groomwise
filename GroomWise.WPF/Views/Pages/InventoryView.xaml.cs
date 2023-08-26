@@ -3,20 +3,12 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using System.Windows.Controls;
-
 namespace GroomWise.Views.Pages;
 
-public partial class InventoryView : IInventoryView
+public partial class InventoryView
 {
-    public InventoryView(IInventoryViewModel viewModel)
+    public InventoryView()
     {
         InitializeComponent();
-        DataContext = viewModel;
-    }
-
-    public void Invalidate()
-    {
-        throw new NotImplementedException();
     }
 }

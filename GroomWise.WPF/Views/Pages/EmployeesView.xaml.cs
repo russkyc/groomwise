@@ -5,16 +5,10 @@
 
 namespace GroomWise.Views.Pages;
 
-public partial class EmployeesView : IEmployeesView
+public partial class EmployeesView
 {
-    public EmployeesView(IEmployeesViewModel viewModel)
+    public EmployeesView()
     {
         InitializeComponent();
-        DataContext = viewModel;
-    }
-
-    public void Invalidate()
-    {
-        throw new NotImplementedException();
     }
 }

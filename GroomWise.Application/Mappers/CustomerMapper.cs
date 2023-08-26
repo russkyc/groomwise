@@ -5,14 +5,19 @@
 
 using GroomWise.Application.Observables;
 using GroomWise.Domain.Entities;
-using Lombok.NET;
-using Riok.Mapperly.Abstractions;
+using Mapster;
 
 namespace GroomWise.Application.Mappers;
 
-[Mapper]
-[Singleton]
-public partial class CustomerMapper
+public static class CustomerMapper
 {
-    public partial ObservableCustomer CustomerToObservable(Customer customer);
+    public static ObservableCustomer ToObservable(this Customer customer)
+    {
+        return customer.Adapt<ObservableCustomer>();
+    }
+
+    public static Customer ToEntity(this ObservableCustomer observableCustomer)
+    {
+        return observableCustomer.Adapt<Customer>();
+    }
 }

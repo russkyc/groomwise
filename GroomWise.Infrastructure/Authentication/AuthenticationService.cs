@@ -4,6 +4,7 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Domain.Entities;
+using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
 using GroomWise.Infrastructure.Authentication.Mappers;
 using GroomWise.Infrastructure.Database;
@@ -14,7 +15,7 @@ using Russkyc.DependencyInjection.Enums;
 
 namespace GroomWise.Infrastructure.Authentication;
 
-[Service(Scope.Singleton, Registration.AsInterfaces)]
+[Service(Scope.Singleton, Registration.AsSelfAndInterfaces)]
 public class AuthenticationService : IAuthenticationService
 {
     private object _lock = new();
@@ -47,7 +48,7 @@ public class AuthenticationService : IAuthenticationService
         _dbContext.Accounts.Insert(account);
     }
 
-    public string Login(string username, string password)
+    public AuthenticationStatus Login(string username, string password)
     {
         var account = _dbContext.Accounts.Get(
             account => account.Username!.Equals(_encryptionService.Hash(username))
@@ -55,19 +56,19 @@ public class AuthenticationService : IAuthenticationService
 
         if (account is null)
         {
-            return "Account does not exist.";
+            return AuthenticationStatus.InvalidAccount;
         }
 
         if (!account.Password!.Equals(_encryptionService.Hash(password)))
         {
-            return "Incorrect password.";
+            return AuthenticationStatus.InvalidPassword;
         }
 
         lock (_lock)
         {
-            _sessionInfo = SessionMapper.Instance.EmployeeToSession(account.Employee);
+            _sessionInfo = account.Employee.ToSession();
         }
-        return "Login successful.";
+        return AuthenticationStatus.Authenticated;
     }
 
     public string Update(

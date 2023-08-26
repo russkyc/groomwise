@@ -12,6 +12,10 @@ namespace GroomWise.Application.Observables;
 public partial class ObservableEmployee
 {
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    private Guid _id;
+    public string FullName => $"{FirstName} {LastName}";
+
+    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
     private string? _prefix;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
@@ -27,7 +31,13 @@ public partial class ObservableEmployee
     private string? _suffix;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private ContactInfo _contactInfo;
+    private string _address;
+
+    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    private string _contactNumber;
+
+    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    private string _email;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
     private IList<Pet>? _pets;

@@ -7,7 +7,7 @@ using GroomWise.Domain.Interfaces;
 
 namespace GroomWise.Domain.Entities;
 
-public record GroomingService : IEntity
+public class GroomingService : IEntity
 {
     public Guid Id { get; set; }
     public string? Type { get; set; }

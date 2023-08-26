@@ -14,7 +14,7 @@ public class DatabaseTests
     private void Add_And_Get_Entity()
     {
         // Arrange
-        var db = new GroomWiseDbContext(new DbStore(":memory:"));
+        var db = new GroomWiseDbContext();
         var entity = new Account { Username = "TestUser", Password = "TasPass" };
 
         // Act

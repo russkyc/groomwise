@@ -3,7 +3,18 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using System;
+using System.Diagnostics;
+using System.Reflection;
+using System.Windows;
+using GroomWise.Application.ViewModels;
+using GroomWise.Containers;
+using GroomWise.Views.Dialogs;
+using Russkyc.DependencyInjection.Helpers;
+using Russkyc.DependencyInjection.Implementations;
+
 namespace GroomWise;
+
 /// <summary>
 /// Interaction logic for App.xaml
 /// </summary>
@@ -15,11 +26,18 @@ public partial class App
     public App()
     {
         InitializeComponent();
-        BuilderServices.BuildWithContainer(ServiceContainer.ConfigureServices());
-        BuilderServices.Resolve<ILoginView>().Show();
+        /*var container = new ServicesCollection()
+            .AddServicesFromAssembly(Assembly.Load("GroomWise.Domain"))
+            .AddServicesFromAssembly(Assembly.Load("GroomWise.Infrastructure"))
+            .AddServicesFromAssembly(Assembly.Load("GroomWise.Application"))
+            .AddServices()
+            .Build();*/
+        var container = new ServiceProvider();
+        Current.MainWindow = container.GetService<LoginView>();
+        MainWindow?.Show();
     }
 
-    protected override void OnStartup(StartupEventArgs e)
+    /*protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
 
@@ -29,5 +47,5 @@ public partial class App
         );
 
         Process.GetCurrentProcess().MaxWorkingSet = maxWorkingSet;
-    }
+    }*/
 }

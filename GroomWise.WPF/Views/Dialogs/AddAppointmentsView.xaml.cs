@@ -3,23 +3,14 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using System;
+
 namespace GroomWise.Views.Dialogs;
 
-public partial class AddAppointmentsView : IAddAppointmentsView
+public partial class AddAppointmentsView
 {
-    public AddAppointmentsView(IAddAppointmentsViewModel viewModel)
+    public AddAppointmentsView()
     {
         InitializeComponent();
-        DataContext = viewModel;
-    }
-
-    public void ClearFields()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void ClearFields(params string[] fields)
-    {
-        throw new NotImplementedException();
     }
 }

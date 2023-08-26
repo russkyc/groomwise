@@ -4,22 +4,22 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Domain.Enums;
-using Lombok.NET;
+using MvvmGen;
 
 namespace GroomWise.Application.Observables;
 
-[NotifyPropertyChanged]
+[ViewModel]
 public partial class ObservableNotification
 {
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private object? _icon;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string? _title;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string? _description;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private NotificationType? _type;
 }

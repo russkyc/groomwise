@@ -3,17 +3,22 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using System;
+using System.Linq;
+using System.Windows.Input;
+using GroomWise.Application.ViewModels;
+using Russkyc.DependencyInjection.Attributes;
+using Russkyc.DependencyInjection.Enums;
+
 namespace GroomWise.Views.Dialogs;
 
-public partial class LoginView : ILoginView
+[Service(Scope.Singleton)]
+public partial class LoginView
 {
-    private readonly ILogger _logger;
-
-    public LoginView(ILoginViewModel viewModel, ILogger logger)
+    public LoginView(ILoginViewModel vm)
     {
+        DataContext = vm;
         InitializeComponent();
-        _logger = logger;
-        DataContext = viewModel;
         ClearFields();
     }
 
@@ -35,15 +40,14 @@ public partial class LoginView : ILoginView
 
     protected override void OnClosed(EventArgs e)
     {
-        _logger.Log(this, "Exiting application environment");
-        Application.Current.Shutdown();
+        System.Windows.Application.Current.Shutdown();
         Environment.Exit(0);
         base.OnClosed(e);
     }
 
-    private void UsernameBox_OnKeyDown(object sender, KeyEventArgs e)
+    private void UsernameBox_OnKeyDown(object sender, KeyEventArgs keyEventArgs)
     {
-        if (e.Key == Key.Enter)
+        if (keyEventArgs.Key == Key.Enter)
             PasswordBox.Focus();
     }
 }

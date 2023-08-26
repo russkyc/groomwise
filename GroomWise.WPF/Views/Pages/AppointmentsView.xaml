@@ -1,41 +1,45 @@
-﻿<UserControl x:Class="GroomWise.Views.Pages.AppointmentsView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:appointments="clr-namespace:GroomWise.ViewModels.Appointments"
-             xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-             xmlns:templates="clr-namespace:GroomWise.Views.Templates"
-             HorizontalAlignment="Stretch"
-             d:DataContext="{d:DesignInstance appointments:AppointmentsViewModel,
-                                              IsDesignTimeCreatable=True}"
-             d:DesignHeight="720"
-             d:DesignWidth="1280"
-             Style="{StaticResource FadeInFromBottomAnimation}"
-             mc:Ignorable="d">
+﻿<UserControl
+    x:Class="GroomWise.Views.Pages.AppointmentsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:templates="clr-namespace:GroomWise.Views.Templates"
+    xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
+    HorizontalAlignment="Stretch"
+    d:DataContext="{d:DesignInstance viewModels:AppointmentViewModel,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignHeight="720"
+    d:DesignWidth="1280"
+    Style="{StaticResource FadeInFromBottomAnimation}"
+    mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Margin="16,20,0,16">
-            <Grid Margin="0,0,0,0"
-                  VerticalAlignment="Stretch"
-                  Style="{StaticResource FadeInFromBottomAnimation}">
+            <Grid
+                Margin="0,0,0,0"
+                VerticalAlignment="Stretch"
+                Style="{StaticResource FadeInFromBottomAnimation}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0"
-                           Margin="0,0,0,12"
-                           FontSize="16"
-                           Text="Schedule" />
-                <ScrollViewer Grid.Row="1"
-                              VerticalAlignment="Stretch"
-                              HorizontalContentAlignment="Stretch"
-                              VerticalScrollBarVisibility="Auto">
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="0,0,0,12"
+                    FontSize="16"
+                    Text="Schedule" />
+                <ScrollViewer
+                    Grid.Row="1"
+                    VerticalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalScrollBarVisibility="Auto">
                     <ItemsControl ItemsSource="{Binding Appointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -56,30 +60,35 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
-        <Grid Grid.Column="1"
-              Margin="16,20,16,16"
-              Style="{StaticResource FadeInFromBottomAnimation}">
+        <Grid
+            Grid.Column="1"
+            Margin="16,20,16,16"
+            Style="{StaticResource FadeInFromBottomAnimation}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0"
-                  Margin="0,0,0,12"
-                  HorizontalAlignment="Stretch">
-                <TextBlock VerticalAlignment="Center"
-                           FontSize="16"
-                           Text="Appointments" />
-                <russkyc:ModernButton HorizontalAlignment="Right"
-                                      Command="{Binding AddAppointmentCommand}"
-                                      Content="Add Appointment"
-                                      CornerRadius="5"
-                                      FontWeight="Medium"
-                                      IconSize="18"
-                                      LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
+            <Grid
+                Grid.Row="0"
+                Margin="0,0,0,12"
+                HorizontalAlignment="Stretch">
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="Appointments" />
+                <russkyc:ModernButton
+                    HorizontalAlignment="Right"
+                    Command="{Binding AddAppointmentCommand}"
+                    Content="Add Appointment"
+                    CornerRadius="5"
+                    FontWeight="Medium"
+                    IconSize="18"
+                    LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
             </Grid>
-            <Border Grid.Row="1"
-                    Background="{DynamicResource bg-100}"
-                    CornerRadius="10">
+            <Border
+                Grid.Row="1"
+                Background="{DynamicResource bg-100}"
+                CornerRadius="10">
                 <Grid Height="200" HorizontalAlignment="Stretch" />
             </Border>
         </Grid>

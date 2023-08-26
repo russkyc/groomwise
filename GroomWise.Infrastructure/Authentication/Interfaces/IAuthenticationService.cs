@@ -3,6 +3,7 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Session.Entities;
 
 namespace GroomWise.Infrastructure.Authentication.Interfaces;
@@ -10,7 +11,7 @@ namespace GroomWise.Infrastructure.Authentication.Interfaces;
 public interface IAuthenticationService
 {
     void Register(string username, string password, Guid employeeId);
-    string Login(string username, string password);
+    AuthenticationStatus Login(string username, string password);
 
     string Update(
         string username,

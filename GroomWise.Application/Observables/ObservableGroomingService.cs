@@ -11,6 +11,9 @@ namespace GroomWise.Application.Observables;
 public partial class ObservableGroomingService
 {
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    private Guid _id;
+
+    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
     private string? _type;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]

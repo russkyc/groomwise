@@ -8,12 +8,11 @@ using LiteDB;
 
 namespace GroomWise.Domain.Entities;
 
-public record Account : IEntity
+public class Account : IEntity
 {
     public Guid Id { get; set; }
     public string? Username { get; set; }
     public string? Password { get; set; }
 
-    [BsonRef("employees")]
     public Employee Employee { get; set; }
 }

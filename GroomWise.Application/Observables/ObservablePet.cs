@@ -12,6 +12,9 @@ namespace GroomWise.Application.Observables;
 public partial class ObservablePet
 {
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    private Guid _id;
+
+    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
     private string? _name;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]

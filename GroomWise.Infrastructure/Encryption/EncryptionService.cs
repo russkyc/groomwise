@@ -12,7 +12,7 @@ using Russkyc.DependencyInjection.Enums;
 
 namespace GroomWise.Infrastructure.Encryption;
 
-[Service(Scope.Singleton, Registration.AsInterfaces)]
+[Service(Scope.Singleton, Registration.AsSelfAndInterfaces)]
 public class EncryptionService : IEncryptionService
 {
     public EncryptionService()

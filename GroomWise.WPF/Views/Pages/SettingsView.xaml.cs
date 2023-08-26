@@ -5,16 +5,10 @@
 
 namespace GroomWise.Views.Pages;
 
-public partial class SettingsView : ISettingsView
+public partial class SettingsView
 {
-    public SettingsView(ISettingsViewModel viewModel)
+    public SettingsView()
     {
         InitializeComponent();
-        DataContext = viewModel;
-    }
-
-    public void Invalidate()
-    {
-        throw new NotImplementedException();
     }
 }

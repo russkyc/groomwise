@@ -8,7 +8,7 @@ using LiteDB;
 
 namespace GroomWise.Domain.Entities;
 
-public record Pet : IEntity
+public class Pet : IEntity
 {
     public Guid Id { get; set; }
     public string? Name { get; set; }

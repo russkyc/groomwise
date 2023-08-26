@@ -5,21 +5,10 @@
 
 namespace GroomWise.Views.Dialogs;
 
-public partial class AddCustomersView : IAddCustomersView
+public partial class AddCustomersView
 {
-    public AddCustomersView(IAddCustomersViewModel viewModel)
+    public AddCustomersView()
     {
-        DataContext = viewModel;
         InitializeComponent();
-    }
-
-    public void ClearFields()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void ClearFields(params string[] fields)
-    {
-        throw new NotImplementedException();
     }
 }

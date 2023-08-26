@@ -11,8 +11,8 @@ public abstract class DbContext
 {
     protected readonly IDbStore DataStore;
 
-    protected DbContext(IDbStore dataStore)
+    protected DbContext()
     {
-        DataStore = dataStore;
+        DataStore = new DbStore("data.db");
     }
 }

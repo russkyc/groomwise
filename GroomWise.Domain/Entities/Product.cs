@@ -7,7 +7,7 @@ using GroomWise.Domain.Interfaces;
 
 namespace GroomWise.Domain.Entities;
 
-public record Product : IEntity
+public class Product : IEntity
 {
     public Guid Id { get; set; }
     public string? ProductName { get; set; }

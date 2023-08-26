@@ -3,6 +3,8 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using System.Windows;
+
 namespace GroomWise.Views.Dialogs;
 
 public partial class DialogView

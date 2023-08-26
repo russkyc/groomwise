@@ -1,35 +1,37 @@
-﻿<russkyc:ModernWindow x:Class="GroomWise.Views.Dialogs.LoginView"
-                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:app="clr-namespace:GroomWise.ViewModels.App"
-                      xmlns:converters="clr-namespace:GroomWise.Models.Converter"
-                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                      xmlns:helpers="clr-namespace:org.russkyc.moderncontrols.Helpers;assembly=Russkyc.ModernControls.WPF"
-                      xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
-                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-                      xmlns:templates="clr-namespace:GroomWise.Views.Templates"
-                      Title="LoginView"
-                      Width="660"
-                      Height="420"
-                      d:DataContext="{d:DesignInstance app:LoginViewModel,
-                                                       IsDesignTimeCreatable=True}"
-                      ExtendClientAreaToChrome="True"
-                      HideDefaultWindowTitle="True"
-                      ResizeMode="NoResize"
-                      TitleBarBackground="Transparent"
-                      Topmost="True"
-                      WindowStartupLocation="CenterScreen"
-                      mc:Ignorable="d">
+﻿<russkyc:ModernWindow
+    x:Class="GroomWise.Views.Dialogs.LoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:GroomWise.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:org.russkyc.moderncontrols.Helpers;assembly=Russkyc.ModernControls.WPF"
+    xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:templates="clr-namespace:GroomWise.Views.Templates"
+    xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
+    Title="LoginView"
+    Width="660"
+    Height="420"
+    d:DataContext="{d:DesignInstance viewModels:LoginViewModel,
+                                     IsDesignTimeCreatable=True}"
+    ExtendClientAreaToChrome="True"
+    HideDefaultWindowTitle="True"
+    ResizeMode="NoResize"
+    TitleBarBackground="Transparent"
+    Topmost="True"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
-        <Image Grid.Column="0"
-               Grid.ColumnSpan="2"
-               IsHitTestVisible="False"
-               WindowChrome.IsHitTestVisibleInChrome="False">
+        <Image
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            IsHitTestVisible="False"
+            WindowChrome.IsHitTestVisibleInChrome="False">
             <Image.Source>
                 <DrawingImage>
                     <DrawingImage.Drawing>
@@ -156,12 +158,13 @@
                                         </DrawingGroup.Transform>
                                         <GeometryDrawing Geometry="F0 M5166.66 739.258C5243.88 680.631 5376.67 695.421 5415.3 778.333C5439.14 829.507 5410.98 847.626 5392.65 840.768C5373.28 833.525 5369.92 795.783 5412.3 772.708C5458.11 747.758 5511.44 766.07 5544.28 827.92C5604.15 940.692 5686.81 930.776 5735.7 871.709C5760.58 841.648 5757.51 795.39 5732.45 779.283C5707.28 763.1 5666.22 797.755 5695.12 843.347C5740.84 915.476 5835.36 830.133 5855.73 747.946C5881.34 644.594 5900.22 516.687 6068.11 530.126C6176.41 538.796 6282.16 703.428 6386.6 546.348C6406.85 515.903 6394.77 482.765 6369.9 483.519C6336.81 484.522 6325.21 529.408 6355.73 573.91C6483.44 760.159 6658.36 572.586 6805.62 578.422C6952.88 584.258 7279.04 923.525 6887.96 1036.79C6496.88 1150.05 6289.37 1105.67 6169.49 1399.91">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="{DynamicResource primary-default}"
-                                                     EndLineCap="Round"
-                                                     LineJoin="Round"
-                                                     MiterLimit="1.5"
-                                                     StartLineCap="Round"
-                                                     Thickness="11.25" />
+                                                <Pen
+                                                    Brush="{DynamicResource primary-default}"
+                                                    EndLineCap="Round"
+                                                    LineJoin="Round"
+                                                    MiterLimit="1.5"
+                                                    StartLineCap="Round"
+                                                    Thickness="11.25" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                     </DrawingGroup>
@@ -383,11 +386,12 @@
                                         </DrawingGroup.Transform>
                                         <GeometryDrawing Geometry="F0 M120.84 194.139C114.263 210.521 103.966 223.627 91.597 228.22C79.228 232.812 56.869 250.52 66.146 262.955C75.422 275.39 87.553 278.957 81.131 284.903C74.709 290.851 53.259 308.575 67.573 318.819C76.739 325.38 85.65 325.341 85.65 325.341">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF3E3C45"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF3E3C45"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                     </DrawingGroup>
@@ -397,9 +401,10 @@
                                         </DrawingGroup.Transform>
                                         <GeometryDrawing Geometry="F0 M149.167 225.871C149.167 225.871 156.961 248.359 149.905 254.677C142.85 260.995 135.558 255.013 135.558 255.013">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF3E3C45"
-                                                     MiterLimit="2"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF3E3C45"
+                                                    MiterLimit="2"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                     </DrawingGroup>
@@ -659,407 +664,452 @@
                                         </DrawingGroup.Transform>
                                         <GeometryDrawing Geometry="F0 M92.788 412.974C124.266 413 192.282 414.524 192.282 414.524">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M91.16 351.713L146.191 356.556">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M96.384 352.173L98.874 345.464">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M100.503 352.535L102.845 345.821">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M104.622 352.897L106.815 346.18">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M108.74 353.26L110.786 346.538">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M112.859 353.622L114.757 346.896">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M116.978 353.985L118.728 347.254">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M121.097 354.348L122.698 347.612">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M125.215 354.71L126.668 347.97">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M129.334 355.072L130.639 348.328">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M133.453 355.435L134.61 348.687">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M137.572 355.797L138.581 349.044">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M141.69 356.159L142.551 349.402">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M165.447 413.749L189.935 405.499">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M175.213 202.166C175.213 202.166 170.97 199.327 165.447 203.54">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M163.099 213.298C163.28 211.778 163.916 210.239 165.048 208.8C168.068 204.964 173.155 204.296 176.41 207.31C177.574 208.387 178.347 209.79 178.72 211.323">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M275.941 208.924C278.045 218.296 277.864 229.466 269.982 229.466C257.935 229.466 253.747 206.16 253.747 206.16">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M224.223 218.701C224.223 218.701 229.658 223.697 234.96 217.813">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M237.573 247.496C241.189 241.781 243.879 238.163 243.879 238.163">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M251.91 293.512C249.269 298.433 247.744 303.285 247.744 303.285">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M136.995 211.014C139.356 210.439 141.903 211.021 143.998 212.253C146.093 213.485 147.776 215.323 149.167 217.316">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M146.191 214.23C144.985 215.03 143.941 216.16 143.531 217.548C143.121 218.936 143.457 220.591 144.574 221.51">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M203.467 296.213C197.122 304.146 192.282 310.753 192.282 310.753">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M278.414 245.271C270.995 252.366 261.551 255.515 261.551 255.515">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M276.2 254.677C272.14 258.948 264.27 262.955 264.27 262.955">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M146.191 319.942L141.313 328.601L123.574 312.25">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M130.701 318.819C130.701 318.819 123.636 318.447 119.548 315.464">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M647.086 229.99C644.645 229.97 642.33 231.203 640.626 233.006C638.921 234.808 637.776 237.142 636.956 239.567">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M639.023 235.61C640.404 236.15 641.716 237.076 642.48 238.426C643.246 239.776 643.359 241.589 642.52 242.824">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M608.188 224.105C608.188 224.105 612.431 221.267 617.953 225.479">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M375.35 433.454L388.795 424.961">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M378.785 444.925L392.738 444.925">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M632.413 385.52C632.413 385.52 635.815 401.855 654.549 402.526">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M656.1 389.429C656.1 389.429 657.638 410.817 646.405 417.896">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M552.949 305.355C552.949 305.355 556.579 309.146 559.563 305.355">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M543.189 304.952C542.947 304.952 529.799 308.434 529.799 308.434">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M562.468 297.881C562.709 297.611 574.244 293.014 574.244 293.014">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M563.678 301.645C563.919 301.483 573.195 300.419 573.195 300.419">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M546.657 307.04C546.415 307.291 536.01 314.551 536.01 314.551">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M578.998 331.67L589.681 336.941">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M509.871 308.839C516.932 316.384 521.224 319.465 521.224 319.465">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M508.831 316.525C514.377 322.957 517.755 325.878 517.755 325.878">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M628.322 339.949L634.757 343.981L648.07 319.354">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                         <GeometryDrawing Geometry="F0 M643.104 328.543C643.104 328.543 649.379 327.401 653.393 322.016">
                                             <GeometryDrawing.Pen>
-                                                <Pen Brush="#FF000000"
-                                                     EndLineCap="Round"
-                                                     MiterLimit="2"
-                                                     StartLineCap="Round"
-                                                     Thickness="0.81" />
+                                                <Pen
+                                                    Brush="#FF000000"
+                                                    EndLineCap="Round"
+                                                    MiterLimit="2"
+                                                    StartLineCap="Round"
+                                                    Thickness="0.81" />
                                             </GeometryDrawing.Pen>
                                         </GeometryDrawing>
                                     </DrawingGroup>
@@ -1070,48 +1120,54 @@
                 </DrawingImage>
             </Image.Source>
         </Image>
-        <StackPanel Grid.Column="0"
-                    Margin="22"
-                    VerticalAlignment="Bottom"
-                    Orientation="Horizontal">
+        <StackPanel
+            Grid.Column="0"
+            Margin="22"
+            VerticalAlignment="Bottom"
+            Orientation="Horizontal">
             <TextBlock Foreground="{DynamicResource bg-600}" Text="Version " />
             <TextBlock Foreground="{DynamicResource bg-600}" Text="{Binding AppVersion}" />
             <TextBlock Foreground="{DynamicResource bg-600}" Text=" © 2023 Russell Camo, Neil Ivan Nabol" />
         </StackPanel>
         <Grid Grid.Column="1">
             <StackPanel Margin="12,18" VerticalAlignment="Center">
-                <TextBlock Margin="12,0,12,0"
-                           FontSize="22"
-                           FontWeight="Medium"
-                           Foreground="{DynamicResource fg-200}"
-                           Text="Welcome Back!"
-                           TextAlignment="Center" />
-                <TextBlock Margin="12,0,12,5"
-                           Foreground="{DynamicResource fg-600}"
-                           Text="Your furry friends are waiting for you"
-                           TextAlignment="Center" />
-                <russkyc:ModernTextBox x:Name="UsernameBox"
-                                       Margin="12,12,12,0"
-                                       CornerRadius="5"
-                                       HelperText="Required"
-                                       KeyDown="UsernameBox_OnKeyDown"
-                                       LeftIcon="{icons:MaterialIconExt Kind=User}"
-                                       Placeholder="Username"
-                                       Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                <PasswordBox x:Name="PasswordBox"
-                             Margin="12,5,12,0"
-                             helpers:PasswordBoxHelper.CornerRadius="5"
-                             helpers:PasswordBoxHelper.HelperText="Required"
-                             helpers:PasswordBoxHelper.LeftIcon="{icons:MaterialIconExt Kind=Password}"
-                             helpers:PasswordBoxHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             helpers:PasswordBoxHelper.Placeholder="Password">
+                <TextBlock
+                    Margin="12,0,12,0"
+                    FontSize="22"
+                    FontWeight="Medium"
+                    Foreground="{DynamicResource fg-200}"
+                    Text="Welcome Back!"
+                    TextAlignment="Center" />
+                <TextBlock
+                    Margin="12,0,12,5"
+                    Foreground="{DynamicResource fg-600}"
+                    Text="Your furry friends are waiting for you"
+                    TextAlignment="Center" />
+                <russkyc:ModernTextBox
+                    x:Name="UsernameBox"
+                    Margin="12,12,12,0"
+                    CornerRadius="5"
+                    HelperText="Required"
+                    KeyDown="UsernameBox_OnKeyDown"
+                    LeftIcon="{icons:MaterialIconExt Kind=User}"
+                    Placeholder="Username"
+                    Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                <PasswordBox
+                    x:Name="PasswordBox"
+                    Margin="12,5,12,0"
+                    helpers:PasswordBoxHelper.CornerRadius="5"
+                    helpers:PasswordBoxHelper.HelperText="Required"
+                    helpers:PasswordBoxHelper.LeftIcon="{icons:MaterialIconExt Kind=Password}"
+                    helpers:PasswordBoxHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    helpers:PasswordBoxHelper.Placeholder="Password">
                     <PasswordBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding LoginCommand}" />
                     </PasswordBox.InputBindings>
                 </PasswordBox>
-                <ItemsControl Margin="12,5,12,0"
-                              IsTabStop="False"
-                              ItemsSource="{Binding Notifications.EditableCollectionView}">
+                <ItemsControl
+                    Margin="12,5,12,0"
+                    IsTabStop="False"
+                    ItemsSource="{Binding Notifications.EditableCollectionView}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel />
@@ -1123,12 +1179,13 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <russkyc:ModernButton Margin="12,14,12,0"
-                                      Command="{Binding LoginCommand}"
-                                      Content="Log In"
-                                      CornerRadius="5"
-                                      FontWeight="Bold"
-                                      IsEnabled="{Binding Path=HasErrors, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:InverseBooleanConverter.Instance}}" />
+                <russkyc:ModernButton
+                    Margin="12,14,12,0"
+                    Command="{Binding LoginCommand}"
+                    Content="Log In"
+                    CornerRadius="5"
+                    FontWeight="Bold"
+                    IsEnabled="{Binding Path=HasErrors, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:InverseBooleanConverter.Instance}}" />
             </StackPanel>
         </Grid>
     </Grid>

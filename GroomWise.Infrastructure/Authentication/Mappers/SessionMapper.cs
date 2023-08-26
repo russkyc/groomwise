@@ -5,14 +5,14 @@
 
 using GroomWise.Domain.Entities;
 using GroomWise.Infrastructure.Session.Entities;
-using Lombok.NET;
-using Riok.Mapperly.Abstractions;
+using Mapster;
 
 namespace GroomWise.Infrastructure.Authentication.Mappers;
 
-[Mapper]
-[Singleton]
-public partial class SessionMapper
+public static class SessionMapper
 {
-    public partial SessionInfo EmployeeToSession(Employee employee);
+    public static SessionInfo ToSession(this Employee employee)
+    {
+        return employee.Adapt<SessionInfo>();
+    }
 }
