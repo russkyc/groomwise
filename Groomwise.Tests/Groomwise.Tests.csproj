@@ -23,7 +23,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="ApplicationTests\" />
       <Folder Include="DomainTests\" />
+      <Folder Include="ServiceTests\" />
       <Folder Include="ViewModelTests\" />
     </ItemGroup>
 
