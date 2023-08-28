@@ -4,6 +4,7 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Application.Enums;
+using GroomWise.Application.Events;
 using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
@@ -13,6 +14,7 @@ using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Infrastructure.Theming.Interfaces;
 using Injectio.Attributes;
 using MvvmGen;
+using MvvmGen.Events;
 using MvvmGen.ViewModels;
 
 namespace GroomWise.Application.ViewModels;
@@ -23,6 +25,7 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(IAppServicesContainer))]
 [Inject(typeof(IConfigurationService))]
 [Inject(typeof(IThemeManagerService))]
+[Inject(typeof(IEventAggregator))]
 [Inject(typeof(DashboardViewModel))]
 [ViewModel]
 [RegisterSingleton]
@@ -63,6 +66,7 @@ public partial class AppViewModel
                 if (result.Equals(AuthenticationStatus.NotAuthenticated))
                 {
                     NavigationService.Navigate(AppViews.Login);
+                    EventAggregator.Publish(new LogoutEvent());
                 }
             }
         });

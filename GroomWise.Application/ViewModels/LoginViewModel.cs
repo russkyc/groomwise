@@ -4,6 +4,7 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Application.Enums;
+using GroomWise.Application.Events;
 using GroomWise.Application.Observables;
 using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Authentication.Enums;
@@ -11,6 +12,7 @@ using GroomWise.Infrastructure.Authentication.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using Injectio.Attributes;
 using MvvmGen;
+using MvvmGen.Events;
 using Swordfish.NET.Collections;
 
 namespace GroomWise.Application.ViewModels;
@@ -20,7 +22,7 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(INavigationService))]
 [Inject(typeof(IAuthenticationService))]
 [RegisterSingleton]
-public partial class LoginViewModel
+public partial class LoginViewModel : IEventSubscriber<LogoutEvent>
 {
     [Property]
     private string _username;
@@ -102,6 +104,22 @@ public partial class LoginViewModel
             {
                 Notifications.RemoveLast();
             }
+        });
+    }
+
+    public void OnEvent(LogoutEvent eventData)
+    {
+        Task.Run(async () =>
+        {
+            await Task.Delay(200);
+            Notifications.RemoveLast();
+            Notifications.Add(
+                new ObservableNotification
+                {
+                    Type = NotificationType.Danger,
+                    Description = "Session Ended."
+                }
+            );
         });
     }
 }

@@ -5,6 +5,7 @@
 
 using System.Threading;
 using GroomWise.Application.Enums;
+using GroomWise.Application.Extensions;
 using GroomWise.Infrastructure.Configuration.Interfaces;
 using GroomWise.Infrastructure.IoC.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
@@ -31,6 +32,7 @@ public partial class App
             .AddGroomWiseInfrastructure()
             .AddGroomWiseApplication()
             .AddGroomWise()
+            .AddEventAggregator()
             .BuildServiceProvider();
 
         var scope = container.GetService<IAppServicesContainer>();
