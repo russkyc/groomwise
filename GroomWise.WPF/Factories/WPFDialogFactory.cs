@@ -5,15 +5,16 @@
 
 using System.Threading.Tasks;
 using System.Windows;
-using GroomWise.Domain.Interfaces;
-using GroomWise.Infrastructure.Navigation;
+using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Views.Dialogs;
+using Injectio.Attributes;
 
 namespace GroomWise.Factories;
 
+[RegisterSingleton<IDialogFactory,WPFDialogFactory>]
 public class WPFDialogFactory : IDialogFactory
 {
-    public bool? Create(string messageBoxText, string caption)
+    public bool? Create(string messageBoxText, string caption, INavigationService navigationService)
     {
         return Task.Run(async () =>
         {
@@ -21,7 +22,7 @@ public class WPFDialogFactory : IDialogFactory
             {
                 var dialog = new DialogView(messageBoxText, caption);
                 dialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                dialog.Owner = (Window)NavigationService.Instance?.CurrentWindow!;
+                dialog.Owner = (Window)navigationService.CurrentWindow!;
                 return dialog.ShowDialog();
             });
         }).Result;

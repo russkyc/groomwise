@@ -4,12 +4,13 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Domain.Entities;
+using Injectio.Attributes;
 using Russkyc.DependencyInjection.Attributes;
 using Russkyc.DependencyInjection.Enums;
 
 namespace GroomWise.Infrastructure.Database;
 
-[Service(Scope.Singleton)]
+[RegisterSingleton]
 public class GroomWiseDbContext : DbContext
 {
     public GroomWiseDbContext()

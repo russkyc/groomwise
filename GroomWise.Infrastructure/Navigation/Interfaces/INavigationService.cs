@@ -7,9 +7,10 @@ namespace GroomWise.Infrastructure.Navigation.Interfaces;
 
 public interface INavigationService
 {
-    static INavigationService Instance { get; }
     IWindow CurrentWindow { get; }
+    IPage CurrentPage { get; }
     void Add(Enum key, IWindow instance);
     void Add(Enum key, IPage instance);
     void Navigate(Enum key);
+    void Initialize(SynchronizationContext? context, IWindow? mainWindow);
 }

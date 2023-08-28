@@ -8,15 +8,16 @@ using System.Linq;
 using System.Windows.Input;
 using GroomWise.Application.ViewModels;
 using GroomWise.Infrastructure.Navigation.Interfaces;
+using Injectio.Attributes;
 using Russkyc.DependencyInjection.Attributes;
 using Russkyc.DependencyInjection.Enums;
 
 namespace GroomWise.Views.Dialogs;
 
-[Service(Scope.Singleton)]
+[RegisterSingleton]
 public partial class LoginView : IWindow
 {
-    public LoginView(ILoginViewModel vm)
+    public LoginView(LoginViewModel vm)
     {
         DataContext = vm;
         InitializeComponent();

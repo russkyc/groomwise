@@ -4,20 +4,32 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Application.Enums;
-using GroomWise.Domain.Interfaces;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
-using GroomWise.Infrastructure.Navigation;
+using GroomWise.Infrastructure.Navigation.Interfaces;
+using Injectio.Attributes;
 using MvvmGen;
+using MvvmGen.ViewModels;
 
 namespace GroomWise.Application.ViewModels;
 
 [Inject(typeof(IAuthenticationService))]
 [Inject(typeof(IDialogFactory))]
+[Inject(typeof(INavigationService))]
+[Inject(typeof(DashboardViewModel))]
 [ViewModel]
 [ViewModelGenerateInterface]
+[RegisterSingleton]
 public partial class AppViewModel
 {
+    [Property]
+    private ViewModelBase _pageContext;
+
+    partial void OnInitialize()
+    {
+        PageContext = DashboardViewModel;
+    }
+
     [Command]
     private async Task Logout()
     {
@@ -25,7 +37,8 @@ public partial class AppViewModel
         {
             var dialogResult = DialogFactory.Create(
                 "GroomWise",
-                "Are you sure you want to log out?"
+                "Are you sure you want to log out?",
+                NavigationService
             );
 
             if (dialogResult == true)
@@ -35,7 +48,7 @@ public partial class AppViewModel
                 await Task.Delay(500);
                 if (result.Equals(AuthenticationStatus.NotAuthenticated))
                 {
-                    NavigationService.Instance?.Navigate(NavigationPage.Login);
+                    NavigationService.Navigate(AppViews.Login);
                 }
             }
         });

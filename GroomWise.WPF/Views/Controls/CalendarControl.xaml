@@ -111,7 +111,7 @@
         <ItemsControl
             Grid.Row="2"
             Margin="5"
-            ItemsSource="{Binding Dates.EditableCollectionView, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}">
+            ItemsSource="{Binding Dates, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="7" />

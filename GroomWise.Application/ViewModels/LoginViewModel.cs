@@ -8,7 +8,8 @@ using GroomWise.Application.Observables;
 using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
-using GroomWise.Infrastructure.Navigation;
+using GroomWise.Infrastructure.Navigation.Interfaces;
+using Injectio.Attributes;
 using MvvmGen;
 using Swordfish.NET.Collections;
 
@@ -16,7 +17,9 @@ namespace GroomWise.Application.ViewModels;
 
 [ViewModel]
 [ViewModelGenerateInterface]
+[Inject(typeof(INavigationService))]
 [Inject(typeof(IAuthenticationService))]
+[RegisterSingleton]
 public partial class LoginViewModel
 {
     [Property]
@@ -86,7 +89,7 @@ public partial class LoginViewModel
 
             await Task.Delay(1000);
             Notifications.RemoveLast();
-            NavigationService.Instance?.Navigate(NavigationPage.Main);
+            NavigationService.Navigate(AppViews.Main);
         });
     }
 

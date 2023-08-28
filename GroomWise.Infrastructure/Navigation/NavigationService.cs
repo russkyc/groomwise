@@ -4,27 +4,18 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Infrastructure.Navigation.Interfaces;
+using Injectio.Attributes;
 
 namespace GroomWise.Infrastructure.Navigation;
 
+[RegisterSingleton<INavigationService, NavigationService>]
 public class NavigationService : INavigationService
 {
-    private readonly SynchronizationContext? _synchronizationContext;
-    private readonly Dictionary<Enum, object?>? _views;
-    private static INavigationService? _instance;
+    private SynchronizationContext? _synchronizationContext;
+    private Dictionary<Enum, object?>? _views;
     private static IWindow? _currentWindow;
+    private static IPage _currentPage;
     private static readonly object Lock = new();
-
-    public static INavigationService? Instance
-    {
-        get
-        {
-            lock (Lock)
-            {
-                return _instance;
-            }
-        }
-    }
 
     public IWindow CurrentWindow
     {
@@ -37,13 +28,21 @@ public class NavigationService : INavigationService
         }
     }
 
-    public NavigationService(SynchronizationContext? context, IWindow? mainWindow)
+    public IPage CurrentPage
     {
-        if (context is not null)
+        get
         {
-            _synchronizationContext = context;
-            _views = new();
-            _currentWindow = mainWindow;
+            lock (Lock)
+            {
+                return _currentPage;
+            }
+        }
+        private set
+        {
+            lock (Lock)
+            {
+                _currentPage = value;
+            }
         }
     }
 
@@ -62,22 +61,31 @@ public class NavigationService : INavigationService
         _synchronizationContext?.Send(
             _ =>
             {
-                if (_views?[key] is IWindow window)
+                var view = _views?[key];
+                if (view is IWindow window)
                 {
                     window.Show();
                     _currentWindow?.Hide();
                     _currentWindow = window;
+                    return;
+                }
+
+                if (view is IPage page)
+                {
+                    CurrentPage = page;
                 }
             },
             null
         );
     }
 
-    public static void Initialize(SynchronizationContext context, IWindow currentWindow)
+    public void Initialize(SynchronizationContext? context, IWindow? mainWindow)
     {
-        lock (Lock)
+        if (context is not null)
         {
-            _instance = new NavigationService(context, currentWindow);
+            _synchronizationContext = context;
+            _views = new();
+            _currentWindow = mainWindow;
         }
     }
 }

@@ -3,9 +3,11 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Domain.Interfaces;
+namespace GroomWise.Application.Enums;
 
-public interface IDialogFactory
+public enum AppViews
 {
-    bool? Create(string messageBoxText, string caption);
+    Login,
+    Main,
+    Dashboard
 }

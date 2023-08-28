@@ -5,6 +5,7 @@
 
 using System.Reflection;
 using GroomWise.Infrastructure.Encryption.Interfaces;
+using Injectio.Attributes;
 using NETCore.Encrypt;
 using NETCore.Encrypt.Extensions;
 using Russkyc.DependencyInjection.Attributes;
@@ -12,7 +13,7 @@ using Russkyc.DependencyInjection.Enums;
 
 namespace GroomWise.Infrastructure.Encryption;
 
-[Service(Scope.Singleton, Registration.AsSelfAndInterfaces)]
+[RegisterSingleton<IEncryptionService, EncryptionService>]
 public class EncryptionService : IEncryptionService
 {
     public EncryptionService()

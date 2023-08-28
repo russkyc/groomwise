@@ -90,11 +90,13 @@ public partial class CalendarControl
                         date.Month == DateTime.Today.Month
                         && date.Year == DateTime.Today.Year
                         && date.Day == DateTime.Today.Day;
-                    var calendarDate = new CalendarDate()
-                        .WithDate(dateIndex)
-                        .WithDateInfo(date)
-                        .WithSelected(isCurrentDate)
-                        .WithCurrentDate(isCurrentDate);
+                    var calendarDate = new CalendarDate
+                    {
+                        Date = dateIndex,
+                        DateInfo = date,
+                        Selected = isCurrentDate,
+                        CurrentDate = isCurrentDate
+                    };
                     tasks.Add(Task.FromResult(calendarDate));
                     dateIndex++;
                 }
@@ -133,21 +135,11 @@ public partial class CalendarControl
     }
 }
 
-[With]
-public partial class CalendarDate
+public class CalendarDate
 {
-    [Property]
-    private int _date;
-
-    [Property]
-    private DateTime _dateInfo;
-
-    [Property]
-    private bool _hasAppointment;
-
-    [Property]
-    private bool _selected;
-
-    [Property]
-    private bool _currentDate;
+    public int Date { get; init; }
+    public DateTime DateInfo { get; init; }
+    public bool HasAppointment { get; set; }
+    public bool Selected { get; init; }
+    public bool CurrentDate { get; init; }
 }

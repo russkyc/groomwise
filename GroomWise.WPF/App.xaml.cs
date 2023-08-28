@@ -4,13 +4,11 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using System.Threading;
-using System.Windows.Navigation;
 using GroomWise.Application.Enums;
-using GroomWise.Containers;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Views;
 using GroomWise.Views.Dialogs;
-using NavigationService = GroomWise.Infrastructure.Navigation.NavigationService;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GroomWise;
 
@@ -25,18 +23,24 @@ public partial class App
     public App()
     {
         InitializeComponent();
-        var container = new ServiceProvider();
+
+        var services = new ServiceCollection()
+            .AddGroomWiseInfrastructure()
+            .AddGroomWiseApplication()
+            .AddGroomWise();
+        var container = services.BuildServiceProvider();
 
         var main = container.GetService<MainView>();
         var login = container.GetService<LoginView>();
+        var navigation = container.GetService<INavigationService>();
 
         Current.MainWindow = login;
 
         Current.Dispatcher.BeginInvoke(() =>
         {
-            NavigationService.Initialize(SynchronizationContext.Current!, login);
-            NavigationService.Instance?.Add(NavigationPage.Login, login);
-            NavigationService.Instance?.Add(NavigationPage.Main, main);
+            navigation?.Initialize(SynchronizationContext.Current!, login!);
+            navigation?.Add(AppViews.Login, login!);
+            navigation?.Add(AppViews.Main, main!);
         });
         MainWindow?.Show();
     }

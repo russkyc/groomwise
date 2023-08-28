@@ -6,13 +6,15 @@
 using System;
 using GroomWise.Application.ViewModels;
 using GroomWise.Infrastructure.Navigation.Interfaces;
+using Injectio.Attributes;
 using org.russkyc.moderncontrols;
 
 namespace GroomWise.Views;
 
+[RegisterSingleton]
 public partial class MainView : ModernWindow, IWindow
 {
-    public MainView(IAppViewModel vm)
+    public MainView(AppViewModel vm)
     {
         DataContext = vm;
         InitializeComponent();

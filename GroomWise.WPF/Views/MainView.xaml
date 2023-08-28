@@ -5,7 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:pages="clr-namespace:GroomWise.Views.Pages"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:services="clr-namespace:GroomWise.Infrastructure.Navigation;assembly=GroomWise.Infrastructure"
     xmlns:templates="clr-namespace:GroomWise.Views.Templates"
     xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
     Title="GroomWise"
@@ -154,6 +156,12 @@
                 PressedForeground="{DynamicResource inverted-default}"
                 ToolTip="Settings" />
         </Grid>
-        <ContentControl Grid.Column="1" Content="{Binding View, UpdateSourceTrigger=PropertyChanged}" />
+        <ContentControl Grid.Column="1" Content="{Binding PageContext}">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type viewModels:DashboardViewModel}">
+                    <pages:DashboardView />
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
     </Grid>
 </russkyc:ModernWindow>

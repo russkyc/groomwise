@@ -3,20 +3,18 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using GroomWise.Domain.Entities;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
 using GroomWise.Infrastructure.Authentication.Mappers;
 using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.Encryption.Interfaces;
 using GroomWise.Infrastructure.Session.Entities;
-using Russkyc.DependencyInjection.Attributes;
-using Russkyc.DependencyInjection.Enums;
+using Injectio.Attributes;
 using Role = GroomWise.Domain.Enums.Role;
 
 namespace GroomWise.Infrastructure.Authentication;
 
-[Service(Scope.Singleton, Registration.AsSelfAndInterfaces)]
+[RegisterSingleton<IAuthenticationService, AuthenticationService>]
 public class AuthenticationService : IAuthenticationService
 {
     private object _lock = new();
