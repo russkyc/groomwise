@@ -63,10 +63,8 @@
         <None Update="data.db">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
-    </ItemGroup>
-    <ItemGroup>
-        <None Update="appconfig.ini">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        <None Update="appconfig.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>
 

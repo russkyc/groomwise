@@ -7,8 +7,10 @@ using GroomWise.Application.Enums;
 using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
+using GroomWise.Infrastructure.Configuration.Interfaces;
 using GroomWise.Infrastructure.IoC.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
+using GroomWise.Infrastructure.Theming.Interfaces;
 using Injectio.Attributes;
 using MvvmGen;
 using MvvmGen.ViewModels;
@@ -19,11 +21,16 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(IDialogFactory))]
 [Inject(typeof(INavigationService))]
 [Inject(typeof(IAppServicesContainer))]
+[Inject(typeof(IConfigurationService))]
+[Inject(typeof(IThemeManagerService))]
 [Inject(typeof(DashboardViewModel))]
 [ViewModel]
 [RegisterSingleton]
 public partial class AppViewModel
 {
+    [Property]
+    private IConfigurationService _configuration;
+
     [Property]
     private ViewModelBase _pageContext;
 
@@ -33,6 +40,7 @@ public partial class AppViewModel
     partial void OnInitialize()
     {
         PageContext = DashboardViewModel;
+        Configuration = ConfigurationService;
         AuthenticatedUserRoles = AuthenticationService.GetSession()?.Roles!;
     }
 
@@ -71,6 +79,34 @@ public partial class AppViewModel
                 {
                     PageContext = viewModel;
                 }
+            }
+        });
+    }
+
+    [Command]
+    public async Task SetDarkTheme(object param)
+    {
+        await Task.Run(() =>
+        {
+            if (param is bool useDarkTheme)
+            {
+                Configuration.DarkMode = true;
+                OnPropertyChanged(nameof(Configuration.DarkMode));
+                ThemeManagerService.SetDarkTheme(useDarkTheme);
+            }
+        });
+    }
+
+    [Command]
+    public async Task SetColorTheme(object param)
+    {
+        await Task.Run(() =>
+        {
+            if (param is string themeId)
+            {
+                Configuration.ColorTheme = themeId;
+                OnPropertyChanged(nameof(Configuration.ColorTheme));
+                ThemeManagerService.SetColorTheme(themeId);
             }
         });
     }

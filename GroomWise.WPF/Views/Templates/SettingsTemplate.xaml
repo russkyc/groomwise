@@ -6,11 +6,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
+    xmlns:views="clr-namespace:GroomWise.Views"
     d:DataContext="{d:DesignInstance viewModels:AppViewModel,
                                      IsDesignTimeCreatable=True}"
     d:DesignWidth="700"
+    DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType=views:MainView}}"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <system:Boolean x:Key="False">False</system:Boolean>
+            <system:Boolean x:Key="True">True</system:Boolean>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <StackPanel>
         <Grid>
             <!--  Header Template  -->
@@ -121,11 +130,11 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     CheckedBackground="{DynamicResource bg-300}"
-                    Command="{Binding DataContext.SwitchBaseThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                    Command="{Binding SetDarkThemeCommand}"
                     CommandParameter="{StaticResource True}"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding ThemeManagerService.DarkMode, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    IsChecked="{Binding Configuration.DarkMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -143,11 +152,11 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     CheckedBackground="{DynamicResource bg-300}"
-                    Command="{Binding DataContext.SwitchBaseThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                    Command="{Binding SetDarkThemeCommand}"
                     CommandParameter="{StaticResource False}"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding ThemeManagerService.DarkMode, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:InverseBooleanConverter.Instance}}"
+                    IsChecked="{Binding Configuration.DarkMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:InverseBooleanConverter.Instance}}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -186,11 +195,11 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     CheckedBackground="{DynamicResource bg-300}"
-                    Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                    Command="{Binding SetColorThemeCommand}"
                     CommandParameter="Gray"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Gray}"
+                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Gray}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -208,11 +217,11 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     CheckedBackground="{DynamicResource bg-300}"
-                    Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                    Command="{Binding SetColorThemeCommand}"
                     CommandParameter="Blue"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Blue}"
+                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Blue}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -230,11 +239,11 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     CheckedBackground="{DynamicResource bg-300}"
-                    Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                    Command="{Binding SetColorThemeCommand}"
                     CommandParameter="Purple"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Purple}"
+                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Purple}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -252,11 +261,11 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     CheckedBackground="{DynamicResource bg-300}"
-                    Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                    Command="{Binding SetColorThemeCommand}"
                     CommandParameter="Pink"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Pink}"
+                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Pink}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -274,11 +283,11 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     CheckedBackground="{DynamicResource bg-300}"
-                    Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                    Command="{Binding SetColorThemeCommand}"
                     CommandParameter="Red"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Red}"
+                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Red}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -296,11 +305,11 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     CheckedBackground="{DynamicResource bg-300}"
-                    Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                    Command="{Binding SetColorThemeCommand}"
                     CommandParameter="Orange"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Orange}"
+                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Orange}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -318,11 +327,11 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     CheckedBackground="{DynamicResource bg-300}"
-                    Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                    Command="{Binding SetColorThemeCommand}"
                     CommandParameter="Yellow"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Yellow}"
+                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Yellow}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -340,11 +349,11 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     CheckedBackground="{DynamicResource bg-300}"
-                    Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                    Command="{Binding SetColorThemeCommand}"
                     CommandParameter="Lime"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Lime}"
+                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Lime}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -362,11 +371,11 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     CheckedBackground="{DynamicResource bg-300}"
-                    Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                    Command="{Binding SetColorThemeCommand}"
                     CommandParameter="Green"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Green}"
+                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Green}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -384,11 +393,11 @@
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     CheckedBackground="{DynamicResource bg-300}"
-                    Command="{Binding DataContext.SwitchColorThemeCommand, RelativeSource={RelativeSource FindAncestor, AncestorLevel=2, AncestorType={x:Type UserControl}}}"
+                    Command="{Binding SetColorThemeCommand}"
                     CommandParameter="Teal"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding ThemeManagerService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Teal}"
+                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Teal}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"

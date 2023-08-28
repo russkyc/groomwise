@@ -3,15 +3,18 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using System.ComponentModel;
 using GroomWise.Infrastructure.Configuration.Interfaces;
+using Injectio.Attributes;
 using Russkyc.Configuration;
 
 namespace GroomWise.Infrastructure.Configuration;
 
+[RegisterSingleton<IConfigurationService, ConfigurationService>]
 public class ConfigurationService : ConfigProvider, IConfigurationService
 {
-    public ConfigurationService(string path)
-        : base(path) { }
+    public ConfigurationService()
+        : base("appconfig.json") { }
 
     public bool DarkMode
     {

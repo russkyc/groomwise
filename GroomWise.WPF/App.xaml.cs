@@ -5,8 +5,10 @@
 
 using System.Threading;
 using GroomWise.Application.Enums;
+using GroomWise.Infrastructure.Configuration.Interfaces;
 using GroomWise.Infrastructure.IoC.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
+using GroomWise.Infrastructure.Theming.Interfaces;
 using GroomWise.Views;
 using GroomWise.Views.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,12 +27,12 @@ public partial class App
     {
         InitializeComponent();
 
-        var services = new ServiceCollection()
+        var container = new ServiceCollection()
             .AddGroomWiseInfrastructure()
             .AddGroomWiseApplication()
-            .AddGroomWise();
+            .AddGroomWise()
+            .BuildServiceProvider();
 
-        var container = services.BuildServiceProvider();
         var scope = container.GetService<IAppServicesContainer>();
         scope?.AddContainer(container);
 
@@ -38,26 +40,24 @@ public partial class App
         var login = scope?.GetService<LoginView>();
         var navigation = scope?.GetService<INavigationService>();
 
-        Current.MainWindow = login;
-
-        Current.Dispatcher.BeginInvoke(() =>
+        Dispatcher.BeginInvoke(() =>
         {
             navigation?.Initialize(SynchronizationContext.Current!, login!);
             navigation?.Add(AppViews.Login, login!);
             navigation?.Add(AppViews.Main, main!);
         });
+
+        // Load Theme Defaults
+        var config = scope?.GetService<IConfigurationService>();
+        var themeManager = scope?.GetService<IThemeManagerService>();
+
+        if (config is not null && themeManager is not null)
+        {
+            themeManager.SetDarkTheme(config.DarkMode);
+            themeManager.SetColorTheme(config.ColorTheme);
+        }
+
+        MainWindow = login;
         MainWindow?.Show();
     }
-
-    /*protected override void OnStartup(StartupEventArgs e)
-    {
-        base.OnStartup(e);
-
-        // Set the maximum amount of memory that the application can use to 2 GB for x86 and 4 GB for x64.
-        IntPtr maxWorkingSet = new IntPtr(
-            (IntPtr.Size == 4) ? (int)(1.5 * 1024 * 1024 * 1024) : 4L * 1024L * 1024L * 1024L
-        );
-
-        Process.GetCurrentProcess().MaxWorkingSet = maxWorkingSet;
-    }*/
 }

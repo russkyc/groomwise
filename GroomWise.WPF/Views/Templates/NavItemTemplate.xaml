@@ -28,7 +28,7 @@
             GroupName="NavItemGroup"
             HoverBackground="{DynamicResource bg-200}"
             HoverForeground="{DynamicResource bg-600}"
-            IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}"
+            IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource FindAncestor, AncestorType=templates:NavItemTemplate}}"
             PressedForeground="{DynamicResource inverted-default}"
             ToolTip="{Binding Tooltip, RelativeSource={RelativeSource FindAncestor, AncestorType=templates:NavItemTemplate}}" />
     </Grid>

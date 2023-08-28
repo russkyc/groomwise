@@ -2,6 +2,7 @@
     x:Class="GroomWise.Views.MainView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:GroomWise.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -100,13 +101,13 @@
                     Margin="5"
                     Padding="6"
                     CheckedForeground="{DynamicResource inverted-lighten-3}"
-                    Command="{Binding SwitchBaseThemeCommand}"
+                    Command="{Binding SetDarkThemeCommand}"
                     CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
                     Content="{icons:MaterialIconExt Kind=Lightbulb}"
                     CornerRadius="5"
                     DefaultForeground="{DynamicResource fg-600}"
                     HoverForeground="{DynamicResource fg-500}"
-                    IsChecked="{Binding ThemeManagerService.DarkMode, UpdateSourceTrigger=PropertyChanged}" />
+                    IsChecked="{Binding Configuration.DarkMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </Grid>
     </russkyc:ModernWindow.TitleBarTemplate>
@@ -127,31 +128,37 @@
                     Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt Home}"
                     PageContext="{x:Type viewModels:DashboardViewModel}"
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:DashboardViewModel}, Mode=OneWay}"
                     Tooltip="Home" />
                 <templates:NavItemTemplate
                     Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt Event}"
                     PageContext="{x:Type viewModels:AppointmentViewModel}"
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:AppointmentViewModel}, Mode=OneWay}"
                     Tooltip="Appointments" />
                 <templates:NavItemTemplate
                     Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt Shower}"
                     PageContext="{x:Type viewModels:GroomingServiceViewModel}"
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:GroomingServiceViewModel}, Mode=OneWay}"
                     Tooltip="Services" />
                 <templates:NavItemTemplate
                     Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt Person}"
                     PageContext="{x:Type viewModels:CustomerViewModel}"
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:CustomerViewModel}, Mode=OneWay}"
                     Tooltip="Customers" />
                 <templates:NavItemTemplate
                     Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt PeopleGroup}"
                     PageContext="{x:Type viewModels:EmployeeViewModel}"
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:EmployeeViewModel}, Mode=OneWay}"
                     Tooltip="Employees" />
                 <templates:NavItemTemplate
                     Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt Pets}"
                     PageContext="{x:Type viewModels:PetViewModel}"
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:PetViewModel}, Mode=OneWay}"
                     Tooltip="Pets" />
             </StackPanel>
             <templates:NavItemTemplate
@@ -159,6 +166,7 @@
                 VerticalAlignment="Bottom"
                 Icon="{icons:MaterialIconExt Settings}"
                 PageContext="{x:Type viewModels:SettingsViewModel}"
+                Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:SettingsViewModel}, Mode=OneWay}"
                 Tooltip="Settings" />
         </Grid>
         <ContentControl Grid.Column="1" Content="{Binding PageContext}">

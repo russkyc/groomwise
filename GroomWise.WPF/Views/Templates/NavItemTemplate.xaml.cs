@@ -22,6 +22,9 @@ public partial class NavItemTemplate
     [DependencyProperty(typeof(string))]
     public static readonly DependencyProperty TooltipProperty;
 
+    [DependencyProperty(typeof(bool))]
+    public static readonly DependencyProperty SelectedProperty;
+
     [DependencyProperty(typeof(Type))]
     public static readonly DependencyProperty PageContextProperty;
 }
