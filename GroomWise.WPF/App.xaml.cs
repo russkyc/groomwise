@@ -5,6 +5,7 @@
 
 using System.Threading;
 using GroomWise.Application.Enums;
+using GroomWise.Infrastructure.IoC.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Views;
 using GroomWise.Views.Dialogs;
@@ -28,11 +29,14 @@ public partial class App
             .AddGroomWiseInfrastructure()
             .AddGroomWiseApplication()
             .AddGroomWise();
-        var container = services.BuildServiceProvider();
 
-        var main = container.GetService<MainView>();
-        var login = container.GetService<LoginView>();
-        var navigation = container.GetService<INavigationService>();
+        var container = services.BuildServiceProvider();
+        var scope = container.GetService<IAppServicesContainer>();
+        scope?.AddContainer(container);
+
+        var main = scope?.GetService<MainView>();
+        var login = scope?.GetService<LoginView>();
+        var navigation = scope?.GetService<INavigationService>();
 
         Current.MainWindow = login;
 

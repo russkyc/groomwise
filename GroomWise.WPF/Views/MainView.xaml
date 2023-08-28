@@ -119,47 +119,70 @@
             Grid.Column="0"
             HorizontalAlignment="Stretch"
             Background="{DynamicResource bg-100}">
-            <ItemsControl VerticalAlignment="Top" ItemsSource="{Binding Path=NavItems.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            Orientation="Vertical" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemContainerStyle>
-                    <Style>
-                        <Setter Property="FrameworkElement.Margin" Value="8,8,8,0" />
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <templates:NavItemTemplate />
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <russkyc:ModernRadioButton
-                Width="40"
-                Height="40"
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Orientation="Vertical">
+                <templates:NavItemTemplate
+                    Margin="8,8,8,0"
+                    Icon="{icons:MaterialIconExt Home}"
+                    PageContext="{x:Type viewModels:DashboardViewModel}"
+                    Tooltip="Home" />
+                <templates:NavItemTemplate
+                    Margin="8,8,8,0"
+                    Icon="{icons:MaterialIconExt Event}"
+                    PageContext="{x:Type viewModels:AppointmentViewModel}"
+                    Tooltip="Appointments" />
+                <templates:NavItemTemplate
+                    Margin="8,8,8,0"
+                    Icon="{icons:MaterialIconExt Shower}"
+                    PageContext="{x:Type viewModels:GroomingServiceViewModel}"
+                    Tooltip="Services" />
+                <templates:NavItemTemplate
+                    Margin="8,8,8,0"
+                    Icon="{icons:MaterialIconExt Person}"
+                    PageContext="{x:Type viewModels:CustomerViewModel}"
+                    Tooltip="Customers" />
+                <templates:NavItemTemplate
+                    Margin="8,8,8,0"
+                    Icon="{icons:MaterialIconExt PeopleGroup}"
+                    PageContext="{x:Type viewModels:EmployeeViewModel}"
+                    Tooltip="Employees" />
+                <templates:NavItemTemplate
+                    Margin="8,8,8,0"
+                    Icon="{icons:MaterialIconExt Pets}"
+                    PageContext="{x:Type viewModels:PetViewModel}"
+                    Tooltip="Pets" />
+            </StackPanel>
+            <templates:NavItemTemplate
                 Margin="8"
-                Padding="4"
-                HorizontalAlignment="Stretch"
                 VerticalAlignment="Bottom"
-                Command="{Binding Path=DataContext.OpenSettingsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type russkyc:ModernWindow}}}"
-                Content="{icons:MaterialIconExt Kind=Settings}"
-                CornerRadius="10"
-                DefaultForeground="{DynamicResource bg-600}"
-                GroupName="NavItemGroup"
-                HoverBackground="{DynamicResource bg-200}"
-                HoverForeground="{DynamicResource bg-600}"
-                PressedForeground="{DynamicResource inverted-default}"
-                ToolTip="Settings" />
+                Icon="{icons:MaterialIconExt Settings}"
+                PageContext="{x:Type viewModels:SettingsViewModel}"
+                Tooltip="Settings" />
         </Grid>
         <ContentControl Grid.Column="1" Content="{Binding PageContext}">
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type viewModels:DashboardViewModel}">
                     <pages:DashboardView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:AppointmentViewModel}">
+                    <pages:AppointmentsView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:GroomingServiceViewModel}">
+                    <pages:ServicesView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:CustomerViewModel}">
+                    <pages:CustomersView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:EmployeeViewModel}">
+                    <pages:EmployeesView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:PetViewModel}">
+                    <pages:PetsView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
+                    <pages:SettingsView />
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>

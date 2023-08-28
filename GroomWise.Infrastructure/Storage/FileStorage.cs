@@ -4,21 +4,17 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Infrastructure.Storage.Interfaces;
+using Injectio.Attributes;
 using LiteDB;
 using Russkyc.DependencyInjection.Attributes;
 using Russkyc.DependencyInjection.Enums;
 
 namespace GroomWise.Infrastructure.Storage;
 
-[Service(Scope.Singleton, Registration.AsInterfaces)]
+[RegisterSingleton<IFileStorage, FileStorage>]
 public class FileStorage : IFileStorage
 {
-    private ILiteDatabase _db;
-
-    public FileStorage(string dbConnectionString)
-    {
-        _db = new LiteDatabase(dbConnectionString);
-    }
+    private readonly ILiteDatabase _db = new LiteDatabase("storage.db");
 
     public void Upload(string id, string path)
     {

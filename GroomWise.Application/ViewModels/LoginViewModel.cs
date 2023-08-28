@@ -84,10 +84,10 @@ public partial class LoginViewModel
                 }
             );
 
-            Username = string.Empty;
             Password = string.Empty;
+            Username = string.Empty;
 
-            await Task.Delay(1000);
+            await Task.Delay(300);
             Notifications.RemoveLast();
             NavigationService.Navigate(AppViews.Main);
         });

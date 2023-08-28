@@ -9,6 +9,5 @@ using MvvmGen;
 namespace GroomWise.Application.ViewModels;
 
 [ViewModel]
-[ViewModelGenerateInterface]
 [RegisterSingleton]
 public partial class DashboardViewModel { }

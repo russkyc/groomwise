@@ -4,12 +4,11 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Infrastructure.Logging.Interfaces;
-using Russkyc.DependencyInjection.Attributes;
-using Russkyc.DependencyInjection.Enums;
+using Injectio.Attributes;
 
 namespace GroomWise.Infrastructure.Logging;
 
-[Service(Scope.Singleton, Registration.AsInterfaces)]
+[RegisterSingleton<ILogger, ConsoleLogger>]
 public class ConsoleLogger : ILogger
 {
     public void Log(string message, string? sender = null)

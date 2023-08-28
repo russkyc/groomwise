@@ -9,6 +9,7 @@ using GroomWise.Application.Observables;
 using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.Logging.Interfaces;
 using GroomWise.Infrastructure.Storage.Interfaces;
+using Injectio.Attributes;
 using MvvmGen;
 
 namespace GroomWise.Application.ViewModels;
@@ -18,6 +19,7 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(ILogger))]
 [Inject(typeof(IFileStorage))]
 [Inject(typeof(GroomWiseDbContext))]
+[RegisterSingleton]
 public partial class AppointmentViewModel
 {
     [Property]
@@ -31,7 +33,7 @@ public partial class AppointmentViewModel
 
     partial void OnInitialize()
     {
-        PopulateCollections();
+        // PopulateCollections();
     }
 
     private void PopulateCollections()

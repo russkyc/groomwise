@@ -3,10 +3,11 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Application.Enums;
+using Injectio.Attributes;
+using MvvmGen;
 
-public enum AppViews
-{
-    Login,
-    Main
-}
+namespace GroomWise.Application.ViewModels;
+
+[ViewModel]
+[RegisterSingleton]
+public partial class SettingsViewModel { }

@@ -20,9 +20,9 @@
             Padding="4"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            Command="{Binding Path=DataContext.GetViewCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type russkyc:ModernWindow}}}"
-            CommandParameter="{Binding .DataContext, RelativeSource={RelativeSource AncestorType=UserControl}, UpdateSourceTrigger=PropertyChanged}"
-            Content="{Binding Icon, UpdateSourceTrigger=PropertyChanged}"
+            Command="{Binding Path=DataContext.NavigateToPageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type russkyc:ModernWindow}}}"
+            CommandParameter="{Binding PageContext, RelativeSource={RelativeSource FindAncestor, AncestorType=templates:NavItemTemplate}}"
+            Content="{Binding Icon, RelativeSource={RelativeSource FindAncestor, AncestorType=templates:NavItemTemplate}}"
             CornerRadius="10"
             DefaultForeground="{DynamicResource bg-600}"
             GroupName="NavItemGroup"
@@ -30,6 +30,6 @@
             HoverForeground="{DynamicResource bg-600}"
             IsChecked="{Binding Selected, UpdateSourceTrigger=PropertyChanged}"
             PressedForeground="{DynamicResource inverted-default}"
-            ToolTip="{Binding Name}" />
+            ToolTip="{Binding Tooltip, RelativeSource={RelativeSource FindAncestor, AncestorType=templates:NavItemTemplate}}" />
     </Grid>
 </UserControl>

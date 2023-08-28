@@ -11,11 +11,23 @@ namespace GroomWise.Infrastructure.Authentication.Interfaces;
 
 public interface IAuthenticationService
 {
-    void Register(string username, string password, Role role = Role.User, Guid? employeeId = null);
+    void Register(
+        string username,
+        string password,
+        Guid? employeeId = null,
+        params Role[] roles
+    );
 
+    void Register(string username, string password, params Role[] roles);
     AuthenticationStatus Login(string username, string password);
 
-    UpdateStatus Update(string username, string password, string newUsername, string newPassword);
+    UpdateStatus Update(
+        string username,
+        string password,
+        string newUsername,
+        string newPassword,
+        params Role[] roles
+    );
 
     AuthenticationStatus Logout();
     SessionInfo? GetSession();

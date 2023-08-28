@@ -6,10 +6,10 @@
 using System.Collections.ObjectModel;
 using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
-using GroomWise.Domain.Entities;
 using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.Logging.Interfaces;
 using GroomWise.Infrastructure.Storage.Interfaces;
+using Injectio.Attributes;
 using MvvmGen;
 
 namespace GroomWise.Application.ViewModels;
@@ -19,6 +19,7 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(ILogger))]
 [Inject(typeof(IFileStorage))]
 [Inject(typeof(GroomWiseDbContext))]
+[RegisterSingleton]
 public partial class CustomerViewModel
 {
     [Property]
@@ -29,7 +30,7 @@ public partial class CustomerViewModel
 
     partial void OnInitialize()
     {
-        PopulateCollections();
+        // PopulateCollections();
     }
 
     private void PopulateCollections()

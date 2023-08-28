@@ -7,6 +7,7 @@ using GroomWise.Application.Enums;
 using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
+using GroomWise.Infrastructure.IoC.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using Injectio.Attributes;
 using MvvmGen;
@@ -17,9 +18,9 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(IAuthenticationService))]
 [Inject(typeof(IDialogFactory))]
 [Inject(typeof(INavigationService))]
+[Inject(typeof(IAppServicesContainer))]
 [Inject(typeof(DashboardViewModel))]
 [ViewModel]
-[ViewModelGenerateInterface]
 [RegisterSingleton]
 public partial class AppViewModel
 {
@@ -50,10 +51,25 @@ public partial class AppViewModel
             {
                 var result = AuthenticationService.Logout();
 
-                await Task.Delay(500);
+                await Task.Delay(300);
                 if (result.Equals(AuthenticationStatus.NotAuthenticated))
                 {
                     NavigationService.Navigate(AppViews.Login);
+                }
+            }
+        });
+    }
+
+    [Command]
+    private async Task NavigateToPage(object param)
+    {
+        await Task.Run(() =>
+        {
+            if (param is Type type)
+            {
+                if (AppServicesContainer.GetService(type) is ViewModelBase viewModel)
+                {
+                    PageContext = viewModel;
                 }
             }
         });

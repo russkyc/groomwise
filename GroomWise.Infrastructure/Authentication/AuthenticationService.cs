@@ -31,14 +31,18 @@ public class AuthenticationService : IAuthenticationService
     public void Register(
         string username,
         string password,
-        Role role = Role.User,
-        Guid? employeeId = null
+        Guid? employeeId = null,
+        params Role[] roles
     )
     {
         var account = new Account();
         account.Username = _encryptionService.Hash(username);
         account.Password = _encryptionService.Hash(password);
-        account.Roles.Add(role);
+
+        foreach (var role in roles)
+        {
+            account.Roles.Add(role);
+        }
 
         if (employeeId is not null)
         {
@@ -51,6 +55,11 @@ public class AuthenticationService : IAuthenticationService
         }
 
         _dbContext.Accounts.Insert(account);
+    }
+
+    public void Register(string username, string password, params Role[] roles)
+    {
+        Register(username, password, null, roles);
     }
 
     public AuthenticationStatus Login(string username, string password)
@@ -80,7 +89,8 @@ public class AuthenticationService : IAuthenticationService
         string username,
         string password,
         string newUsername,
-        string newPassword
+        string newPassword,
+        params Role[] roles
     )
     {
         var account = _dbContext.Accounts.Get(
@@ -109,6 +119,11 @@ public class AuthenticationService : IAuthenticationService
         if (executeUpdate)
         {
             return UpdateStatus.Success;
+        }
+
+        foreach (var role in roles)
+        {
+            account.Roles.Add(role);
         }
 
         return UpdateStatus.Fail;
