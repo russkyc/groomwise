@@ -84,7 +84,7 @@ public partial class AppViewModel
     }
 
     [Command]
-    public async Task SetDarkTheme(object param)
+    private async Task SetDarkTheme(object param)
     {
         await Task.Run(() =>
         {
@@ -98,7 +98,7 @@ public partial class AppViewModel
     }
 
     [Command]
-    public async Task SetColorTheme(object param)
+    private async Task SetColorTheme(object param)
     {
         await Task.Run(() =>
         {
