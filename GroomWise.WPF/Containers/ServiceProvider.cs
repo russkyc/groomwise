@@ -31,5 +31,5 @@ namespace GroomWise.Containers;
 [Singleton<ILoginViewModel, LoginViewModel>]
 [Singleton<IAppViewModel, AppViewModel>]
 // Factory
-[Singleton<IDialogFactory, DialogFactory>]
+[Singleton<IDialogFactory, WPFDialogFactory>]
 public partial class ServiceProvider { }

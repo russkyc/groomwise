@@ -11,7 +11,7 @@ using GroomWise.Views.Dialogs;
 
 namespace GroomWise.Factories;
 
-public class DialogFactory : IDialogFactory
+public class WPFDialogFactory : IDialogFactory
 {
     public bool? Create(string messageBoxText, string caption)
     {
