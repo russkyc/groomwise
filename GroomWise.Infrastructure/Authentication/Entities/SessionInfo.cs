@@ -3,11 +3,9 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using GroomWise.Domain.Entities;
-using GroomWise.Domain.Interfaces;
-using LiteDB;
+using GroomWise.Domain.Enums;
 
-namespace GroomWise.Infrastructure.Session.Entities;
+namespace GroomWise.Infrastructure.Authentication.Entities;
 
 public record SessionInfo
 {

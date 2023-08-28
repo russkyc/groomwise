@@ -4,8 +4,8 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Domain.Enums;
+using GroomWise.Infrastructure.Authentication.Entities;
 using GroomWise.Infrastructure.Authentication.Enums;
-using GroomWise.Infrastructure.Session.Entities;
 
 namespace GroomWise.Infrastructure.Authentication.Interfaces;
 

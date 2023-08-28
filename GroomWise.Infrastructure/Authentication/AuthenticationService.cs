@@ -3,12 +3,12 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using GroomWise.Infrastructure.Authentication.Entities;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
 using GroomWise.Infrastructure.Authentication.Mappers;
 using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.Encryption.Interfaces;
-using GroomWise.Infrastructure.Session.Entities;
 using Injectio.Attributes;
 using Role = GroomWise.Domain.Enums.Role;
 

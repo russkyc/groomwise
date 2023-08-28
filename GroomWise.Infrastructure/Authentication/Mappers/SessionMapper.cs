@@ -4,7 +4,7 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Domain.Entities;
-using GroomWise.Infrastructure.Session.Entities;
+using GroomWise.Infrastructure.Authentication.Entities;
 using Mapster;
 
 namespace GroomWise.Infrastructure.Authentication.Mappers;

@@ -4,6 +4,7 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Application.Enums;
+using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
@@ -25,9 +26,13 @@ public partial class AppViewModel
     [Property]
     private ViewModelBase _pageContext;
 
+    [Property]
+    private IList<Role> _authenticatedUserRoles;
+
     partial void OnInitialize()
     {
         PageContext = DashboardViewModel;
+        AuthenticatedUserRoles = AuthenticationService.GetSession()?.Roles!;
     }
 
     [Command]

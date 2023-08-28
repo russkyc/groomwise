@@ -14,7 +14,6 @@ public class NavigationService : INavigationService
     private SynchronizationContext? _synchronizationContext;
     private Dictionary<Enum, object?>? _views;
     private static IWindow? _currentWindow;
-    private static IPage _currentPage;
     private static readonly object Lock = new();
 
     public IWindow CurrentWindow
@@ -28,35 +27,12 @@ public class NavigationService : INavigationService
         }
     }
 
-    public IPage CurrentPage
-    {
-        get
-        {
-            lock (Lock)
-            {
-                return _currentPage;
-            }
-        }
-        private set
-        {
-            lock (Lock)
-            {
-                _currentPage = value;
-            }
-        }
-    }
-
     public void Add(Enum key, IWindow instance)
     {
         _views?.Add(key, instance);
     }
 
-    public void Add(Enum key, IPage instance)
-    {
-        _views?.Add(key, instance);
-    }
-
-    public void Navigate(Enum key)
+    public void Navigate(Enum key, bool hidePrevious = true)
     {
         _synchronizationContext?.Send(
             _ =>
@@ -65,14 +41,14 @@ public class NavigationService : INavigationService
                 if (view is IWindow window)
                 {
                     window.Show();
-                    _currentWindow?.Hide();
-                    _currentWindow = window;
-                    return;
-                }
-
-                if (view is IPage page)
-                {
-                    CurrentPage = page;
+                    lock (Lock)
+                    {
+                        if (hidePrevious)
+                        {
+                            _currentWindow?.Hide();
+                        }
+                        _currentWindow = window;
+                    }
                 }
             },
             null
