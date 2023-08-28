@@ -14,16 +14,9 @@ public partial class ObservableCustomer
 {
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
     private Guid _id;
-    public string FullName => $"{FirstName} {LastName}";
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private string _firstName;
-
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private string _middleName;
-
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private string _lastName;
+    private string _fullName;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
     private string _address;

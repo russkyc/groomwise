@@ -14,16 +14,8 @@ public class Appointment : IEntity
     public Guid Id { get; set; }
     public DateTime? Date { get; set; }
     public AppointmentStatus? Status { get; set; }
-
-    [BsonRef("groomingServices")]
     public GroomingService? Service { get; set; }
-
-    [BsonRef("pets")]
     public Pet? Pet { get; set; }
-
-    [BsonRef("customers")]
     public Customer? Customer { get; set; }
-
-    [BsonRef("employees")]
     public IList<Employee>? Employees { get; set; }
 }

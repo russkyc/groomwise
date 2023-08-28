@@ -11,6 +11,7 @@ using GroomWise.Infrastructure.Logging.Interfaces;
 using GroomWise.Infrastructure.Storage.Interfaces;
 using Injectio.Attributes;
 using MvvmGen;
+using Swordfish.NET.Collections;
 
 namespace GroomWise.Application.ViewModels;
 
@@ -26,14 +27,14 @@ public partial class AppointmentViewModel
     private ObservableAppointment _activeAppointment;
 
     [Property]
-    private ObservableCollection<ObservableAppointment> _appointments;
+    private ConcurrentObservableCollection<ObservableAppointment> _appointments;
 
     [Property]
-    private ObservableCollection<ObservableGroomingService> _groomingServices;
+    private ConcurrentObservableCollection<ObservableGroomingService> _groomingServices;
 
     partial void OnInitialize()
     {
-        // PopulateCollections();
+        PopulateCollections();
     }
 
     private void PopulateCollections()
@@ -46,7 +47,9 @@ public partial class AppointmentViewModel
             .GetAll()
             .Select(GroomingServiceMapper.ToObservable);
 
-        Appointments = new ObservableCollection<ObservableAppointment>(appointments);
-        GroomingServices = new ObservableCollection<ObservableGroomingService>(groomingServices);
+        Appointments = new ConcurrentObservableCollection<ObservableAppointment>(appointments);
+        GroomingServices = new ConcurrentObservableCollection<ObservableGroomingService>(
+            groomingServices
+        );
     }
 }

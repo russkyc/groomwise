@@ -15,7 +15,5 @@ public class Pet : IEntity
     public int? Age { get; set; }
     public string? Breed { get; set; }
     public int? Gender { get; set; }
-
-    [BsonRef("customers")]
     public IList<Customer> Owner { get; set; }
 }

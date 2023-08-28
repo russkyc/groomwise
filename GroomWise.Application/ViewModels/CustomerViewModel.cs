@@ -11,6 +11,7 @@ using GroomWise.Infrastructure.Logging.Interfaces;
 using GroomWise.Infrastructure.Storage.Interfaces;
 using Injectio.Attributes;
 using MvvmGen;
+using Swordfish.NET.Collections;
 
 namespace GroomWise.Application.ViewModels;
 
@@ -26,23 +27,22 @@ public partial class CustomerViewModel
     private ObservableCustomer _activeCustomer;
 
     [Property]
-    private ObservableCollection<ObservableCustomer> _customers;
+    private ConcurrentObservableCollection<ObservableCustomer> _customers;
 
     partial void OnInitialize()
     {
-        // PopulateCollections();
+        PopulateCollections();
     }
 
     private void PopulateCollections()
     {
         var customers = GroomWiseDbContext!.Customers.GetAll().Select(CustomerMapper.ToObservable);
-        Customers = new ObservableCollection<ObservableCustomer>(customers);
+        Customers = new ConcurrentObservableCollection<ObservableCustomer>(customers);
     }
 
     private async Task CreateCustomer()
     {
-        ActiveCustomer = new();
-        await Task.CompletedTask;
+        await Task.Run(() => ActiveCustomer = new());
     }
 
     [Command]
