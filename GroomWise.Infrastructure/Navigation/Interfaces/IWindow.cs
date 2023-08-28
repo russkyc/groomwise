@@ -3,12 +3,10 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Infrastructure.Authentication.Enums;
+namespace GroomWise.Infrastructure.Navigation.Interfaces;
 
-public enum AuthenticationStatus
+public interface IWindow
 {
-    InvalidPassword,
-    InvalidAccount,
-    Authenticated,
-    NotAuthenticated
+    void Show();
+    void Hide();
 }

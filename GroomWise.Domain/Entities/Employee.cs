@@ -26,7 +26,4 @@ public record Employee : IEntity
 
     [BsonRef("appointments")]
     public IList<Appointment>? Appointments { get; set; }
-
-    [BsonRef("roles")]
-    public IList<Role>? Roles { get; set; }
 }

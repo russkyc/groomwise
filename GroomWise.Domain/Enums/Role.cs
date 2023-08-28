@@ -3,12 +3,13 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-namespace GroomWise.Infrastructure.Authentication.Enums;
+namespace GroomWise.Domain.Enums;
 
-public enum AuthenticationStatus
+public enum Role
 {
-    InvalidPassword,
-    InvalidAccount,
-    Authenticated,
-    NotAuthenticated
+    Admin,
+    Manager,
+    Groomer,
+    User,
+    Custom
 }

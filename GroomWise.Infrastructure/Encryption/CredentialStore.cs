@@ -13,19 +13,18 @@ public partial class CredentialStore
 {
     public void Save(string key, string value)
     {
-        using var credential = new Credential
-        {
-            Target = key,
-            Password = value,
-            Type = CredentialType.Generic,
-            PersistanceType = PersistanceType.LocalComputer
-        };
+        using var credential = new Credential();
+        credential.Target = key;
+        credential.Password = value;
+        credential.Type = CredentialType.Generic;
+        credential.PersistanceType = PersistanceType.LocalComputer;
         credential.Save();
     }
 
     public string Get(string key)
     {
-        using var credential = new Credential { Target = key };
+        using var credential = new Credential();
+        credential.Target = key;
         credential.Load();
         return credential.Password;
     }

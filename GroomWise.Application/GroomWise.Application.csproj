@@ -22,6 +22,12 @@
     <ItemGroup>
       <ProjectReference Include="..\GroomWise.Infrastructure\GroomWise.Infrastructure.csproj" />
 
+
+
+
+
+
+
     </ItemGroup>
 
 

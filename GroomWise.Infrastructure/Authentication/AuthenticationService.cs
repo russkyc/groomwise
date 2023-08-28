@@ -12,6 +12,7 @@ using GroomWise.Infrastructure.Encryption.Interfaces;
 using GroomWise.Infrastructure.Session.Entities;
 using Russkyc.DependencyInjection.Attributes;
 using Russkyc.DependencyInjection.Enums;
+using Role = GroomWise.Domain.Enums.Role;
 
 namespace GroomWise.Infrastructure.Authentication;
 
@@ -29,21 +30,27 @@ public class AuthenticationService : IAuthenticationService
         _encryptionService = encryptionService;
     }
 
-    public void Register(string username, string password, Guid employeeId)
+    public void Register(
+        string username,
+        string password,
+        Role role = Role.User,
+        Guid? employeeId = null
+    )
     {
-        var employee = _dbContext.Employees.Get(employee => employee.Id.Equals(employeeId));
+        var account = new Account();
+        account.Username = _encryptionService.Hash(username);
+        account.Password = _encryptionService.Hash(password);
+        account.Roles.Add(role);
 
-        if (employee is null)
+        if (employeeId is not null)
         {
-            return;
+            var employee = _dbContext.Employees.Get(employee => employee.Id.Equals(employeeId));
+
+            if (employee is not null)
+            {
+                account.Employee = employee;
+            }
         }
-
-        var account = new Account
-        {
-            Username = _encryptionService.Hash(username),
-            Password = _encryptionService.Hash(password),
-            Employee = employee
-        };
 
         _dbContext.Accounts.Insert(account);
     }
@@ -71,11 +78,11 @@ public class AuthenticationService : IAuthenticationService
         return AuthenticationStatus.Authenticated;
     }
 
-    public string Update(
+    public UpdateStatus Update(
         string username,
         string password,
-        string newUsername = "",
-        string newPassword = ""
+        string newUsername,
+        string newPassword
     )
     {
         var account = _dbContext.Accounts.Get(
@@ -86,7 +93,7 @@ public class AuthenticationService : IAuthenticationService
 
         if (account is null)
         {
-            return "Account does not exist.";
+            return UpdateStatus.InvalidAccount;
         }
 
         if (!string.IsNullOrEmpty(username))
@@ -99,18 +106,23 @@ public class AuthenticationService : IAuthenticationService
             account.Password = _encryptionService.Hash(newPassword);
         }
 
-        _dbContext.Accounts.Update(account.Id, account);
+        bool executeUpdate = _dbContext.Accounts.Update(account.Id, account);
 
-        return "Account successfully updated";
+        if (executeUpdate)
+        {
+            return UpdateStatus.Success;
+        }
+
+        return UpdateStatus.Fail;
     }
 
-    public string Logout()
+    public AuthenticationStatus Logout()
     {
         lock (_lock)
         {
             _sessionInfo = null!;
         }
-        return "Logout successful.";
+        return AuthenticationStatus.NotAuthenticated;
     }
 
     public SessionInfo? GetSession()

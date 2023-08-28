@@ -3,15 +3,14 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using System;
-using System.Diagnostics;
-using System.Reflection;
-using System.Windows;
-using GroomWise.Application.ViewModels;
+using System.Threading;
+using System.Windows.Navigation;
+using GroomWise.Application.Enums;
 using GroomWise.Containers;
+using GroomWise.Infrastructure.Navigation.Interfaces;
+using GroomWise.Views;
 using GroomWise.Views.Dialogs;
-using Russkyc.DependencyInjection.Helpers;
-using Russkyc.DependencyInjection.Implementations;
+using NavigationService = GroomWise.Infrastructure.Navigation.NavigationService;
 
 namespace GroomWise;
 
@@ -26,14 +25,19 @@ public partial class App
     public App()
     {
         InitializeComponent();
-        /*var container = new ServicesCollection()
-            .AddServicesFromAssembly(Assembly.Load("GroomWise.Domain"))
-            .AddServicesFromAssembly(Assembly.Load("GroomWise.Infrastructure"))
-            .AddServicesFromAssembly(Assembly.Load("GroomWise.Application"))
-            .AddServices()
-            .Build();*/
         var container = new ServiceProvider();
-        Current.MainWindow = container.GetService<LoginView>();
+
+        var main = container.GetService<MainView>();
+        var login = container.GetService<LoginView>();
+
+        Current.MainWindow = login;
+
+        Current.Dispatcher.BeginInvoke(() =>
+        {
+            NavigationService.Initialize(SynchronizationContext.Current!, login);
+            NavigationService.Instance?.Add(NavigationPage.Login, login);
+            NavigationService.Instance?.Add(NavigationPage.Main, main);
+        });
         MainWindow?.Show();
     }
 

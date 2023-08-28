@@ -51,7 +51,7 @@
                 Grid.Column="1"
                 Margin="7"
                 Padding="5"
-                Command="{Binding ((viewModels:LoginViewModel)DataContext).RemoveNotificationCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernWindow}}"
+                Command="{Binding Path=DataContext.(viewModels:LoginViewModel.RemoveNotificationCommand), RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernWindow}}"
                 CommandParameter="{Binding}"
                 Content="{icons:MaterialIconExt Kind=Close}">
                 <russkyc:ModernButton.Style>

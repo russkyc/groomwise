@@ -3,10 +3,12 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using GroomWise.Application.Enums;
 using GroomWise.Application.Observables;
 using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
+using GroomWise.Infrastructure.Navigation;
 using MvvmGen;
 using Swordfish.NET.Collections;
 
@@ -37,7 +39,7 @@ public partial class LoginViewModel
     [Command]
     private async Task Login()
     {
-        await Task.Run(() =>
+        await Task.Run(async () =>
         {
             var result = AuthenticationService.Login(Username, Password);
 
@@ -78,7 +80,13 @@ public partial class LoginViewModel
                     Description = "Login successful."
                 }
             );
-            Task.Delay(500);
+
+            Username = string.Empty;
+            Password = string.Empty;
+
+            await Task.Delay(1000);
+            Notifications.RemoveLast();
+            NavigationService.Instance?.Navigate(NavigationPage.Main);
         });
     }
 

@@ -7,13 +7,14 @@ using System;
 using System.Linq;
 using System.Windows.Input;
 using GroomWise.Application.ViewModels;
+using GroomWise.Infrastructure.Navigation.Interfaces;
 using Russkyc.DependencyInjection.Attributes;
 using Russkyc.DependencyInjection.Enums;
 
 namespace GroomWise.Views.Dialogs;
 
 [Service(Scope.Singleton)]
-public partial class LoginView
+public partial class LoginView : IWindow
 {
     public LoginView(ILoginViewModel vm)
     {

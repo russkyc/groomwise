@@ -3,6 +3,7 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Session.Entities;
 
@@ -10,16 +11,12 @@ namespace GroomWise.Infrastructure.Authentication.Interfaces;
 
 public interface IAuthenticationService
 {
-    void Register(string username, string password, Guid employeeId);
+    void Register(string username, string password, Role role = Role.User, Guid? employeeId = null);
+
     AuthenticationStatus Login(string username, string password);
 
-    string Update(
-        string username,
-        string password,
-        string newUsername = "",
-        string newPassword = ""
-    );
+    UpdateStatus Update(string username, string password, string newUsername, string newPassword);
 
-    string Logout();
+    AuthenticationStatus Logout();
     SessionInfo? GetSession();
 }

@@ -5,10 +5,9 @@
 
 namespace GroomWise.Infrastructure.Authentication.Enums;
 
-public enum AuthenticationStatus
+public enum UpdateStatus
 {
-    InvalidPassword,
     InvalidAccount,
-    Authenticated,
-    NotAuthenticated
+    Success,
+    Fail
 }

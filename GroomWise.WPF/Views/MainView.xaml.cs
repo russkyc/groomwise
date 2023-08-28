@@ -4,14 +4,17 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using System;
-using System.ComponentModel;
+using GroomWise.Application.ViewModels;
+using GroomWise.Infrastructure.Navigation.Interfaces;
+using org.russkyc.moderncontrols;
 
 namespace GroomWise.Views;
 
-public partial class MainView
+public partial class MainView : ModernWindow, IWindow
 {
-    public MainView()
+    public MainView(IAppViewModel vm)
     {
+        DataContext = vm;
         InitializeComponent();
     }
 

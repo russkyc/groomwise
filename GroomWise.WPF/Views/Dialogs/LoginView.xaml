@@ -1152,18 +1152,19 @@
                     LeftIcon="{icons:MaterialIconExt Kind=User}"
                     Placeholder="Username"
                     Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
-                <PasswordBox
+                <russkyc:ModernTextBox
                     x:Name="PasswordBox"
                     Margin="12,5,12,0"
-                    helpers:PasswordBoxHelper.CornerRadius="5"
-                    helpers:PasswordBoxHelper.HelperText="Required"
-                    helpers:PasswordBoxHelper.LeftIcon="{icons:MaterialIconExt Kind=Password}"
-                    helpers:PasswordBoxHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    helpers:PasswordBoxHelper.Placeholder="Password">
-                    <PasswordBox.InputBindings>
+                    CornerRadius="5"
+                    HelperText="Required"
+                    IsPasswordBox="True"
+                    LeftIcon="{icons:MaterialIconExt Kind=Password}"
+                    Placeholder="Password"
+                    Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <russkyc:ModernTextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding LoginCommand}" />
-                    </PasswordBox.InputBindings>
-                </PasswordBox>
+                    </russkyc:ModernTextBox.InputBindings>
+                </russkyc:ModernTextBox>
                 <ItemsControl
                     Margin="12,5,12,0"
                     IsTabStop="False"
@@ -1184,8 +1185,7 @@
                     Command="{Binding LoginCommand}"
                     Content="Log In"
                     CornerRadius="5"
-                    FontWeight="Bold"
-                    IsEnabled="{Binding Path=HasErrors, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:InverseBooleanConverter.Instance}}" />
+                    FontWeight="Bold" />
             </StackPanel>
         </Grid>
     </Grid>
