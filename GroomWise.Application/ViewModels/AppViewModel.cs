@@ -96,7 +96,7 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
         {
             if (param is bool useDarkTheme)
             {
-                ConfigurationService.DarkMode = true;
+                ConfigurationService.DarkMode = useDarkTheme;
                 ThemeManagerService.SetDarkTheme(useDarkTheme);
                 OnPropertyChanged(nameof(ConfigurationService.DarkMode));
             }

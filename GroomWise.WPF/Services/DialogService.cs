@@ -10,7 +10,7 @@ using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Views.Dialogs;
 using Injectio.Attributes;
 
-namespace GroomWise.Factories;
+namespace GroomWise.Services;
 
 [RegisterSingleton<IDialogService, DialogService>]
 public class DialogService : IDialogService
@@ -23,6 +23,7 @@ public class DialogService : IDialogService
                 () =>
                     new DialogView(messageBoxText, caption)
                     {
+                        ShowInTaskbar = false,
                         WindowStartupLocation = WindowStartupLocation.CenterOwner,
                         Owner = (Window)navigationService.CurrentWindow!
                     }.ShowDialog()
@@ -45,7 +46,9 @@ public class DialogService : IDialogService
                     { } window
                 )
                 {
+                    var owner = navigationService.CurrentWindow as Window;
                     window.Close();
+                    owner!.Focus();
                 }
             });
         });
@@ -61,9 +64,10 @@ public class DialogService : IDialogService
                 {
                     new AddAppointmentsView(viewModel)
                     {
+                        ShowInTaskbar = false,
                         WindowStartupLocation = WindowStartupLocation.CenterOwner,
                         Owner = (Window)navigationService.CurrentWindow!
-                    }.ShowDialog();
+                    }.Show();
                 }
             });
         });
