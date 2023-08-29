@@ -48,7 +48,8 @@ public partial class CustomerViewModel
         {
             var customers = GroomWiseDbContext!.Customers
                 .GetAll()
-                .Select(CustomerMapper.ToObservable);
+                .Select(CustomerMapper.ToObservable)
+                .OrderBy(customer => customer.FullName);
             Customers = new ConcurrentObservableCollection<ObservableCustomer>(customers);
         });
     }

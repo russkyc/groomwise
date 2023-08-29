@@ -4,13 +4,10 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using System;
-using System.Linq;
 using System.Windows.Input;
 using GroomWise.Application.ViewModels;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using Injectio.Attributes;
-using Russkyc.DependencyInjection.Attributes;
-using Russkyc.DependencyInjection.Enums;
 
 namespace GroomWise.Views.Dialogs;
 
@@ -22,22 +19,13 @@ public partial class LoginView : IWindow
         DataContext = vm;
         InitializeComponent();
         ClearFields();
+        UsernameBox.Focus();
     }
 
     public void ClearFields()
     {
         UsernameBox.Clear();
         PasswordBox.Clear();
-        UsernameBox.Focus();
-    }
-
-    public void ClearFields(params string[] fields)
-    {
-        if (fields.Any(field => UsernameBox.Name.Contains(field)))
-            UsernameBox.Clear();
-        if (fields.Any(field => PasswordBox.Name.Contains(field)))
-            PasswordBox.Clear();
-        UsernameBox.Focus();
     }
 
     protected override void OnClosed(EventArgs e)

@@ -12,6 +12,7 @@
     Width="600"
     d:DataContext="{d:DesignInstance viewModels:CustomerViewModel,
                                      IsDesignTimeCreatable=True}"
+    FocusManager.FocusedElement="{Binding ElementName=FullNameTextBox}"
     NoDecorations="True"
     ResizeMode="NoResize"
     SizeToContent="Height"
@@ -37,6 +38,7 @@
             VerticalAlignment="Top">
             <Grid>
                 <russkyc:ModernTextBox
+                    Name="FullNameTextBox"
                     Margin="0,0,0,0"
                     CornerRadius="5"
                     HelperText="Max Length (200)"
