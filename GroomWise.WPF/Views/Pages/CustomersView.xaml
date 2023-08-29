@@ -65,7 +65,7 @@
                 <russkyc:ModernButton
                     Grid.Column="3"
                     HorizontalAlignment="Right"
-                    Command="{Binding AddCustomerCommand}"
+                    Command="{Binding CreateCustomerCommand}"
                     Content="Add Customer"
                     CornerRadius="5"
                     FontWeight="Medium"

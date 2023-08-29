@@ -44,19 +44,24 @@ public partial class AppointmentViewModel
         ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
     }
 
-    private void PopulateCollections()
+    private async void PopulateCollections()
     {
-        var appointments = GroomWiseDbContext.Appointments
-            .GetAll()
-            .Select(AppointmentMapper.ToObservable)
-            .OrderBy(appointment => appointment.Date);
+        await Task.Run(() =>
+        {
+            var appointments = GroomWiseDbContext.Appointments
+                .GetMultiple(appointment => appointment.Date >= DateTime.Today)
+                .Select(AppointmentMapper.ToObservable)
+                .OrderBy(appointment => appointment.Date);
 
-        var services = GroomWiseDbContext.GroomingServices
-            .GetAll()
-            .Select(GroomingServiceMapper.ToObservable);
+            var services = GroomWiseDbContext.GroomingServices
+                .GetAll()
+                .Select(GroomingServiceMapper.ToObservable);
 
-        Appointments = new ConcurrentObservableCollection<ObservableAppointment>(appointments);
-        GroomingServices = new ConcurrentObservableCollection<ObservableGroomingService>(services);
+            Appointments = new ConcurrentObservableCollection<ObservableAppointment>(appointments);
+            GroomingServices = new ConcurrentObservableCollection<ObservableGroomingService>(
+                services
+            );
+        });
     }
 
     [Command]
@@ -82,9 +87,6 @@ public partial class AppointmentViewModel
             {
                 var appointment = ActiveAppointment.ToEntity();
                 GroomWiseDbContext.Appointments.Insert(appointment);
-                ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
-                OnPropertyChanged(nameof(ActiveAppointment.Date));
-                PopulateCollections();
                 DialogService.CloseDialogs(NavigationService);
                 EventAggregator.Publish(
                     new PublishNotificationEvent(
@@ -92,6 +94,9 @@ public partial class AppointmentViewModel
                         NotificationType.Success
                     )
                 );
+                ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
+                OnPropertyChanged(nameof(ActiveAppointment.Date));
+                PopulateCollections();
             }
         });
     }

@@ -4,13 +4,17 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using System.Collections.ObjectModel;
+using GroomWise.Application.Events;
 using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
+using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.Logging.Interfaces;
+using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Infrastructure.Storage.Interfaces;
 using Injectio.Attributes;
 using MvvmGen;
+using MvvmGen.Events;
 using Swordfish.NET.Collections;
 
 namespace GroomWise.Application.ViewModels;
@@ -19,6 +23,9 @@ namespace GroomWise.Application.ViewModels;
 [ViewModelGenerateInterface]
 [Inject(typeof(ILogger))]
 [Inject(typeof(IFileStorage))]
+[Inject(typeof(IEventAggregator))]
+[Inject(typeof(IDialogService))]
+[Inject(typeof(INavigationService))]
 [Inject(typeof(GroomWiseDbContext))]
 [RegisterSingleton]
 public partial class CustomerViewModel
@@ -31,25 +38,65 @@ public partial class CustomerViewModel
 
     partial void OnInitialize()
     {
+        ActiveCustomer = new ObservableCustomer();
         PopulateCollections();
     }
 
-    private void PopulateCollections()
+    private async void PopulateCollections()
     {
-        var customers = GroomWiseDbContext!.Customers.GetAll().Select(CustomerMapper.ToObservable);
-        Customers = new ConcurrentObservableCollection<ObservableCustomer>(customers);
+        await Task.Run(() =>
+        {
+            var customers = GroomWiseDbContext!.Customers
+                .GetAll()
+                .Select(CustomerMapper.ToObservable);
+            Customers = new ConcurrentObservableCollection<ObservableCustomer>(customers);
+        });
     }
 
+    [Command]
     private async Task CreateCustomer()
     {
-        await Task.Run(() => ActiveCustomer = new());
+        await Task.Run(() =>
+        {
+            DialogService.CreateAddCustomersDialog(this, NavigationService);
+        });
     }
 
     [Command]
     private async Task SaveCustomer()
     {
-        await Task.Run(() => GroomWiseDbContext!.Customers.Insert(ActiveCustomer.ToEntity()));
-        await CreateCustomer();
+        await Task.Run(() =>
+        {
+            var dialogResult = DialogService.Create(
+                "GroomWise",
+                "Save Customer?",
+                NavigationService
+            );
+            if (dialogResult is true)
+            {
+                if (string.IsNullOrEmpty(ActiveCustomer.FullName))
+                {
+                    EventAggregator.Publish(
+                        new PublishNotificationEvent(
+                            "Customer name cannot be empty.",
+                            NotificationType.Danger
+                        )
+                    );
+                    return;
+                }
+                var customer = ActiveCustomer.ToEntity();
+                GroomWiseDbContext.Customers.Insert(customer);
+                DialogService.CloseDialogs(NavigationService);
+                EventAggregator.Publish(
+                    new PublishNotificationEvent(
+                        $"Customer {ActiveCustomer.FullName} added.",
+                        NotificationType.Success
+                    )
+                );
+                ActiveCustomer = new ObservableCustomer();
+                PopulateCollections();
+            }
+        });
     }
 
     [Command]
@@ -59,7 +106,7 @@ public partial class CustomerViewModel
         {
             await Task.Run(
                 () =>
-                    GroomWiseDbContext!.Customers.Update(
+                    GroomWiseDbContext.Customers.Update(
                         observableCustomer.Id,
                         observableCustomer.ToEntity()
                     )
@@ -72,7 +119,7 @@ public partial class CustomerViewModel
     {
         if (param is ObservableCustomer observableCustomer)
         {
-            await Task.Run(() => GroomWiseDbContext!.Customers.Delete(observableCustomer.Id));
+            await Task.Run(() => GroomWiseDbContext.Customers.Delete(observableCustomer.Id));
         }
     }
 }
