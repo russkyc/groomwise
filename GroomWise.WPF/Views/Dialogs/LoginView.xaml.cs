@@ -4,6 +4,8 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using System;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using GroomWise.Application.ViewModels;
 using GroomWise.Infrastructure.Navigation.Interfaces;
@@ -18,14 +20,7 @@ public partial class LoginView : IWindow
     {
         DataContext = vm;
         InitializeComponent();
-        ClearFields();
         UsernameBox.Focus();
-    }
-
-    public void ClearFields()
-    {
-        UsernameBox.Clear();
-        PasswordBox.Clear();
     }
 
     protected override void OnClosed(EventArgs e)
@@ -39,5 +34,13 @@ public partial class LoginView : IWindow
     {
         if (keyEventArgs.Key == Key.Enter)
             PasswordBox.Focus();
+    }
+
+    private void PasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)
+    {
+        if (DataContext != null)
+        {
+            ((dynamic)DataContext).Password = ((PasswordBox)sender).Password;
+        }
     }
 }

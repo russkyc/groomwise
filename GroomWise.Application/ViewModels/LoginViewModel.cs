@@ -19,6 +19,7 @@ namespace GroomWise.Application.ViewModels;
 
 [ViewModel]
 [ViewModelGenerateInterface]
+[Inject(typeof(IEventAggregator))]
 [Inject(typeof(INavigationService))]
 [Inject(typeof(IAuthenticationService))]
 [RegisterSingleton]
@@ -118,6 +119,7 @@ public partial class LoginViewModel : IEventSubscriber<LogoutEvent>
 
             await Task.Delay(300);
             Notifications.RemoveLast();
+            EventAggregator.Publish(new LoginEvent());
             NavigationService.Navigate(AppViews.Main);
         });
     }

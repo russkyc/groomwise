@@ -67,6 +67,7 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
                 await Task.Delay(300);
                 if (result.Equals(AuthenticationStatus.NotAuthenticated))
                 {
+                    DialogService.CloseDialogs(NavigationService);
                     NavigationService.Navigate(AppViews.Login);
                     EventAggregator.Publish(new LogoutEvent());
                 }

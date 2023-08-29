@@ -505,13 +505,43 @@
                     Grid.Row="0"
                     Margin="0,0,0,12"
                     FontSize="16"
-                    Text="Status" />
-                <Border
-                    Grid.Row="1"
-                    Background="{DynamicResource bg-100}"
-                    CornerRadius="10">
-                    <Grid Height="200" HorizontalAlignment="Stretch" />
-                </Border>
+                    Text="Upcoming" />
+                <ItemsControl Grid.Row="1" ItemsSource="{Binding Appointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <templates:DashboardNotificationTemplate />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="{x:Type FrameworkElement}">
+                            <Setter Property="Margin" Value="0,0,0,10" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+
+                    <ItemsControl.Template>
+                        <ControlTemplate TargetType="ItemsControl">
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                                <ScrollViewer
+                                    Padding="{TemplateBinding Padding}"
+                                    CanContentScroll="True"
+                                    Focusable="False"
+                                    VerticalScrollBarVisibility="Auto">
+                                    <ItemsPresenter />
+                                </ScrollViewer>
+                            </Border>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+                </ItemsControl>
             </Grid>
         </Grid>
         <Grid Grid.Column="1" Margin="0,20,16,16">
@@ -537,44 +567,6 @@
                         <controls:CalendarControl Margin="4" />
                     </Grid>
                 </Border>
-            </Grid>
-            <Grid
-                Grid.Row="1"
-                Margin="0,0,0,0"
-                VerticalAlignment="Stretch"
-                Style="{StaticResource FadeInFromBottomAnimation}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <TextBlock
-                    Grid.Row="0"
-                    Margin="0,20,0,12"
-                    FontSize="16"
-                    Text="Upcoming" />
-                <ScrollViewer
-                    Grid.Row="1"
-                    VerticalAlignment="Stretch"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Appointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <templates:DashboardNotificationTemplate />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="{x:Type FrameworkElement}">
-                                <Setter Property="Margin" Value="0,0,0,10" />
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-                    </ItemsControl>
-                </ScrollViewer>
             </Grid>
         </Grid>
     </Grid>
