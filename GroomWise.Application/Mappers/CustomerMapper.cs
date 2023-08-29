@@ -6,6 +6,7 @@
 using GroomWise.Application.Observables;
 using GroomWise.Domain.Entities;
 using Mapster;
+using Swordfish.NET.Collections;
 
 namespace GroomWise.Application.Mappers;
 
@@ -18,6 +19,13 @@ public static class CustomerMapper
 
     public static Customer ToEntity(this ObservableCustomer observableCustomer)
     {
+        TypeAdapterConfig<ObservableCustomer, Customer>
+            .NewConfig()
+            .Map(dest => dest.Pets, src => src.Pets.Select(pet => pet.ToEntity()).ToList())
+            .Map(
+                dest => dest.Appointments,
+                src => src.Appointments.Select(appointment => appointment.ToEntity()).ToList()
+            );
         return observableCustomer.Adapt<Customer>();
     }
 }

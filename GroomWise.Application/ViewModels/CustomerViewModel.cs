@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using GroomWise.Application.Events;
 using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
+using GroomWise.Domain.Entities;
 using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.Logging.Interfaces;
@@ -98,6 +99,21 @@ public partial class CustomerViewModel
                 PopulateCollections();
             }
         });
+    }
+
+    [Command]
+    private async Task AddCustomerPet()
+    {
+        ActiveCustomer.Pets.Insert(0, new ObservablePet());
+    }
+
+    [Command]
+    private async Task RemoveCustomerPet(object param)
+    {
+        if (param is ObservablePet pet)
+        {
+            ActiveCustomer.Pets.Remove(pet);
+        }
     }
 
     [Command]

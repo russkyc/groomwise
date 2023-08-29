@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:templates="clr-namespace:GroomWise.Views.Templates"
     xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
     xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     Title="AddCustomersView"
@@ -72,6 +73,59 @@
                 HelperText="Max Length (200)"
                 Placeholder="Primary Address"
                 Text="{Binding ActiveCustomer.Address, UpdateSourceTrigger=PropertyChanged}" />
+            <russkyc:ModernButton
+                Margin="0,12,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top"
+                Command="{Binding AddCustomerPetCommand}"
+                Content="Add Pet"
+                CornerRadius="5"
+                DefaultBackground="{DynamicResource bg-000}"
+                FontWeight="Medium"
+                Foreground="{DynamicResource fg-200}"
+                HoverBackground="{DynamicResource bg-000}"
+                LeftCenterIcon="{wpf:MaterialIconExt Kind=Add}"
+                PressedBackground="{DynamicResource bg-100}" />
+            <ItemsControl
+                MaxHeight="170"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Stretch"
+                ItemsSource="{Binding ActiveCustomer.Pets.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <templates:CustomerPetInfoCardTemplate />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="{x:Type FrameworkElement}">
+                        <Setter Property="Margin" Value="0,0,0,10" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+
+                <ItemsControl.Template>
+                    <ControlTemplate TargetType="ItemsControl">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer
+                                Padding="{TemplateBinding Padding}"
+                                CanContentScroll="True"
+                                Focusable="False"
+                                VerticalScrollBarVisibility="Auto">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+            </ItemsControl>
             <StackPanel
                 Margin="0,24,0,0"
                 HorizontalAlignment="Right"

@@ -24,8 +24,6 @@ public partial class ObservablePet
     private string? _breed;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private int? _gender;
+    private string? _gender;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private Customer _owner;
 }

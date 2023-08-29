@@ -14,6 +14,5 @@ public class Pet : IEntity
     public string? Name { get; set; }
     public int? Age { get; set; }
     public string? Breed { get; set; }
-    public int? Gender { get; set; }
-    public IList<Customer> Owner { get; set; }
+    public string? Gender { get; set; }
 }

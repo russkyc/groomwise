@@ -28,8 +28,8 @@ public partial class ObservableCustomer
     private string _email;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private ConcurrentObservableCollection<Appointment> _appointments = new();
+    private ConcurrentObservableCollection<ObservableAppointment> _appointments = new();
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private ConcurrentObservableCollection<Pet> _pets = new();
+    private ConcurrentObservableCollection<ObservablePet> _pets = new();
 }

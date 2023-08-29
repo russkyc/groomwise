@@ -14,12 +14,6 @@
     d:DesignWidth="700"
     DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType=views:MainView}}"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <system:Boolean x:Key="False">False</system:Boolean>
-            <system:Boolean x:Key="True">True</system:Boolean>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <StackPanel>
         <Grid>
             <!--  Header Template  -->
