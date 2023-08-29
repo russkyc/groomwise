@@ -14,15 +14,17 @@
     Background="Transparent"
     mc:Ignorable="d">
     <Grid Style="{StaticResource FadeInFromBottomAnimation}">
-        <russkyc:ModernButton
+        <russkyc:ModernRadioButton
             x:Name="CardButton"
             Padding="5"
             HorizontalContentAlignment="Stretch"
+            CheckedBackground="{DynamicResource bg-200}"
             Command="{Binding DataContext.GetCustomerInfoCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
             CommandParameter="{Binding}"
             CornerRadius="10"
-            DefaultBackground="{DynamicResource bg-100}"
+            DefaultBackground="{DynamicResource bg-000}"
             DefaultForeground="{DynamicResource fg-000}"
+            GroupName="CustomerListGroup"
             HoverBackground="{DynamicResource bg-100}"
             HoverForeground="{DynamicResource fg-000}"
             PressedBackground="{DynamicResource bg-200}"
@@ -49,7 +51,7 @@
                 VerticalAlignment="Center"
                 FontSize="14"
                 FontWeight="Medium"
-                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock
                 Grid.Column="2"
                 Margin="12,0,0,0"

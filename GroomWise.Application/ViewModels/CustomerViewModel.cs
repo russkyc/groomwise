@@ -122,4 +122,13 @@ public partial class CustomerViewModel
             await Task.Run(() => GroomWiseDbContext.Customers.Delete(observableCustomer.Id));
         }
     }
+
+    [Command]
+    private async Task CloseDialogs()
+    {
+        await Task.Run(() =>
+        {
+            DialogService.CloseDialogs(NavigationService);
+        });
+    }
 }

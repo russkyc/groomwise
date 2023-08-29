@@ -100,4 +100,5 @@ public partial class AppointmentViewModel
             }
         });
     }
+
 }
