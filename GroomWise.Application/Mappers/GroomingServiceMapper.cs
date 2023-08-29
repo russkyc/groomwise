@@ -15,4 +15,9 @@ public static class GroomingServiceMapper
     {
         return groomingService.Adapt<ObservableGroomingService>();
     }
+
+    public static GroomingService ToEntity(this ObservableGroomingService observableGroomingService)
+    {
+        return observableGroomingService.Adapt<GroomingService>();
+    }
 }

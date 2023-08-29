@@ -11,4 +11,5 @@ public interface IDialogService
     void CloseDialogs(INavigationService navigationService);
     void CreateAddAppointmentsDialog(object viewModel, INavigationService navigationService);
     void CreateAddCustomersDialog(object viewModel, INavigationService navigationService);
+    void CreateAddServicesDialog(object viewModel, INavigationService navigationService);
 }

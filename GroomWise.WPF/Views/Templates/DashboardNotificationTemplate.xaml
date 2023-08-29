@@ -65,13 +65,13 @@
                     FontSize="14"
                     FontWeight="Medium"
                     Foreground="{DynamicResource fg-000}"
-                    Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
+                    Text="{Binding Service.Type, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock
                     Margin="0,6,0,0"
                     HorizontalAlignment="Stretch"
                     FontSize="12"
                     Foreground="{DynamicResource bg-600}"
-                    Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Status, UpdateSourceTrigger=PropertyChanged}"
                     TextTrimming="CharacterEllipsis" />
             </StackPanel>
         </Grid>

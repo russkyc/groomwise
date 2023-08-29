@@ -91,4 +91,23 @@ public class DialogService : IDialogService
             });
         });
     }
+
+    public void CreateAddServicesDialog(object viewModel, INavigationService navigationService)
+    {
+        Task.Run(async () =>
+        {
+            await App.Current.Dispatcher.InvokeAsync(() =>
+            {
+                if (!App.Current.Windows.OfType<AddServicesView>().Any())
+                {
+                    new AddServicesView(viewModel)
+                    {
+                        ShowInTaskbar = false,
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                        Owner = (Window)navigationService.CurrentWindow!
+                    }.Show();
+                }
+            });
+        });
+    }
 }

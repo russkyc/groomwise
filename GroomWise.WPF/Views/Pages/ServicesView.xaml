@@ -15,122 +15,66 @@
     d:DesignWidth="1280"
     Style="{StaticResource FadeInFromBottomAnimation}"
     mc:Ignorable="d">
-    <Grid Style="{StaticResource FadeInFromBottomAnimation}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="320" />
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Margin="16,20,16,16">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid
-                Grid.Row="0"
-                Margin="0,0,0,12"
-                HorizontalAlignment="Stretch">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    Grid.Column="0"
-                    VerticalAlignment="Center"
-                    FontSize="16"
-                    Text="Services" />
-                <russkyc:ModernTextBox
-                    Grid.Column="2"
-                    Width="200"
-                    Margin="12,0"
-                    CornerRadius="5"
-                    LeftIcon="{icons:MaterialIconExt Search}"
-                    Placeholder="Find Employee"
-                    Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" />
-                <russkyc:ModernButton
-                    Grid.Column="3"
-                    HorizontalAlignment="Right"
-                    Content="Add Employee"
-                    CornerRadius="5"
-                    FontWeight="Medium"
-                    IconSize="18"
-                    LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
-            </Grid>
-            <ScrollViewer
-                Grid.Row="1"
-                VerticalAlignment="Stretch"
-                HorizontalContentAlignment="Stretch"
-                VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Employees.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <templates:EmployeeListCardTemplate />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemContainerStyle>
-                        <Style TargetType="{x:Type FrameworkElement}">
-                            <Setter Property="Margin" Value="0,0,0,10" />
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>
-                </ItemsControl>
-            </ScrollViewer>
+    <Grid Margin="16,20,16,16" Style="{StaticResource FadeInFromBottomAnimation}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid
+            Grid.Row="0"
+            Margin="0,0,0,12"
+            HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="Services" />
+            <russkyc:ModernTextBox
+                Grid.Column="2"
+                Width="200"
+                Margin="12,0"
+                CornerRadius="5"
+                LeftIcon="{icons:MaterialIconExt Search}"
+                Placeholder="Find Employee"
+                Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" />
+            <russkyc:ModernButton
+                Grid.Column="3"
+                HorizontalAlignment="Right"
+                Command="{Binding CreateServiceCommand}"
+                Content="Add Service"
+                CornerRadius="5"
+                FontWeight="Medium"
+                IconSize="18"
+                LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
         </Grid>
-        <Grid Grid.Column="1" Margin="0,20,16,16">
-            <Grid Margin="0,0,0,0" VerticalAlignment="Stretch">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Margin="0,0,0,12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock
-                        Grid.Column="0"
-                        VerticalAlignment="Center"
-                        FontSize="16"
-                        Text="Roles" />
-                    <russkyc:ModernButton
-                        Grid.Column="2"
-                        HorizontalAlignment="Right"
-                        Content="Add Role"
-                        CornerRadius="5"
-                        FontWeight="Medium"
-                        IconSize="18"
-                        LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
-                </Grid>
-                <ScrollViewer
-                    Grid.Row="1"
-                    VerticalAlignment="Stretch"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Roles.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <templates:RoleListCardTemplate />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="{x:Type FrameworkElement}">
-                                <Setter Property="Margin" Value="0,0,0,10" />
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-                    </ItemsControl>
-                </ScrollViewer>
-            </Grid>
-        </Grid>
+        <ScrollViewer
+            Grid.Row="1"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding GroomingServices.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <templates:EmployeeListCardTemplate />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="{x:Type FrameworkElement}">
+                        <Setter Property="Margin" Value="0,0,0,10" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>
