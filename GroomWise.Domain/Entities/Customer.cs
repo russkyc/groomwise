@@ -10,6 +10,7 @@ namespace GroomWise.Domain.Entities;
 
 public class Customer : IEntity
 {
+    [BsonId]
     public Guid Id { get; set; }
     public string? FullName { get; set; }
     public string? Address { get; set; }

@@ -4,11 +4,13 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Domain.Interfaces;
+using LiteDB;
 
 namespace GroomWise.Domain.Entities;
 
 public class Product : IEntity
 {
+    [BsonId]
     public Guid Id { get; set; }
     public string? ProductName { get; set; }
     public string? ProductDescription { get; set; }

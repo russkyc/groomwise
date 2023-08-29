@@ -7,14 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
     xmlns:pages="clr-namespace:GroomWise.Views.Pages"
-    MinHeight="600"
+    MinHeight="300"
     d:DataContext="{d:DesignInstance observables:ObservableCustomer,
                                      IsDesignTimeCreatable=True}"
-    d:DesignHeight="600"
     d:DesignWidth="300"
     DataContext="{Binding DataContext.CustomerInfo, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
     mc:Ignorable="d">
-    <Grid Height="600" VerticalAlignment="Top">
+    <Grid VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

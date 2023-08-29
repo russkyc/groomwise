@@ -5,10 +5,12 @@
 
 using GroomWise.Domain.Entities;
 using GroomWise.Domain.Interfaces;
+using LiteDB;
 using Role = GroomWise.Domain.Enums.Role;
 
 public class Account : IEntity
 {
+    [BsonId]
     public Guid Id { get; set; }
     public string? Username { get; set; }
     public string? Password { get; set; }

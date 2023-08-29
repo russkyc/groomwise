@@ -5,8 +5,6 @@
 
 using GroomWise.Domain.Entities;
 using Injectio.Attributes;
-using Russkyc.DependencyInjection.Attributes;
-using Russkyc.DependencyInjection.Enums;
 
 namespace GroomWise.Infrastructure.Database;
 

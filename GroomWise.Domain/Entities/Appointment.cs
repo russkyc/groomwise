@@ -11,6 +11,7 @@ namespace GroomWise.Domain.Entities;
 
 public class Appointment : IEntity
 {
+    [BsonId]
     public Guid Id { get; set; }
     public DateTime? Date { get; set; }
     public AppointmentStatus? Status { get; set; }

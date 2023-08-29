@@ -16,31 +16,19 @@
     Style="{StaticResource FadeInFromBottomAnimation}"
     mc:Ignorable="d">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Margin="20,20,0,20">
-            <Grid VerticalAlignment="Stretch">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <TextBlock
-                    Grid.Row="0"
-                    Margin="0,0,0,12"
-                    FontSize="16"
-                    Text="Customer Profile" />
-                <templates:CustomerInfoCardTemplate Grid.Row="1" />
-            </Grid>
-        </Grid>
-        <Grid Grid.Column="1" Margin="16,20,16,16">
+        <Grid Margin="16,20,16,16">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
             <Grid
                 Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
                 Margin="0,0,0,12"
                 HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
@@ -72,7 +60,14 @@
                     IconSize="18"
                     LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
             </Grid>
-            <ItemsControl Grid.Row="1" ItemsSource="{Binding Customers.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
+            <templates:CustomerInfoCardTemplate
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,0,16,0" />
+            <ItemsControl
+                Grid.Row="1"
+                Grid.Column="1"
+                ItemsSource="{Binding Customers.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <templates:CustomerListCardTemplate />
