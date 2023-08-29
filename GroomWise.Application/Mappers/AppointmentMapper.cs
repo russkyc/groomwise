@@ -15,4 +15,9 @@ public static class AppointmentMapper
     {
         return appointment.Adapt<ObservableAppointment>();
     }
+
+    public static Appointment ToEntity(this ObservableAppointment observableAppointment)
+    {
+        return observableAppointment.Adapt<Appointment>();
+    }
 }

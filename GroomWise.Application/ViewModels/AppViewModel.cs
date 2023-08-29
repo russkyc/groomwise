@@ -5,6 +5,7 @@
 
 using GroomWise.Application.Enums;
 using GroomWise.Application.Events;
+using GroomWise.Application.Observables;
 using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
@@ -16,34 +17,35 @@ using Injectio.Attributes;
 using MvvmGen;
 using MvvmGen.Events;
 using MvvmGen.ViewModels;
+using Swordfish.NET.Collections;
 
 namespace GroomWise.Application.ViewModels;
 
 [Inject(typeof(IAuthenticationService))]
-[Inject(typeof(IDialogFactory))]
+[Inject(typeof(IDialogService))]
 [Inject(typeof(INavigationService))]
 [Inject(typeof(IAppServicesContainer))]
-[Inject(typeof(IConfigurationService))]
 [Inject(typeof(IThemeManagerService))]
 [Inject(typeof(IEventAggregator))]
+[Inject(typeof(IConfigurationService), PropertyAccessModifier = AccessModifier.Public)]
 [Inject(typeof(DashboardViewModel))]
 [ViewModel]
 [RegisterSingleton]
-public partial class AppViewModel
+public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
 {
-    [Property]
-    private IConfigurationService _configuration;
-
     [Property]
     private ViewModelBase _pageContext;
 
     [Property]
     private IList<Role> _authenticatedUserRoles;
 
+    [Property]
+    private ConcurrentObservableCollection<ObservableNotification> _notifications;
+
     partial void OnInitialize()
     {
+        Notifications = new();
         PageContext = DashboardViewModel;
-        Configuration = ConfigurationService;
         AuthenticatedUserRoles = AuthenticationService.GetSession()?.Roles!;
     }
 
@@ -52,7 +54,7 @@ public partial class AppViewModel
     {
         await Task.Run(async () =>
         {
-            var dialogResult = DialogFactory.Create(
+            var dialogResult = DialogService.Create(
                 "GroomWise",
                 "Are you sure you want to log out?",
                 NavigationService
@@ -94,9 +96,9 @@ public partial class AppViewModel
         {
             if (param is bool useDarkTheme)
             {
-                Configuration.DarkMode = true;
-                OnPropertyChanged(nameof(Configuration.DarkMode));
+                ConfigurationService.DarkMode = true;
                 ThemeManagerService.SetDarkTheme(useDarkTheme);
+                OnPropertyChanged(nameof(ConfigurationService.DarkMode));
             }
         });
     }
@@ -108,10 +110,25 @@ public partial class AppViewModel
         {
             if (param is string themeId)
             {
-                Configuration.ColorTheme = themeId;
-                OnPropertyChanged(nameof(Configuration.ColorTheme));
+                ConfigurationService.ColorTheme = themeId;
                 ThemeManagerService.SetColorTheme(themeId);
+                OnPropertyChanged(nameof(ConfigurationService.ColorTheme));
             }
         });
+    }
+
+    public void OnEvent(PublishNotificationEvent eventData)
+    {
+        Notifications.Add(
+            new ObservableNotification
+            {
+                Description = eventData.Content,
+                Type = eventData.NotificationType
+            }
+        );
+        if (Notifications.Count > 3)
+        {
+            Notifications.RemoveAt(0);
+        }
     }
 }

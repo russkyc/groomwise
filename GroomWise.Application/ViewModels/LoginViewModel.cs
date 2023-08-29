@@ -46,8 +46,35 @@ public partial class LoginViewModel : IEventSubscriber<LogoutEvent>
     {
         await Task.Run(async () =>
         {
-            var result = AuthenticationService.Login(Username, Password);
+            if (string.IsNullOrEmpty(Username))
+            {
+                HasErrors = true;
+                Notifications.RemoveLast();
+                Notifications.Add(
+                    new ObservableNotification
+                    {
+                        Type = NotificationType.Danger,
+                        Description = "Username cannot be blank."
+                    }
+                );
+                return;
+            }
 
+            if (string.IsNullOrEmpty(Password))
+            {
+                HasErrors = true;
+                Notifications.RemoveLast();
+                Notifications.Add(
+                    new ObservableNotification
+                    {
+                        Type = NotificationType.Danger,
+                        Description = "Password cannot be blank."
+                    }
+                );
+                return;
+            }
+
+            var result = AuthenticationService.Login(Username, Password);
             if (result is AuthenticationStatus.InvalidAccount)
             {
                 HasErrors = true;

@@ -3,14 +3,17 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using System.Collections.ObjectModel;
+using GroomWise.Application.Events;
 using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
+using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.Logging.Interfaces;
+using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Infrastructure.Storage.Interfaces;
 using Injectio.Attributes;
 using MvvmGen;
+using MvvmGen.Events;
 using Swordfish.NET.Collections;
 
 namespace GroomWise.Application.ViewModels;
@@ -19,6 +22,9 @@ namespace GroomWise.Application.ViewModels;
 [ViewModelGenerateInterface]
 [Inject(typeof(ILogger))]
 [Inject(typeof(IFileStorage))]
+[Inject(typeof(IDialogService))]
+[Inject(typeof(IEventAggregator))]
+[Inject(typeof(INavigationService))]
 [Inject(typeof(GroomWiseDbContext))]
 [RegisterSingleton]
 public partial class AppointmentViewModel
@@ -35,21 +41,58 @@ public partial class AppointmentViewModel
     partial void OnInitialize()
     {
         PopulateCollections();
+        ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
     }
 
     private void PopulateCollections()
     {
-        var appointments = GroomWiseDbContext!.Appointments
+        var appointments = GroomWiseDbContext.Appointments
             .GetAll()
-            .Select(AppointmentMapper.ToObservable);
+            .Select(AppointmentMapper.ToObservable)
+            .OrderBy(appointment => appointment.Date);
 
-        var groomingServices = GroomWiseDbContext!.GroomingServices
+        var services = GroomWiseDbContext.GroomingServices
             .GetAll()
             .Select(GroomingServiceMapper.ToObservable);
 
         Appointments = new ConcurrentObservableCollection<ObservableAppointment>(appointments);
-        GroomingServices = new ConcurrentObservableCollection<ObservableGroomingService>(
-            groomingServices
-        );
+        GroomingServices = new ConcurrentObservableCollection<ObservableGroomingService>(services);
+    }
+
+    [Command]
+    private async Task CreateAppointment()
+    {
+        await Task.Run(() =>
+        {
+            DialogService.CreateAddAppointmentsDialog(this, NavigationService);
+        });
+    }
+
+    [Command]
+    private async Task SaveAppointment()
+    {
+        await Task.Run(() =>
+        {
+            var dialogResult = DialogService.Create(
+                "GroomWise",
+                "Create Appointment?",
+                NavigationService
+            );
+            if (dialogResult is true)
+            {
+                var appointment = ActiveAppointment.ToEntity();
+                GroomWiseDbContext.Appointments.Insert(appointment);
+                ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
+                OnPropertyChanged(nameof(ActiveAppointment.Date));
+                PopulateCollections();
+                DialogService.CloseDialogs(NavigationService);
+                EventAggregator.Publish(
+                    new PublishNotificationEvent(
+                        $"Appointment {ActiveAppointment.Service} saved",
+                        NotificationType.Success
+                    )
+                );
+            }
+        });
     }
 }

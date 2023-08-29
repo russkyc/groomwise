@@ -35,31 +35,46 @@ public partial class App
             .AddEventAggregator()
             .BuildServiceProvider();
 
-        var scope = container.GetService<IAppServicesContainer>();
-        scope?.AddContainer(container);
+        var scope = container.GetService<IAppServicesContainer>()!;
+        scope.AddContainer(container);
+        RegisterNavigationViews(scope);
+        LoadThemeDefaults(scope);
+        StartApp(scope);
+    }
 
-        var main = scope?.GetService<MainView>();
-        var login = scope?.GetService<LoginView>();
-        var navigation = scope?.GetService<INavigationService>();
-
+    private void RegisterNavigationViews(IAppServicesContainer scope)
+    {
         Dispatcher.BeginInvoke(() =>
         {
-            navigation?.Initialize(SynchronizationContext.Current!, login!);
-            navigation?.Add(AppViews.Login, login!);
-            navigation?.Add(AppViews.Main, main!);
-        });
+            var navigation = scope.GetService<INavigationService>()!;
 
+            var main = scope.GetService<MainView>();
+            var login = scope.GetService<LoginView>();
+            var addAppointment = scope.GetService<AddAppointmentsView>();
+
+            navigation.Initialize(SynchronizationContext.Current!, login!);
+            navigation.Add(AppViews.Login, login!);
+            navigation.Add(AppViews.Main, main!);
+            navigation.Add(AppViews.AddAppointment, addAppointment!);
+        });
+    }
+
+    private void LoadThemeDefaults(IAppServicesContainer scope)
+    {
         // Load Theme Defaults
-        var config = scope?.GetService<IConfigurationService>();
-        var themeManager = scope?.GetService<IThemeManagerService>();
+        var config = scope.GetService<IConfigurationService>();
+        var themeManager = scope.GetService<IThemeManagerService>();
 
         if (config is not null && themeManager is not null)
         {
             themeManager.SetDarkTheme(config.DarkMode);
             themeManager.SetColorTheme(config.ColorTheme);
         }
+    }
 
-        MainWindow = login;
+    private void StartApp(IAppServicesContainer scope)
+    {
+        MainWindow = scope.GetService<LoginView>();
         MainWindow?.Show();
     }
 }

@@ -60,7 +60,7 @@
                 Margin="0,12,0,0"
                 CornerRadius="5"
                 DisplayMemberPath="ServiceName"
-                ItemsSource="{Binding GroomingServices, UpdateSourceTrigger=PropertyChanged}"
+                ItemsSource="{Binding GroomingServices.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}"
                 Placeholder="Service"
                 SelectedValue="{Binding ActiveAppointment.Service, UpdateSourceTrigger=PropertyChanged}" />
             <Grid Margin="0,12,0,0">
@@ -75,7 +75,7 @@
                     DisplayMemberPath="Time"
                     FontSize="14"
                     FontWeight="Medium"
-                    ItemsSource="{Binding Times.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding Times, UpdateSourceTrigger=PropertyChanged}"
                     SelectedValue="{Binding Time, UpdateSourceTrigger=PropertyChanged}">
                     <russkyc:ModernComboBox.Resources>
                         <Style TargetType="Popup">
@@ -91,7 +91,7 @@
                     Padding="2"
                     VerticalContentAlignment="Center"
                     BorderThickness="1"
-                    Command="{Binding DataContext.SetTimeOfDayCommand, RelativeSource={RelativeSource AncestorType=russkyc:ModernWindow}}"
+                    Command="{Binding SetTimeOfDayCommand}"
                     CommandParameter="{StaticResource True}"
                     Content="AM"
                     CornerRadius="5"
@@ -106,7 +106,7 @@
                     Padding="2"
                     VerticalContentAlignment="Center"
                     BorderThickness="1"
-                    Command="{Binding .DataContext.SetTimeOfDayCommand, RelativeSource={RelativeSource AncestorType=russkyc:ModernWindow}}"
+                    Command="{Binding SetTimeOfDayCommand}"
                     CommandParameter="{StaticResource False}"
                     Content="PM"
                     CornerRadius="5"
@@ -131,13 +131,13 @@
                     PressedBackground="{DynamicResource bg-100}">
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="Click">
-                            <b:CallMethodAction MethodName="Hide" TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=russkyc:ModernWindow}}" />
+                            <b:CallMethodAction MethodName="Close" TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=russkyc:ModernWindow}}" />
                         </b:EventTrigger>
                     </b:Interaction.Triggers>
                 </russkyc:ModernButton>
                 <russkyc:ModernButton
                     HorizontalAlignment="Right"
-                    Command="{Binding AddAppointmentCommand}"
+                    Command="{Binding SaveAppointmentCommand}"
                     Content="Save Appointment"
                     CornerRadius="5"
                     FontWeight="Medium"

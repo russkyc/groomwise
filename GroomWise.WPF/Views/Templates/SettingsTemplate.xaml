@@ -134,7 +134,7 @@
                     CommandParameter="{StaticResource True}"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding Configuration.DarkMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    IsChecked="{Binding ConfigurationService.DarkMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -156,7 +156,7 @@
                     CommandParameter="{StaticResource False}"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding Configuration.DarkMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:InverseBooleanConverter.Instance}}"
+                    IsChecked="{Binding ConfigurationService.DarkMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:InverseBooleanConverter.Instance}}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -199,7 +199,7 @@
                     CommandParameter="Gray"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Gray}"
+                    IsChecked="{Binding ConfigurationService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Gray}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -221,7 +221,7 @@
                     CommandParameter="Blue"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Blue}"
+                    IsChecked="{Binding ConfigurationService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Blue}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -243,7 +243,7 @@
                     CommandParameter="Purple"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Purple}"
+                    IsChecked="{Binding ConfigurationService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Purple}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -265,7 +265,7 @@
                     CommandParameter="Pink"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Pink}"
+                    IsChecked="{Binding ConfigurationService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Pink}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -287,7 +287,7 @@
                     CommandParameter="Red"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Red}"
+                    IsChecked="{Binding ConfigurationService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Red}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -309,7 +309,7 @@
                     CommandParameter="Orange"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Orange}"
+                    IsChecked="{Binding ConfigurationService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Orange}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -331,7 +331,7 @@
                     CommandParameter="Yellow"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Yellow}"
+                    IsChecked="{Binding ConfigurationService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Yellow}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -353,7 +353,7 @@
                     CommandParameter="Lime"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Lime}"
+                    IsChecked="{Binding ConfigurationService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Lime}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -375,7 +375,7 @@
                     CommandParameter="Green"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Green}"
+                    IsChecked="{Binding ConfigurationService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Green}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"
@@ -397,7 +397,7 @@
                     CommandParameter="Teal"
                     CornerRadius="34"
                     DefaultBackground="{DynamicResource bg-000}"
-                    IsChecked="{Binding Configuration.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Teal}"
+                    IsChecked="{Binding ConfigurationService.ColorTheme, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={x:Static converters:StringSelectionToBooleanConverter.Instance}, ConverterParameter=Teal}"
                     PressedBackground="{DynamicResource bg-200}">
                     <Border
                         Width="24"

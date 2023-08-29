@@ -107,7 +107,7 @@
                     CornerRadius="5"
                     DefaultForeground="{DynamicResource fg-600}"
                     HoverForeground="{DynamicResource fg-500}"
-                    IsChecked="{Binding Configuration.DarkMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    IsChecked="{Binding ConfigurationService.DarkMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </Grid>
     </russkyc:ModernWindow.TitleBarTemplate>
@@ -194,5 +194,24 @@
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
+        <ItemsControl
+            Grid.Column="1"
+            Width="250"
+            Margin="12,12,12,12"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            IsTabStop="False"
+            ItemsSource="{Binding Notifications.EditableCollectionView}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Background="{x:Null}" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <templates:LoginNotificationTemplate Margin="0,8,0,0" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </russkyc:ModernWindow>

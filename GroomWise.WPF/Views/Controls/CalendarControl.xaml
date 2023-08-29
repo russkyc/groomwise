@@ -134,19 +134,24 @@
                                 <Style BasedOn="{StaticResource {x:Type russkyc:ModernRadioButton}}" TargetType="{x:Type russkyc:ModernRadioButton}">
                                     <Setter Property="Margin" Value="3" />
                                     <Setter Property="CornerRadius" Value="7" />
-                                    <Setter Property="FontWeight" Value="Medium" />
+                                    <Setter Property="DefaultForeground" Value="{DynamicResource fg-600}" />
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                                     <Setter Property="VerticalContentAlignment" Value="Center" />
                                     <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="FontWeight" Value="Medium" />
+                                        </Trigger>
                                         <DataTrigger Binding="{Binding}" Value="{x:Null}">
                                             <Setter Property="Visibility" Value="Hidden" />
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding Selected, Mode=OneWay}" Value="True">
+                                        <DataTrigger Binding="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                            <Setter Property="DefaultForeground" Value="{DynamicResource fg-000}" />
                                             <Setter Property="IsChecked" Value="True" />
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding CurrentDate, Mode=OneWay}" Value="True">
                                             <Setter Property="DefaultForeground" Value="{DynamicResource primary-default}" />
                                             <Setter Property="HoverForeground" Value="{DynamicResource primary-default}" />
+                                            <Setter Property="FontWeight" Value="Medium" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>

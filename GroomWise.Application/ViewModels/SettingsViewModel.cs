@@ -4,24 +4,12 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Infrastructure.Configuration.Interfaces;
-using GroomWise.Infrastructure.Theming.Interfaces;
 using Injectio.Attributes;
 using MvvmGen;
 
 namespace GroomWise.Application.ViewModels;
 
 [ViewModel]
-[Inject(typeof(IThemeManagerService))]
-[Inject(typeof(IConfigurationService))]
+[Inject(typeof(IConfigurationService), PropertyAccessModifier = AccessModifier.Public)]
 [RegisterSingleton]
-public partial class SettingsViewModel
-{
-    [Property]
-    private IConfigurationService _configuration;
-
-    partial void OnInitialize()
-    {
-        Configuration = ConfigurationService;
-    }
-
-}
+public partial class SettingsViewModel { }
