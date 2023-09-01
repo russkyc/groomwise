@@ -58,12 +58,6 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="{x:Type FrameworkElement}">
-                    <Setter Property="Margin" Value="0,0,0,10" />
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-
             <ItemsControl.Template>
                 <ControlTemplate TargetType="ItemsControl">
                     <Border

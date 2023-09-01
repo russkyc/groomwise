@@ -91,6 +91,25 @@ public class DialogService : IDialogService
             });
         });
     }
+    
+    public void CreateEditCustomersDialog(object viewModel, INavigationService navigationService)
+    {
+        Task.Run(async () =>
+        {
+            await App.Current.Dispatcher.InvokeAsync(() =>
+            {
+                if (!App.Current.Windows.OfType<EditCustomersView>().Any())
+                {
+                    new EditCustomersView(viewModel)
+                    {
+                        ShowInTaskbar = false,
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                        Owner = (Window)navigationService.CurrentWindow!
+                    }.Show();
+                }
+            });
+        });
+    }
 
     public void CreateAddServicesDialog(object viewModel, INavigationService navigationService)
     {

@@ -33,6 +33,9 @@ public partial class CustomerViewModel
     private ObservableCustomer _activeCustomer;
 
     [Property]
+    private ObservableCustomer _selectedCustomer;
+
+    [Property]
     private ConcurrentObservableCollection<ObservableCustomer> _customers;
 
     partial void OnInitialize()
@@ -58,6 +61,7 @@ public partial class CustomerViewModel
     {
         await Task.Run(() =>
         {
+            ActiveCustomer = new();
             DialogService.CreateAddCustomersDialog(this, NavigationService);
         });
     }
@@ -101,9 +105,27 @@ public partial class CustomerViewModel
     }
 
     [Command]
+    private async Task SelectCustomer(object param)
+    {
+        await Task.Run(() =>
+        {
+            if (param is ObservableCustomer customer)
+            {
+                SelectedCustomer = customer;
+            }
+        });
+    }
+
+    [Command]
     private async Task AddCustomerPet()
     {
         ActiveCustomer.Pets.Insert(0, new ObservablePet());
+    }
+
+    [Command]
+    private async Task AddSelectedCustomerPet()
+    {
+        SelectedCustomer.Pets.Insert(0, new ObservablePet());
     }
 
     [Command]
@@ -116,18 +138,40 @@ public partial class CustomerViewModel
     }
 
     [Command]
-    private async Task UpdateCustomer(object param)
+    private async Task RemoveSelectedCustomerPet(object param)
     {
-        if (param is ObservableCustomer observableCustomer)
+        if (param is ObservablePet pet)
         {
-            await Task.Run(
-                () =>
-                    GroomWiseDbContext.Customers.Update(
-                        observableCustomer.Id,
-                        observableCustomer.ToEntity()
-                    )
-            );
+            SelectedCustomer.Pets.Remove(pet);
+            GroomWiseDbContext.Customers.Update(SelectedCustomer.Id, SelectedCustomer.ToEntity());
         }
+    }
+
+    [Command]
+    private async Task UpdateCustomer()
+    {
+        await Task.Run(() =>
+        {
+            var dialogResult = DialogService.Create(
+                "GroomWise",
+                $"Update {SelectedCustomer.FullName}?",
+                NavigationService
+            );
+            if (dialogResult is true)
+            {
+                GroomWiseDbContext.Customers.Update(
+                    SelectedCustomer.Id,
+                    SelectedCustomer.ToEntity()
+                );
+                DialogService.CloseDialogs(NavigationService);
+            }
+        });
+    }
+
+    [Command]
+    private async Task EditCustomer()
+    {
+        DialogService.CreateEditCustomersDialog(this, NavigationService);
     }
 
     [Command]
@@ -144,6 +188,10 @@ public partial class CustomerViewModel
                 );
                 if (dialogResult is true)
                 {
+                    if (observableCustomer == SelectedCustomer)
+                    {
+                        SelectedCustomer = null!;
+                    }
                     GroomWiseDbContext.Customers.Delete(observableCustomer.Id);
                     EventAggregator.Publish(new DeleteCustomerEvent());
                     PopulateCollections();

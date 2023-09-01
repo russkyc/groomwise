@@ -548,8 +548,10 @@
         </Grid>
         <Border
             Grid.Row="1"
+            Grid.RowSpan="2"
             Grid.Column="1"
             Margin="16,0,0,0"
+            VerticalAlignment="Top"
             Background="{DynamicResource bg-100}"
             CornerRadius="10">
             <Grid MinHeight="300" HorizontalAlignment="Stretch">

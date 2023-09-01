@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
     xmlns:templates="clr-namespace:GroomWise.Views.Templates"
     xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
@@ -22,8 +23,8 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
             <Grid
                 Grid.Row="0"
@@ -60,9 +61,19 @@
                     IconSize="18"
                     LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
             </Grid>
-            <ItemsControl
+            <ContentControl
                 Grid.Row="1"
                 Grid.Column="0"
+                Content="{Binding SelectedCustomer, UpdateSourceTrigger=PropertyChanged}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type observables:ObservableCustomer}">
+                        <templates:CustomerInfoCardTemplate Margin="0,0,16,0" />
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+            <ItemsControl
+                Grid.Row="1"
+                Grid.Column="1"
                 ItemsSource="{Binding Customers.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -98,10 +109,6 @@
                     </ControlTemplate>
                 </ItemsControl.Template>
             </ItemsControl>
-            <templates:CustomerInfoCardTemplate
-                Grid.Row="1"
-                Grid.Column="1"
-                Margin="16,0,0,0" />
         </Grid>
     </Grid>
 </UserControl>
