@@ -1,0 +1,87 @@
+﻿<UserControl
+    x:Class="GroomWise.Views.Templates.AppNotificationTemplate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enums="clr-namespace:GroomWise.Domain.Enums;assembly=GroomWise.Domain"
+    xmlns:local="clr-namespace:GroomWise.Views.Templates"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:moderncontrols="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
+    xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
+    xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+    Height="38"
+    d:DataContext="{d:DesignInstance observables:ObservableNotification,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignWidth="200"
+    Background="Transparent"
+    IsTabStop="False"
+    Style="{StaticResource FadeInFromBottomAnimation}"
+    mc:Ignorable="d">
+    <Border CornerRadius="5">
+        <Border.Style>
+            <Style>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Type}" Value="{x:Static enums:NotificationType.Notify}">
+                        <Setter Property="Border.Background" Value="{DynamicResource primary-default}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Type}" Value="{x:Static enums:NotificationType.Success}">
+                        <Setter Property="Border.Background" Value="{DynamicResource success}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Type}" Value="{x:Static enums:NotificationType.Warning}">
+                        <Setter Property="Border.Background" Value="{DynamicResource warning}" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Type}" Value="{x:Static enums:NotificationType.Danger}">
+                        <Setter Property="Border.Background" Value="{DynamicResource danger}" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel
+                Grid.Column="0"
+                Margin="12"
+                VerticalAlignment="Center">
+                <TextBlock Foreground="{DynamicResource inverted-lighten-3}" Text="{Binding Description}" />
+            </StackPanel>
+            <moderncontrols:ModernButton
+                Grid.Column="1"
+                Margin="7"
+                Padding="5"
+                Command="{Binding Path=DataContext.(viewModels:AppViewModel.RemoveNotificationCommand), RelativeSource={RelativeSource FindAncestor, AncestorType=moderncontrols:ModernWindow}}"
+                CommandParameter="{Binding}"
+                Content="{wpf:MaterialIconExt Kind=Close}">
+                <moderncontrols:ModernButton.Style>
+                    <Style BasedOn="{StaticResource {x:Type moderncontrols:ModernButton}}" TargetType="{x:Type moderncontrols:ModernButton}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Type}" Value="{x:Static enums:NotificationType.Notify}">
+                                <Setter Property="moderncontrols:ModernButton.DefaultBackground" Value="{DynamicResource primary-default}" />
+                                <Setter Property="moderncontrols:ModernButton.HoverBackground" Value="{DynamicResource primary-lighten-1}" />
+                                <Setter Property="moderncontrols:ModernButton.PressedBackground" Value="{DynamicResource primary-darken-1}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Type}" Value="{x:Static enums:NotificationType.Success}">
+                                <Setter Property="moderncontrols:ModernButton.DefaultBackground" Value="{DynamicResource success}" />
+                                <Setter Property="moderncontrols:ModernButton.HoverBackground" Value="{DynamicResource success-lighten}" />
+                                <Setter Property="moderncontrols:ModernButton.PressedBackground" Value="{DynamicResource success-darken}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Type}" Value="{x:Static enums:NotificationType.Warning}">
+                                <Setter Property="moderncontrols:ModernButton.DefaultBackground" Value="{DynamicResource warning}" />
+                                <Setter Property="moderncontrols:ModernButton.HoverBackground" Value="{DynamicResource warning-lighten}" />
+                                <Setter Property="moderncontrols:ModernButton.PressedBackground" Value="{DynamicResource warning-darken}" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Type}" Value="{x:Static enums:NotificationType.Danger}">
+                                <Setter Property="moderncontrols:ModernButton.DefaultBackground" Value="{DynamicResource danger}" />
+                                <Setter Property="moderncontrols:ModernButton.HoverBackground" Value="{DynamicResource danger-lighten}" />
+                                <Setter Property="moderncontrols:ModernButton.PressedBackground" Value="{DynamicResource danger-darken}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </moderncontrols:ModernButton.Style>
+            </moderncontrols:ModernButton>
+        </Grid>
+    </Border>
+</UserControl>

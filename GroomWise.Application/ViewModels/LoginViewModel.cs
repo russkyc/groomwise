@@ -9,6 +9,7 @@ using GroomWise.Application.Observables;
 using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
+using GroomWise.Infrastructure.Configuration.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using Injectio.Attributes;
 using MvvmGen;
@@ -22,6 +23,7 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(IEventAggregator))]
 [Inject(typeof(INavigationService))]
 [Inject(typeof(IAuthenticationService))]
+[Inject(typeof(IConfigurationService), PropertyAccessModifier = AccessModifier.Public)]
 [RegisterSingleton]
 public partial class LoginViewModel : IEventSubscriber<LogoutEvent>
 {

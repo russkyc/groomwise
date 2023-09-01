@@ -95,4 +95,26 @@ public partial class GroomingServiceViewModel
             }
         });
     }
+
+    [Command]
+    private async Task RemoveService(object param)
+    {
+        if (param is ObservableGroomingService observableGroomingService)
+        {
+            await Task.Run(() =>
+            {
+                var dialogResult = DialogService.Create(
+                    "Services",
+                    $"Are you sure you want to delete {observableGroomingService.Type}?",
+                    NavigationService
+                );
+                if (dialogResult is true)
+                {
+                    GroomWiseDbContext.GroomingServices.Delete(observableGroomingService.Id);
+                    EventAggregator.Publish(new DeleteGroomingServiceEvent());
+                    PopulateCollections();
+                }
+            });
+        }
+    }
 }

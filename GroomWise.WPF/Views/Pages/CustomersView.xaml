@@ -22,8 +22,8 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
             <Grid
                 Grid.Row="0"
@@ -60,13 +60,9 @@
                     IconSize="18"
                     LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
             </Grid>
-            <templates:CustomerInfoCardTemplate
-                Grid.Row="1"
-                Grid.Column="0"
-                Margin="0,0,16,0" />
             <ItemsControl
                 Grid.Row="1"
-                Grid.Column="1"
+                Grid.Column="0"
                 ItemsSource="{Binding Customers.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -102,6 +98,10 @@
                     </ControlTemplate>
                 </ItemsControl.Template>
             </ItemsControl>
+            <templates:CustomerInfoCardTemplate
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="16,0,0,0" />
         </Grid>
     </Grid>
 </UserControl>

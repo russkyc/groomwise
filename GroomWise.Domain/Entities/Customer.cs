@@ -16,6 +16,6 @@ public class Customer : IEntity
     public string? Address { get; set; }
     public string? ContactNumber { get; set; }
     public string? Email { get; set; }
-    public IList<Pet>? Pets { get; set; }
-    public IList<Appointment>? Appointments { get; set; }
+    public List<Pet>? Pets { get; set; }
+    public List<Appointment>? Appointments { get; set; }
 }

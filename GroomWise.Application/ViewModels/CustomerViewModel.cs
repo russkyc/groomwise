@@ -3,11 +3,9 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using System.Collections.ObjectModel;
 using GroomWise.Application.Events;
 using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
-using GroomWise.Domain.Entities;
 using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.Logging.Interfaces;
@@ -89,6 +87,7 @@ public partial class CustomerViewModel
                 var customer = ActiveCustomer.ToEntity();
                 GroomWiseDbContext.Customers.Insert(customer);
                 DialogService.CloseDialogs(NavigationService);
+                EventAggregator.Publish(new CreateCustomerEvent());
                 EventAggregator.Publish(
                     new PublishNotificationEvent(
                         $"Customer {ActiveCustomer.FullName} added.",
@@ -132,11 +131,24 @@ public partial class CustomerViewModel
     }
 
     [Command]
-    private async Task DeleteCustomer(object param)
+    private async Task RemoveCustomer(object param)
     {
         if (param is ObservableCustomer observableCustomer)
         {
-            await Task.Run(() => GroomWiseDbContext.Customers.Delete(observableCustomer.Id));
+            await Task.Run(() =>
+            {
+                var dialogResult = DialogService.Create(
+                    "Customers",
+                    $"Are you sure you want to delete {observableCustomer.FullName}?",
+                    NavigationService
+                );
+                if (dialogResult is true)
+                {
+                    GroomWiseDbContext.Customers.Delete(observableCustomer.Id);
+                    EventAggregator.Publish(new DeleteCustomerEvent());
+                    PopulateCollections();
+                }
+            });
         }
     }
 

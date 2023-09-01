@@ -161,13 +161,20 @@
                     Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:PetViewModel}, Mode=OneWay}"
                     Tooltip="Pets" />
             </StackPanel>
-            <templates:NavItemTemplate
-                Margin="8"
-                VerticalAlignment="Bottom"
-                Icon="{icons:MaterialIconExt Settings}"
-                PageContext="{x:Type viewModels:SettingsViewModel}"
-                Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:SettingsViewModel}, Mode=OneWay}"
-                Tooltip="Settings" />
+            <StackPanel VerticalAlignment="Bottom">
+                <templates:NavItemTemplate
+                    Margin="8"
+                    Icon="{icons:MaterialIconExt InfoCircle}"
+                    PageContext="{x:Type viewModels:AboutViewModel}"
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:AboutViewModel}, Mode=OneWay}"
+                    Tooltip="About" />
+                <templates:NavItemTemplate
+                    Margin="8"
+                    Icon="{icons:MaterialIconExt Settings}"
+                    PageContext="{x:Type viewModels:SettingsViewModel}"
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:SettingsViewModel}, Mode=OneWay}"
+                    Tooltip="Settings" />
+            </StackPanel>
         </Grid>
         <ContentControl Grid.Column="1" Content="{Binding PageContext}">
             <ContentControl.Resources>
@@ -189,6 +196,9 @@
                 <DataTemplate DataType="{x:Type viewModels:PetViewModel}">
                     <pages:PetsView />
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:AboutViewModel}">
+                    <pages:AboutView />
+                </DataTemplate>
                 <DataTemplate DataType="{x:Type viewModels:SettingsViewModel}">
                     <pages:SettingsView />
                 </DataTemplate>
@@ -209,7 +219,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <templates:LoginNotificationTemplate Margin="0,8,0,0" />
+                    <templates:AppNotificationTemplate Margin="0,8,0,0" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

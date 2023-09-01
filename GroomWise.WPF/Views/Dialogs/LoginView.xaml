@@ -1127,7 +1127,7 @@
             VerticalAlignment="Bottom"
             Orientation="Horizontal">
             <TextBlock Foreground="{DynamicResource bg-600}" Text="Version " />
-            <TextBlock Foreground="{DynamicResource bg-600}" Text="{Binding AppVersion}" />
+            <TextBlock Foreground="{DynamicResource bg-600}" Text="{Binding ConfigurationService.Version}" />
             <TextBlock Foreground="{DynamicResource bg-600}" Text=" © 2023 Russell Camo (@russkyc)" />
         </StackPanel>
         <Grid Grid.Column="1">

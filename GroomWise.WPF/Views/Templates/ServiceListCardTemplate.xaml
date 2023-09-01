@@ -5,7 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
+    xmlns:pages="clr-namespace:GroomWise.Views.Pages"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
+    xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     Height="70"
     d:DataContext="{d:DesignInstance observables:ObservableGroomingService,
                                      IsDesignTimeCreatable=True}"
@@ -24,7 +27,7 @@
             HoverForeground="{DynamicResource fg-000}"
             PressedBackground="{DynamicResource bg-200}"
             PressedForeground="{DynamicResource fg-000}" />
-        <Grid IsHitTestVisible="False">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="200" />
@@ -54,6 +57,18 @@
                 FontSize="14"
                 FontWeight="Medium"
                 Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
+            <russkyc:ModernButton
+                Grid.Column="3"
+                Width="27"
+                Height="27"
+                Margin="0,0,20,0"
+                Padding="5"
+                Command="{Binding Path=DataContext.(viewModels:GroomingServiceViewModel.RemoveServiceCommand), RelativeSource={RelativeSource FindAncestor, AncestorType=pages:ServicesView}}"
+                CommandParameter="{Binding}"
+                Content="{wpf:MaterialIconExt Kind=TrashCan}"
+                DefaultBackground="Transparent"
+                HoverBackground="{DynamicResource bg-300}"
+                PressedBackground="{DynamicResource danger}" />
         </Grid>
     </Grid>
 </UserControl>

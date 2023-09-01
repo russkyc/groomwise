@@ -1,5 +1,6 @@
 {
   "darkMode": true,
   "colorTheme": "Blue",
-  "version": "0.11.0-dev"
+  "version": "1.4.1-beta",
+  "dbConnection": ""
 }

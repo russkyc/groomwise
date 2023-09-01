@@ -118,6 +118,15 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
         });
     }
 
+    [Command]
+    private async Task RemoveNotification(object param)
+    {
+        if (param is ObservableNotification notification)
+        {
+            Notifications.Remove(notification);
+        }
+    }
+
     public void OnEvent(PublishNotificationEvent eventData)
     {
         Notifications.Add(

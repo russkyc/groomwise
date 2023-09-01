@@ -19,7 +19,9 @@ namespace GroomWise.Application.ViewModels;
 [RegisterSingleton]
 [Inject(typeof(IAuthenticationService))]
 [Inject(typeof(GroomWiseDbContext))]
-public partial class DashboardViewModel : IEventSubscriber<LoginEvent>
+public partial class DashboardViewModel
+    : IEventSubscriber<LoginEvent>,
+        IEventSubscriber<CreateAppointmentEvent>
 {
     [Property]
     private ConcurrentObservableCollection<ObservableAppointment> _appointments;
@@ -37,7 +39,7 @@ public partial class DashboardViewModel : IEventSubscriber<LoginEvent>
         await Task.Run(() =>
         {
             var appointments = GroomWiseDbContext.Appointments
-                .GetMultiple(appointment => appointment.Date == DateTime.Today)
+                .GetMultiple(appointment => appointment.Date == DateTime.Now)
                 .Select(AppointmentMapper.ToObservable)
                 .OrderBy(appointment => appointment.Date);
             Appointments = new ConcurrentObservableCollection<ObservableAppointment>(appointments);
@@ -47,5 +49,10 @@ public partial class DashboardViewModel : IEventSubscriber<LoginEvent>
     public void OnEvent(LoginEvent eventData)
     {
         User = AuthenticationService.GetSession()?.FirstName!;
+    }
+
+    public void OnEvent(CreateAppointmentEvent eventData)
+    {
+        PopulateCollections();
     }
 }

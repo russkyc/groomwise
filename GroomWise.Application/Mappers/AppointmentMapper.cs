@@ -13,9 +13,10 @@ public static class AppointmentMapper
 {
     public static ObservableAppointment ToObservable(this Appointment appointment)
     {
-        TypeAdapterConfig<Appointment, ObservableAppointment>
-            .NewConfig()
-            .Map(
+        var config = TypeAdapterConfig<Appointment, ObservableAppointment>.NewConfig();
+        if (appointment.Services is not null)
+        {
+            config.Map(
                 dest => dest.Services,
                 src =>
                     src.Services
@@ -27,13 +28,26 @@ public static class AppointmentMapper
                                 }
                         )
                         .ToList()
-            )
-            .Map(
+            );
+        }
+
+        if (appointment.Employees is not null)
+        {
+            config.Map(
                 dest => dest.Employees,
                 src => src.Employees.Select(employee => employee.ToObservable()).ToList()
-            )
-            .Map(dest => dest.Customer, src => src.Customer.ToObservable())
-            .Map(dest => dest.Pet, src => src.Pet.ToObservable());
+            );
+        }
+
+        if (appointment.Customer is not null)
+        {
+            config.Map(dest => dest.Customer, src => src.Customer.ToObservable());
+        }
+
+        if (appointment.Pet is not null)
+        {
+            config.Map(dest => dest.Pet, src => src.Pet.ToObservable());
+        }
         return appointment.Adapt<ObservableAppointment>();
     }
 

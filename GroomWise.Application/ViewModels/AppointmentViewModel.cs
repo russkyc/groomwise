@@ -27,7 +27,9 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(INavigationService))]
 [Inject(typeof(GroomWiseDbContext))]
 [RegisterSingleton]
-public partial class AppointmentViewModel : IEventSubscriber<CreateGroomingServiceEvent>
+public partial class AppointmentViewModel
+    : IEventSubscriber<CreateGroomingServiceEvent>,
+        IEventSubscriber<DeleteGroomingServiceEvent>
 {
     [Property]
     private ObservableAppointment _activeAppointment;
@@ -119,6 +121,11 @@ public partial class AppointmentViewModel : IEventSubscriber<CreateGroomingServi
     }
 
     public void OnEvent(CreateGroomingServiceEvent eventData)
+    {
+        PopulateCollections();
+    }
+
+    public void OnEvent(DeleteGroomingServiceEvent eventData)
     {
         PopulateCollections();
     }

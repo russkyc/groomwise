@@ -32,7 +32,8 @@
             HorizontalAlignment="Stretch">
             <TextBlock
                 VerticalAlignment="Center"
-                FontSize="16"
+                FontSize="18"
+                FontWeight="Medium"
                 Text="Appointments" />
             <russkyc:ModernButton
                 HorizontalAlignment="Right"

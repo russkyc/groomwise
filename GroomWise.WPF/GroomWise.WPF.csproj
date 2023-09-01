@@ -59,9 +59,6 @@
         <None Remove="Views\Resources\Images\groomwise-logo-vertical-inverted.png" />
         <None Remove="Views\Resources\Icons\groomwise-multi.ico" />
         <Resource Include="Views\Resources\Icons\groomwise-multi.ico" />
-        <None Update="data.db">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
         <None Update="appconfig.json">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
