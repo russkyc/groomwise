@@ -7,6 +7,7 @@ using System.Threading;
 using GroomWise.Application.Enums;
 using GroomWise.Application.Extensions;
 using GroomWise.Infrastructure.Configuration.Interfaces;
+using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.IoC.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Infrastructure.Theming.Interfaces;
@@ -37,6 +38,10 @@ public partial class App
 
         var scope = container.GetService<IAppServicesContainer>()!;
         scope.AddContainer(container);
+
+#if DEBUG
+        ResetDatabase(scope);
+#endif
         RegisterNavigationViews(scope);
         LoadThemeDefaults(scope);
         StartApp(scope);
@@ -70,6 +75,18 @@ public partial class App
             themeManager.SetDarkTheme(config.DarkMode);
             themeManager.SetColorTheme(config.ColorTheme);
         }
+    }
+
+    private void ResetDatabase(IAppServicesContainer scope)
+    {
+        var context = scope.GetService<GroomWiseDbContext>();
+        context?.Appointments.DeleteMultiple(t => true);
+        context?.Customers.DeleteMultiple(t => true);
+        context?.Employees.DeleteMultiple(t => true);
+        context?.Products.DeleteMultiple(t => true);
+        context?.Roles.DeleteMultiple(t => true);
+        context?.GroomingServices.DeleteMultiple(t => true);
+        context?.Pets.DeleteMultiple(t => true);
     }
 
     private void StartApp(IAppServicesContainer scope)

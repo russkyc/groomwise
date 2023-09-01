@@ -16,7 +16,7 @@
     Background="Transparent"
     IsTabStop="False"
     mc:Ignorable="d">
-    <Grid Style="{StaticResource FadeInFromTopAnimation}">
+    <Grid Style="{StaticResource FadeInAnimation}">
         <Border
             Padding="5"
             HorizontalAlignment="Stretch"
@@ -74,7 +74,13 @@
                 Padding="5"
                 Command="{Binding Path=DataContext.RemoveSelectedCustomerPetCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=dialogs:EditCustomersView}}"
                 CommandParameter="{Binding}"
-                Content="{wpf:MaterialIconExt Kind=Close}" />
+                Content="{wpf:MaterialIconExt Kind=TrashCan}"
+                DefaultBackground="Transparent"
+                DefaultForeground="{DynamicResource fg-000}"
+                HoverBackground="{DynamicResource bg-300}"
+                HoverForeground="{DynamicResource fg-000}"
+                PressedBackground="{DynamicResource danger}"
+                PressedForeground="#ffffff" />
         </Grid>
     </Grid>
 </UserControl>

@@ -38,7 +38,7 @@
             <russkyc:ModernButton
                 HorizontalAlignment="Right"
                 Command="{Binding CreateAppointmentCommand}"
-                Content="Add Appointment"
+                Content="Schedule Appointment"
                 CornerRadius="5"
                 FontWeight="Medium"
                 IconSize="18"

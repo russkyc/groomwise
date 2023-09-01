@@ -12,7 +12,7 @@
     d:DesignWidth="700"
     Background="Transparent"
     mc:Ignorable="d">
-    <Grid Style="{StaticResource FadeInFromBottomAnimation}">
+    <Grid Style="{StaticResource FadeInAnimation}">
         <russkyc:ModernButton
             Padding="5"
             HorizontalContentAlignment="Stretch"

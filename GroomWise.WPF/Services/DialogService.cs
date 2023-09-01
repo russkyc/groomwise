@@ -9,6 +9,7 @@ using System.Windows;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Views.Dialogs;
 using Injectio.Attributes;
+using Swordfish.NET.Collections.Auxiliary;
 
 namespace GroomWise.Services;
 
@@ -40,14 +41,15 @@ public class DialogService : IDialogService
                 if (
                     App.Current.Windows
                         .OfType<Window>()
-                        .FirstOrDefault(
-                            dialog => dialog.Owner == navigationService.CurrentWindow
-                        ) is
-                    { } window
+                        .Where(dialog => dialog.Owner == navigationService.CurrentWindow) is
+                    { } windows
                 )
                 {
                     var owner = navigationService.CurrentWindow as Window;
-                    window.Close();
+                    windows.ForEach(window =>
+                    {
+                        window.Close();
+                    });
                     owner!.Focus();
                 }
             });
@@ -91,7 +93,7 @@ public class DialogService : IDialogService
             });
         });
     }
-    
+
     public void CreateEditCustomersDialog(object viewModel, INavigationService navigationService)
     {
         Task.Run(async () =>

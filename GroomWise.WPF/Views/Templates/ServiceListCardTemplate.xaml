@@ -14,7 +14,7 @@
                                      IsDesignTimeCreatable=True}"
     d:DesignWidth="700"
     mc:Ignorable="d">
-    <Grid Style="{StaticResource FadeInFromBottomAnimation}">
+    <Grid Style="{StaticResource FadeInAnimation}">
         <russkyc:ModernRadioButton
             Padding="5"
             HorizontalContentAlignment="Stretch"
@@ -30,7 +30,7 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
@@ -38,12 +38,16 @@
                 Grid.Column="0"
                 Width="52"
                 Height="52"
-                Margin="10,0,0,0"
+                Margin="10,0,20,0"
+                Padding="6"
                 Background="{DynamicResource primary-default}"
-                CornerRadius="6" />
+                CornerRadius="6">
+                <TextBlock Foreground="{DynamicResource primary-lighten-3}">
+                    <wpf:MaterialIconExt Kind="BubbleChart" />
+                </TextBlock>
+            </Border>
             <TextBlock
                 Grid.Column="1"
-                Margin="20,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 FontSize="14"

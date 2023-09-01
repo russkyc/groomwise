@@ -12,7 +12,7 @@
     d:DataContext="{d:DesignInstance observables:ObservableAppointment,
                                      IsDesignTimeCreatable=True}"
     d:DesignWidth="300"
-    Style="{StaticResource FadeInFromBottomAnimation}"
+    Style="{StaticResource FadeInAnimation}"
     mc:Ignorable="d">
     <Grid>
         <russkyc:ModernRadioButton
@@ -64,7 +64,7 @@
             </Border>
             <StackPanel
                 Grid.Column="1"
-                Margin="12"
+                Margin="12,0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center">
                 <TextBlock
@@ -72,7 +72,10 @@
                     FontWeight="Medium"
                     Foreground="{DynamicResource fg-000}"
                     Text="{Binding Customer.FullName, UpdateSourceTrigger=PropertyChanged}" />
-                <ItemsControl VerticalAlignment="Center" ItemsSource="{Binding Services.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl
+                    Margin="0,8,0,0"
+                    VerticalAlignment="Center"
+                    ItemsSource="{Binding Services.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border

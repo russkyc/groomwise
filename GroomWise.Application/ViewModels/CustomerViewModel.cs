@@ -8,6 +8,7 @@ using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
 using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Database;
+using GroomWise.Infrastructure.IoC.Interfaces;
 using GroomWise.Infrastructure.Logging.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Infrastructure.Storage.Interfaces;
@@ -25,6 +26,7 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(IEventAggregator))]
 [Inject(typeof(IDialogService))]
 [Inject(typeof(INavigationService))]
+[Inject(typeof(IAppServicesContainer))]
 [Inject(typeof(GroomWiseDbContext))]
 [RegisterSingleton]
 public partial class CustomerViewModel
@@ -119,13 +121,19 @@ public partial class CustomerViewModel
     [Command]
     private async Task AddCustomerPet()
     {
-        ActiveCustomer.Pets.Insert(0, new ObservablePet());
+        await Task.Run(() =>
+        {
+            ActiveCustomer.Pets.Insert(0, new ObservablePet());
+        });
     }
 
     [Command]
     private async Task AddSelectedCustomerPet()
     {
-        SelectedCustomer.Pets.Insert(0, new ObservablePet());
+        await Task.Run(() =>
+        {
+            SelectedCustomer.Pets.Insert(0, new ObservablePet());
+        });
     }
 
     [Command]
@@ -133,7 +141,10 @@ public partial class CustomerViewModel
     {
         if (param is ObservablePet pet)
         {
-            ActiveCustomer.Pets.Remove(pet);
+            await Task.Run(() =>
+            {
+                ActiveCustomer.Pets.Remove(pet);
+            });
         }
     }
 
@@ -142,8 +153,24 @@ public partial class CustomerViewModel
     {
         if (param is ObservablePet pet)
         {
-            SelectedCustomer.Pets.Remove(pet);
-            GroomWiseDbContext.Customers.Update(SelectedCustomer.Id, SelectedCustomer.ToEntity());
+            await Task.Run(() =>
+            {
+                var dialogResult = DialogService.Create(
+                    $"{SelectedCustomer.FullName.Split(" ")[0]}'s Pets",
+                    $"Are you sure you want to remove {pet.Name}?",
+                    NavigationService
+                );
+
+                if (dialogResult is true)
+                {
+                    SelectedCustomer.Pets.Remove(pet);
+                    GroomWiseDbContext.Customers.Update(
+                        SelectedCustomer.Id,
+                        SelectedCustomer.ToEntity()
+                    );
+                    EventAggregator.Publish(new UpdateCustomerEvent());
+                }
+            });
         }
     }
 
@@ -163,6 +190,7 @@ public partial class CustomerViewModel
                     SelectedCustomer.Id,
                     SelectedCustomer.ToEntity()
                 );
+                EventAggregator.Publish(new UpdateCustomerEvent());
                 DialogService.CloseDialogs(NavigationService);
             }
         });
@@ -171,7 +199,10 @@ public partial class CustomerViewModel
     [Command]
     private async Task EditCustomer()
     {
-        DialogService.CreateEditCustomersDialog(this, NavigationService);
+        await Task.Run(() =>
+        {
+            DialogService.CreateEditCustomersDialog(this, NavigationService);
+        });
     }
 
     [Command]
@@ -193,10 +224,23 @@ public partial class CustomerViewModel
                         SelectedCustomer = null!;
                     }
                     GroomWiseDbContext.Customers.Delete(observableCustomer.Id);
-                    EventAggregator.Publish(new DeleteCustomerEvent());
+                    EventAggregator.Publish(new DeleteCustomerEvent(observableCustomer));
                     PopulateCollections();
                 }
             });
+        }
+    }
+
+    [Command]
+    private async Task ScheduleAppointment(object param)
+    {
+        if (param is ObservableCustomer customer)
+        {
+            var appointmentsViewModel = AppServicesContainer.GetService<AppointmentViewModel>();
+            if (appointmentsViewModel is not null)
+            {
+                EventAggregator.Publish(new ScheduleAppointmentEvent(customer));
+            }
         }
     }
 

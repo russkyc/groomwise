@@ -7,4 +7,4 @@ using GroomWise.Application.Observables;
 
 namespace GroomWise.Application.Events;
 
-public record DeleteCustomerEvent(ObservableCustomer Customer);
+public record ScheduleAppointmentEvent(ObservableCustomer Customer);

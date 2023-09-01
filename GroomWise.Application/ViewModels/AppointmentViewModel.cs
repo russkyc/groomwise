@@ -29,7 +29,9 @@ namespace GroomWise.Application.ViewModels;
 [RegisterSingleton]
 public partial class AppointmentViewModel
     : IEventSubscriber<CreateGroomingServiceEvent>,
-        IEventSubscriber<DeleteGroomingServiceEvent>
+        IEventSubscriber<DeleteGroomingServiceEvent>,
+        IEventSubscriber<ScheduleAppointmentEvent>,
+        IEventSubscriber<DeleteCustomerEvent>
 {
     [Property]
     private ObservableAppointment _activeAppointment;
@@ -127,6 +129,20 @@ public partial class AppointmentViewModel
 
     public void OnEvent(DeleteGroomingServiceEvent eventData)
     {
+        PopulateCollections();
+    }
+
+    public void OnEvent(ScheduleAppointmentEvent eventData)
+    {
+        ActiveAppointment.Customer = eventData.Customer;
+        CreateAppointment();
+    }
+
+    public void OnEvent(DeleteCustomerEvent eventData)
+    {
+        GroomWiseDbContext.Appointments.DeleteMultiple(
+            apppintment => apppintment.Customer.Id == eventData.Customer.Id
+        );
         PopulateCollections();
     }
 }

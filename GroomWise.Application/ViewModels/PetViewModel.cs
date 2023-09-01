@@ -24,7 +24,8 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(IEventAggregator))]
 public partial class PetViewModel
     : IEventSubscriber<CreateCustomerEvent>,
-        IEventSubscriber<DeleteCustomerEvent>
+        IEventSubscriber<DeleteCustomerEvent>,
+        IEventSubscriber<UpdateCustomerEvent>
 {
     [Property]
     private ObservablePet _activePet = new();
@@ -55,6 +56,11 @@ public partial class PetViewModel
     }
 
     public void OnEvent(DeleteCustomerEvent eventData)
+    {
+        PopulateCollections();
+    }
+
+    public void OnEvent(UpdateCustomerEvent eventData)
     {
         PopulateCollections();
     }

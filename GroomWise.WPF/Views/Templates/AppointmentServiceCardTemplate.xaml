@@ -16,7 +16,7 @@
     Background="Transparent"
     IsTabStop="False"
     mc:Ignorable="d">
-    <Grid Style="{StaticResource FadeInFromBottomAnimation}">
+    <Grid Style="{StaticResource FadeInAnimation}">
         <Border
             Padding="5"
             HorizontalAlignment="Stretch"

@@ -51,7 +51,11 @@
                     Margin="0,16,0,16"
                     VerticalAlignment="Center"
                     Background="{DynamicResource primary-default}"
-                    CornerRadius="10" />
+                    CornerRadius="10">
+                    <TextBlock Margin="32" Foreground="{DynamicResource primary-lighten-3}">
+                        <wpf:MaterialIconExt Kind="Person" />
+                    </TextBlock>
+                </Border>
                 <StackPanel
                     Grid.Column="1"
                     Margin="16,0,0,0"
@@ -75,15 +79,33 @@
                         Text="{Binding ContactNumber, UpdateSourceTrigger=PropertyChanged}"
                         TextAlignment="Center" />
 
-                    <russkyc:ModernButton
-                        Margin="0,16,0,0"
-                        Padding="12,7"
-                        HorizontalAlignment="Left"
-                        Command="{Binding DataContext.EditCustomerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
-                        Content="Edit"
-                        CornerRadius="5"
-                        FontWeight="Medium"
-                        LeftCenterIcon="{wpf:MaterialIconExt Kind=Edit}" />
+                    <StackPanel Margin="0,16,0,0" Orientation="Horizontal">
+                        <russkyc:ModernButton
+                            Padding="12,7"
+                            HorizontalAlignment="Left"
+                            Command="{Binding DataContext.ScheduleAppointmentCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
+                            CommandParameter="{Binding}"
+                            Content="Appointment"
+                            CornerRadius="5"
+                            FontWeight="Medium"
+                            LeftCenterIcon="{wpf:MaterialIconExt Kind=Add}" />
+                        <russkyc:ModernButton
+                            Margin="8,0,0,0"
+                            Padding="12,7"
+                            HorizontalAlignment="Left"
+                            Command="{Binding DataContext.EditCustomerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
+                            Content="Edit"
+                            CornerRadius="5"
+                            DefaultBackground="Transparent"
+                            DefaultForeground="{DynamicResource fg-000}"
+                            FontWeight="Medium"
+                            HoverBackground="{DynamicResource bg-200}"
+                            HoverForeground="{DynamicResource fg-000}"
+                            IconForeground="{DynamicResource fg-000}"
+                            LeftCenterIcon="{wpf:MaterialIconExt Kind=Edit}"
+                            PressedBackground="{DynamicResource bg-300}"
+                            PressedForeground="{DynamicResource fg-000}" />
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </StackPanel>

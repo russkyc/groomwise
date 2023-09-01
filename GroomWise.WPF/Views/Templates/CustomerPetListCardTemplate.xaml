@@ -32,7 +32,11 @@
                 VerticalAlignment="Center"
                 Background="{DynamicResource primary-default}"
                 CornerRadius="40"
-                IsHitTestVisible="False" />
+                IsHitTestVisible="False">
+                <TextBlock Margin="7" Foreground="{DynamicResource primary-lighten-3}">
+                    <wpf:MaterialIconExt Kind="Pets" />
+                </TextBlock>
+            </Border>
             <TextBlock
                 Grid.Column="1"
                 Margin="10,0,0,0"
@@ -66,8 +70,11 @@
                 CommandParameter="{Binding}"
                 Content="{wpf:MaterialIconExt Kind=TrashCan}"
                 DefaultBackground="Transparent"
+                DefaultForeground="{DynamicResource fg-000}"
                 HoverBackground="{DynamicResource bg-300}"
-                PressedBackground="{DynamicResource danger}" />
+                HoverForeground="{DynamicResource fg-000}"
+                PressedBackground="{DynamicResource danger}"
+                PressedForeground="#ffffff" />
         </Grid>
     </Grid>
 </UserControl>

@@ -8,13 +8,14 @@
     xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
     xmlns:pages="clr-namespace:GroomWise.Views.Pages"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     Height="70"
     d:DataContext="{d:DesignInstance observables:ObservablePet,
                                      IsDesignTimeCreatable=True}"
     d:DesignWidth="700"
     Background="Transparent"
     mc:Ignorable="d">
-    <Grid Style="{StaticResource FadeInFromBottomAnimation}">
+    <Grid Style="{StaticResource FadeInAnimation}">
         <russkyc:ModernRadioButton
             x:Name="CardButton"
             Padding="5"
@@ -44,7 +45,11 @@
                 Height="40"
                 VerticalAlignment="Center"
                 Background="{DynamicResource primary-default}"
-                CornerRadius="40" />
+                CornerRadius="40">
+                <TextBlock Margin="7" Foreground="{DynamicResource primary-lighten-3}">
+                    <wpf:MaterialIconExt Kind="Pets" />
+                </TextBlock>
+            </Border>
             <TextBlock
                 Grid.Column="1"
                 Margin="20,0,0,0"

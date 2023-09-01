@@ -138,7 +138,7 @@
                     Tooltip="Appointments" />
                 <templates:NavItemTemplate
                     Margin="8,8,8,0"
-                    Icon="{icons:MaterialIconExt Shower}"
+                    Icon="{icons:MaterialIconExt Scissors}"
                     PageContext="{x:Type viewModels:GroomingServiceViewModel}"
                     Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:GroomingServiceViewModel}, Mode=OneWay}"
                     Tooltip="Services" />
