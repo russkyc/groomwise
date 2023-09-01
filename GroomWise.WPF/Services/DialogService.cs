@@ -56,6 +56,28 @@ public class DialogService : IDialogService
         });
     }
 
+    public void CreateCustomerSelectionDialog(
+        object viewModel,
+        INavigationService navigationService
+    )
+    {
+        Task.Run(async () =>
+        {
+            await App.Current.Dispatcher.InvokeAsync(() =>
+            {
+                if (!App.Current.Windows.OfType<SelectCustomerView>().Any())
+                {
+                    new SelectCustomerView(viewModel)
+                    {
+                        ShowInTaskbar = false,
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                        Owner = (Window)navigationService.CurrentWindow!
+                    }.Show();
+                }
+            });
+        });
+    }
+
     public void CreateAddAppointmentsDialog(object viewModel, INavigationService navigationService)
     {
         Task.Run(async () =>

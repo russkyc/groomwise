@@ -40,7 +40,7 @@ public partial class App
         scope.AddContainer(container);
 
 #if DEBUG
-        ResetDatabase(scope);
+        // ResetDatabase(scope);
 #endif
         RegisterNavigationViews(scope);
         LoadThemeDefaults(scope);

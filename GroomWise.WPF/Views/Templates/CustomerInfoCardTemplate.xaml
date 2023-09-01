@@ -81,17 +81,15 @@
 
                     <StackPanel Margin="0,16,0,0" Orientation="Horizontal">
                         <russkyc:ModernButton
-                            Padding="12,7"
                             HorizontalAlignment="Left"
                             Command="{Binding DataContext.ScheduleAppointmentCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
                             CommandParameter="{Binding}"
                             Content="Appointment"
                             CornerRadius="5"
                             FontWeight="Medium"
-                            LeftCenterIcon="{wpf:MaterialIconExt Kind=Add}" />
+                            LeftCenterIcon="{wpf:MaterialIconExt Kind=AddThick}" />
                         <russkyc:ModernButton
                             Margin="8,0,0,0"
-                            Padding="12,7"
                             HorizontalAlignment="Left"
                             Command="{Binding DataContext.EditCustomerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
                             Content="Edit"

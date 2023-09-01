@@ -12,5 +12,7 @@
     <TextBlock
         HorizontalAlignment="Center"
         VerticalAlignment="Center"
+        FontSize="18"
+        FontWeight="Medium"
         Text="Inventory" />
 </UserControl>

@@ -41,7 +41,8 @@
                 Margin="10,0,20,0"
                 Padding="6"
                 Background="{DynamicResource primary-default}"
-                CornerRadius="6">
+                CornerRadius="6"
+                IsHitTestVisible="False">
                 <TextBlock Foreground="{DynamicResource primary-lighten-3}">
                     <wpf:MaterialIconExt Kind="BubbleChart" />
                 </TextBlock>
@@ -52,6 +53,7 @@
                 VerticalAlignment="Center"
                 FontSize="14"
                 FontWeight="Medium"
+                IsHitTestVisible="False"
                 Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock
                 Grid.Column="2"
@@ -60,6 +62,7 @@
                 VerticalAlignment="Center"
                 FontSize="14"
                 FontWeight="Medium"
+                IsHitTestVisible="False"
                 Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
             <russkyc:ModernButton
                 Grid.Column="3"

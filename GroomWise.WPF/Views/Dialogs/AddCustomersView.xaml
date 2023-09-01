@@ -25,18 +25,18 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock
-            Grid.Row="0"
-            Grid.Column="0"
-            Margin="20,16,0,12"
-            HorizontalAlignment="Left"
-            FontSize="16"
-            Text="New Customer" />
+
+
         <StackPanel
             Grid.Row="1"
             Margin="20,0,16,20"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Top">
+            <TextBlock
+                Margin="0,16,0,12"
+                FontSize="18"
+                FontWeight="Medium"
+                Text="New Customer" />
             <Grid>
                 <russkyc:ModernTextBox
                     Name="FullNameTextBox"

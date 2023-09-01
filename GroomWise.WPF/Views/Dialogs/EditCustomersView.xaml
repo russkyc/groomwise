@@ -27,12 +27,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <TextBlock
-            Grid.Row="0"
-            Grid.Column="0"
             Margin="20,16,0,12"
-            HorizontalAlignment="Left"
-            FontSize="16"
-            Text="Edit Customer" />
+            FontSize="18"
+            FontWeight="Medium"
+            Text="Update Customer" />
         <StackPanel
             Grid.Row="1"
             Margin="20,0,16,20"

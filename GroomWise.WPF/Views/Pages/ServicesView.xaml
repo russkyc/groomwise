@@ -33,7 +33,8 @@
             <TextBlock
                 Grid.Column="0"
                 VerticalAlignment="Center"
-                FontSize="16"
+                FontSize="18"
+                FontWeight="Medium"
                 Text="Services" />
             <russkyc:ModernTextBox
                 Grid.Column="2"

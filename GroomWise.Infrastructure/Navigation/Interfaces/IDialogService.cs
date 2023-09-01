@@ -9,6 +9,12 @@ public interface IDialogService
 {
     bool? Create(string messageBoxText, string caption, INavigationService navigationService);
     void CloseDialogs(INavigationService navigationService);
+
+    void CreateCustomerSelectionDialog(
+        object viewModel,
+        INavigationService navigationService
+    );
+
     void CreateAddAppointmentsDialog(object viewModel, INavigationService navigationService);
     void CreateAddCustomersDialog(object viewModel, INavigationService navigationService);
     void CreateEditCustomersDialog(object viewModel, INavigationService navigationService);
