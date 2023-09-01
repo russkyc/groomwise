@@ -47,14 +47,30 @@
                     <wpf:MaterialIconExt Kind="BubbleChart" />
                 </TextBlock>
             </Border>
-            <TextBlock
-                Grid.Column="1"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                FontSize="14"
-                FontWeight="Medium"
-                IsHitTestVisible="False"
-                Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}" />
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock
+                    HorizontalAlignment="Left"
+                    FontSize="14"
+                    FontWeight="Medium"
+                    IsHitTestVisible="False"
+                    Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}" />
+                <Border
+                    Margin="0,8,10,0"
+                    Padding="8,3"
+                    HorizontalAlignment="Left"
+                    Background="{DynamicResource primary-default}"
+                    CornerRadius="10"
+                    IsHitTestVisible="False"
+                    Visibility="{Binding Type}">
+                    <TextBlock
+                        HorizontalAlignment="Stretch"
+                        FontSize="10"
+                        Foreground="#ffffff"
+                        Text="{Binding TimeSpan, StringFormat={}{0:hh':'mm}, UpdateSourceTrigger=PropertyChanged}"
+                        TextTrimming="CharacterEllipsis" />
+                </Border>
+            </StackPanel>
+
             <TextBlock
                 Grid.Column="2"
                 Margin="20,0,0,0"

@@ -13,6 +13,7 @@ public class GroomingService : IEntity
     [BsonId]
     public Guid Id { get; set; }
     public string? Type { get; set; }
-    public TimeSpan? TimeSpan { get; set; }
+    public int? HourSpan { get; set; }
+    public int? MinuteSpan { get; set; }
     public string? Description { get; set; }
 }

@@ -17,7 +17,20 @@ public partial class ObservableGroomingService
     private string? _type;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private TimeSpan? _timeSpan;
+    private double _hourSpan;
+
+    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    private double _minuteSpan;
+
+    public TimeSpan TimeSpan
+    {
+        get
+        {
+            return new TimeSpan()
+                .Add(TimeSpan.FromHours(HourSpan))
+                .Add(TimeSpan.FromMinutes(MinuteSpan));
+        }
+    }
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
     private string? _description;

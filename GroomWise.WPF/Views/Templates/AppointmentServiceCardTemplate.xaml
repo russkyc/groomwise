@@ -2,6 +2,7 @@
     x:Class="GroomWise.Views.Templates.AppointmentServiceCardTemplate"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:GroomWise.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dialogs="clr-namespace:GroomWise.Views.Dialogs"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -27,6 +28,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <russkyc:ModernComboBox
                 Grid.Column="0"
@@ -40,13 +42,37 @@
                 Placeholder="Select Service"
                 SelectedIndex="0"
                 SelectedValue="{Binding GroomingService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <russkyc:ModernButton
+            <Border
                 Grid.Column="1"
+                Margin="8,0,0,0"
+                Padding="8,3"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="{DynamicResource primary-default}"
+                CornerRadius="10"
+                IsHitTestVisible="False"
+                Visibility="{Binding GroomingService.Type, Converter={x:Static converters:StringToVisibilityConverter.Instance}}">
+                <TextBlock
+                    HorizontalAlignment="Stretch"
+                    FontSize="10"
+                    Foreground="#ffffff"
+                    Text="{Binding GroomingService.TimeSpan, StringFormat={}{0:hh':'mm}, UpdateSourceTrigger=PropertyChanged}"
+                    TextTrimming="CharacterEllipsis" />
+            </Border>
+            <russkyc:ModernButton
+                Grid.Column="2"
                 Margin="14"
                 Padding="5"
+                HorizontalAlignment="Right"
                 Command="{Binding Path=DataContext.RemoveGroomingServiceCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=dialogs:AddAppointmentsView}}"
                 CommandParameter="{Binding}"
-                Content="{wpf:MaterialIconExt Kind=Close}" />
+                Content="{wpf:MaterialIconExt Kind=TrashCan}"
+                DefaultBackground="Transparent"
+                DefaultForeground="{DynamicResource fg-000}"
+                HoverBackground="{DynamicResource bg-300}"
+                HoverForeground="{DynamicResource fg-000}"
+                PressedBackground="{DynamicResource danger}"
+                PressedForeground="#ffffff" />
         </Grid>
     </Grid>
 </UserControl>

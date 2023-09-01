@@ -40,6 +40,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="350" />
                     <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <russkyc:ModernTextBox
                     Name="ServiceNameBox"
@@ -49,13 +50,47 @@
                     HelperText="Max Length (200)"
                     Placeholder="Service Name"
                     Text="{Binding ActiveGroomingService.Type, UpdateSourceTrigger=PropertyChanged}" />
-                <russkyc:ModernTextBox
+                <russkyc:ModernComboBox
                     Grid.Column="1"
                     Margin="12,0,0,0"
+                    VerticalAlignment="Top"
                     CornerRadius="5"
-                    HelperText="Max Length (200)"
-                    Placeholder="Service Info"
-                    Text="{Binding ActiveCustomer.ContactNumber, UpdateSourceTrigger=PropertyChanged}" />
+                    IsEditable="True"
+                    IsSynchronizedWithCurrentItem="True"
+                    Placeholder="Hours"
+                    SelectedValue="{Binding ActiveGroomingService.HourSpan, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem>0</ComboBoxItem>
+                    <ComboBoxItem>1</ComboBoxItem>
+                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>3</ComboBoxItem>
+                    <ComboBoxItem>4</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
+                    <ComboBoxItem>6</ComboBoxItem>
+                    <ComboBoxItem>7</ComboBoxItem>
+                    <ComboBoxItem>8</ComboBoxItem>
+                </russkyc:ModernComboBox>
+                <russkyc:ModernComboBox
+                    Grid.Column="2"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Top"
+                    CornerRadius="5"
+                    IsEditable="True"
+                    IsSynchronizedWithCurrentItem="True"
+                    Placeholder="Minutes"
+                    SelectedValue="{Binding ActiveGroomingService.MinuteSpan, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBoxItem>0</ComboBoxItem>
+                    <ComboBoxItem>5</ComboBoxItem>
+                    <ComboBoxItem>10</ComboBoxItem>
+                    <ComboBoxItem>15</ComboBoxItem>
+                    <ComboBoxItem>20</ComboBoxItem>
+                    <ComboBoxItem>25</ComboBoxItem>
+                    <ComboBoxItem>30</ComboBoxItem>
+                    <ComboBoxItem>35</ComboBoxItem>
+                    <ComboBoxItem>40</ComboBoxItem>
+                    <ComboBoxItem>45</ComboBoxItem>
+                    <ComboBoxItem>50</ComboBoxItem>
+                    <ComboBoxItem>55</ComboBoxItem>
+                </russkyc:ModernComboBox>
 
             </Grid>
             <Grid Margin="0,12,0,0">
