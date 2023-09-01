@@ -27,7 +27,7 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(INavigationService))]
 [Inject(typeof(GroomWiseDbContext))]
 [RegisterSingleton]
-public partial class AppointmentViewModel
+public partial class AppointmentViewModel : IEventSubscriber<CreateGroomingServiceEvent>
 {
     [Property]
     private ObservableAppointment _activeAppointment;
@@ -89,10 +89,7 @@ public partial class AppointmentViewModel
                 GroomWiseDbContext.Appointments.Insert(appointment);
                 DialogService.CloseDialogs(NavigationService);
                 EventAggregator.Publish(
-                    new PublishNotificationEvent(
-                        $"Appointment {ActiveAppointment.Service} saved",
-                        NotificationType.Success
-                    )
+                    new PublishNotificationEvent($"Appointment saved", NotificationType.Success)
                 );
                 ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
                 OnPropertyChanged(nameof(ActiveAppointment.Date));
@@ -101,4 +98,28 @@ public partial class AppointmentViewModel
         });
     }
 
+    [Command]
+    private async Task AddGroomingService()
+    {
+        await Task.Run(
+            () => ActiveAppointment.Services.Insert(0, new ObservableAppointmentService())
+        );
+    }
+
+    [Command]
+    private async Task RemoveGroomingService(object param)
+    {
+        await Task.Run(() =>
+        {
+            if (param is ObservableAppointmentService service)
+            {
+                ActiveAppointment.Services.Remove(service);
+            }
+        });
+    }
+
+    public void OnEvent(CreateGroomingServiceEvent eventData)
+    {
+        PopulateCollections();
+    }
 }

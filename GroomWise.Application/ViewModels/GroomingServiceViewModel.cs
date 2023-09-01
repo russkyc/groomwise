@@ -89,6 +89,7 @@ public partial class GroomingServiceViewModel
                         NotificationType.Success
                     )
                 );
+                EventAggregator.Publish(new CreateGroomingServiceEvent());
                 ActiveGroomingService = new();
                 PopulateCollections();
             }

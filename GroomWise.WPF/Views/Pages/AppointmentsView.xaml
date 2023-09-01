@@ -15,93 +15,79 @@
     d:DesignWidth="1280"
     Style="{StaticResource FadeInFromBottomAnimation}"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Margin="16,20,16,16" Style="{StaticResource FadeInFromBottomAnimation}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="300" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Margin="16,20,0,16">
-            <Grid
-                Margin="0,0,0,0"
-                VerticalAlignment="Stretch"
-                Style="{StaticResource FadeInFromBottomAnimation}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <TextBlock
-                    Grid.Row="0"
-                    Margin="0,0,0,12"
-                    FontSize="16"
-                    Text="Schedule" />
-                <ItemsControl Grid.Row="1" ItemsSource="{Binding Appointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <templates:AppointmentCardTemplate />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-
-                    <ItemsControl.ItemContainerStyle>
-                        <Style TargetType="{x:Type FrameworkElement}">
-                            <Setter Property="Margin" Value="0,0,0,10" />
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>
-
-                    <ItemsControl.Template>
-                        <ControlTemplate TargetType="ItemsControl">
-                            <Border
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
-                                <ScrollViewer
-                                    Padding="{TemplateBinding Padding}"
-                                    CanContentScroll="True"
-                                    Focusable="False">
-                                    <ItemsPresenter />
-                                </ScrollViewer>
-                            </Border>
-                        </ControlTemplate>
-                    </ItemsControl.Template>
-                </ItemsControl>
-            </Grid>
-        </Grid>
         <Grid
-            Grid.Column="1"
-            Margin="16,20,16,16"
-            Style="{StaticResource FadeInFromBottomAnimation}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid
-                Grid.Row="0"
-                Margin="0,0,0,12"
-                HorizontalAlignment="Stretch">
-                <TextBlock
-                    VerticalAlignment="Center"
-                    FontSize="16"
-                    Text="Appointments" />
-                <russkyc:ModernButton
-                    HorizontalAlignment="Right"
-                    Command="{Binding CreateAppointmentCommand}"
-                    Content="Add Appointment"
-                    CornerRadius="5"
-                    FontWeight="Medium"
-                    IconSize="18"
-                    LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
-            </Grid>
-            <Border
-                Grid.Row="1"
-                Background="{DynamicResource bg-100}"
-                CornerRadius="10">
-                <Grid Height="200" HorizontalAlignment="Stretch" />
-            </Border>
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="0,0,0,12"
+            HorizontalAlignment="Stretch">
+            <TextBlock
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="Appointments" />
+            <russkyc:ModernButton
+                HorizontalAlignment="Right"
+                Command="{Binding CreateAppointmentCommand}"
+                Content="Add Appointment"
+                CornerRadius="5"
+                FontWeight="Medium"
+                IconSize="18"
+                LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
         </Grid>
+        <ItemsControl
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="0,0,16,0"
+            ItemsSource="{Binding Appointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <templates:AppointmentCardTemplate />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="{x:Type FrameworkElement}">
+                    <Setter Property="Margin" Value="0,0,0,10" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+            <ItemsControl.Template>
+                <ControlTemplate TargetType="ItemsControl">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer
+                            Padding="{TemplateBinding Padding}"
+                            CanContentScroll="True"
+                            Focusable="False">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </ItemsControl.Template>
+        </ItemsControl>
+        <Border
+            Grid.Row="1"
+            Grid.Column="1"
+            Background="{DynamicResource bg-100}"
+            CornerRadius="10">
+            <Grid Height="200" HorizontalAlignment="Stretch" />
+        </Border>
     </Grid>
 </UserControl>

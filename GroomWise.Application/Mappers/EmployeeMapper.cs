@@ -9,15 +9,15 @@ using Mapster;
 
 namespace GroomWise.Application.Mappers;
 
-public static class PetMapper
+public static class EmployeeMapper
 {
-    public static Pet ToEntity(this ObservablePet observablePet)
+    public static Employee ToEntity(this ObservableEmployee observablePet)
     {
-        return observablePet.Adapt<Pet>();
+        return observablePet.Adapt<Employee>();
     }
 
-    public static ObservablePet ToObservable(this Pet pet)
+    public static ObservableEmployee ToObservable(this Employee employee)
     {
-        return pet.Adapt<ObservablePet>();
+        return employee.Adapt<ObservableEmployee>();
     }
 }

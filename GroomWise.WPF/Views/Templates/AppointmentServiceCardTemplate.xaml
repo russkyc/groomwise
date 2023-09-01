@@ -1,0 +1,52 @@
+﻿<UserControl
+    x:Class="GroomWise.Views.Templates.AppointmentServiceCardTemplate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dialogs="clr-namespace:GroomWise.Views.Dialogs"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
+    xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+    Height="54"
+    HorizontalAlignment="Stretch"
+    d:DataContext="{d:DesignInstance observables:ObservableAppointmentService,
+                                     IsDesignTimeCreatable=True}"
+    d:DesignWidth="300"
+    Background="Transparent"
+    IsTabStop="False"
+    mc:Ignorable="d">
+    <Grid Style="{StaticResource FadeInFromBottomAnimation}">
+        <Border
+            Padding="5"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Background="{DynamicResource bg-100}"
+            CornerRadius="10" />
+        <Grid HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <russkyc:ModernComboBox
+                Grid.Column="0"
+                Margin="8,0,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                CornerRadius="5"
+                DisplayMemberPath="Type"
+                IsEditable="False"
+                ItemsSource="{Binding DataContext.GroomingServices.EditableCollectionView, RelativeSource={RelativeSource FindAncestor, AncestorType=dialogs:AddAppointmentsView}}"
+                Placeholder="Select Service"
+                SelectedIndex="0"
+                SelectedValue="{Binding GroomingService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <russkyc:ModernButton
+                Grid.Column="1"
+                Margin="14"
+                Padding="5"
+                Command="{Binding Path=DataContext.RemoveGroomingServiceCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=dialogs:AddAppointmentsView}}"
+                CommandParameter="{Binding}"
+                Content="{wpf:MaterialIconExt Kind=Close}" />
+        </Grid>
+    </Grid>
+</UserControl>

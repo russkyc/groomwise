@@ -505,11 +505,11 @@
                     Grid.Row="0"
                     Margin="0,0,0,12"
                     FontSize="16"
-                    Text="Upcoming" />
+                    Text="Today" />
                 <ItemsControl Grid.Row="1" ItemsSource="{Binding Appointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <templates:DashboardNotificationTemplate />
+                            <templates:DashboardAppointmentTemplate />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
 

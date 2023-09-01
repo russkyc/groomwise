@@ -6,6 +6,7 @@
 using GroomWise.Domain.Entities;
 using GroomWise.Domain.Enums;
 using Lombok.NET;
+using Swordfish.NET.Collections;
 
 namespace GroomWise.Application.Observables;
 
@@ -19,14 +20,14 @@ public partial class ObservableAppointment
     private AppointmentStatus? _status;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private GroomingService? _service;
+    private ObservablePet? _pet;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private Pet? _pet;
+    private ObservableCustomer? _customer;
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private Customer? _customer;
+    private ConcurrentObservableCollection<ObservableEmployee>? _employees = new();
 
     [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
-    private IEnumerable<Employee>? _employees;
+    private ConcurrentObservableCollection<ObservableAppointmentService>? _services = new();
 }

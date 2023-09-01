@@ -7,9 +7,9 @@ using System.Windows.Controls;
 
 namespace GroomWise.Views.Templates;
 
-public partial class DashboardNotificationTemplate : UserControl
+public partial class ServiceListCardTemplate : UserControl
 {
-    public DashboardNotificationTemplate()
+    public ServiceListCardTemplate()
     {
         InitializeComponent();
     }
