@@ -39,7 +39,9 @@ public partial class DashboardViewModel
         await Task.Run(() =>
         {
             var appointments = GroomWiseDbContext.Appointments
-                .GetMultiple(appointment => appointment.Date == DateTime.Today)
+                .GetMultiple(
+                    appointment => appointment.Date == DateOnly.FromDateTime(DateTime.Today)
+                )
                 .Select(AppointmentMapper.ToObservable)
                 .OrderBy(appointment => appointment.Date);
             Appointments = new ConcurrentObservableCollection<ObservableAppointment>(appointments);

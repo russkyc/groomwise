@@ -50,7 +50,10 @@ public partial class AppointmentViewModel
     partial void OnInitialize()
     {
         PopulateCollections();
-        ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
+        ActiveAppointment = new ObservableAppointment
+        {
+            Date = DateOnly.FromDateTime(DateTime.Today)
+        };
     }
 
     private async void PopulateCollections()
@@ -58,7 +61,7 @@ public partial class AppointmentViewModel
         await Task.Run(() =>
         {
             var appointments = GroomWiseDbContext.Appointments
-                .GetMultiple(appointment => appointment.Date >= DateTime.Today)
+                .GetMultiple(appointment => appointment.Date >= DateOnly.FromDateTime(DateTime.Now))
                 .Select(AppointmentMapper.ToObservable)
                 .OrderBy(appointment => appointment.Date);
 
@@ -90,9 +93,34 @@ public partial class AppointmentViewModel
                 DialogService.CreateAddAppointmentsDialog(this, NavigationService);
                 return;
             }
-            ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
+            ActiveAppointment = new ObservableAppointment
+            {
+                Date = DateOnly.FromDateTime(DateTime.Today)
+            };
             DialogService.CreateCustomerSelectionDialog(this, NavigationService);
         });
+    }
+
+    [Command]
+    private async Task CancelAppointment(object param)
+    {
+        if (param is ObservableAppointment appointment)
+        {
+            await Task.Run(() =>
+            {
+                var dialogResult = DialogService.Create(
+                    "Appointments",
+                    $"Cancel {appointment.Customer.FullName.Split(" ")[0]}'s Appointment?",
+                    NavigationService
+                );
+
+                if (dialogResult is true)
+                {
+                    Appointments.Remove(appointment);
+                    GroomWiseDbContext.Appointments.Delete(appointment.Id);
+                }
+            });
+        }
     }
 
     [Command]
@@ -141,8 +169,8 @@ public partial class AppointmentViewModel
             }
 
             var dialogResult = DialogService.Create(
-                "GroomWise",
-                "Create Appointment?",
+                "Appointments",
+                $"Book Appointment for {ActiveAppointment.Customer.FullName.Split(" ")[0]}?",
                 NavigationService
             );
             if (dialogResult is true)
@@ -153,7 +181,10 @@ public partial class AppointmentViewModel
                 EventAggregator.Publish(
                     new PublishNotificationEvent($"Appointment saved", NotificationType.Success)
                 );
-                ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
+                ActiveAppointment = new ObservableAppointment
+                {
+                    Date = DateOnly.FromDateTime(DateTime.Today)
+                };
                 OnPropertyChanged(nameof(ActiveAppointment.Date));
                 PopulateCollections();
             }

@@ -13,7 +13,9 @@ public class Appointment : IEntity
 {
     [BsonId]
     public Guid Id { get; set; }
-    public DateTime? Date { get; set; }
+    public DateOnly? Date { get; set; }
+    public TimeOnly? StartTime { get; set; }
+    public TimeOnly? EndTime { get; set; }
     public AppointmentStatus? Status { get; set; }
     public Pet? Pet { get; set; }
     public Customer? Customer { get; set; }

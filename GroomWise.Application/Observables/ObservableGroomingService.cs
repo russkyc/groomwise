@@ -10,16 +10,16 @@ namespace GroomWise.Application.Observables;
 [NotifyPropertyChanged]
 public partial class ObservableGroomingService
 {
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private Guid _id;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string? _type;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private double _hourSpan;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private double _minuteSpan;
 
     public TimeSpan TimeSpan
@@ -32,6 +32,6 @@ public partial class ObservableGroomingService
         }
     }
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string? _description;
 }

@@ -49,7 +49,7 @@
                 Margin="5"
                 VerticalAlignment="Top"
                 IsEditable="True"
-                SelectedDate="{Binding ActiveAppointment.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                SelectedDate="{Binding ActiveAppointment.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converter:DateOnlyToDateTimeConverter.Instance}}" />
         </Border>
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>

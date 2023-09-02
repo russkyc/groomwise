@@ -11,40 +11,40 @@ namespace GroomWise.Application.Observables;
 [NotifyPropertyChanged]
 public partial class ObservableEmployee
 {
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private Guid _id;
     public string FullName => $"{FirstName} {LastName}";
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string? _prefix;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string? _firstName;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string? _middleName;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string? _lastName;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string? _suffix;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string _address;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string _contactNumber;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string _email;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private IList<Pet>? _pets;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private IList<Appointment>? _appointments;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private IList<Role>? _roles;
 }

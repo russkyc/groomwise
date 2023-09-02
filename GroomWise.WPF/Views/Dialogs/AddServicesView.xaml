@@ -58,7 +58,7 @@
                     IsEditable="True"
                     IsSynchronizedWithCurrentItem="True"
                     Placeholder="Hours"
-                    SelectedValue="{Binding ActiveGroomingService.HourSpan, UpdateSourceTrigger=PropertyChanged}">
+                    Text="{Binding ActiveGroomingService.HourSpan, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBoxItem>0</ComboBoxItem>
                     <ComboBoxItem>1</ComboBoxItem>
                     <ComboBoxItem>2</ComboBoxItem>
@@ -77,7 +77,7 @@
                     IsEditable="True"
                     IsSynchronizedWithCurrentItem="True"
                     Placeholder="Minutes"
-                    SelectedValue="{Binding ActiveGroomingService.MinuteSpan, UpdateSourceTrigger=PropertyChanged}">
+                    Text="{Binding ActiveGroomingService.MinuteSpan, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBoxItem>0</ComboBoxItem>
                     <ComboBoxItem>5</ComboBoxItem>
                     <ComboBoxItem>10</ComboBoxItem>

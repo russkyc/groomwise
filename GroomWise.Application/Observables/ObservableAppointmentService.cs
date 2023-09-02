@@ -10,6 +10,6 @@ namespace GroomWise.Application.Observables;
 [NotifyPropertyChanged]
 public partial class ObservableAppointmentService
 {
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private ObservableGroomingService _groomingService;
 }

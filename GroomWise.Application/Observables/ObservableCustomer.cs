@@ -12,24 +12,24 @@ namespace GroomWise.Application.Observables;
 [NotifyPropertyChanged]
 public partial class ObservableCustomer
 {
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private Guid _id;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string _fullName;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string _address;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string _contactNumber;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private string _email;
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private ConcurrentObservableCollection<ObservableAppointment> _appointments = new();
 
-    [Property(PropertyChangeType = PropertyChangeType.PropertyChanged)]
+    [Property]
     private ConcurrentObservableCollection<ObservablePet> _pets = new();
 }
