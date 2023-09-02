@@ -3,11 +3,11 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using Lombok.NET;
+using MvvmGen;
 
 namespace GroomWise.Application.Observables;
 
-[NotifyPropertyChanged]
+[ViewModel]
 public partial class ObservableGroomingService
 {
     [Property]
@@ -22,16 +22,10 @@ public partial class ObservableGroomingService
     [Property]
     private double _minuteSpan;
 
-    public TimeSpan TimeSpan
-    {
-        get
-        {
-            return new TimeSpan()
-                .Add(TimeSpan.FromHours(HourSpan))
-                .Add(TimeSpan.FromMinutes(MinuteSpan));
-        }
-    }
+    [PropertyInvalidate(nameof(HourSpan), nameof(MinuteSpan))]
+    public TimeSpan TimeSpan =>
+        new TimeSpan().Add(TimeSpan.FromHours(HourSpan)).Add(TimeSpan.FromMinutes(MinuteSpan));
 
-    [Property]
+    [Lombok.NET.Property]
     private string? _description;
 }

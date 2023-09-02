@@ -51,7 +51,7 @@
                 Background="{DynamicResource primary-default}"
                 CornerRadius="10"
                 IsHitTestVisible="False"
-                Visibility="{Binding GroomingService.Type, Converter={x:Static converters:StringToVisibilityConverter.Instance}}">
+                Visibility="{Binding GroomingService, Converter={x:Static converters:ObjectToVisibilityConverter.Instance}, Mode=OneWay}">
                 <TextBlock
                     HorizontalAlignment="Stretch"
                     FontSize="10"

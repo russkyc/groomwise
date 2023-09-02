@@ -3,13 +3,19 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using Lombok.NET;
+using MvvmGen;
 
 namespace GroomWise.Application.Observables;
 
-[NotifyPropertyChanged]
+[ViewModel]
 public partial class ObservableAppointmentService
 {
     [Property]
-    private ObservableGroomingService _groomingService;
+    [PropertyCallMethod(nameof(ServiceChanged))]
+    private ObservableGroomingService? _groomingService;
+
+    private void ServiceChanged()
+    {
+        OnPropertyChanged(nameof(GroomingService.TimeSpan));
+    }
 }
