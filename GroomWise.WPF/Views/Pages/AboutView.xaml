@@ -49,7 +49,7 @@
                 VerticalAlignment="Center"
                 FontSize="10"
                 Foreground="{DynamicResource fg-600}"
-                Text="All Rights Reserved 2023, John Russell Camo (@russkyc) ."
+                Text="GroomWise is authored and developed by John Russell Camo (@russkyc) and is licensed under GNU AGPLv3."
                 TextAlignment="Center"
                 TextWrapping="Wrap" />
             <moderncontrols:ModernButton

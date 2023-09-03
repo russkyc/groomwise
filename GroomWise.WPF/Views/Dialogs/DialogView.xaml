@@ -1,19 +1,20 @@
-﻿<russkyc:ModernWindow x:Class="GroomWise.Views.Dialogs.DialogView"
-                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
-                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-                      Title="DialogView"
-                      Width="320"
-                      Height="220"
-                      ExtendClientAreaToChrome="True"
-                      NoDecorations="True"
-                      ShowInTaskbar="False"
-                      TitleBarHeight="0"
-                      WindowStartupLocation="CenterOwner"
-                      mc:Ignorable="d">
+﻿<russkyc:ModernWindow
+    x:Class="GroomWise.Views.Dialogs.DialogView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    Title="DialogView"
+    Width="320"
+    Height="220"
+    ExtendClientAreaToChrome="True"
+    NoDecorations="True"
+    ShowInTaskbar="False"
+    TitleBarHeight="0"
+    WindowStartupLocation="CenterOwner"
+    mc:Ignorable="d">
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="Click">
             <b:CallMethodAction MethodName="Hide" TargetObject="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=russkyc:ModernWindow}}" />
@@ -26,67 +27,73 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock HorizontalAlignment="Center"
-                           FontSize="18"
-                           FontWeight="Medium"
-                           Text="{Binding MessageBoxText, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernWindow}}" />
-                <TextBlock Margin="18,14,18,0"
-                           HorizontalAlignment="Center"
-                           FontFamily="13"
-                           Foreground="{DynamicResource fg-600}"
-                           LineHeight="17"
-                           LineStackingStrategy="BlockLineHeight"
-                           Text="{Binding Caption, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernWindow}}"
-                           TextAlignment="Center"
-                           TextWrapping="Wrap" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="18"
+                    FontWeight="Medium"
+                    Text="{Binding MessageBoxText, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernWindow}}" />
+                <TextBlock
+                    Margin="18,14,18,0"
+                    HorizontalAlignment="Center"
+                    FontFamily="13"
+                    Foreground="{DynamicResource fg-600}"
+                    LineHeight="17"
+                    LineStackingStrategy="BlockLineHeight"
+                    Text="{Binding Caption, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernWindow}}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1" Background="{DynamicResource bg-100}">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <russkyc:ModernButton x:Name="ButtonYes"
-                                      Width="100"
-                                      Height="36"
-                                      Margin="0,0,0,0"
-                                      HorizontalAlignment="Stretch"
-                                      Click="ButtonYes_OnClick"
-                                      Content="Yes"
-                                      CornerRadius="5"
-                                      FontWeight="Medium" />
-                <russkyc:ModernButton x:Name="ButtonOk"
-                                      Width="100"
-                                      Height="36"
-                                      Margin="8,0,0,0"
-                                      HorizontalAlignment="Stretch"
-                                      Click="ButtonYes_OnClick"
-                                      Content="Ok"
-                                      CornerRadius="5"
-                                      FontWeight="Medium" />
-                <russkyc:ModernButton x:Name="ButtonNo"
-                                      Width="100"
-                                      Height="36"
-                                      Margin="8,0,0,0"
-                                      HorizontalAlignment="Stretch"
-                                      Click="ButtonCancel_OnClick"
-                                      Content="No"
-                                      CornerRadius="5"
-                                      DefaultBackground="{DynamicResource bg-100}"
-                                      FontWeight="Medium"
-                                      Foreground="{DynamicResource fg-600}"
-                                      HoverBackground="{DynamicResource bg-100}"
-                                      PressedBackground="{DynamicResource bg-200}" />
-                <russkyc:ModernButton x:Name="ButtonCancel"
-                                      Width="100"
-                                      Height="36"
-                                      Margin="8,0,0,0"
-                                      HorizontalAlignment="Stretch"
-                                      Click="ButtonCancel_OnClick"
-                                      Content="Cancel"
-                                      CornerRadius="5"
-                                      DefaultBackground="{DynamicResource bg-100}"
-                                      FontWeight="Medium"
-                                      Foreground="{DynamicResource fg-600}"
-                                      HoverBackground="{DynamicResource bg-100}"
-                                      PressedBackground="{DynamicResource bg-200}" />
+                <russkyc:ModernButton
+                    x:Name="ButtonYes"
+                    Width="100"
+                    Height="36"
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Stretch"
+                    Click="ButtonYes_OnClick"
+                    Content="Yes"
+                    CornerRadius="5"
+                    FontWeight="Medium" />
+                <russkyc:ModernButton
+                    x:Name="ButtonOk"
+                    Width="100"
+                    Height="36"
+                    Margin="8,0,0,0"
+                    HorizontalAlignment="Stretch"
+                    Click="ButtonYes_OnClick"
+                    Content="Ok"
+                    CornerRadius="5"
+                    FontWeight="Medium" />
+                <russkyc:ModernButton
+                    x:Name="ButtonNo"
+                    Width="100"
+                    Height="36"
+                    Margin="8,0,0,0"
+                    HorizontalAlignment="Stretch"
+                    Click="ButtonCancel_OnClick"
+                    Content="No"
+                    CornerRadius="5"
+                    DefaultBackground="{DynamicResource bg-100}"
+                    FontWeight="Medium"
+                    Foreground="{DynamicResource fg-600}"
+                    HoverBackground="{DynamicResource bg-100}"
+                    PressedBackground="{DynamicResource bg-200}" />
+                <russkyc:ModernButton
+                    x:Name="ButtonCancel"
+                    Width="100"
+                    Height="36"
+                    Margin="8,0,0,0"
+                    HorizontalAlignment="Stretch"
+                    Click="ButtonCancel_OnClick"
+                    Content="Cancel"
+                    CornerRadius="5"
+                    DefaultBackground="{DynamicResource bg-100}"
+                    FontWeight="Medium"
+                    Foreground="{DynamicResource fg-600}"
+                    HoverBackground="{DynamicResource bg-100}"
+                    PressedBackground="{DynamicResource bg-200}" />
             </StackPanel>
         </Grid>
     </Grid>
