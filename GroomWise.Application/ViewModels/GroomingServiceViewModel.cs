@@ -25,7 +25,7 @@ namespace GroomWise.Application.ViewModels;
 public partial class GroomingServiceViewModel
 {
     [Property]
-    private ObservableGroomingService _activeGroomingService = new();
+    private ObservableGroomingService _activeGroomingService;
 
     [Property]
     private ConcurrentObservableCollection<ObservableGroomingService> _groomingServices = new();
@@ -54,6 +54,7 @@ public partial class GroomingServiceViewModel
     {
         await Task.Run(() =>
         {
+            ActiveGroomingService = new();
             DialogService.CreateAddServicesDialog(this, NavigationService);
         });
     }

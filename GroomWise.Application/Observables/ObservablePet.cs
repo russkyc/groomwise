@@ -3,27 +3,24 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using GroomWise.Domain.Entities;
-using Lombok.NET;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace GroomWise.Application.Observables;
 
-[NotifyPropertyChanged]
-public partial class ObservablePet
+public partial class ObservablePet : ObservableObject
 {
-    [Property]
+    [ObservableProperty]
     private Guid _id;
 
-    [Property]
+    [ObservableProperty]
     private string? _name;
 
-    [Property]
+    [ObservableProperty]
     private int? _age;
 
-    [Property]
+    [ObservableProperty]
     private string? _breed;
 
-    [Property]
+    [ObservableProperty]
     private string? _gender;
-
 }

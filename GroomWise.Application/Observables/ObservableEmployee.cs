@@ -3,48 +3,51 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using CommunityToolkit.Mvvm.ComponentModel;
 using GroomWise.Domain.Entities;
-using Lombok.NET;
+using Swordfish.NET.Collections;
 
 namespace GroomWise.Application.Observables;
 
-[NotifyPropertyChanged]
-public partial class ObservableEmployee
+public partial class ObservableEmployee : ObservableObject
 {
-    [Property]
+    [ObservableProperty]
     private Guid _id;
     public string FullName => $"{FirstName} {LastName}";
 
-    [Property]
+    [ObservableProperty]
     private string? _prefix;
 
-    [Property]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FullName))]
     private string? _firstName;
 
-    [Property]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FullName))]
     private string? _middleName;
 
-    [Property]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FullName))]
     private string? _lastName;
 
-    [Property]
+    [ObservableProperty]
     private string? _suffix;
 
-    [Property]
+    [ObservableProperty]
     private string _address;
 
-    [Property]
+    [ObservableProperty]
     private string _contactNumber;
 
-    [Property]
+    [ObservableProperty]
     private string _email;
 
-    [Property]
-    private IList<Pet>? _pets;
+    [ObservableProperty]
+    private ConcurrentObservableCollection<ObservablePet>? _pets = new();
 
-    [Property]
-    private IList<Appointment>? _appointments;
+    [ObservableProperty]
+    private ConcurrentObservableCollection<ObservableAppointment>? _appointments = new();
 
-    [Property]
-    private IList<Role>? _roles;
+    [ObservableProperty]
+    private ConcurrentObservableCollection<Role>? _roles = new();
 }

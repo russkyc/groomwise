@@ -21,7 +21,8 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(GroomWiseDbContext))]
 public partial class DashboardViewModel
     : IEventSubscriber<LoginEvent>,
-        IEventSubscriber<CreateAppointmentEvent>
+        IEventSubscriber<CreateAppointmentEvent>,
+        IEventSubscriber<DeleteAppointmentEvent>
 {
     [Property]
     private ConcurrentObservableCollection<ObservableAppointment> _appointments;
@@ -40,7 +41,9 @@ public partial class DashboardViewModel
         {
             var appointments = GroomWiseDbContext.Appointments
                 .GetMultiple(
-                    appointment => appointment.Date == DateOnly.FromDateTime(DateTime.Today)
+                    appointment =>
+                        appointment.Date == DateTime.Today
+                        && appointment.StartTime >= TimeOnly.FromDateTime(DateTime.Now)
                 )
                 .Select(AppointmentMapper.ToObservable)
                 .OrderBy(appointment => appointment.Date);
@@ -54,6 +57,11 @@ public partial class DashboardViewModel
     }
 
     public void OnEvent(CreateAppointmentEvent eventData)
+    {
+        PopulateCollections();
+    }
+
+    public void OnEvent(DeleteAppointmentEvent eventData)
     {
         PopulateCollections();
     }

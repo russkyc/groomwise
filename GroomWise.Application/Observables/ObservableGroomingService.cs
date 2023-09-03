@@ -3,29 +3,29 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using MvvmGen;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace GroomWise.Application.Observables;
 
-[ViewModel]
-public partial class ObservableGroomingService
+public partial class ObservableGroomingService : ObservableObject
 {
-    [Property]
+    [ObservableProperty]
     private Guid _id;
 
-    [Property]
+    [ObservableProperty]
     private string? _type;
 
-    [Property]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(TimeSpan))]
     private double _hourSpan;
 
-    [Property]
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(TimeSpan))]
     private double _minuteSpan;
 
-    [PropertyInvalidate(nameof(HourSpan), nameof(MinuteSpan))]
     public TimeSpan TimeSpan =>
         new TimeSpan().Add(TimeSpan.FromHours(HourSpan)).Add(TimeSpan.FromMinutes(MinuteSpan));
 
-    [Lombok.NET.Property]
+    [ObservableProperty]
     private string? _description;
 }

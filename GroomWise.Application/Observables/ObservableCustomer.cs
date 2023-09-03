@@ -3,33 +3,31 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using GroomWise.Domain.Entities;
-using Lombok.NET;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Swordfish.NET.Collections;
 
 namespace GroomWise.Application.Observables;
 
-[NotifyPropertyChanged]
-public partial class ObservableCustomer
+public partial class ObservableCustomer : ObservableObject
 {
-    [Property]
+    [ObservableProperty]
     private Guid _id;
 
-    [Property]
+    [ObservableProperty]
     private string _fullName;
 
-    [Property]
+    [ObservableProperty]
     private string _address;
 
-    [Property]
+    [ObservableProperty]
     private string _contactNumber;
 
-    [Property]
+    [ObservableProperty]
     private string _email;
 
-    [Property]
+    [ObservableProperty]
     private ConcurrentObservableCollection<ObservableAppointment> _appointments = new();
 
-    [Property]
+    [ObservableProperty]
     private ConcurrentObservableCollection<ObservablePet> _pets = new();
 }

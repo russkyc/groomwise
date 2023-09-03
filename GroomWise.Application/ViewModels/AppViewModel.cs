@@ -37,16 +37,12 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
     private ViewModelBase _pageContext;
 
     [Property]
-    private IList<Role> _authenticatedUserRoles;
-
-    [Property]
     private ConcurrentObservableCollection<ObservableNotification> _notifications;
 
     partial void OnInitialize()
     {
         Notifications = new();
         PageContext = DashboardViewModel;
-        AuthenticatedUserRoles = AuthenticationService.GetSession()?.Roles!;
     }
 
     [Command]
@@ -63,8 +59,8 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
             if (dialogResult == true)
             {
                 var result = AuthenticationService.Logout();
-
                 await Task.Delay(300);
+
                 if (result.Equals(AuthenticationStatus.NotAuthenticated))
                 {
                     DialogService.CloseDialogs(NavigationService);
@@ -78,44 +74,44 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
     [Command]
     private async Task NavigateToPage(object param)
     {
-        await Task.Run(() =>
+        if (param is Type type)
         {
-            if (param is Type type)
+            await Task.Run(() =>
             {
                 if (AppServicesContainer.GetService(type) is ViewModelBase viewModel)
                 {
                     PageContext = viewModel;
                 }
-            }
-        });
+            });
+        }
     }
 
     [Command]
     private async Task SetDarkTheme(object param)
     {
-        await Task.Run(() =>
+        if (param is bool useDarkTheme)
         {
-            if (param is bool useDarkTheme)
+            await Task.Run(() =>
             {
                 ConfigurationService.DarkMode = useDarkTheme;
                 ThemeManagerService.SetDarkTheme(useDarkTheme);
                 OnPropertyChanged(nameof(ConfigurationService.DarkMode));
-            }
-        });
+            });
+        }
     }
 
     [Command]
     private async Task SetColorTheme(object param)
     {
-        await Task.Run(() =>
+        if (param is string themeId)
         {
-            if (param is string themeId)
+            await Task.Run(() =>
             {
                 ConfigurationService.ColorTheme = themeId;
                 ThemeManagerService.SetColorTheme(themeId);
                 OnPropertyChanged(nameof(ConfigurationService.ColorTheme));
-            }
-        });
+            });
+        }
     }
 
     [Command]
@@ -123,22 +119,29 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
     {
         if (param is ObservableNotification notification)
         {
-            Notifications.Remove(notification);
+            await Task.Run(() =>
+            {
+                Notifications.Remove(notification);
+            });
         }
     }
 
     public void OnEvent(PublishNotificationEvent eventData)
     {
-        Notifications.Add(
-            new ObservableNotification
+        Task.Run(async () =>
+        {
+            var notification = new ObservableNotification
             {
                 Description = eventData.Content,
                 Type = eventData.NotificationType
+            };
+            Notifications.Add(notification);
+            if (Notifications.Count > 3)
+            {
+                Notifications.RemoveAt(0);
             }
-        );
-        if (Notifications.Count > 3)
-        {
-            Notifications.RemoveAt(0);
-        }
+            await Task.Delay(TimeSpan.FromSeconds(ConfigurationService.ToastCooldown));
+            Notifications.Remove(notification);
+        });
     }
 }

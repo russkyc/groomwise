@@ -39,4 +39,10 @@ public class ConfigurationService : ConfigProvider, IConfigurationService
         get => GetValue<string>(nameof(AppDataPath));
         set => SetValue(nameof(AppDataPath), value);
     }
+
+    public double ToastCooldown
+    {
+        get => GetValue<double>(nameof(ToastCooldown));
+        set => SetValue(nameof(ToastCooldown), value);
+    }
 }

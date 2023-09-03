@@ -3,39 +3,42 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
+using CommunityToolkit.Mvvm.ComponentModel;
 using GroomWise.Domain.Enums;
-using Lombok.NET;
 using Swordfish.NET.Collections;
 
 namespace GroomWise.Application.Observables;
 
-[NotifyPropertyChanged]
-public partial class ObservableAppointment
+public partial class ObservableAppointment : ObservableObject
 {
-    [Property]
+    [ObservableProperty]
     private Guid _id;
 
-    [Property]
-    private DateOnly? _date;
+    [ObservableProperty]
+    private DateTime _date;
 
-    [Property]
-    private TimeOnly? _startTime;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(TimeSpan))]
+    private TimeOnly _startTime;
 
-    [Property]
-    private TimeOnly? _endTime;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(TimeSpan))]
+    private TimeOnly _endTime;
 
-    [Property]
+    public string TimeSpan => $"{StartTime} - {EndTime}";
+
+    [ObservableProperty]
     private AppointmentStatus? _status;
 
-    [Property]
+    [ObservableProperty]
     private ObservablePet? _pet;
 
-    [Property]
-    private ObservableCustomer? _customer;
+    [ObservableProperty]
+    private ObservableCustomer _customer;
 
-    [Property]
+    [ObservableProperty]
     private ConcurrentObservableCollection<ObservableEmployee>? _employees = new();
 
-    [Property]
+    [ObservableProperty]
     private ConcurrentObservableCollection<ObservableAppointmentService>? _services = new();
 }

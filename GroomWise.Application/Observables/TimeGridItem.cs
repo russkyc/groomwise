@@ -4,19 +4,21 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using Lombok.NET;
 
 namespace GroomWise.Application.Observables;
 
 [ObservableObject]
-public partial class ObservableRole
+public partial class TimeGridItem
 {
     [ObservableProperty]
-    private Guid _id;
+    private TimeOnly _time;
 
     [ObservableProperty]
-    private string? _name;
+    private bool _available;
 
-    [ObservableProperty]
-    private string? _description;
+    public TimeGridItem(TimeOnly time, bool available)
+    {
+        Time = time;
+        Available = available;
+    }
 }

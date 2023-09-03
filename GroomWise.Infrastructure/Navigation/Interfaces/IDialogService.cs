@@ -8,6 +8,13 @@ namespace GroomWise.Infrastructure.Navigation.Interfaces;
 public interface IDialogService
 {
     bool? Create(string messageBoxText, string caption, INavigationService navigationService);
+
+    bool? CreateOk(
+        string messageBoxText,
+        string caption,
+        INavigationService navigationService
+    );
+
     void CloseDialogs(INavigationService navigationService);
 
     void CreateCustomerSelectionDialog(

@@ -11,4 +11,5 @@ public interface IConfigurationService
     string ColorTheme { get; set; }
     string Version { get; set; }
     string AppDataPath { get; set; }
+    double ToastCooldown { get; set; }
 }

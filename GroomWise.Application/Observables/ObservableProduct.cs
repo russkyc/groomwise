@@ -3,22 +3,21 @@
 // Unauthorized copying or redistribution of all files, in source and binary forms via any medium
 // without written, signed consent from the author is strictly prohibited.
 
-using Lombok.NET;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace GroomWise.Application.Observables;
 
-[NotifyPropertyChanged]
-public partial class ObservableProduct
+public partial class ObservableProduct : ObservableObject
 {
-    [Property]
+    [ObservableProperty]
     private Guid _id;
 
-    [Property]
+    [ObservableProperty]
     private string? _productName;
 
-    [Property]
+    [ObservableProperty]
     private string? _productDescription;
 
-    [Property]
+    [ObservableProperty]
     private int _quantity;
 }
