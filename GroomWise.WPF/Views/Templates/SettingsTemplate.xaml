@@ -6,9 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
     xmlns:views="clr-namespace:GroomWise.Views"
+    xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     d:DataContext="{d:DesignInstance viewModels:AppViewModel,
                                      IsDesignTimeCreatable=True}"
     d:DesignWidth="700"
@@ -30,59 +30,33 @@
         <Grid Margin="16,6" HorizontalAlignment="Stretch">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="180" />
+                <ColumnDefinition Width="110" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <TextBlock FontSize="14" Text="Settings Item" />
+                <TextBlock
+                    FontSize="14"
+                    Foreground="{DynamicResource fg-600}"
+                    Text="Toast Timeout" />
                 <TextBlock
                     Margin="0,6,0,0"
                     FontSize="12"
                     Foreground="{DynamicResource bg-600}"
-                    Text="Settings Item" />
+                    Text="Timeout before a toast notification is removed" />
             </StackPanel>
             <russkyc:ModernComboBox
                 Grid.Column="1"
                 Height="38"
                 Margin="12"
-                VerticalAlignment="Center" />
-        </Grid>
-        <Grid Margin="16,6" HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="180" />
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <TextBlock FontSize="14" Text="Settings Item" />
-                <TextBlock
-                    Margin="0,6,0,0"
-                    FontSize="12"
-                    Foreground="{DynamicResource bg-600}"
-                    Text="Settings Item" />
-            </StackPanel>
-            <russkyc:ModernComboBox
-                Grid.Column="1"
-                Height="38"
-                Margin="12"
-                VerticalAlignment="Center" />
-        </Grid>
-        <Grid Margin="16,6" HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="180" />
-            </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <TextBlock FontSize="14" Text="Settings Item" />
-                <TextBlock
-                    Margin="0,6,0,0"
-                    FontSize="12"
-                    Foreground="{DynamicResource bg-600}"
-                    Text="Settings Item" />
-            </StackPanel>
-            <russkyc:ModernComboBox
-                Grid.Column="1"
-                Height="38"
-                Margin="12"
-                VerticalAlignment="Center" />
+                Padding="7"
+                VerticalAlignment="Center"
+                CornerRadius="5"
+                Icon="{wpf:MaterialIconExt Stopwatch}"
+                SelectedIndex="0"
+                SelectedItem="{Binding ConfigurationService.ToastCooldown, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={x:Static converters:StringSecondsToDoubleConverter.Instance}}">
+                <ComboBoxItem>3.0s</ComboBoxItem>
+                <ComboBoxItem>5.0s</ComboBoxItem>
+                <ComboBoxItem>10.0s</ComboBoxItem>
+            </russkyc:ModernComboBox>
         </Grid>
 
         <Grid>
@@ -103,7 +77,10 @@
                 <ColumnDefinition Width="180" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <TextBlock FontSize="14" Text="Background Mode" />
+                <TextBlock
+                    FontSize="14"
+                    Foreground="{DynamicResource fg-600}"
+                    Text="Background Mode" />
                 <TextBlock
                     Margin="0,6,0,0"
                     FontSize="12"
@@ -168,7 +145,10 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                <TextBlock FontSize="14" Text="Accent Theme" />
+                <TextBlock
+                    FontSize="14"
+                    Foreground="{DynamicResource fg-600}"
+                    Text="Accent Theme" />
                 <TextBlock
                     Margin="0,6,0,0"
                     FontSize="12"
@@ -402,6 +382,93 @@
                         CornerRadius="24" />
                 </russkyc:ModernRadioButton>
             </WrapPanel>
+        </Grid>
+        <Grid>
+            <!--  Header Template  -->
+            <TextBlock
+                Margin="16"
+                VerticalAlignment="Center"
+                FontSize="16"
+                Text="Data" />
+            <Border
+                Margin="16,0"
+                BorderBrush="{DynamicResource bg-200}"
+                BorderThickness="0,0,0,1" />
+        </Grid>
+        <Grid Margin="16,6" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <TextBlock
+                    FontSize="14"
+                    Foreground="{DynamicResource fg-600}"
+                    Text="Data Path" />
+                <TextBlock
+                    Margin="0,6,0,0"
+                    FontSize="12"
+                    Foreground="{DynamicResource bg-600}"
+                    Text="C:/Users/Russell/AppData/Roaming/GroomWise/" />
+            </StackPanel>
+            <russkyc:ModernButton
+                Grid.Column="1"
+                Margin="12"
+                VerticalAlignment="Center"
+                Content="Select"
+                CornerRadius="5"
+                DefaultBackground="Transparent"
+                DefaultForeground="{DynamicResource fg-000}"
+                HoverBackground="{DynamicResource bg-300}"
+                HoverForeground="{DynamicResource fg-000}"
+                LeftCenterIcon="{wpf:MaterialIconExt Folder}"
+                PressedBackground="{DynamicResource primary-darken-1}" />
+        </Grid>
+        <Grid Margin="16,6" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        FontSize="14"
+                        Foreground="{DynamicResource fg-600}"
+                        Text="Clear Data" />
+                    <Border
+                        Margin="12,0,10,0"
+                        Padding="8,3"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Background="{DynamicResource danger}"
+                        CornerRadius="10"
+                        IsHitTestVisible="False">
+                        <TextBlock
+                            HorizontalAlignment="Stretch"
+                            FontSize="10"
+                            Foreground="#ffffff"
+                            Text="Danger Zone"
+                            TextTrimming="CharacterEllipsis" />
+                    </Border>
+                </StackPanel>
+                <TextBlock
+                    Margin="0,6,0,0"
+                    FontSize="12"
+                    Foreground="{DynamicResource bg-600}"
+                    Text="Deletes all application data" />
+            </StackPanel>
+            <russkyc:ModernButton
+                Grid.Column="1"
+                Margin="12"
+                VerticalAlignment="Center"
+                Content="Clear"
+                CornerRadius="5"
+                DefaultBackground="Transparent"
+                DefaultForeground="{DynamicResource fg-000}"
+                HoverBackground="{DynamicResource bg-300}"
+                HoverForeground="{DynamicResource fg-000}"
+                LeftCenterIcon="{wpf:MaterialIconExt Trash}"
+                PressedBackground="{DynamicResource danger}" />
         </Grid>
     </StackPanel>
 </UserControl>

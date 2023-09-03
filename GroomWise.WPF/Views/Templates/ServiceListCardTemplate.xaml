@@ -82,15 +82,15 @@
                 Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
             <russkyc:ModernButton
                 Grid.Column="3"
-                Width="27"
-                Height="27"
                 Margin="0,0,20,0"
-                Padding="5"
+                VerticalAlignment="Center"
                 Command="{Binding Path=DataContext.(viewModels:GroomingServiceViewModel.RemoveServiceCommand), RelativeSource={RelativeSource FindAncestor, AncestorType=pages:ServicesView}}"
                 CommandParameter="{Binding}"
-                Content="{wpf:MaterialIconExt Kind=TrashCan}"
+                Content="Remove"
+                CornerRadius="5"
                 DefaultBackground="Transparent"
                 HoverBackground="{DynamicResource bg-300}"
+                LeftCenterIcon="{wpf:MaterialIconExt Kind=TrashCan}"
                 PressedBackground="{DynamicResource danger}" />
         </Grid>
     </Grid>

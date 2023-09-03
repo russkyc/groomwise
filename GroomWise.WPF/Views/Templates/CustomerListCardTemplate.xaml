@@ -115,16 +115,16 @@
             </ItemsControl>
             <russkyc:ModernButton
                 Grid.Column="5"
-                Width="27"
-                Height="27"
-                Padding="5"
+                VerticalAlignment="Center"
                 Command="{Binding Path=DataContext.(viewModels:CustomerViewModel.RemoveCustomerCommand), RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
                 CommandParameter="{Binding}"
-                Content="{wpf:MaterialIconExt Kind=TrashCan}"
+                Content="Remove"
+                CornerRadius="5"
                 DefaultBackground="Transparent"
                 DefaultForeground="{DynamicResource fg-000}"
                 HoverBackground="{DynamicResource bg-300}"
                 HoverForeground="{DynamicResource fg-000}"
+                LeftCenterIcon="{wpf:MaterialIconExt Kind=TrashCan}"
                 PressedBackground="{DynamicResource danger}"
                 PressedForeground="#ffffff" />
         </Grid>

@@ -25,7 +25,10 @@ public partial class DashboardViewModel
         IEventSubscriber<DeleteAppointmentEvent>
 {
     [Property]
-    private ConcurrentObservableCollection<ObservableAppointment> _appointments;
+    private ConcurrentObservableCollection<ObservableAppointment> _appointments = new();
+
+    [Property]
+    private ConcurrentObservableCollection<ObservableAppointment> _upcomingAppointments = new();
 
     [Property]
     private string _user;
@@ -43,11 +46,24 @@ public partial class DashboardViewModel
                 .GetMultiple(
                     appointment =>
                         appointment.Date == DateTime.Today
-                        && appointment.StartTime >= TimeOnly.FromDateTime(DateTime.Now)
                 )
                 .Select(AppointmentMapper.ToObservable)
                 .OrderBy(appointment => appointment.Date);
+
+            var upcomingApointments = GroomWiseDbContext.Appointments
+                .GetMultiple(
+                    appointment =>
+                        appointment.Date >= DateTime.Today
+                        && appointment.Date < DateTime.Today.AddDays(7)
+                )
+                .Select(AppointmentMapper.ToObservable)
+                .OrderBy(appointment => appointment.Date)
+                .ThenBy(appointment => appointment.StartTime);
+
             Appointments = new ConcurrentObservableCollection<ObservableAppointment>(appointments);
+            UpcomingAppointments = new ConcurrentObservableCollection<ObservableAppointment>(
+                upcomingApointments
+            );
         });
     }
 

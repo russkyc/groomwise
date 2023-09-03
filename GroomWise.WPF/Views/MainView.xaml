@@ -8,7 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="clr-namespace:GroomWise.Views.Pages"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-    xmlns:services="clr-namespace:GroomWise.Infrastructure.Navigation;assembly=GroomWise.Infrastructure"
     xmlns:templates="clr-namespace:GroomWise.Views.Templates"
     xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
     Title="GroomWise"
@@ -163,13 +162,13 @@
             </StackPanel>
             <StackPanel VerticalAlignment="Bottom">
                 <templates:NavItemTemplate
-                    Margin="8"
+                    Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt InfoCircle}"
                     PageContext="{x:Type viewModels:AboutViewModel}"
                     Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:AboutViewModel}, Mode=OneWay}"
                     Tooltip="About" />
                 <templates:NavItemTemplate
-                    Margin="8"
+                    Margin="8,8,8,10"
                     Icon="{icons:MaterialIconExt Settings}"
                     PageContext="{x:Type viewModels:SettingsViewModel}"
                     Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:SettingsViewModel}, Mode=OneWay}"

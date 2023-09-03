@@ -29,7 +29,8 @@
             Grid.Column="0"
             Margin="20,16,0,12"
             HorizontalAlignment="Left"
-            FontSize="16"
+            FontSize="18"
+            FontWeight="Medium"
             Text="New GroomingService" />
         <StackPanel
             Grid.Row="1"
@@ -56,7 +57,6 @@
                     VerticalAlignment="Top"
                     CornerRadius="5"
                     IsEditable="True"
-                    IsSynchronizedWithCurrentItem="True"
                     Placeholder="Hours"
                     Text="{Binding ActiveGroomingService.HourSpan, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBoxItem>0</ComboBoxItem>
@@ -75,7 +75,6 @@
                     VerticalAlignment="Top"
                     CornerRadius="5"
                     IsEditable="True"
-                    IsSynchronizedWithCurrentItem="True"
                     Placeholder="Minutes"
                     Text="{Binding ActiveGroomingService.MinuteSpan, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBoxItem>0</ComboBoxItem>

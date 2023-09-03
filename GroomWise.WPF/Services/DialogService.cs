@@ -20,15 +20,65 @@ public class DialogService : IDialogService
     {
         return Task.Run(async () =>
         {
-            return await App.Current.Dispatcher.InvokeAsync(
-                () =>
-                    new DialogView(messageBoxText, caption)
-                    {
-                        ShowInTaskbar = false,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                        Owner = (Window)navigationService.CurrentWindow!
-                    }.ShowDialog()
-            );
+            return await App.Current.Dispatcher.InvokeAsync(() =>
+            {
+                if (
+                    App.Current.Windows
+                        .OfType<DialogView>()
+                        .FirstOrDefault(
+                            dialog =>
+                                dialog.Owner == navigationService.CurrentWindow
+                                && dialog.Caption.Equals(caption)
+                                && dialog.MessageBoxText.Equals(messageBoxText)
+                        ) is
+                    { } window
+                )
+                {
+                    return false;
+                }
+
+                return new DialogView(messageBoxText, caption)
+                {
+                    ShowInTaskbar = false,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                    Owner = (Window)navigationService.CurrentWindow!
+                }.ShowDialog();
+            });
+        }).Result;
+    }
+
+    public bool? CreateOk(
+        string messageBoxText,
+        string caption,
+        INavigationService navigationService
+    )
+    {
+        return Task.Run(async () =>
+        {
+            return await App.Current.Dispatcher.InvokeAsync(() =>
+            {
+                if (
+                    App.Current.Windows
+                        .OfType<DialogView>()
+                        .FirstOrDefault(
+                            dialog =>
+                                dialog.Owner == navigationService.CurrentWindow
+                                && dialog.Caption.Equals(caption)
+                                && dialog.MessageBoxText.Equals(messageBoxText)
+                        ) is
+                    { } window
+                )
+                {
+                    return false;
+                }
+
+                return new DialogView(messageBoxText, caption, MessageBoxButton.OK)
+                {
+                    ShowInTaskbar = false,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                    Owner = (Window)navigationService.CurrentWindow!
+                }.ShowDialog();
+            });
         }).Result;
     }
 

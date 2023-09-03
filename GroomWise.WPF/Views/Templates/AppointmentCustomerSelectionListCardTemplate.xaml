@@ -18,17 +18,15 @@
     Background="Transparent"
     mc:Ignorable="d">
     <Grid Style="{StaticResource FadeInAnimation}">
-        <russkyc:ModernRadioButton
+        <russkyc:ModernButton
             x:Name="CardButton"
             Padding="5"
             HorizontalContentAlignment="Stretch"
-            CheckedBackground="{DynamicResource bg-200}"
-            Command="{Binding DataContext.SelectCustomerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
+            Command="{Binding DataContext.SelectCustomerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=dialogs:SelectCustomerView}}"
             CommandParameter="{Binding}"
             CornerRadius="10"
             DefaultBackground="{DynamicResource bg-000}"
             DefaultForeground="{DynamicResource fg-000}"
-            GroupName="CustomerListGroup"
             HoverBackground="{DynamicResource bg-100}"
             HoverForeground="{DynamicResource fg-000}"
             PressedBackground="{DynamicResource bg-200}"
@@ -36,7 +34,6 @@
         <Grid Margin="20,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
@@ -62,10 +59,8 @@
                 IsHitTestVisible="False"
                 Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}" />
             <ItemsControl
-                Grid.Column="4"
-                Width="120"
-                Margin="12,0,12,0"
-                HorizontalAlignment="Center"
+                Grid.Column="2"
+                HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 IsHitTestVisible="False"
                 ItemsSource="{Binding Pets.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
@@ -74,6 +69,7 @@
                         <VirtualizingStackPanel
                             Height="30"
                             HorizontalAlignment="Center"
+                            FlowDirection="RightToLeft"
                             Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
@@ -96,15 +92,6 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <russkyc:ModernButton
-                Grid.Column="3"
-                VerticalAlignment="Center"
-                Command="{Binding DataContext.SelectCustomerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=dialogs:SelectCustomerView}}"
-                CommandParameter="{Binding}"
-                Content="Book Appointment"
-                CornerRadius="5"
-                FontWeight="Medium"
-                LeftCenterIcon="{wpf:MaterialIconExt Kind=Add}" />
         </Grid>
     </Grid>
 </UserControl>

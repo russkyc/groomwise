@@ -509,7 +509,7 @@
                 Margin="0,0,0,12"
                 FontSize="16"
                 Text="Today" />
-            <ItemsControl Grid.Row="0" ItemsSource="{Binding Appointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Appointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <templates:DashboardAppointmentTemplate />
@@ -546,17 +546,66 @@
                 </ItemsControl.Template>
             </ItemsControl>
         </Grid>
-        <Border
+        <StackPanel
             Grid.Row="1"
             Grid.RowSpan="2"
-            Grid.Column="1"
-            Margin="16,0,0,0"
-            VerticalAlignment="Top"
-            Background="{DynamicResource bg-100}"
-            CornerRadius="10">
-            <Grid MinHeight="300" HorizontalAlignment="Stretch">
-                <controls:CalendarControl Margin="4" />
+            Grid.Column="1">
+            <Border
+                Margin="16,0,0,0"
+                VerticalAlignment="Top"
+                Background="{DynamicResource bg-100}"
+                CornerRadius="10">
+                <Grid MinHeight="300" HorizontalAlignment="Stretch">
+                    <controls:CalendarControl Margin="4" />
+                </Grid>
+            </Border>
+            <Grid Margin="16,20,0,0" Style="{StaticResource FadeInFromBottomAnimation}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Margin="0,0,0,12"
+                    FontSize="16"
+                    Text="Upcoming" />
+                <ItemsControl Grid.Row="1" ItemsSource="{Binding UpcomingAppointments.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <templates:DashboardUpcomingAppointmentTemplate />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="{x:Type FrameworkElement}">
+                            <Setter Property="Margin" Value="0,0,0,10" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+
+                    <ItemsControl.Template>
+                        <ControlTemplate TargetType="ItemsControl">
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                                <ScrollViewer
+                                    Padding="{TemplateBinding Padding}"
+                                    CanContentScroll="True"
+                                    Focusable="False"
+                                    VerticalScrollBarVisibility="Auto">
+                                    <ItemsPresenter />
+                                </ScrollViewer>
+                            </Border>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+                </ItemsControl>
             </Grid>
-        </Border>
+        </StackPanel>
     </Grid>
 </UserControl>

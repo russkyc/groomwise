@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
-using Lombok.NET;
 using org.russkyc.moderncontrols;
 using Swordfish.NET.Collections.Auxiliary;
 
@@ -16,21 +15,30 @@ namespace GroomWise.Views.Controls;
 
 public partial class CalendarControl
 {
+    // Define the DateChangedEvent
+    public static readonly RoutedEvent DateChangedEvent = EventManager.RegisterRoutedEvent(
+        "DateChanged",
+        RoutingStrategy.Bubble,
+        typeof(RoutedEventHandler),
+        typeof(CalendarControl)
+    );
+
+    // .NET event wrapper for the DateChangedEvent
+    public event RoutedEventHandler DateChanged
+    {
+        add { AddHandler(DateChangedEvent, value); }
+        remove { RemoveHandler(DateChangedEvent, value); }
+    }
+
     public static readonly DependencyProperty SelectedDateProperty = DependencyProperty.Register(
         nameof(SelectedDate),
         typeof(DateTime),
         typeof(CalendarControl),
         new FrameworkPropertyMetadata(
             default(DateTime),
-            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault
+            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+            OnSelectedDateChanged // Added property changed callback
         )
-    );
-
-    public static readonly DependencyProperty IsEditableProperty = DependencyProperty.Register(
-        nameof(IsEditable),
-        typeof(bool),
-        typeof(CalendarControl),
-        new FrameworkPropertyMetadata(false)
     );
 
     public DateTime SelectedDate
@@ -38,6 +46,27 @@ public partial class CalendarControl
         get => (DateTime)GetValue(SelectedDateProperty);
         set => SetValue(SelectedDateProperty, value);
     }
+
+    private static void OnSelectedDateChanged(
+        DependencyObject d,
+        DependencyPropertyChangedEventArgs e
+    )
+    {
+        var control = d as CalendarControl;
+        if (control != null)
+        {
+            // Raise the DateChanged event
+            var args = new RoutedEventArgs(DateChangedEvent);
+            control.RaiseEvent(args);
+        }
+    }
+
+    public static readonly DependencyProperty IsEditableProperty = DependencyProperty.Register(
+        nameof(IsEditable),
+        typeof(bool),
+        typeof(CalendarControl),
+        new FrameworkPropertyMetadata(false)
+    );
 
     public bool IsEditable
     {
@@ -67,7 +96,6 @@ public partial class CalendarControl
         InitializeComponent();
         CurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
         _dates = new ObservableCollection<CalendarDate>();
-        IsEditable = false;
         DisplayDates();
     }
 

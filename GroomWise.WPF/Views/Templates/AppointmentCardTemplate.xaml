@@ -21,7 +21,7 @@
             Padding="5"
             HorizontalContentAlignment="Stretch"
             CheckedBackground="{DynamicResource bg-200}"
-            Command="{Binding DataContext.GetAppointmentInfoCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:AppointmentsView}}"
+            Command="{Binding DataContext.SelectAppointmentCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:AppointmentsView}}"
             CommandParameter="{Binding}"
             CornerRadius="10"
             DefaultBackground="{DynamicResource bg-000}"
@@ -68,18 +68,31 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center"
                 IsHitTestVisible="False">
-                <TextBlock
-                    FontSize="14"
-                    FontWeight="Medium"
-                    Foreground="{DynamicResource fg-000}"
-                    Text="{Binding Customer.FullName, UpdateSourceTrigger=PropertyChanged}" />
-                <ItemsControl
-                    Margin="0,8,0,0"
-                    VerticalAlignment="Center"
-                    ItemsSource="{Binding Services.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        FontSize="14"
+                        FontWeight="Medium"
+                        Foreground="{DynamicResource fg-000}"
+                        Text="{Binding Customer.FullName, UpdateSourceTrigger=PropertyChanged}" />
+                    <Border
+                        Margin="12,0,0,0"
+                        Padding="8,3"
+                        VerticalAlignment="Center"
+                        Background="{DynamicResource bg-200}"
+                        CornerRadius="10">
+                        <TextBlock
+                            HorizontalAlignment="Stretch"
+                            FontSize="10"
+                            Foreground="{DynamicResource fg-600}"
+                            Text="{Binding TimeSpan, UpdateSourceTrigger=PropertyChanged}"
+                            TextTrimming="CharacterEllipsis" />
+                    </Border>
+                </StackPanel>
+                <ItemsControl VerticalAlignment="Center" ItemsSource="{Binding Services.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border
+                                Margin="0,8,0,0"
                                 Padding="8,3"
                                 Background="{DynamicResource primary-default}"
                                 CornerRadius="10">
@@ -126,11 +139,11 @@
             <russkyc:ModernButton
                 Grid.Column="2"
                 Margin="0,0,12,0"
-                Padding="5"
                 VerticalAlignment="Center"
                 Command="{Binding Path=DataContext.(viewModels:AppointmentViewModel.CancelAppointmentCommand), RelativeSource={RelativeSource FindAncestor, AncestorType=pages:AppointmentsView}}"
                 CommandParameter="{Binding}"
                 Content="Cancel"
+                CornerRadius="5"
                 DefaultBackground="Transparent"
                 DefaultForeground="{DynamicResource fg-000}"
                 HoverBackground="{DynamicResource bg-300}"

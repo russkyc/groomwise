@@ -45,13 +45,13 @@
                         Foreground="{DynamicResource inverted-lighten-3}"
                         LineHeight="17"
                         LineStackingStrategy="BlockLineHeight"
-                        Text="{Binding Date, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DateTimeToTimeConverter.Instance}}"
+                        Text="{Binding StartTime, UpdateSourceTrigger=PropertyChanged, StringFormat=hh:mm}"
                         TextAlignment="Center" />
                     <TextBlock
                         FontSize="12"
                         FontWeight="Medium"
                         Foreground="{DynamicResource inverted-default}"
-                        Text="{Binding Date, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DateTimeToAmPmConverter.Instance}}"
+                        Text="{Binding StartTime, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DateTimeToAmPmConverter.Instance}}"
                         TextAlignment="Center" />
                 </StackPanel>
             </Border>

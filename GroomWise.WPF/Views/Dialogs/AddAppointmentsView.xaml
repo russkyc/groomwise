@@ -12,7 +12,7 @@
     xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
     xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     Title="AddAppointmentsView"
-    Width="600"
+    Width="570"
     d:DataContext="{d:DesignInstance viewModels:AppointmentViewModel,
                                      IsDesignTimeCreatable=True}"
     NoDecorations="True"
@@ -49,7 +49,13 @@
                 Margin="5"
                 VerticalAlignment="Top"
                 IsEditable="True"
-                SelectedDate="{Binding ActiveAppointment.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converter:DateOnlyToDateTimeConverter.Instance}}" />
+                SelectedDate="{Binding ActiveAppointment.Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="DateChanged">
+                        <b:InvokeCommandAction Command="{Binding GenerateBookingTimesCommand}" />
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </controls:CalendarControl>
         </Border>
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.RowDefinitions>
@@ -65,53 +71,68 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
+
                     <russkyc:ModernComboBox
                         Grid.Column="0"
                         CornerRadius="5"
-                        DisplayMemberPath="Time"
                         FontSize="14"
                         FontWeight="Medium"
-                        ItemsSource="{Binding Times, UpdateSourceTrigger=PropertyChanged}"
-                        SelectedValue="{Binding Time, UpdateSourceTrigger=PropertyChanged}">
+                        IsSynchronizedWithCurrentItem="True"
+                        ItemsSource="{Binding BookingTimes.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedIndex="0"
+                        SelectedItem="{Binding ActiveAppointment.StartTime, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="SelectionChanged">
+                                <b:InvokeCommandAction Command="{Binding CalculateAppointmentTimeSpanCommand}" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
                         <russkyc:ModernComboBox.Resources>
                             <Style TargetType="Popup">
-                                <Setter Property="MaxHeight" Value="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernComboBox}}" />
+                                <Setter Property="MaxHeight" Value="200" />
                                 <Setter Property="Width" Value="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=russkyc:ModernComboBox}}" />
+                            </Style>
+                            <Style BasedOn="{StaticResource {x:Type russkyc:ModernComboBox}}" TargetType="russkyc:ModernComboBox">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding BookingTimes.Count}" Value="0">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
                             </Style>
                         </russkyc:ModernComboBox.Resources>
                     </russkyc:ModernComboBox>
-                    <russkyc:ModernRadioButton
+                    <TextBlock
                         Grid.Column="1"
-                        Width="70"
                         Margin="12,0,0,0"
-                        Padding="2"
-                        VerticalContentAlignment="Center"
-                        BorderThickness="1"
-                        Command="{Binding SetTimeOfDayCommand}"
-                        CommandParameter="{StaticResource True}"
-                        Content="AM"
-                        CornerRadius="5"
-                        FontSize="14"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="13"
                         FontWeight="Medium"
-                        GroupName="TimeOfDay"
-                        IsChecked="{Binding IsAm, UpdateSourceTrigger=PropertyChanged}" />
-                    <russkyc:ModernRadioButton
+                        Foreground="{DynamicResource bg-600}"
+                        Text="To" />
+                    <Border
                         Grid.Column="2"
-                        Width="70"
-                        Margin="6,0,0,0"
-                        Padding="2"
-                        VerticalContentAlignment="Center"
-                        BorderThickness="1"
-                        Command="{Binding SetTimeOfDayCommand}"
-                        CommandParameter="{StaticResource False}"
-                        Content="PM"
-                        CornerRadius="5"
-                        FontSize="14"
-                        FontWeight="Medium"
-                        GroupName="TimeOfDay"
-                        IsChecked="{Binding IsAm, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converter:InverseBooleanConverter.Instance}}" />
+                        Margin="12,0,0,0"
+                        Background="{DynamicResource bg-100}"
+                        CornerRadius="5">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            FontWeight="Medium">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="{Binding ActiveAppointment.EndTime}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding BookingTimes.Count}" Value="0">
+                                            <Setter Property="Text" Value="" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Border>
                 </Grid>
                 <russkyc:ModernButton
                     Margin="0,12,0,0"
@@ -125,7 +146,21 @@
                     Foreground="{DynamicResource fg-200}"
                     HoverBackground="{DynamicResource bg-000}"
                     LeftCenterIcon="{wpf:MaterialIconExt Kind=Add}"
-                    PressedBackground="{DynamicResource bg-100}" />
+                    PressedBackground="{DynamicResource bg-100}">
+                    <russkyc:ModernButton.Resources>
+                        <ResourceDictionary>
+                            <Style BasedOn="{StaticResource {x:Type russkyc:ModernButton}}" TargetType="{x:Type russkyc:ModernButton}">
+                                <Setter Property="Content" Value="Save Appointment" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding BookingTimes.Count}" Value="0">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                        <Setter Property="Content" Value="Fully Booked" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ResourceDictionary>
+                    </russkyc:ModernButton.Resources>
+                </russkyc:ModernButton>
                 <ItemsControl
                     Height="180"
                     Margin="0,10,0,0"
@@ -192,10 +227,23 @@
                 <russkyc:ModernButton
                     HorizontalAlignment="Right"
                     Command="{Binding SaveAppointmentCommand}"
-                    Content="Save Appointment"
                     CornerRadius="5"
                     FontWeight="Medium"
-                    LeftCenterIcon="{wpf:MaterialIconExt Kind=ContentSave}" />
+                    LeftCenterIcon="{wpf:MaterialIconExt Kind=ContentSave}">
+                    <russkyc:ModernButton.Resources>
+                        <ResourceDictionary>
+                            <Style BasedOn="{StaticResource {x:Type russkyc:ModernButton}}" TargetType="{x:Type russkyc:ModernButton}">
+                                <Setter Property="Content" Value="Save Appointment" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding BookingTimes.Count}" Value="0">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                        <Setter Property="Content" Value="Fully Booked" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ResourceDictionary>
+                    </russkyc:ModernButton.Resources>
+                </russkyc:ModernButton>
             </StackPanel>
         </Grid>
 

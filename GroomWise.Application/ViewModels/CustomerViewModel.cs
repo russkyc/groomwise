@@ -4,6 +4,7 @@
 // without written, signed consent from the author is strictly prohibited.
 
 using GroomWise.Application.Events;
+using GroomWise.Application.Extensions;
 using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
 using GroomWise.Domain.Enums;
@@ -156,7 +157,7 @@ public partial class CustomerViewModel
             await Task.Run(() =>
             {
                 var dialogResult = DialogService.Create(
-                    $"{SelectedCustomer.FullName.Split(" ")[0]}'s Pets",
+                    $"{SelectedCustomer.FullName.GetFirstName()}'s Pets",
                     $"Are you sure you want to remove {pet.Name}?",
                     NavigationService
                 );
@@ -181,7 +182,7 @@ public partial class CustomerViewModel
         {
             var dialogResult = DialogService.Create(
                 "GroomWise",
-                $"Update {SelectedCustomer.FullName}?",
+                $"Update {SelectedCustomer.FullName.GetFirstName()}?",
                 NavigationService
             );
             if (dialogResult is true)
@@ -214,7 +215,7 @@ public partial class CustomerViewModel
             {
                 var dialogResult = DialogService.Create(
                     "Customers",
-                    $"Are you sure you want to delete {observableCustomer.FullName}?",
+                    $"Are you sure you want to delete {observableCustomer.FullName.GetFirstName()}?",
                     NavigationService
                 );
                 if (dialogResult is true)
