@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:GroomWise.Views.Templates"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
     xmlns:pages="clr-namespace:GroomWise.Views.Pages"
@@ -37,7 +36,7 @@
                 <ColumnDefinition Width="200" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="200" />
             </Grid.ColumnDefinitions>
             <Border
                 Grid.Column="0"
@@ -72,13 +71,20 @@
                 VerticalAlignment="Center"
                 Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}"
                 TextAlignment="Left" />
-            <TextBlock
+            <Border
                 Grid.Column="4"
-                Margin="12,0,0,0"
+                Padding="8,3"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Text="{Binding Breed, UpdateSourceTrigger=PropertyChanged}"
-                TextAlignment="Left" />
+                Background="{DynamicResource primary-default}"
+                CornerRadius="10">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="#ffffff"
+                    Text="{Binding Breed, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Left" />
+            </Border>
         </Grid>
     </Grid>
 </UserControl>
