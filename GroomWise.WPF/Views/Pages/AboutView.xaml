@@ -3,9 +3,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:GroomWise.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:moderncontrols="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:views="clr-namespace:GroomWise.Views"
     xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     d:DesignHeight="720"
     d:DesignWidth="1280"
@@ -49,11 +49,28 @@
                 VerticalAlignment="Center"
                 FontSize="10"
                 Foreground="{DynamicResource fg-600}"
-                Text="GroomWise is authored and developed by John Russell Camo (@russkyc) and is licensed under GNU AGPLv3."
+                Text="GroomWise is authored and developed by John Russell Camo (@russkyc) and is licensed under GNU GPLv3."
                 TextAlignment="Center"
                 TextWrapping="Wrap" />
-            <moderncontrols:ModernButton
+            <StackPanel
                 Margin="0,80,0,0"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <TextBlock
+                    Margin="0,0,7,0"
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    Foreground="{DynamicResource fg-600}"
+                    Text="Version"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    Foreground="{DynamicResource fg-600}"
+                    Text="{Binding DataContext.ConfigurationService.Version, RelativeSource={RelativeSource FindAncestor, AncestorType=views:MainView}}" />
+            </StackPanel>
+            <moderncontrols:ModernButton
+                Margin="0,22,0,0"
                 HorizontalAlignment="Center"
                 Command="{Binding CreateCustomerCommand}"
                 Content="Check for Updates"
