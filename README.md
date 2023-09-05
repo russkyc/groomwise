@@ -30,3 +30,12 @@ In addition to these features, GroomWise also has:
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/services.png)
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/settings.png)
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/about.png)
+
+---
+
+### Sponsors
+Special thanks to [JetBrains](https://www.jetbrains.com/) for supporting this project by providing licences to the JetBrains Suite!
+
+<a href="https://www.jetbrains.com/community/opensource/#support">
+<img width="200px" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo.">
+</a>
