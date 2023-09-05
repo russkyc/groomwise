@@ -31,6 +31,9 @@ In addition to these features, GroomWise also has:
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/settings.png)
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/about.png)
 
+### Theming and Animations
+![](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExajFrM3BnbWJzc3J0cWJuOXhreHVxc24wdmIwMXA0ZWlndWtjZ2hvdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/nxBQKYFpD94OlT2ayW/giphy.gif)
+
 ---
 
 ### Sponsors
