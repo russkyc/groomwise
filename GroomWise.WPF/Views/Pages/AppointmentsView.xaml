@@ -36,14 +36,25 @@
                 FontSize="18"
                 FontWeight="Medium"
                 Text="Appointments" />
-            <russkyc:ModernButton
-                HorizontalAlignment="Right"
-                Command="{Binding CreateAppointmentCommand}"
-                Content="Schedule Appointment"
-                CornerRadius="5"
-                FontWeight="Medium"
-                IconSize="18"
-                LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <russkyc:ModernTextBox
+                    Width="200"
+                    Margin="0,0,12,0"
+                    HorizontalAlignment="Right"
+                    CornerRadius="5"
+                    LeftIcon="{icons:MaterialIconExt Search}"
+                    Placeholder="Find Appointment"
+                    Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" />
+                <russkyc:ModernButton
+                    HorizontalAlignment="Right"
+                    Command="{Binding CreateAppointmentCommand}"
+                    Content="Schedule Appointment"
+                    CornerRadius="5"
+                    FontWeight="Medium"
+                    IconSize="18"
+                    LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
+            </StackPanel>
         </Grid>
         <ContentControl
             Grid.Row="1"

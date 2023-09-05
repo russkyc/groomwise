@@ -2,23 +2,188 @@
     x:Class="GroomWise.Views.Templates.AppointmentInfoCardTemplate"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:GroomWise.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:GroomWise.Views.Templates"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
     xmlns:pages="clr-namespace:GroomWise.Views.Pages"
+    xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     d:DataContext="{d:DesignInstance observables:ObservableAppointment,
                                      IsDesignTimeCreatable=True}"
-    d:DesignHeight="300"
-    d:DesignWidth="300"
     DataContext="{Binding DataContext.SelectedAppointment, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:AppointmentsView}, UpdateSourceTrigger=PropertyChanged}"
     Style="{StaticResource FadeInFromLeftAnimation}"
     mc:Ignorable="d">
-    <Border
-        Grid.Row="1"
-        Grid.Column="0"
-        Background="{DynamicResource bg-100}"
-        CornerRadius="10">
-        <Grid></Grid>
-    </Border>
+    <Grid Width="400" VerticalAlignment="Top">
+        <Grid.Style>
+            <Style>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding DataContext.SelectedAppointment, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:AppointmentsView}, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}">
+                        <Setter Property="Grid.Visibility" Value="Collapsed" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Border
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Background="{DynamicResource bg-100}"
+                CornerRadius="10" />
+            <Viewbox
+                Grid.Row="0"
+                Grid.Column="0"
+                Width="108"
+                Margin="16,16,0,16"
+                Stretch="Uniform">
+                <Border
+                    Width="52"
+                    Height="52"
+                    Background="{DynamicResource primary-default}"
+                    CornerRadius="6"
+                    IsHitTestVisible="False">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock
+                            FontSize="13"
+                            FontWeight="Medium"
+                            Foreground="{DynamicResource inverted-default}"
+                            Text="{Binding Date, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DateTimeToShortMonthConverter.Instance}}"
+                            TextAlignment="Center" />
+                        <TextBlock
+                            FontSize="24"
+                            FontWeight="Bold"
+                            Foreground="{DynamicResource inverted-lighten-3}"
+                            LineHeight="24"
+                            LineStackingStrategy="BlockLineHeight"
+                            Text="{Binding Date, UpdateSourceTrigger=PropertyChanged, Converter={x:Static converters:DateTimeToDayOfMonthConverter.Instance}}"
+                            TextAlignment="Center" />
+                    </StackPanel>
+                </Border>
+            </Viewbox>
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel
+                    Grid.Row="0"
+                    Margin="16,16"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center">
+                    <StackPanel VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="Medium"
+                                Text="{Binding Customer.FullName, UpdateSourceTrigger=PropertyChanged}"
+                                TextAlignment="Center" />
+                            <Border
+                                Margin="12,0,0,0"
+                                Padding="8,3"
+                                VerticalAlignment="Center"
+                                Background="{DynamicResource primary-default}"
+                                CornerRadius="10">
+                                <TextBlock
+                                    HorizontalAlignment="Stretch"
+                                    FontSize="10"
+                                    Foreground="#ffffff"
+                                    Text="{Binding Date, StringFormat={}{0:dddd}, UpdateSourceTrigger=PropertyChanged}"
+                                    TextTrimming="CharacterEllipsis" />
+                            </Border>
+                        </StackPanel>
+                        <Border
+                            Margin="0,8,0,0"
+                            Padding="8,3"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="{DynamicResource bg-200}"
+                            CornerRadius="10">
+                            <TextBlock
+                                HorizontalAlignment="Stretch"
+                                FontSize="10"
+                                Foreground="{DynamicResource fg-600}"
+                                Text="{Binding TimeSpan, UpdateSourceTrigger=PropertyChanged}"
+                                TextTrimming="CharacterEllipsis" />
+                        </Border>
+                        <StackPanel Margin="0,16,0,0" Orientation="Horizontal">
+                            <russkyc:ModernButton
+                                HorizontalAlignment="Left"
+                                Command="{Binding DataContext.ScheduleAppointmentCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
+                                CommandParameter="{Binding}"
+                                Content="Edit"
+                                CornerRadius="5"
+                                FontWeight="Medium"
+                                LeftCenterIcon="{wpf:MaterialIconExt Kind=Edit}" />
+                            <russkyc:ModernButton
+                                Margin="8,0,0,0"
+                                HorizontalAlignment="Left"
+                                Command="{Binding DataContext.EditCustomerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
+                                Content="Cancel"
+                                CornerRadius="5"
+                                DefaultBackground="Transparent"
+                                DefaultForeground="{DynamicResource fg-000}"
+                                FontWeight="Medium"
+                                HoverBackground="{DynamicResource bg-200}"
+                                HoverForeground="{DynamicResource fg-000}"
+                                IconForeground="{DynamicResource fg-000}"
+                                LeftCenterIcon="{wpf:MaterialIconExt Kind=Cancel}"
+                                PressedBackground="{DynamicResource danger}"
+                                PressedForeground="{DynamicResource fg-000}" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <ItemsControl
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch"
+                ItemsSource="{Binding Services.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Margin="0,12,0,0" HorizontalAlignment="Stretch">
+                            <VirtualizingStackPanel.Resources>
+                                <ResourceDictionary>
+                                    <Style TargetType="VirtualizingStackPanel">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Services.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}" Value="{x:Null}">
+                                                <Setter Property="Control.Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Services.EditableCollectionView.Count, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                                <Setter Property="Control.Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ResourceDictionary>
+                            </VirtualizingStackPanel.Resources>
+                        </VirtualizingStackPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:AppointmentServiceInfoCardTemplate Margin="12,0" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="{x:Type FrameworkElement}">
+                        <Setter Property="Margin" Value="0,0,0,10" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+        </Grid>
+
+    </Grid>
 </UserControl>

@@ -22,9 +22,11 @@ In addition to these features, GroomWise also has:
 ### Screenshots
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/login.png)
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/dashboard.png)
-![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/customers.png)
-![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/customers-add.png)
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/appointments.png)
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/appointments-schedule.png)
+![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/customers.png)
+![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/customers-add.png)
+![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/pets.png)
+![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/services.png)
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/settings.png)
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/about.png)
