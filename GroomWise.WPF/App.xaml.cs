@@ -1,19 +1,20 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
 using GroomWise.Application.Enums;
 using GroomWise.Application.Extensions;
 using GroomWise.Infrastructure.Configuration.Interfaces;
-using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.IoC.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Infrastructure.Theming.Interfaces;
@@ -45,9 +46,6 @@ public partial class App
         var scope = container.GetService<IAppServicesContainer>()!;
         scope.AddContainer(container);
 
-#if DEBUG
-        // ResetDatabase(scope);
-#endif
         RegisterNavigationViews(scope);
         LoadThemeDefaults(scope);
         StartApp(scope);
@@ -63,7 +61,6 @@ public partial class App
             var login = scope.GetService<LoginView>();
             var addAppointment = scope.GetService<AddAppointmentsView>();
 
-            navigation.Initialize(SynchronizationContext.Current!, login!);
             navigation.Add(AppViews.Login, login!);
             navigation.Add(AppViews.Main, main!);
             navigation.Add(AppViews.AddAppointment, addAppointment!);
@@ -83,21 +80,27 @@ public partial class App
         }
     }
 
-    private void ResetDatabase(IAppServicesContainer scope)
-    {
-        var context = scope.GetService<GroomWiseDbContext>();
-        context?.Appointments.DeleteMultiple(t => true);
-        context?.Customers.DeleteMultiple(t => true);
-        context?.Employees.DeleteMultiple(t => true);
-        context?.Products.DeleteMultiple(t => true);
-        context?.Roles.DeleteMultiple(t => true);
-        context?.GroomingServices.DeleteMultiple(t => true);
-        context?.Pets.DeleteMultiple(t => true);
-    }
-
     private void StartApp(IAppServicesContainer scope)
     {
-        MainWindow = scope.GetService<LoginView>();
-        MainWindow?.Show();
+        var configuration = scope.GetService<IConfigurationService>();
+        var navigation = scope.GetService<INavigationService>()!;
+
+        if (configuration is null)
+        {
+            return;
+        }
+
+        IWindow window;
+        if (configuration.MultiUser)
+        {
+            window = scope.GetService<LoginView>()!;
+        }
+        else
+        {
+            window = scope.GetService<MainView>()!;
+        }
+        navigation.Initialize(SynchronizationContext.Current!, window);
+        MainWindow = window as Window;
+        MainWindow!.Show();
     }
 }

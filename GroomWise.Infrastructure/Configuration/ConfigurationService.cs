@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -20,7 +20,7 @@ namespace GroomWise.Infrastructure.Configuration;
 public class ConfigurationService : ConfigProvider, IConfigurationService
 {
     public ConfigurationService()
-        : base("appconfig.json") { }
+        : base("GroomWise.Settings.json") { }
 
     public bool DarkMode
     {
@@ -50,5 +50,11 @@ public class ConfigurationService : ConfigProvider, IConfigurationService
     {
         get => GetValue<double>(nameof(ToastCooldown));
         set => SetValue(nameof(ToastCooldown), value);
+    }
+
+    public bool MultiUser
+    {
+        get => GetValue<bool>(nameof(MultiUser));
+        set => SetValue(nameof(MultiUser), value);
     }
 }

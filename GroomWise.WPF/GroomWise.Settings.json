@@ -3,5 +3,7 @@
   "colorTheme": "Blue",
   "version": "1.4.1-beta",
   "dbConnection": "",
-  "toastCooldown": 5.0
+  "toastCooldown": 5.0,
+  "multiUser": false,
+  "appDataPath": "/"
 }

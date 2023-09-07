@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:templates="clr-namespace:GroomWise.Views.Templates"
     xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
     xmlns:views="clr-namespace:GroomWise.Views"
     xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
@@ -51,12 +52,8 @@
                 VerticalAlignment="Center"
                 CornerRadius="5"
                 Icon="{wpf:MaterialIconExt Stopwatch}"
-                SelectedIndex="0"
-                SelectedItem="{Binding ConfigurationService.ToastCooldown, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={x:Static converters:StringSecondsToDoubleConverter.Instance}}">
-                <ComboBoxItem>3.0s</ComboBoxItem>
-                <ComboBoxItem>5.0s</ComboBoxItem>
-                <ComboBoxItem>10.0s</ComboBoxItem>
-            </russkyc:ModernComboBox>
+                ItemsSource="{Binding CooldownOptions, RelativeSource={RelativeSource FindAncestor, AncestorType=templates:SettingsTemplate}}"
+                SelectedItem="{Binding ConfigurationService.ToastCooldown, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
         </Grid>
 
         <Grid>
@@ -409,7 +406,7 @@
                     Margin="0,6,0,0"
                     FontSize="12"
                     Foreground="{DynamicResource bg-600}"
-                    Text="C:/Users/Russell/AppData/Roaming/GroomWise/" />
+                    Text="Current App Directory" />
             </StackPanel>
             <russkyc:ModernButton
                 Grid.Column="1"
@@ -421,6 +418,7 @@
                 DefaultForeground="{DynamicResource fg-000}"
                 HoverBackground="{DynamicResource bg-300}"
                 HoverForeground="{DynamicResource fg-000}"
+                IsEnabled="False"
                 LeftCenterIcon="{wpf:MaterialIconExt Folder}"
                 PressedBackground="{DynamicResource primary-darken-1}" />
         </Grid>
@@ -467,6 +465,7 @@
                 DefaultForeground="{DynamicResource fg-000}"
                 HoverBackground="{DynamicResource bg-300}"
                 HoverForeground="{DynamicResource fg-000}"
+                IsEnabled="False"
                 LeftCenterIcon="{wpf:MaterialIconExt Trash}"
                 PressedBackground="{DynamicResource danger}" />
         </Grid>

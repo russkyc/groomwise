@@ -11,28 +11,33 @@
 
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
 namespace GroomWise.Converters;
 
-[ValueConversion(typeof(double), typeof(string))]
-public class StringSecondsToDoubleConverter : IValueConverter
+[ValueConversion(typeof(bool), typeof(Visibility))]
+public class BooleanToVisibilityConverter : IValueConverter
 {
-    public static StringSecondsToDoubleConverter Instance = new();
+    public static BooleanToVisibilityConverter Instance = new();
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        var seconds = (double)value;
-        return $"{seconds:1F}s";
+        if (value is bool visibility)
+        {
+            return visibility ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        return Visibility.Collapsed;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is string seconds && seconds.EndsWith("s"))
+        if (value is Visibility visibility)
         {
-            return double.Parse(seconds.Substring(0, seconds.Length - 1));
+            return visibility == Visibility.Visible;
         }
 
-        return 0.0;
+        return false;
     }
 }

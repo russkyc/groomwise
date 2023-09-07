@@ -94,7 +94,8 @@
                     HoverForeground="{DynamicResource fg-000}"
                     LeftIcon="{icons:MaterialIconExt Kind=UserRemove}"
                     PressedBackground="{DynamicResource bg-300}"
-                    PressedForeground="{DynamicResource fg-000}" />
+                    PressedForeground="{DynamicResource fg-000}"
+                    Visibility="{Binding ConfigurationService.MultiUser, Converter={x:Static converters:BooleanToVisibilityConverter.Instance}}" />
                 <russkyc:ModernToggleButton
                     Width="30"
                     Margin="5"
