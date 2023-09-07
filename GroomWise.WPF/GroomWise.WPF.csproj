@@ -62,6 +62,7 @@
         <None Update="GroomWise.Settings.json">
           <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
+        <None Remove="data.db" />
     </ItemGroup>
 
     <ItemGroup>
