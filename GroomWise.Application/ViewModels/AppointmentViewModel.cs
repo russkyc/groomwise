@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -70,14 +70,16 @@ public partial class AppointmentViewModel
 
     private async void PopulateCollections()
     {
+        var appointments = await Task.Run(
+            () =>
+                GroomWiseDbContext.Appointments
+                    .GetMultiple(appointment => appointment.Date >= DateTime.Today)
+                    .Select(AppointmentMapper.ToObservable)
+                    .OrderBy(appointment => appointment.Date)
+                    .ThenBy(appointment => appointment.StartTime)
+        );
         await Task.Run(() =>
         {
-            var appointments = GroomWiseDbContext.Appointments
-                .GetMultiple(appointment => appointment.Date >= DateTime.Today)
-                .Select(AppointmentMapper.ToObservable)
-                .OrderBy(appointment => appointment.Date)
-                .ThenBy(appointment => appointment.StartTime);
-
             var services = GroomWiseDbContext.GroomingServices
                 .GetAll()
                 .Select(GroomingServiceMapper.ToObservable);

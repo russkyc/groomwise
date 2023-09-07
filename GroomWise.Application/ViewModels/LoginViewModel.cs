@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -43,105 +43,91 @@ public partial class LoginViewModel : IEventSubscriber<LogoutEvent>
     private bool _hasErrors;
 
     [Property]
-    private ConcurrentObservableCollection<ObservableNotification> _notifications;
-
-    partial void OnInitialize()
-    {
-        Notifications = new();
-    }
+    private ConcurrentObservableCollection<ObservableNotification> _notifications = new();
 
     [Command]
     private async Task Login()
     {
-        await Task.Run(async () =>
+        if (string.IsNullOrEmpty(Username))
         {
-            if (string.IsNullOrEmpty(Username))
-            {
-                HasErrors = true;
-                Notifications.RemoveLast();
-                Notifications.Add(
-                    new ObservableNotification
-                    {
-                        Type = NotificationType.Danger,
-                        Description = "Username cannot be blank."
-                    }
-                );
-                return;
-            }
-
-            if (string.IsNullOrEmpty(Password))
-            {
-                HasErrors = true;
-                Notifications.RemoveLast();
-                Notifications.Add(
-                    new ObservableNotification
-                    {
-                        Type = NotificationType.Danger,
-                        Description = "Password cannot be blank."
-                    }
-                );
-                return;
-            }
-
-            var result = AuthenticationService.Login(Username, Password);
-            if (result is AuthenticationStatus.InvalidAccount)
-            {
-                HasErrors = true;
-                Notifications.RemoveLast();
-                Notifications.Add(
-                    new ObservableNotification
-                    {
-                        Type = NotificationType.Danger,
-                        Description = "Account is invalid."
-                    }
-                );
-                return;
-            }
-
-            if (result is AuthenticationStatus.InvalidPassword)
-            {
-                HasErrors = true;
-                Notifications.RemoveLast();
-                Notifications.Add(
-                    new ObservableNotification
-                    {
-                        Type = NotificationType.Danger,
-                        Description = "Password is incorrect."
-                    }
-                );
-                return;
-            }
-
-            HasErrors = false;
+            HasErrors = true;
             Notifications.RemoveLast();
             Notifications.Add(
                 new ObservableNotification
                 {
-                    Type = NotificationType.Success,
-                    Description = "Login successful."
+                    Type = NotificationType.Danger,
+                    Description = "Username cannot be blank."
                 }
             );
+            return;
+        }
 
-            Password = string.Empty;
-            Username = string.Empty;
-
-            await Task.Delay(300);
+        if (string.IsNullOrEmpty(Password))
+        {
+            HasErrors = true;
             Notifications.RemoveLast();
-            EventAggregator.Publish(new LoginEvent());
-            NavigationService.Navigate(AppViews.Main);
-        });
+            Notifications.Add(
+                new ObservableNotification
+                {
+                    Type = NotificationType.Danger,
+                    Description = "Password cannot be blank."
+                }
+            );
+            return;
+        }
+
+        var result = AuthenticationService.Login(Username, Password);
+        if (result is AuthenticationStatus.InvalidAccount)
+        {
+            HasErrors = true;
+            Notifications.RemoveLast();
+            Notifications.Add(
+                new ObservableNotification
+                {
+                    Type = NotificationType.Danger,
+                    Description = "Account is invalid."
+                }
+            );
+            return;
+        }
+
+        if (result is AuthenticationStatus.InvalidPassword)
+        {
+            HasErrors = true;
+            Notifications.RemoveLast();
+            Notifications.Add(
+                new ObservableNotification
+                {
+                    Type = NotificationType.Danger,
+                    Description = "Password is incorrect."
+                }
+            );
+            return;
+        }
+
+        HasErrors = false;
+        Notifications.RemoveLast();
+        Notifications.Add(
+            new ObservableNotification
+            {
+                Type = NotificationType.Success,
+                Description = "Login successful."
+            }
+        );
+
+        Password = string.Empty;
+        Username = string.Empty;
+
+        await Task.Delay(300);
+        Notifications.RemoveLast();
+        EventAggregator.Publish(new LoginEvent());
+        NavigationService.Navigate(AppViews.Main);
     }
 
     [Command]
-    private async Task RemoveNotification(object param)
+    private void RemoveNotification(object param)
     {
-        await Task.Run(() =>
-        {
-            if (param is ObservableNotification)
-            {
-                Notifications.RemoveLast();
-            }
-        });
+        Notifications.RemoveLast();
     }
 
     public void OnEvent(LogoutEvent eventData)

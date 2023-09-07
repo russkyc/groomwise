@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -39,28 +39,30 @@ namespace GroomWise.Application.ViewModels;
 public partial class CustomerViewModel
 {
     [Property]
-    private ObservableCustomer _activeCustomer;
+    private ObservableCustomer _activeCustomer = new ObservableCustomer();
 
     [Property]
     private ObservableCustomer _selectedCustomer;
 
     [Property]
-    private ConcurrentObservableCollection<ObservableCustomer> _customers;
+    private ConcurrentObservableCollection<ObservableCustomer> _customers = new();
 
     partial void OnInitialize()
     {
-        ActiveCustomer = new ObservableCustomer();
         PopulateCollections();
     }
 
-    private async void PopulateCollections()
+    private void PopulateCollections()
     {
-        await Task.Run(() =>
+        Task.Run(async () =>
         {
-            var customers = GroomWiseDbContext!.Customers
-                .GetAll()
-                .Select(CustomerMapper.ToObservable)
-                .OrderBy(customer => customer.FullName);
+            var customers = await Task.Run(
+                () =>
+                    GroomWiseDbContext.Customers
+                        .GetAll()
+                        .Select(CustomerMapper.ToObservable)
+                        .OrderBy(customer => customer.FullName)
+            );
             Customers = new ConcurrentObservableCollection<ObservableCustomer>(customers);
         });
     }
@@ -217,29 +219,30 @@ public partial class CustomerViewModel
     {
         if (param is ObservableCustomer observableCustomer)
         {
-            await Task.Run(() =>
+            var dialogResult = await Task.Run(
+                () =>
+                    DialogService.Create(
+                        "Customers",
+                        $"Are you sure you want to delete {observableCustomer.FullName.GetFirstName()}?",
+                        NavigationService
+                    )
+            );
+
+            if (dialogResult is true)
             {
-                var dialogResult = DialogService.Create(
-                    "Customers",
-                    $"Are you sure you want to delete {observableCustomer.FullName.GetFirstName()}?",
-                    NavigationService
-                );
-                if (dialogResult is true)
+                if (observableCustomer == SelectedCustomer)
                 {
-                    if (observableCustomer == SelectedCustomer)
-                    {
-                        SelectedCustomer = null!;
-                    }
-                    GroomWiseDbContext.Customers.Delete(observableCustomer.Id);
-                    EventAggregator.Publish(new DeleteCustomerEvent(observableCustomer));
-                    PopulateCollections();
+                    SelectedCustomer = null!;
                 }
-            });
+                GroomWiseDbContext.Customers.Delete(observableCustomer.Id);
+                EventAggregator.Publish(new DeleteCustomerEvent(observableCustomer));
+                PopulateCollections();
+            }
         }
     }
 
     [Command]
-    private async Task ScheduleAppointment(object param)
+    private void ScheduleAppointment(object param)
     {
         if (param is ObservableCustomer customer)
         {
@@ -252,11 +255,8 @@ public partial class CustomerViewModel
     }
 
     [Command]
-    private async Task CloseDialogs()
+    private void CloseDialogs()
     {
-        await Task.Run(() =>
-        {
-            DialogService.CloseDialogs(NavigationService);
-        });
+        DialogService.CloseDialogs(NavigationService);
     }
 }

@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -44,31 +44,34 @@ public partial class DashboardViewModel
         PopulateCollections();
     }
 
-    private async void PopulateCollections()
+    private void PopulateCollections()
     {
-        await Task.Run(() =>
+        Task.Run(async () =>
         {
-            var appointments = GroomWiseDbContext.Appointments
-                .GetMultiple(
-                    appointment =>
-                        appointment.Date == DateTime.Today
-                )
-                .Select(AppointmentMapper.ToObservable)
-                .OrderBy(appointment => appointment.Date);
+            var appointments = await Task.Run(
+                () =>
+                    GroomWiseDbContext.Appointments
+                        .GetMultiple(appointment => appointment.Date == DateTime.Today)
+                        .Select(AppointmentMapper.ToObservable)
+                        .OrderBy(appointment => appointment.Date)
+            );
 
-            var upcomingApointments = GroomWiseDbContext.Appointments
-                .GetMultiple(
-                    appointment =>
-                        appointment.Date >= DateTime.Today
-                        && appointment.Date < DateTime.Today.AddDays(7)
-                )
-                .Select(AppointmentMapper.ToObservable)
-                .OrderBy(appointment => appointment.Date)
-                .ThenBy(appointment => appointment.StartTime);
+            var upcomingAppointments = await Task.Run(
+                () =>
+                    GroomWiseDbContext.Appointments
+                        .GetMultiple(
+                            appointment =>
+                                appointment.Date >= DateTime.Today
+                                && appointment.Date < DateTime.Today.AddDays(7)
+                        )
+                        .Select(AppointmentMapper.ToObservable)
+                        .OrderBy(appointment => appointment.Date)
+                        .ThenBy(appointment => appointment.StartTime)
+            );
 
             Appointments = new ConcurrentObservableCollection<ObservableAppointment>(appointments);
             UpcomingAppointments = new ConcurrentObservableCollection<ObservableAppointment>(
-                upcomingApointments
+                upcomingAppointments
             );
         });
     }
