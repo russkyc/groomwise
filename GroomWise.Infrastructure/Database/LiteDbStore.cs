@@ -15,16 +15,16 @@ using LiteDB;
 
 namespace GroomWise.Infrastructure.Database;
 
-public class DbStore : IDbStore
+public class LiteDbStore : IDbStore
 {
     private readonly ILiteDatabase _db;
 
-    public DbStore(string connectionString)
+    public LiteDbStore(string connectionString)
     {
         _db = new LiteDatabase(connectionString);
     }
 
-    public DbStore(Stream stream)
+    public LiteDbStore(Stream stream)
     {
         _db = new LiteDatabase(stream);
     }

@@ -21,6 +21,6 @@ public abstract class DbContext
 
     protected DbContext()
     {
-        DataStore = new DbStore("data.db");
+        DataStore = new LiteDbStore("data.db");
     }
 }
