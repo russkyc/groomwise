@@ -191,7 +191,7 @@ public partial class CustomerViewModel
         await Task.Run(() =>
         {
             var dialogResult = DialogService.Create(
-                "GroomWise",
+                "Appointments",
                 $"Update {SelectedCustomer.FullName.GetFirstName()}?",
                 NavigationService
             );

@@ -121,16 +121,8 @@
                         <StackPanel Margin="0,16,0,0" Orientation="Horizontal">
                             <russkyc:ModernButton
                                 HorizontalAlignment="Left"
-                                Command="{Binding DataContext.ScheduleAppointmentCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
+                                Command="{Binding DataContext.CancelAppointmentCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:AppointmentsView}}"
                                 CommandParameter="{Binding}"
-                                Content="Edit"
-                                CornerRadius="5"
-                                FontWeight="Medium"
-                                LeftCenterIcon="{wpf:MaterialIconExt Kind=Edit}" />
-                            <russkyc:ModernButton
-                                Margin="8,0,0,0"
-                                HorizontalAlignment="Left"
-                                Command="{Binding DataContext.EditCustomerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
                                 Content="Cancel"
                                 CornerRadius="5"
                                 DefaultBackground="Transparent"
@@ -174,7 +166,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:AppointmentServiceInfoCardTemplate Margin="12,0" />
+                        <local:AppointmentInfoCardServiceTemplate Margin="12,0" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemContainerStyle>

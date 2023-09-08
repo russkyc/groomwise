@@ -546,11 +546,16 @@
                 </ItemsControl.Template>
             </ItemsControl>
         </Grid>
-        <StackPanel
+        <Grid
             Grid.Row="1"
             Grid.RowSpan="2"
             Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
             <Border
+                Grid.Row="0"
                 Margin="16,0,0,0"
                 VerticalAlignment="Top"
                 Background="{DynamicResource bg-100}"
@@ -559,7 +564,10 @@
                     <controls:CalendarControl Margin="4" />
                 </Grid>
             </Border>
-            <Grid Margin="16,20,0,0" Style="{StaticResource FadeInFromBottomAnimation}">
+            <Grid
+                Grid.Row="1"
+                Margin="16,20,0,0"
+                Style="{StaticResource FadeInFromBottomAnimation}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -606,6 +614,6 @@
                     </ItemsControl.Template>
                 </ItemsControl>
             </Grid>
-        </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

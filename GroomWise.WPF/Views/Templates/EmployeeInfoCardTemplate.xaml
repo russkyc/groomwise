@@ -70,13 +70,15 @@
                         HorizontalAlignment="Left"
                         FontSize="13"
                         Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
-                        TextAlignment="Center" />
+                        TextAlignment="Center"
+                        TextTrimming="CharacterEllipsis" />
                     <TextBlock
                         Margin="0,8,0,0"
                         HorizontalAlignment="Left"
                         FontSize="13"
                         Text="{Binding ContactNumber, UpdateSourceTrigger=PropertyChanged}"
-                        TextAlignment="Center" />
+                        TextAlignment="Center"
+                        TextTrimming="CharacterEllipsis" />
 
                     <StackPanel Margin="0,16,0,0" Orientation="Horizontal">
                         <russkyc:ModernButton

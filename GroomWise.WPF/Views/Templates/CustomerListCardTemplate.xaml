@@ -62,22 +62,32 @@
                 FontWeight="Medium"
                 IsHitTestVisible="False"
                 Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock
+            <Border
                 Grid.Column="2"
-                Margin="12,0,0,0"
-                HorizontalAlignment="Center"
+                Padding="8,3"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                IsHitTestVisible="False"
-                Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"
-                TextTrimming="CharacterEllipsis" />
+                Background="{DynamicResource primary-default}"
+                CornerRadius="10"
+                IsHitTestVisible="False">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="#ffffff"
+                    Text="{Binding ContactNumber, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Left"
+                    TextTrimming="CharacterEllipsis" />
+            </Border>
             <TextBlock
                 Grid.Column="3"
                 Margin="12,0,0,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
+                Foreground="{DynamicResource fg-600}"
                 IsHitTestVisible="False"
                 Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
-                TextAlignment="Left" />
+                TextAlignment="Left"
+                TextTrimming="CharacterEllipsis" />
             <ItemsControl
                 Grid.Column="4"
                 Width="120"

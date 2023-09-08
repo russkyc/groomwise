@@ -156,6 +156,12 @@ public partial class AppointmentViewModel
                 {
                     Appointments.Remove(appointment);
                     GroomWiseDbContext.Appointments.Delete(appointment.Id);
+
+                    if (appointment.Id == SelectedAppointment.Id)
+                    {
+                        SelectedAppointment = null;
+                    }
+
                     EventAggregator.Publish(new DeleteAppointmentEvent());
                     EventAggregator.Publish(
                         new PublishNotificationEvent(
@@ -305,7 +311,7 @@ public partial class AppointmentViewModel
             {
                 if (groomingService.GroomingService is not null)
                 {
-                    timeSpan = timeSpan.Add(groomingService.GroomingService.TimeSpan);
+                    timeSpan = timeSpan.Add(groomingService.GroomingService.Duration);
                 }
             });
             return ActiveAppointment.StartTime.Add(timeSpan);
