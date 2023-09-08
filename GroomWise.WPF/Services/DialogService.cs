@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -34,8 +34,8 @@ public class DialogService : IDialogService
                         .FirstOrDefault(
                             dialog =>
                                 dialog.Owner == navigationService.CurrentWindow
-                                && dialog.Caption.Equals(caption)
-                                && dialog.MessageBoxText.Equals(messageBoxText)
+                                && dialog!.Caption!.Equals(caption)
+                                && dialog!.MessageBoxText!.Equals(messageBoxText)
                         ) is
                     { } window
                 )
@@ -61,16 +61,16 @@ public class DialogService : IDialogService
     {
         return Task.Run(async () =>
         {
-            return await App.Current.Dispatcher.InvokeAsync(() =>
+            return await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
             {
                 if (
-                    App.Current.Windows
+                    System.Windows.Application.Current.Windows
                         .OfType<DialogView>()
                         .FirstOrDefault(
                             dialog =>
                                 dialog.Owner == navigationService.CurrentWindow
-                                && dialog.Caption.Equals(caption)
-                                && dialog.MessageBoxText.Equals(messageBoxText)
+                                && dialog.Caption!.Equals(caption)
+                                && dialog.MessageBoxText!.Equals(messageBoxText)
                         ) is
                     { } window
                 )

@@ -9,9 +9,8 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
-using System;
 using System.ComponentModel;
-using System.Linq;
+using GroomWise.Extensions;
 
 namespace GroomWise.Views.Dialogs;
 
@@ -25,8 +24,7 @@ public partial class SelectCustomerView
 
     protected override void OnClosing(CancelEventArgs e)
     {
-        var parent = App.Current.Windows.OfType<MainView>().FirstOrDefault();
-        parent.Focus();
+        WindowExtensions.CloseAllAndFocusMainView();
         base.OnClosing(e);
     }
 }
