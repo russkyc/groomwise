@@ -171,7 +171,7 @@ public class DialogService : IDialogService
             });
         });
     }
-    
+
     public void CreateAddEmployeeDialog(object viewModel, INavigationService navigationService)
     {
         Task.Run(async () =>
@@ -200,6 +200,25 @@ public class DialogService : IDialogService
                 if (!App.Current.Windows.OfType<EditCustomersView>().Any())
                 {
                     new EditCustomersView(viewModel)
+                    {
+                        ShowInTaskbar = false,
+                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                        Owner = (Window)navigationService.CurrentWindow!
+                    }.Show();
+                }
+            });
+        });
+    }
+
+    public void CreateEditEmployeeDialog(object viewModel, INavigationService navigationService)
+    {
+        Task.Run(async () =>
+        {
+            await App.Current.Dispatcher.InvokeAsync(() =>
+            {
+                if (!App.Current.Windows.OfType<EditEmployeeView>().Any())
+                {
+                    new EditEmployeeView(viewModel)
                     {
                         ShowInTaskbar = false,
                         WindowStartupLocation = WindowStartupLocation.CenterOwner,

@@ -80,9 +80,8 @@
 
                     <StackPanel Margin="0,16,0,0" Orientation="Horizontal">
                         <russkyc:ModernButton
-                            Margin="8,0,0,0"
                             HorizontalAlignment="Left"
-                            Command="{Binding DataContext.EditEmployeeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:CustomersView}}"
+                            Command="{Binding DataContext.EditEmployeeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:EmployeesView}}"
                             Content="Edit"
                             CornerRadius="5"
                             DefaultBackground="Transparent"

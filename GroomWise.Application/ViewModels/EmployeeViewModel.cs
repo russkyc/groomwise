@@ -83,6 +83,34 @@ public partial class EmployeeViewModel
     }
 
     [Command]
+    private async Task EditEmployee()
+    {
+        await Task.Run(() =>
+        {
+            DialogService.CreateEditEmployeeDialog(this, NavigationService);
+        });
+    }
+
+    [Command]
+    private async Task UpdateEmployee()
+    {
+        var dialogResult = await Task.Run(
+            () =>
+                DialogService.Create(
+                    "Employees",
+                    $"Update {SelectedEmployee.FullName.GetFirstName()}?",
+                    NavigationService
+                )
+        );
+        if (dialogResult is true)
+        {
+            GroomWiseDbContext.Employees.Update(SelectedEmployee.Id, SelectedEmployee.ToEntity());
+            EventAggregator.Publish(new UpdateCustomerEvent());
+            DialogService.CloseDialogs(NavigationService);
+        }
+    }
+
+    [Command]
     private async Task SaveEmployee()
     {
         var dialogResult = await Task.Run(
