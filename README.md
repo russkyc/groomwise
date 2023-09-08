@@ -3,7 +3,7 @@
 <h2 align="center">GroomWise - A Pet Grooming CRM</h2>
 
 <p style="text-align: justify">
-GroomWise is an on-site pet grooming CRM designed to help pet grooming businesses manage their appointments, services, employees, customers, pets, and inventory. It offers features like appointment management, services/packages management, employee and customer management, employee roles management, pets management, and inventory management. The platform also has a modern clean UI, global app theming, and login and session management. GroomWise is designed to help pet grooming businesses streamline their operations and focus on what they do best: making pets look and feel their best.
+GroomWise is an on-site pet grooming CRM designed to help pet grooming businesses manage their appointments, services, employees, customers, pets, and inventory. Designed to help pet grooming businesses streamline their operations and focus on what they do best: making pets look and feel their best.
 </p>
 
 ### Features
@@ -26,6 +26,7 @@ In addition to these features, GroomWise also has:
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/appointments-schedule.png)
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/customers.png)
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/customers-add.png)
+![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/employees.png)
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/pets.png)
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/services.png)
 ![](https://raw.githubusercontent.com/russkyc/groomwise/master/Images/settings.png)
