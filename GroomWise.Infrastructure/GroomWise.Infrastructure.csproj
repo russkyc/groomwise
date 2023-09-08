@@ -31,13 +31,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="GroomWise.Domain">
-        <HintPath>..\GroomWise.Domain\bin\Debug\net7.0\GroomWise.Domain.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
-
-    <ItemGroup>
       <None Remove=".env" />
 
 
