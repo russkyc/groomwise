@@ -124,7 +124,8 @@
                 DefaultForeground="{DynamicResource fg-000}"
                 HoverBackground="{DynamicResource bg-300}"
                 HoverForeground="{DynamicResource fg-000}"
-                LeftCenterIcon="{wpf:MaterialIconExt Kind=TrashCan}"
+                Icon="{wpf:MaterialIconExt Kind=TrashCan}"
+                IconPlacement="Left"
                 PressedBackground="{DynamicResource danger}"
                 PressedForeground="#ffffff" />
         </Grid>

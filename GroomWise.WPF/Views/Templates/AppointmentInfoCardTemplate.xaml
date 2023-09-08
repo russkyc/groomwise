@@ -130,8 +130,9 @@
                                 FontWeight="Medium"
                                 HoverBackground="{DynamicResource bg-200}"
                                 HoverForeground="{DynamicResource fg-000}"
+                                Icon="{wpf:MaterialIconExt Kind=Cancel}"
                                 IconForeground="{DynamicResource fg-000}"
-                                LeftCenterIcon="{wpf:MaterialIconExt Kind=Cancel}"
+                                IconPlacement="Left"
                                 PressedBackground="{DynamicResource danger}"
                                 PressedForeground="{DynamicResource fg-000}" />
                         </StackPanel>

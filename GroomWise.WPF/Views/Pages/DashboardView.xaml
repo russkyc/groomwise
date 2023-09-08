@@ -487,8 +487,9 @@
                             FontWeight="Medium"
                             HoverBackground="{DynamicResource inverted-lighten-1}"
                             HoverForeground="{DynamicResource primary-default}"
+                            Icon="{icon:MaterialIconExt Kind=Edit}"
+                            IconPlacement="Left"
                             IconSize="18"
-                            LeftIcon="{icon:MaterialIconExt Kind=Edit}"
                             PressedBackground="{DynamicResource inverted-darken-1}"
                             PressedForeground="{DynamicResource primary-default}" />
                     </StackPanel>

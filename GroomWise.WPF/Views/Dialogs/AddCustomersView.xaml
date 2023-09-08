@@ -84,7 +84,8 @@
                 FontWeight="Medium"
                 Foreground="{DynamicResource fg-200}"
                 HoverBackground="{DynamicResource bg-000}"
-                LeftCenterIcon="{wpf:MaterialIconExt Kind=Add}"
+                Icon="{wpf:MaterialIconExt Kind=Add}"
+                IconPlacement="Left"
                 PressedBackground="{DynamicResource bg-100}" />
             <ItemsControl
                 MaxHeight="170"
@@ -152,7 +153,8 @@
                     Content="Save Customer"
                     CornerRadius="5"
                     FontWeight="Medium"
-                    LeftCenterIcon="{wpf:MaterialIconExt Kind=ContentSave}" />
+                    Icon="{wpf:MaterialIconExt Kind=ContentSave}"
+                    IconPlacement="Left" />
             </StackPanel>
         </StackPanel>
     </Grid>

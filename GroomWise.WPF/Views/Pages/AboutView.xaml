@@ -76,9 +76,10 @@
                 Content="Check for Updates"
                 CornerRadius="5"
                 FontWeight="Medium"
+                Icon="{wpf:MaterialIconExt Kind=Update}"
+                IconPlacement="Left"
                 IconSize="18"
-                IsEnabled="False"
-                LeftIcon="{wpf:MaterialIconExt Kind=Update}" />
+                IsEnabled="False" />
             <TextBlock
                 Width="600"
                 Margin="0,22,0,0"

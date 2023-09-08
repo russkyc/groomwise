@@ -88,7 +88,8 @@
                             Content="Appointment"
                             CornerRadius="5"
                             FontWeight="Medium"
-                            LeftCenterIcon="{wpf:MaterialIconExt Kind=AddThick}" />
+                            Icon="{wpf:MaterialIconExt Kind=AddThick}"
+                            IconPlacement="Left" />
                         <russkyc:ModernButton
                             Margin="8,0,0,0"
                             HorizontalAlignment="Left"
@@ -100,8 +101,9 @@
                             FontWeight="Medium"
                             HoverBackground="{DynamicResource bg-200}"
                             HoverForeground="{DynamicResource fg-000}"
+                            Icon="{wpf:MaterialIconExt Kind=Edit}"
                             IconForeground="{DynamicResource fg-000}"
-                            LeftCenterIcon="{wpf:MaterialIconExt Kind=Edit}"
+                            IconPlacement="Left"
                             PressedBackground="{DynamicResource bg-300}"
                             PressedForeground="{DynamicResource fg-000}" />
                     </StackPanel>

@@ -145,7 +145,8 @@
                     FontWeight="Medium"
                     Foreground="{DynamicResource fg-200}"
                     HoverBackground="{DynamicResource bg-000}"
-                    LeftCenterIcon="{wpf:MaterialIconExt Kind=Add}"
+                    Icon="{wpf:MaterialIconExt Kind=Add}"
+                    IconPlacement="Left"
                     PressedBackground="{DynamicResource bg-100}">
                     <russkyc:ModernButton.Resources>
                         <ResourceDictionary>
@@ -229,7 +230,8 @@
                     Command="{Binding SaveAppointmentCommand}"
                     CornerRadius="5"
                     FontWeight="Medium"
-                    LeftCenterIcon="{wpf:MaterialIconExt Kind=ContentSave}">
+                    Icon="{wpf:MaterialIconExt Kind=ContentSave}"
+                    IconPlacement="Left">
                     <russkyc:ModernButton.Resources>
                         <ResourceDictionary>
                             <Style BasedOn="{StaticResource {x:Type russkyc:ModernButton}}" TargetType="{x:Type russkyc:ModernButton}">

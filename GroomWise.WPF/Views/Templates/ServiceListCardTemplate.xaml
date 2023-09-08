@@ -101,7 +101,8 @@
                 CornerRadius="5"
                 DefaultBackground="Transparent"
                 HoverBackground="{DynamicResource bg-300}"
-                LeftCenterIcon="{wpf:MaterialIconExt Kind=TrashCan}"
+                Icon="{wpf:MaterialIconExt Kind=TrashCan}"
+                IconPlacement="Left"
                 PressedBackground="{DynamicResource danger}" />
         </Grid>
     </Grid>

@@ -40,7 +40,8 @@
                 Grid.Column="2"
                 Width="200"
                 CornerRadius="5"
-                LeftIcon="{wpf:MaterialIconExt Search}"
+                Icon="{wpf:MaterialIconExt Search}"
+                IconPlacement="Left"
                 Placeholder="Find Pet"
                 Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>

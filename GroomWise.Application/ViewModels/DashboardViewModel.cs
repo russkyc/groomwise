@@ -14,6 +14,8 @@ using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
 using GroomWise.Infrastructure.Authentication.Interfaces;
 using GroomWise.Infrastructure.Database;
+using Hangfire;
+using Hangfire.LiteDB;
 using Injectio.Attributes;
 using MvvmGen;
 using MvvmGen.Events;
@@ -39,9 +41,19 @@ public partial class DashboardViewModel
     [Property]
     private string _user;
 
+    [Property]
+    private DateTime _date;
+
     partial void OnInitialize()
     {
         PopulateCollections();
+        RecurringJob.AddOrUpdate("updateTime", () => SetDate(), Cron.Hourly);
+    }
+
+    public async Task SetDate()
+    {
+        Date = DateTime.Now;
+        await Task.Delay(10);
     }
 
     private void PopulateCollections()

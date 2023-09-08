@@ -43,7 +43,8 @@
                     Width="200"
                     Margin="12,0"
                     CornerRadius="5"
-                    LeftIcon="{wpf:MaterialIconExt Search}"
+                    Icon="{wpf:MaterialIconExt Search}"
+                    IconPlacement="Left"
                     Placeholder="Find Employee"
                     Text="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" />
                 <russkyc:ModernButton
@@ -52,8 +53,9 @@
                     Content="Add Employee"
                     CornerRadius="5"
                     FontWeight="Medium"
-                    IconSize="18"
-                    LeftIcon="{wpf:MaterialIconExt Kind=AddBold}" />
+                    Icon="{wpf:MaterialIconExt Kind=AddBold}"
+                    IconPlacement="Left"
+                    IconSize="18" />
             </Grid>
             <Grid Grid.Row="1" />
         </Grid>
@@ -80,8 +82,9 @@
                         Content="Add Role"
                         CornerRadius="5"
                         FontWeight="Medium"
-                        IconSize="18"
-                        LeftIcon="{wpf:MaterialIconExt Kind=AddBold}" />
+                        Icon="{wpf:MaterialIconExt Kind=AddBold}"
+                        IconPlacement="Left"
+                        IconSize="18" />
                 </Grid>
                 <ScrollViewer
                     Grid.Row="1"

@@ -17,7 +17,7 @@
     </b:Interaction.Triggers>
     <Grid Background="Transparent">
         <russkyc:ModernRadioButton
-            Padding="4"
+            Padding="8"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Command="{Binding Path=DataContext.NavigateToPageCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type russkyc:ModernWindow}}}"

@@ -418,8 +418,9 @@
                 DefaultForeground="{DynamicResource fg-000}"
                 HoverBackground="{DynamicResource bg-300}"
                 HoverForeground="{DynamicResource fg-000}"
+                Icon="{wpf:MaterialIconExt Folder}"
+                IconPlacement="Left"
                 IsEnabled="False"
-                LeftCenterIcon="{wpf:MaterialIconExt Folder}"
                 PressedBackground="{DynamicResource primary-darken-1}" />
         </Grid>
         <Grid Margin="16,6" HorizontalAlignment="Stretch">
@@ -465,8 +466,9 @@
                 DefaultForeground="{DynamicResource fg-000}"
                 HoverBackground="{DynamicResource bg-300}"
                 HoverForeground="{DynamicResource fg-000}"
+                Icon="{wpf:MaterialIconExt Trash}"
+                IconPlacement="Left"
                 IsEnabled="False"
-                LeftCenterIcon="{wpf:MaterialIconExt Trash}"
                 PressedBackground="{DynamicResource danger}" />
         </Grid>
     </StackPanel>

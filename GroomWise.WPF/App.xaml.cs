@@ -20,6 +20,8 @@ using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Infrastructure.Theming.Interfaces;
 using GroomWise.Views;
 using GroomWise.Views.Dialogs;
+using Hangfire;
+using Hangfire.LiteDB;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GroomWise;
@@ -82,6 +84,7 @@ public partial class App
 
     private void StartApp(IAppServicesContainer scope)
     {
+        GlobalConfiguration.Configuration.UseLiteDbStorage();
         var configuration = scope.GetService<IConfigurationService>();
         var navigation = scope.GetService<INavigationService>()!;
 

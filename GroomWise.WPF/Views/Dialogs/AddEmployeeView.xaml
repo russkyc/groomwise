@@ -98,7 +98,8 @@
                     Content="Save Employee"
                     CornerRadius="5"
                     FontWeight="Medium"
-                    LeftCenterIcon="{wpf:MaterialIconExt Kind=ContentSave}" />
+                    Icon="{wpf:MaterialIconExt Kind=ContentSave}"
+                    IconPlacement="Left" />
             </StackPanel>
         </StackPanel>
     </Grid>
