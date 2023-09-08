@@ -19,41 +19,24 @@ public partial class ObservableEmployee : ObservableObject
 {
     [ObservableProperty]
     private Guid _id;
-    public string FullName => $"{FirstName} {LastName}";
-
+    
     [ObservableProperty]
     private string? _prefix;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(FullName))]
-    private string? _firstName;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(FullName))]
-    private string? _middleName;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(FullName))]
-    private string? _lastName;
+    private string? _fullName;
 
     [ObservableProperty]
     private string? _suffix;
 
     [ObservableProperty]
-    private string _address;
+    private string? _address;
 
     [ObservableProperty]
-    private string _contactNumber;
+    private string? _contactNumber;
 
     [ObservableProperty]
-    private string _email;
+    private string? _email;
+    
 
-    [ObservableProperty]
-    private ConcurrentObservableCollection<ObservablePet>? _pets = new();
-
-    [ObservableProperty]
-    private ConcurrentObservableCollection<ObservableAppointment>? _appointments = new();
-
-    [ObservableProperty]
-    private ConcurrentObservableCollection<Role>? _roles = new();
 }

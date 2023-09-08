@@ -30,6 +30,8 @@ public interface IDialogService
 
     void CreateAddAppointmentsDialog(object viewModel, INavigationService navigationService);
     void CreateAddCustomersDialog(object viewModel, INavigationService navigationService);
+    void CreateAddEmployeeDialog(object viewModel, INavigationService navigationService);
     void CreateEditCustomersDialog(object viewModel, INavigationService navigationService);
+    void CreateEditEmployeeDialog(object viewModel, INavigationService navigationService);
     void CreateAddServicesDialog(object viewModel, INavigationService navigationService);
 }

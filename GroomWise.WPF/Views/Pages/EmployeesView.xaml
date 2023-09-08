@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
     xmlns:templates="clr-namespace:GroomWise.Views.Templates"
     xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
@@ -13,19 +14,22 @@
                                      IsDesignTimeCreatable=True}"
     d:DesignHeight="720"
     d:DesignWidth="1280"
+    Style="{StaticResource FadeInFromBottomAnimation}"
     mc:Ignorable="d">
-    <Grid Style="{StaticResource FadeInFromBottomAnimation}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="320" />
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Margin="16,20,16,16">
+    <Grid>
+        <Grid Margin="16,20,16,16">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
             <Grid
                 Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
                 Margin="0,0,0,12"
                 HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
@@ -51,86 +55,61 @@
                 <russkyc:ModernButton
                     Grid.Column="3"
                     HorizontalAlignment="Right"
+                    Command="{Binding CreateEmployeeCommand}"
                     Content="Add Employee"
                     CornerRadius="5"
                     FontWeight="Medium"
                     IconSize="18"
                     LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
             </Grid>
-            <ScrollViewer
+            <ContentControl
                 Grid.Row="1"
-                VerticalAlignment="Stretch"
-                HorizontalContentAlignment="Stretch"
-                VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Employees.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <templates:EmployeeListCardTemplate />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                    <ItemsControl.ItemContainerStyle>
-                        <Style TargetType="{x:Type FrameworkElement}">
-                            <Setter Property="Margin" Value="0,0,0,10" />
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>
-                </ItemsControl>
-            </ScrollViewer>
-        </Grid>
-        <Grid Grid.Column="1" Margin="0,20,16,16">
-            <Grid Margin="0,0,0,0" VerticalAlignment="Stretch">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Margin="0,0,0,12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock
-                        Grid.Column="0"
-                        VerticalAlignment="Center"
-                        FontSize="16"
-                        Text="Roles" />
-                    <russkyc:ModernButton
-                        Grid.Column="2"
-                        HorizontalAlignment="Right"
-                        Content="Add Role"
-                        CornerRadius="5"
-                        FontWeight="Medium"
-                        IconSize="18"
-                        LeftIcon="{icons:MaterialIconExt Kind=AddBold}" />
-                </Grid>
-                <ScrollViewer
-                    Grid.Row="1"
-                    VerticalAlignment="Stretch"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Roles.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <templates:RoleListCardTemplate />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="{x:Type FrameworkElement}">
-                                <Setter Property="Margin" Value="0,0,0,10" />
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-                    </ItemsControl>
-                </ScrollViewer>
-            </Grid>
+                Grid.Column="0"
+                Content="{Binding SelectedEmployee, UpdateSourceTrigger=PropertyChanged}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type observables:ObservableEmployee}">
+                        <templates:EmployeeInfoCardTemplate Margin="0,0,16,0" />
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+            <ItemsControl
+                Grid.Row="1"
+                Grid.Column="1"
+                ItemsSource="{Binding Employees.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <templates:EmployeeListCardTemplate />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="{x:Type FrameworkElement}">
+                        <Setter Property="Margin" Value="0,0,0,10" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+
+                <ItemsControl.Template>
+                    <ControlTemplate TargetType="ItemsControl">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer
+                                Padding="{TemplateBinding Padding}"
+                                CanContentScroll="True"
+                                Focusable="False">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+            </ItemsControl>
         </Grid>
     </Grid>
 </UserControl>

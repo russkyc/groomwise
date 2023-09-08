@@ -9,12 +9,13 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
-using GroomWise.Domain.Enums;
+namespace GroomWise.Views.Dialogs;
 
-namespace GroomWise.Application.Events;
-
-public record PublishNotificationEvent(
-    string Title,
-    string Content,
-    NotificationType NotificationType
-);
+public partial class AddEmployeeView
+{
+    public AddEmployeeView(object vm)
+    {
+        DataContext = vm;
+        InitializeComponent();
+    }
+}

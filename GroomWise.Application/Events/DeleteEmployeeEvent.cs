@@ -9,12 +9,6 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
-using GroomWise.Domain.Enums;
-
 namespace GroomWise.Application.Events;
 
-public record PublishNotificationEvent(
-    string Title,
-    string Content,
-    NotificationType NotificationType
-);
+public record DeleteEmployeeEvent(string Name);

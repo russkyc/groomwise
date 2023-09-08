@@ -74,7 +74,8 @@ public partial class GroomingServiceViewModel
             {
                 EventAggregator.Publish(
                     new PublishNotificationEvent(
-                        $"Service name cannot be blank",
+                        "Save Failed",
+                        "Service name cannot be blank",
                         NotificationType.Danger
                     )
                 );
@@ -90,6 +91,7 @@ public partial class GroomingServiceViewModel
             DialogService.CloseDialogs(NavigationService);
             EventAggregator.Publish(
                 new PublishNotificationEvent(
+                    "Save Successful",
                     $"Service {ActiveGroomingService.Type} saved",
                     NotificationType.Success
                 )

@@ -10,17 +10,17 @@
     xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
     xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
     xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
-    Height="38"
+    Width="270"
+    MinHeight="75"
     d:DataContext="{d:DesignInstance observables:ObservableNotification,
                                      IsDesignTimeCreatable=True}"
-    d:DesignWidth="200"
     Background="Transparent"
     IsTabStop="False"
     Style="{StaticResource FadeInAnimation}"
     mc:Ignorable="d">
-    <Border CornerRadius="5">
+    <Border CornerRadius="7">
         <Border.Style>
-            <Style>
+            <Style TargetType="{x:Type Border}">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Type}" Value="{x:Static enums:NotificationType.Notify}">
                         <Setter Property="Border.Background" Value="{DynamicResource primary-default}" />
@@ -44,14 +44,28 @@
             </Grid.ColumnDefinitions>
             <StackPanel
                 Grid.Column="0"
-                Margin="12"
+                Margin="16"
+                HorizontalAlignment="Stretch"
                 VerticalAlignment="Center">
-                <TextBlock Foreground="{DynamicResource inverted-lighten-3}" Text="{Binding Description}" />
+                <TextBlock
+                    FontSize="14"
+                    FontWeight="Medium"
+                    Foreground="#ffffff"
+                    Text="{Binding Title}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Margin="0,4,0,0"
+                    Foreground="{DynamicResource inverted-lighten-3}"
+                    Text="{Binding Description}"
+                    TextWrapping="Wrap" />
             </StackPanel>
             <moderncontrols:ModernButton
                 Grid.Column="1"
-                Margin="7"
+                Width="24"
+                Height="24"
+                Margin="8"
                 Padding="5"
+                VerticalAlignment="Top"
                 Command="{Binding Path=DataContext.(viewModels:AppViewModel.RemoveNotificationCommand), RelativeSource={RelativeSource FindAncestor, AncestorType=moderncontrols:ModernWindow}}"
                 CommandParameter="{Binding}"
                 Content="{wpf:MaterialIconExt Kind=Close}">
