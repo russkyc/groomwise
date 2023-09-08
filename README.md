@@ -10,7 +10,7 @@ GroomWise is an on-site pet grooming CRM designed to help pet grooming businesse
 - [x] **Appointment management:** Easily create, view, and manage appointments for your pet grooming business.
 - [x] **Services/Packages management:** Keep track of the services and packages you offer, and easily add new ones as needed.
 - [x] **Customer management:** Manage your employees and customers, including their contact information and other important details.
-- [ ] **Employee management:** Assign different roles and permissions to your employees based on their responsibilities.
+- [x] **Employee management:** Assign different roles and permissions to your employees based on their responsibilities.
 - [x] **Pets management:** Keep track of the pets you groom, including their breed, size, and special needs.
 - [ ] **Inventory management:** Keep track of your inventory, including grooming supplies, pet food, and other products.
 
