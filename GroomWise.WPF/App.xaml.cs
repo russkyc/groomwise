@@ -90,17 +90,21 @@ public partial class App
             return;
         }
 
-        IWindow window;
-        if (configuration.MultiUser)
+        Current.Dispatcher.BeginInvoke(() =>
         {
-            window = scope.GetService<LoginView>()!;
-        }
-        else
-        {
-            window = scope.GetService<MainView>()!;
-        }
-        navigation.Initialize(SynchronizationContext.Current!, window);
-        MainWindow = window as Window;
-        MainWindow!.Show();
+            IWindow window;
+            if (configuration.MultiUser)
+            {
+                window = scope.GetService<LoginView>()!;
+            }
+            else
+            {
+                window = scope.GetService<MainView>()!;
+            }
+
+            navigation.Initialize(SynchronizationContext.Current!, window);
+            MainWindow = window as Window;
+            MainWindow!.Show();
+        });
     }
 }
