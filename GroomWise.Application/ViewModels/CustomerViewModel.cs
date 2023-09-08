@@ -93,6 +93,7 @@ public partial class CustomerViewModel
                 {
                     EventAggregator.Publish(
                         new PublishNotificationEvent(
+                            "Save Failed",
                             "Customer name cannot be empty.",
                             NotificationType.Danger
                         )
@@ -105,6 +106,7 @@ public partial class CustomerViewModel
                 EventAggregator.Publish(new CreateCustomerEvent());
                 EventAggregator.Publish(
                     new PublishNotificationEvent(
+                        "Save Succesful",
                         $"Customer {ActiveCustomer.FullName} added.",
                         NotificationType.Success
                     )

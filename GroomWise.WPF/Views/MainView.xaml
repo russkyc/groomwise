@@ -206,7 +206,6 @@
         </ContentControl>
         <ItemsControl
             Grid.Column="1"
-            Width="250"
             Margin="12,12,12,12"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"

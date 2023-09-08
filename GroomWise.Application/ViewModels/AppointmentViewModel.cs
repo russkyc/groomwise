@@ -192,7 +192,8 @@ public partial class AppointmentViewModel
             {
                 EventAggregator.Publish(
                     new PublishNotificationEvent(
-                        "Appointment should be scheduled to a customer.",
+                        "Save Failed",
+                        "Appointment should be scheduled to a customer",
                         NotificationType.Danger
                     )
                 );
@@ -207,6 +208,7 @@ public partial class AppointmentViewModel
             {
                 EventAggregator.Publish(
                     new PublishNotificationEvent(
+                        "Save Failed",
                         "Cannot create an appointment if there are no services.",
                         NotificationType.Danger
                     )
@@ -227,7 +229,11 @@ public partial class AppointmentViewModel
                 GroomWiseDbContext.Appointments.Insert(appointment);
                 EventAggregator.Publish(new CreateAppointmentEvent());
                 EventAggregator.Publish(
-                    new PublishNotificationEvent($"Appointment saved", NotificationType.Success)
+                    new PublishNotificationEvent(
+                        "Save Successful",
+                        "Appointment saved",
+                        NotificationType.Success
+                    )
                 );
 
                 ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };

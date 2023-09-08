@@ -126,6 +126,7 @@ public partial class EmployeeViewModel
         {
             EventAggregator.Publish(
                 new PublishNotificationEvent(
+                    "Save Failed",
                     "Employee name cannot be empty.",
                     NotificationType.Danger
                 )
@@ -138,6 +139,7 @@ public partial class EmployeeViewModel
         EventAggregator.Publish(new CreateCustomerEvent());
         EventAggregator.Publish(
             new PublishNotificationEvent(
+                "Save Successful",
                 $"Employee {ActiveEmployee.FullName} added.",
                 NotificationType.Success
             )

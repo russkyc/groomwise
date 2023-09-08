@@ -120,17 +120,19 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
     {
         var notification = new ObservableNotification
         {
+            Title = eventData.Title,
             Description = eventData.Content,
             Type = eventData.NotificationType
         };
         Notifications.Add(notification);
-        if (Notifications.Count > 3)
+        if (Notifications.Count > 8)
         {
             Notifications.RemoveAt(0);
         }
-        Task.Run(
-            async () => await Task.Delay(TimeSpan.FromSeconds(ConfigurationService.ToastCooldown))
-        );
-        Notifications.Remove(notification);
+        Task.Run(async () =>
+        {
+            await Task.Delay(TimeSpan.FromSeconds(ConfigurationService.ToastCooldown));
+            Notifications.Remove(notification);
+        });
     }
 }
