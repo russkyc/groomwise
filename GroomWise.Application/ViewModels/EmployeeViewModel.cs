@@ -126,7 +126,7 @@ public partial class EmployeeViewModel
         {
             EventAggregator.Publish(
                 new PublishNotificationEvent(
-                    "Save Failed",
+                    "Saving Failed",
                     "Employee name cannot be empty.",
                     NotificationType.Danger
                 )
@@ -139,7 +139,7 @@ public partial class EmployeeViewModel
         EventAggregator.Publish(new CreateCustomerEvent());
         EventAggregator.Publish(
             new PublishNotificationEvent(
-                "Save Successful",
+                "Employees Updated",
                 $"Employee {ActiveEmployee.FullName} added.",
                 NotificationType.Success
             )
@@ -171,6 +171,13 @@ public partial class EmployeeViewModel
                 GroomWiseDbContext.Employees.Delete(observableEmployee.Id);
                 EventAggregator.Publish(
                     new DeleteEmployeeEvent(observableEmployee.FullName.GetFirstName())
+                );
+                EventAggregator.Publish(
+                    new PublishNotificationEvent(
+                        "Employees Updated",
+                        $"{observableEmployee.FullName.GetFirstName()}' is removed",
+                        NotificationType.Notify
+                    )
                 );
                 PopulateCollections();
             }

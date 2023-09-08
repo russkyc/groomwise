@@ -106,8 +106,8 @@ public partial class CustomerViewModel
                 EventAggregator.Publish(new CreateCustomerEvent());
                 EventAggregator.Publish(
                     new PublishNotificationEvent(
-                        "Save Succesful",
-                        $"Customer {ActiveCustomer.FullName} added.",
+                        "Customer Added",
+                        $"{ActiveCustomer.FullName} is saved to Customers",
                         NotificationType.Success
                     )
                 );
@@ -238,6 +238,13 @@ public partial class CustomerViewModel
                 }
                 GroomWiseDbContext.Customers.Delete(observableCustomer.Id);
                 EventAggregator.Publish(new DeleteCustomerEvent(observableCustomer));
+                EventAggregator.Publish(
+                    new PublishNotificationEvent(
+                        "Customer List Updated",
+                        $"{observableCustomer.FullName.GetFirstName()}' is removed",
+                        NotificationType.Notify
+                    )
+                );
                 PopulateCollections();
             }
         }

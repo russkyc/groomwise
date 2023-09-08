@@ -23,7 +23,7 @@
             <Style TargetType="{x:Type Border}">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Type}" Value="{x:Static enums:NotificationType.Notify}">
-                        <Setter Property="Border.Background" Value="{DynamicResource primary-default}" />
+                        <Setter Property="Border.Background" Value="{DynamicResource bg-300}" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Type}" Value="{x:Static enums:NotificationType.Success}">
                         <Setter Property="Border.Background" Value="{DynamicResource success}" />
@@ -55,7 +55,7 @@
                     TextWrapping="Wrap" />
                 <TextBlock
                     Margin="0,4,0,0"
-                    Foreground="{DynamicResource inverted-lighten-3}"
+                    Foreground="#AAFFFFFF"
                     Text="{Binding Description}"
                     TextWrapping="Wrap" />
             </StackPanel>
@@ -73,9 +73,9 @@
                     <Style BasedOn="{StaticResource {x:Type moderncontrols:ModernButton}}" TargetType="{x:Type moderncontrols:ModernButton}">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Type}" Value="{x:Static enums:NotificationType.Notify}">
-                                <Setter Property="moderncontrols:ModernButton.DefaultBackground" Value="{DynamicResource primary-default}" />
-                                <Setter Property="moderncontrols:ModernButton.HoverBackground" Value="{DynamicResource primary-lighten-1}" />
-                                <Setter Property="moderncontrols:ModernButton.PressedBackground" Value="{DynamicResource primary-darken-1}" />
+                                <Setter Property="moderncontrols:ModernButton.DefaultBackground" Value="{DynamicResource bg-300}" />
+                                <Setter Property="moderncontrols:ModernButton.HoverBackground" Value="{DynamicResource bg-200}" />
+                                <Setter Property="moderncontrols:ModernButton.PressedBackground" Value="{DynamicResource bg-400}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Type}" Value="{x:Static enums:NotificationType.Success}">
                                 <Setter Property="moderncontrols:ModernButton.DefaultBackground" Value="{DynamicResource success}" />

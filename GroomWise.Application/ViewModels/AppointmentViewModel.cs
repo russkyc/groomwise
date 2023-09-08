@@ -135,6 +135,13 @@ public partial class AppointmentViewModel
                 Appointments.Remove(appointment);
                 GroomWiseDbContext.Appointments.Delete(appointment.Id);
                 EventAggregator.Publish(new DeleteAppointmentEvent());
+                EventAggregator.Publish(
+                    new PublishNotificationEvent(
+                        "Appointment Cancelled",
+                        $"{appointment.Customer.FullName.GetFirstName()}'s appointment is cancelled.",
+                        NotificationType.Notify
+                    )
+                );
                 return;
             }
             await Task.Run(() =>
@@ -150,6 +157,13 @@ public partial class AppointmentViewModel
                     Appointments.Remove(appointment);
                     GroomWiseDbContext.Appointments.Delete(appointment.Id);
                     EventAggregator.Publish(new DeleteAppointmentEvent());
+                    EventAggregator.Publish(
+                        new PublishNotificationEvent(
+                            "Appointment Cancelled",
+                            $"{appointment.Customer.FullName.GetFirstName()}'s appointment is cancelled.",
+                            NotificationType.Notify
+                        )
+                    );
                 }
             });
             await GenerateBookingTimes();
@@ -230,8 +244,8 @@ public partial class AppointmentViewModel
                 EventAggregator.Publish(new CreateAppointmentEvent());
                 EventAggregator.Publish(
                     new PublishNotificationEvent(
-                        "Save Successful",
-                        "Appointment saved",
+                        "Appointment Booked",
+                        $"{appointment.Customer.FullName.GetFirstName()}'s appointment is scheduled on {appointment.Date:MMM-dd ddd}",
                         NotificationType.Success
                     )
                 );

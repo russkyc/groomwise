@@ -119,6 +119,13 @@ public partial class GroomingServiceViewModel
             {
                 GroomWiseDbContext.GroomingServices.Delete(observableGroomingService.Id);
                 EventAggregator.Publish(new DeleteGroomingServiceEvent());
+                EventAggregator.Publish(
+                    new PublishNotificationEvent(
+                        "Service List Updated",
+                        $"{observableGroomingService.Type}' is removed",
+                        NotificationType.Notify
+                    )
+                );
                 PopulateCollections();
             }
         }
