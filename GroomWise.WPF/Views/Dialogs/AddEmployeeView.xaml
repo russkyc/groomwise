@@ -37,32 +37,13 @@
                 FontWeight="Medium"
                 Text="New Employee" />
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="150" />
-                    <ColumnDefinition Width="150" />
-                </Grid.ColumnDefinitions>
                 <russkyc:ModernTextBox
                     Grid.Column="0"
                     Margin="0,0,0,0"
                     CornerRadius="5"
                     HelperText="Max Length (200)"
-                    Placeholder="First Name"
-                    Text="{Binding ActiveEmployee.FirstName, UpdateSourceTrigger=PropertyChanged}" />
-                <russkyc:ModernTextBox
-                    Grid.Column="1"
-                    Margin="12,0,0,0"
-                    CornerRadius="5"
-                    HelperText="Max Length (200)"
-                    Placeholder="Middle Name"
-                    Text="{Binding ActiveEmployee.MiddleName, UpdateSourceTrigger=PropertyChanged}" />
-                <russkyc:ModernTextBox
-                    Grid.Column="2"
-                    Margin="12,0,0,0"
-                    CornerRadius="5"
-                    HelperText="Max Length (200)"
-                    Placeholder="Last Name"
-                    Text="{Binding ActiveEmployee.LastName, UpdateSourceTrigger=PropertyChanged}" />
+                    Placeholder="Full Name"
+                    Text="{Binding ActiveEmployee.FullName, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
             <Grid Margin="0,12,0,0">
                 <Grid.ColumnDefinitions>

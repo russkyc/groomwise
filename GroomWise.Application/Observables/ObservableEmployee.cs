@@ -20,22 +20,11 @@ public partial class ObservableEmployee : ObservableObject
     [ObservableProperty]
     private Guid _id;
     
-    public string FullName => $"{FirstName} {LastName}";
-
     [ObservableProperty]
     private string? _prefix;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(FullName))]
-    private string? _firstName;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(FullName))]
-    private string? _middleName;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(FullName))]
-    private string? _lastName;
+    private string? _fullName;
 
     [ObservableProperty]
     private string? _suffix;
@@ -49,9 +38,5 @@ public partial class ObservableEmployee : ObservableObject
     [ObservableProperty]
     private string? _email;
     
-    [ObservableProperty]
-    private ConcurrentObservableCollection<ObservableAppointment>? _appointments = new();
 
-    [ObservableProperty]
-    private ConcurrentObservableCollection<Role>? _roles = new();
 }

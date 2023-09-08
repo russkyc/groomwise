@@ -9,19 +9,6 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
-using GroomWise.Domain.Interfaces;
-using LiteDB;
+namespace GroomWise.Application.Events;
 
-namespace GroomWise.Domain.Entities;
-
-public record Employee : IEntity
-{
-    [BsonId]
-    public Guid Id { get; set; }
-    public string? Prefix { get; set; }
-    public string? FullName { get; set; }
-    public string? Suffix { get; set; }
-    public string? Address { get; set; }
-    public string? ContactNumber { get; set; }
-    public string? Email { get; set; }
-}
+public record DeleteEmployeeEvent(string Name);

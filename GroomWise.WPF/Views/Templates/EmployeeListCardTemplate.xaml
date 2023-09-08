@@ -5,7 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
+    xmlns:pages="clr-namespace:GroomWise.Views.Pages"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
+    xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     Height="70"
     d:DataContext="{d:DesignInstance observables:ObservableEmployee,
                                      IsDesignTimeCreatable=True}"
@@ -13,20 +16,26 @@
     Background="Transparent"
     mc:Ignorable="d">
     <Grid Style="{StaticResource FadeInAnimation}">
-        <russkyc:ModernButton
+        <russkyc:ModernRadioButton
+            x:Name="CardButton"
             Padding="5"
             HorizontalContentAlignment="Stretch"
+            CheckedBackground="{DynamicResource bg-200}"
+            Command="{Binding DataContext.SelectEmployeeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=pages:EmployeesView}}"
+            CommandParameter="{Binding}"
             CornerRadius="10"
-            DefaultBackground="{DynamicResource bg-100}"
+            DefaultBackground="{DynamicResource bg-000}"
             DefaultForeground="{DynamicResource fg-000}"
+            GroupName="CustomerListGroup"
             HoverBackground="{DynamicResource bg-100}"
             HoverForeground="{DynamicResource fg-000}"
             PressedBackground="{DynamicResource bg-200}"
             PressedForeground="{DynamicResource fg-000}" />
-        <Grid Margin="20,0" IsHitTestVisible="False">
+        <Grid Margin="20,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="230" />
+                <ColumnDefinition Width="140" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
@@ -36,7 +45,12 @@
                 Height="40"
                 VerticalAlignment="Center"
                 Background="{DynamicResource primary-default}"
-                CornerRadius="40" />
+                CornerRadius="40"
+                IsHitTestVisible="False">
+                <TextBlock Margin="4" Foreground="{DynamicResource primary-lighten-3}">
+                    <wpf:MaterialIconExt Kind="Person" />
+                </TextBlock>
+            </Border>
             <TextBlock
                 Grid.Column="1"
                 Margin="20,0,0,0"
@@ -44,12 +58,29 @@
                 VerticalAlignment="Center"
                 FontSize="14"
                 FontWeight="Medium"
-                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                IsHitTestVisible="False"
+                Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}" />
+            <Border
+                Grid.Column="2"
+                Padding="8,3"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="{DynamicResource primary-default}"
+                CornerRadius="10"
+                IsHitTestVisible="False">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="#ffffff"
+                    Text="{Binding ContactNumber, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Left" />
+            </Border>
             <ItemsControl
                 Grid.Column="3"
                 Margin="12,0,6,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
+                IsHitTestVisible="False"
                 ItemsSource="{Binding Roles.EditableCollectionView, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -82,6 +113,20 @@
                     </Style>
                 </ItemsControl.ItemContainerStyle>
             </ItemsControl>
+            <russkyc:ModernButton
+                Grid.Column="4"
+                VerticalAlignment="Center"
+                Command="{Binding Path=DataContext.(viewModels:EmployeeViewModel.RemoveEmployeeCommand), RelativeSource={RelativeSource FindAncestor, AncestorType=pages:EmployeesView}}"
+                CommandParameter="{Binding}"
+                Content="Remove"
+                CornerRadius="5"
+                DefaultBackground="Transparent"
+                DefaultForeground="{DynamicResource fg-000}"
+                HoverBackground="{DynamicResource bg-300}"
+                HoverForeground="{DynamicResource fg-000}"
+                LeftCenterIcon="{wpf:MaterialIconExt Kind=TrashCan}"
+                PressedBackground="{DynamicResource danger}"
+                PressedForeground="#ffffff" />
         </Grid>
     </Grid>
 </UserControl>

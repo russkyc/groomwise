@@ -10,6 +10,7 @@
 // but WITHOUT ANY WARRANTY
 
 using GroomWise.Application.Events;
+using GroomWise.Application.Extensions;
 using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
 using GroomWise.Domain.Enums;
@@ -70,6 +71,18 @@ public partial class EmployeeViewModel
     }
 
     [Command]
+    private async Task SelectEmployee(object param)
+    {
+        await Task.Run(() =>
+        {
+            if (param is ObservableEmployee employee)
+            {
+                SelectedEmployee = employee;
+            }
+        });
+    }
+
+    [Command]
     private async Task SaveEmployee()
     {
         var dialogResult = await Task.Run(
@@ -85,7 +98,7 @@ public partial class EmployeeViewModel
         {
             EventAggregator.Publish(
                 new PublishNotificationEvent(
-                    "Customer name cannot be empty.",
+                    "Employee name cannot be empty.",
                     NotificationType.Danger
                 )
             );
@@ -97,11 +110,40 @@ public partial class EmployeeViewModel
         EventAggregator.Publish(new CreateCustomerEvent());
         EventAggregator.Publish(
             new PublishNotificationEvent(
-                $"Customer {ActiveEmployee.FullName} added.",
+                $"Employee {ActiveEmployee.FullName} added.",
                 NotificationType.Success
             )
         );
         ActiveEmployee = new();
         PopulateCollections();
+    }
+
+    [Command]
+    private async Task RemoveEmployee(object param)
+    {
+        if (param is ObservableEmployee observableEmployee)
+        {
+            var dialogResult = await Task.Run(
+                () =>
+                    DialogService.Create(
+                        "Employees",
+                        $"Are you sure you want to delete {observableEmployee.FullName.GetFirstName()}?",
+                        NavigationService
+                    )
+            );
+
+            if (dialogResult is true)
+            {
+                if (observableEmployee == SelectedEmployee)
+                {
+                    SelectedEmployee = null!;
+                }
+                GroomWiseDbContext.Employees.Delete(observableEmployee.Id);
+                EventAggregator.Publish(
+                    new DeleteEmployeeEvent(observableEmployee.FullName.GetFirstName())
+                );
+                PopulateCollections();
+            }
+        }
     }
 }
