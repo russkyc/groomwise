@@ -19,6 +19,7 @@ public partial class ObservableEmployee : ObservableObject
 {
     [ObservableProperty]
     private Guid _id;
+    
     public string FullName => $"{FirstName} {LastName}";
 
     [ObservableProperty]
@@ -40,17 +41,14 @@ public partial class ObservableEmployee : ObservableObject
     private string? _suffix;
 
     [ObservableProperty]
-    private string _address;
+    private string? _address;
 
     [ObservableProperty]
-    private string _contactNumber;
+    private string? _contactNumber;
 
     [ObservableProperty]
-    private string _email;
-
-    [ObservableProperty]
-    private ConcurrentObservableCollection<ObservablePet>? _pets = new();
-
+    private string? _email;
+    
     [ObservableProperty]
     private ConcurrentObservableCollection<ObservableAppointment>? _appointments = new();
 
