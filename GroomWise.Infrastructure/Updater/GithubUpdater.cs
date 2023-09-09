@@ -55,32 +55,13 @@ public class GithubUpdater : IUpdater
     public async Task<bool> CheckForUpdates()
     {
         var result = await _updateManager.CheckForUpdatesAsync();
-
-        if (result.CanUpdate is false)
-        {
-            return false;
-        }
-
         var semanticVersion = _configuration.Version.Split(".").Select(Int32.Parse).ToArray();
 
-        if (semanticVersion is not { })
-        {
-            return false;
-        }
-
-        if (result.LastVersion!.Major > semanticVersion[0])
-        {
-            _latestVersion = result.LastVersion;
-            return true;
-        }
-
-        if (result.LastVersion!.Minor > semanticVersion[1])
-        {
-            _latestVersion = result.LastVersion;
-            return true;
-        }
-
-        if (result.LastVersion!.Build > semanticVersion[2])
+        if (
+            result.LastVersion is { }
+            && result.LastVersion
+                > new Version(semanticVersion[0], semanticVersion[1], semanticVersion[2])
+        )
         {
             _latestVersion = result.LastVersion;
             return true;

@@ -64,40 +64,39 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
             RecurringJob.AddOrUpdate("checkForUpdates", () => CheckForUpdates(false), Cron.Hourly);
             if (param is bool silent)
             {
-                if (canUpdate is false)
+                if (canUpdate)
                 {
-                    if (silent)
-                    {
-                        return;
-                    }
-                    await Task.Run(
+                    var dialogResult = await Task.Run(
                         () =>
-                            DialogService.CreateOk(
-                                "No Updates Available",
-                                $"You are using the latest version",
+                            DialogService.Create(
+                                "New Update Available",
+                                $"Update to Version {Updater.GetVersion()}?",
                                 NavigationService
                             )
                     );
+
+                    if (dialogResult is false)
+                    {
+                        return;
+                    }
+
+                    var progress = new Progress<double>(val => Progress = val * 100);
+                    await Updater.PerformUpdate(progress);
                     return;
                 }
-                return;
+                if (silent)
+                {
+                    return;
+                }
+                await Task.Run(
+                    () =>
+                        DialogService.CreateOk(
+                            "No Updates Available",
+                            $"You are using the latest version",
+                            NavigationService
+                        )
+                );
             }
-            var dialogResult = await Task.Run(
-                () =>
-                    DialogService.Create(
-                        "New Update Available",
-                        $"Update to Version {Updater.GetVersion()}?",
-                        NavigationService
-                    )
-            );
-
-            if (dialogResult is false)
-            {
-                return;
-            }
-
-            var progress = new Progress<double>(val => Progress = val * 100);
-            await Updater.PerformUpdate(progress);
         }
         catch (HttpRequestException e)
         {
