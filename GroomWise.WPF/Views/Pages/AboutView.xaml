@@ -2,9 +2,11 @@
     x:Class="GroomWise.Views.Pages.AboutView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:GroomWise.Views.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:moderncontrols="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
     xmlns:views="clr-namespace:GroomWise.Views"
     xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     d:DesignHeight="720"
@@ -72,23 +74,18 @@
             <moderncontrols:ModernButton
                 Margin="0,22,0,0"
                 HorizontalAlignment="Center"
-                Command="{Binding CreateCustomerCommand}"
+                Command="{Binding DataContext.CheckForUpdatesCommand, RelativeSource={RelativeSource FindAncestor, AncestorType=views:MainView}}"
+                CommandParameter="{StaticResource False}"
                 Content="Check for Updates"
                 CornerRadius="5"
                 FontWeight="Medium"
                 Icon="{wpf:MaterialIconExt Kind=Update}"
                 IconPlacement="Left"
-                IconSize="18"
-                IsEnabled="False" />
-            <TextBlock
-                Width="600"
-                Margin="0,22,0,0"
-                VerticalAlignment="Center"
-                FontSize="10"
-                Foreground="{DynamicResource fg-600}"
-                Text="You are using the latest version."
-                TextAlignment="Center"
-                TextWrapping="Wrap" />
+                IconSize="18" />
+            <controls:ProgressBarControl
+                Width="200"
+                Margin="0,32,0,0"
+                Progress="{Binding DataContext.Progress, RelativeSource={RelativeSource FindAncestor, AncestorType=views:MainView}}" />
         </StackPanel>
     </Grid>
 </UserControl>

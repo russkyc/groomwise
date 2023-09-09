@@ -18,6 +18,8 @@ using GroomWise.Infrastructure.Configuration.Interfaces;
 using GroomWise.Infrastructure.IoC.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Infrastructure.Theming.Interfaces;
+using GroomWise.Infrastructure.Updater.Interfaces;
+using Hangfire;
 using Injectio.Attributes;
 using MvvmGen;
 using MvvmGen.Events;
@@ -28,6 +30,7 @@ namespace GroomWise.Application.ViewModels;
 
 [Inject(typeof(IAuthenticationService))]
 [Inject(typeof(IDialogService))]
+[Inject(typeof(IUpdater))]
 [Inject(typeof(INavigationService))]
 [Inject(typeof(IAppServicesContainer))]
 [Inject(typeof(IThemeManagerService))]
@@ -42,11 +45,80 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
     private ViewModelBase _pageContext;
 
     [Property]
+    private double _progress;
+
+    [Property]
     private ConcurrentObservableCollection<ObservableNotification> _notifications = new();
 
     partial void OnInitialize()
     {
         PageContext = DashboardViewModel;
+    }
+
+    [Command]
+    public async Task CheckForUpdates(object param)
+    {
+        try
+        {
+            var canUpdate = await Updater.CheckForUpdates();
+            RecurringJob.AddOrUpdate("checkForUpdates", () => CheckForUpdates(false), Cron.Hourly);
+            if (param is bool silent)
+            {
+                if (canUpdate is false)
+                {
+                    if (silent)
+                    {
+                        return;
+                    }
+                    await Task.Run(
+                        () =>
+                            DialogService.CreateOk(
+                                "No Updates Available",
+                                $"You are using the latest version",
+                                NavigationService
+                            )
+                    );
+                    return;
+                }
+                return;
+            }
+            var dialogResult = await Task.Run(
+                () =>
+                    DialogService.Create(
+                        "New Update Available",
+                        $"Update to Version {Updater.GetVersion()}?",
+                        NavigationService
+                    )
+            );
+
+            if (dialogResult is false)
+            {
+                return;
+            }
+
+            var progress = new Progress<double>(val => Progress = val * 100);
+            await Updater.PerformUpdate(progress);
+        }
+        catch (HttpRequestException e)
+        {
+            if (param is not bool silent)
+            {
+                return;
+            }
+
+            if (silent)
+            {
+                return;
+            }
+            await Task.Run(
+                () =>
+                    DialogService.CreateOk(
+                        "No Network Connection",
+                        $"Cannot check for updates.",
+                        NavigationService
+                    )
+            );
+        }
     }
 
     [Command]
