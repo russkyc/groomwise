@@ -72,7 +72,7 @@ public partial class DashboardViewModel
                     GroomWiseDbContext.Appointments
                         .GetMultiple(
                             appointment =>
-                                appointment.Date >= DateTime.Today
+                                appointment.Date > DateTime.Today
                                 && appointment.Date < DateTime.Today.AddDays(7)
                         )
                         .Select(AppointmentMapper.ToObservable)
