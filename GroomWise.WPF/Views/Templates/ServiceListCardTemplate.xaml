@@ -100,10 +100,13 @@
                 Content="Remove"
                 CornerRadius="5"
                 DefaultBackground="Transparent"
+                DefaultForeground="{DynamicResource fg-000}"
                 HoverBackground="{DynamicResource bg-300}"
+                HoverForeground="{DynamicResource fg-000}"
                 Icon="{wpf:MaterialIconExt Kind=TrashCan}"
                 IconPlacement="Left"
-                PressedBackground="{DynamicResource danger}" />
+                PressedBackground="{DynamicResource danger}"
+                PressedForeground="#ffffff" />
         </Grid>
     </Grid>
 </UserControl>
