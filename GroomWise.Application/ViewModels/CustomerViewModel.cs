@@ -70,196 +70,175 @@ public partial class CustomerViewModel
     [Command]
     private async Task CreateCustomer()
     {
-        await Task.Run(() =>
-        {
-            ActiveCustomer = new();
-            DialogService.CreateAddCustomersDialog(this, NavigationService);
-        });
+        ActiveCustomer = new();
+        await Task.Run(() => DialogService.CreateAddCustomersDialog(this, NavigationService));
     }
 
     [Command]
     private async Task SaveCustomer()
     {
-        await Task.Run(() =>
+        var dialogResult = await Task.Run(
+            () => DialogService.Create("GroomWise", "Save Customer?", NavigationService)
+        );
+        if (dialogResult is false)
         {
-            var dialogResult = DialogService.Create(
-                "GroomWise",
-                "Save Customer?",
-                NavigationService
-            );
-            if (dialogResult is true)
-            {
-                if (string.IsNullOrEmpty(ActiveCustomer.FullName))
-                {
-                    EventAggregator.Publish(
-                        new PublishNotificationEvent(
-                            "Save Failed",
-                            "Customer name cannot be empty.",
-                            NotificationType.Danger
-                        )
-                    );
-                    return;
-                }
-                var customer = ActiveCustomer.ToEntity();
-                GroomWiseDbContext.Customers.Insert(customer);
-                DialogService.CloseDialogs(NavigationService);
-                EventAggregator.Publish(new CreateCustomerEvent());
-                EventAggregator.Publish(
-                    new PublishNotificationEvent(
-                        "Customer Added",
-                        $"{ActiveCustomer.FullName} is saved to Customers",
-                        NotificationType.Success
-                    )
-                );
-                ActiveCustomer = new ObservableCustomer();
-                PopulateCollections();
-            }
-        });
-    }
-
-    [Command]
-    private async Task SelectCustomer(object param)
-    {
-        await Task.Run(() =>
-        {
-            if (param is ObservableCustomer customer)
-            {
-                SelectedCustomer = customer;
-            }
-        });
-    }
-
-    [Command]
-    private async Task AddCustomerPet()
-    {
-        await Task.Run(() =>
-        {
-            ActiveCustomer.Pets.Insert(0, new ObservablePet());
-        });
-    }
-
-    [Command]
-    private async Task AddSelectedCustomerPet()
-    {
-        await Task.Run(() =>
-        {
-            SelectedCustomer.Pets.Insert(0, new ObservablePet());
-        });
-    }
-
-    [Command]
-    private async Task RemoveCustomerPet(object param)
-    {
-        if (param is ObservablePet pet)
-        {
-            await Task.Run(() =>
-            {
-                ActiveCustomer.Pets.Remove(pet);
-            });
+            return;
         }
+        if (string.IsNullOrEmpty(ActiveCustomer.FullName))
+        {
+            EventAggregator.Publish(
+                new PublishNotificationEvent(
+                    "Save Failed",
+                    "Customer name cannot be empty.",
+                    NotificationType.Danger
+                )
+            );
+            return;
+        }
+        GroomWiseDbContext.Customers.Insert(ActiveCustomer.ToEntity());
+        DialogService.CloseDialogs(NavigationService);
+        EventAggregator.Publish(new CreateCustomerEvent());
+        EventAggregator.Publish(
+            new PublishNotificationEvent(
+                "Customer Added",
+                $"{ActiveCustomer.FullName} is saved to Customers",
+                NotificationType.Success
+            )
+        );
+        ActiveCustomer = new ObservableCustomer();
+        PopulateCollections();
+    }
+
+    [Command]
+    private void SelectCustomer(object param)
+    {
+        if (param is not ObservableCustomer customer)
+        {
+            return;
+        }
+        SelectedCustomer = customer;
+    }
+
+    [Command]
+    private void AddCustomerPet()
+    {
+        ActiveCustomer.Pets.Insert(0, new ObservablePet());
+    }
+
+    [Command]
+    private void AddSelectedCustomerPet()
+    {
+        SelectedCustomer.Pets.Insert(0, new ObservablePet());
+    }
+
+    [Command]
+    private void RemoveCustomerPet(object param)
+    {
+        if (param is not ObservablePet pet)
+        {
+            return;
+        }
+        ActiveCustomer.Pets.Remove(pet);
     }
 
     [Command]
     private async Task RemoveSelectedCustomerPet(object param)
     {
-        if (param is ObservablePet pet)
+        if (param is not ObservablePet pet)
         {
-            await Task.Run(() =>
-            {
-                var dialogResult = DialogService.Create(
+            return;
+        }
+        var dialogResult = await Task.Run(
+            () =>
+                DialogService.Create(
                     $"{SelectedCustomer.FullName.GetFirstName()}'s Pets",
                     $"Are you sure you want to remove {pet.Name}?",
                     NavigationService
-                );
-
-                if (dialogResult is true)
-                {
-                    SelectedCustomer.Pets.Remove(pet);
-                    GroomWiseDbContext.Customers.Update(
-                        SelectedCustomer.Id,
-                        SelectedCustomer.ToEntity()
-                    );
-                    EventAggregator.Publish(new UpdateCustomerEvent());
-                }
-            });
+                )
+        );
+        if (dialogResult is false)
+        {
+            return;
         }
+        SelectedCustomer.Pets.Remove(pet);
+        GroomWiseDbContext.Customers.Update(SelectedCustomer.Id, SelectedCustomer.ToEntity());
+        EventAggregator.Publish(new UpdateCustomerEvent());
     }
 
     [Command]
     private async Task UpdateCustomer()
     {
-        await Task.Run(() =>
+        var dialogResult = await Task.Run(
+            () =>
+                DialogService.Create(
+                    "Appointments",
+                    $"Update {SelectedCustomer.FullName.GetFirstName()}?",
+                    NavigationService
+                )
+        );
+        if (dialogResult is false)
         {
-            var dialogResult = DialogService.Create(
-                "Appointments",
-                $"Update {SelectedCustomer.FullName.GetFirstName()}?",
-                NavigationService
-            );
-            if (dialogResult is true)
-            {
-                GroomWiseDbContext.Customers.Update(
-                    SelectedCustomer.Id,
-                    SelectedCustomer.ToEntity()
-                );
-                EventAggregator.Publish(new UpdateCustomerEvent());
-                DialogService.CloseDialogs(NavigationService);
-            }
-        });
+            return;
+        }
+        GroomWiseDbContext.Customers.Update(SelectedCustomer.Id, SelectedCustomer.ToEntity());
+        EventAggregator.Publish(new UpdateCustomerEvent());
+        DialogService.CloseDialogs(NavigationService);
     }
 
     [Command]
-    private async Task EditCustomer()
+    private void EditCustomer()
     {
-        await Task.Run(() =>
-        {
-            DialogService.CreateEditCustomersDialog(this, NavigationService);
-        });
+        DialogService.CreateEditCustomersDialog(this, NavigationService);
     }
 
     [Command]
     private async Task RemoveCustomer(object param)
     {
-        if (param is ObservableCustomer observableCustomer)
+        if (param is not ObservableCustomer observableCustomer)
         {
-            var dialogResult = await Task.Run(
-                () =>
-                    DialogService.Create(
-                        "Customers",
-                        $"Are you sure you want to delete {observableCustomer.FullName.GetFirstName()}?",
-                        NavigationService
-                    )
-            );
-
-            if (dialogResult is true)
-            {
-                if (observableCustomer == SelectedCustomer)
-                {
-                    SelectedCustomer = null!;
-                }
-                GroomWiseDbContext.Customers.Delete(observableCustomer.Id);
-                EventAggregator.Publish(new DeleteCustomerEvent(observableCustomer));
-                EventAggregator.Publish(
-                    new PublishNotificationEvent(
-                        "Customer List Updated",
-                        $"{observableCustomer.FullName.GetFirstName()}' is removed",
-                        NotificationType.Notify
-                    )
-                );
-                PopulateCollections();
-            }
+            return;
         }
+        var dialogResult = await Task.Run(
+            () =>
+                DialogService.Create(
+                    "Customers",
+                    $"Are you sure you want to delete {observableCustomer.FullName.GetFirstName()}?",
+                    NavigationService
+                )
+        );
+
+        if (dialogResult is false)
+        {
+            return;
+        }
+
+        if (observableCustomer == SelectedCustomer)
+        {
+            SelectedCustomer = null!;
+        }
+        GroomWiseDbContext.Customers.Delete(observableCustomer.Id);
+        EventAggregator.Publish(new DeleteCustomerEvent(observableCustomer));
+        EventAggregator.Publish(
+            new PublishNotificationEvent(
+                "Customer List Updated",
+                $"{observableCustomer.FullName.GetFirstName()}' is removed",
+                NotificationType.Notify
+            )
+        );
+        PopulateCollections();
     }
 
     [Command]
     private void ScheduleAppointment(object param)
     {
-        if (param is ObservableCustomer customer)
+        if (param is not ObservableCustomer customer)
         {
-            var appointmentsViewModel = AppServicesContainer.GetService<AppointmentViewModel>();
-            if (appointmentsViewModel is not null)
-            {
-                EventAggregator.Publish(new ScheduleAppointmentEvent(customer));
-            }
+            return;
+        }
+        var appointmentsViewModel = AppServicesContainer.GetService<AppointmentViewModel>();
+        if (appointmentsViewModel is not null)
+        {
+            EventAggregator.Publish(new ScheduleAppointmentEvent(customer));
         }
     }
 

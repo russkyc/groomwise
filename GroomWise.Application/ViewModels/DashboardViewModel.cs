@@ -15,7 +15,6 @@ using GroomWise.Application.Observables;
 using GroomWise.Infrastructure.Authentication.Interfaces;
 using GroomWise.Infrastructure.Database;
 using Hangfire;
-using Hangfire.LiteDB;
 using Injectio.Attributes;
 using MvvmGen;
 using MvvmGen.Events;

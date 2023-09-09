@@ -13,7 +13,6 @@ using GroomWise.Application.Events;
 using GroomWise.Application.Extensions;
 using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
-using GroomWise.Domain.Entities;
 using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.Logging.Interfaces;
@@ -84,7 +83,7 @@ public partial class AppointmentViewModel
                 .GetAll()
                 .Select(GroomingServiceMapper.ToObservable);
 
-            var customers = GroomWiseDbContext!.Customers
+            var customers = GroomWiseDbContext.Customers
                 .GetAll()
                 .Select(CustomerMapper.ToObservable)
                 .OrderBy(customer => customer.FullName);
@@ -128,139 +127,132 @@ public partial class AppointmentViewModel
     [Command]
     private async Task CancelAppointment(object param, bool noConfirmation = false)
     {
-        if (param is ObservableAppointment appointment)
+        if (param is not ObservableAppointment appointment)
         {
-            if (noConfirmation)
+            return;
+        }
+        if (noConfirmation)
+        {
+            Appointments.Remove(appointment);
+            GroomWiseDbContext.Appointments.Delete(appointment.Id);
+            EventAggregator.Publish(new DeleteAppointmentEvent());
+            EventAggregator.Publish(
+                new PublishNotificationEvent(
+                    "Appointment Cancelled",
+                    $"{appointment.Customer.FullName.GetFirstName()}'s appointment is cancelled.",
+                    NotificationType.Notify
+                )
+            );
+            return;
+        }
+        await Task.Run(() =>
+        {
+            var dialogResult = DialogService.Create(
+                "Appointments",
+                $"Cancel {appointment.Customer.FullName.Split(" ")[0]}'s Appointment?",
+                NavigationService
+            );
+
+            if (dialogResult is false)
             {
-                Appointments.Remove(appointment);
-                GroomWiseDbContext.Appointments.Delete(appointment.Id);
-                EventAggregator.Publish(new DeleteAppointmentEvent());
-                EventAggregator.Publish(
-                    new PublishNotificationEvent(
-                        "Appointment Cancelled",
-                        $"{appointment.Customer.FullName.GetFirstName()}'s appointment is cancelled.",
-                        NotificationType.Notify
-                    )
-                );
                 return;
             }
-            await Task.Run(() =>
+
+            Appointments.Remove(appointment);
+            GroomWiseDbContext.Appointments.Delete(appointment.Id);
+
+            EventAggregator.Publish(new DeleteAppointmentEvent());
+            EventAggregator.Publish(
+                new PublishNotificationEvent(
+                    "Appointment Cancelled",
+                    $"{appointment.Customer.FullName.GetFirstName()}'s appointment is cancelled.",
+                    NotificationType.Notify
+                )
+            );
+
+            if (SelectedAppointment is null)
             {
-                var dialogResult = DialogService.Create(
-                    "Appointments",
-                    $"Cancel {appointment.Customer.FullName.Split(" ")[0]}'s Appointment?",
-                    NavigationService
-                );
-
-                if (dialogResult is true)
-                {
-                    Appointments.Remove(appointment);
-                    GroomWiseDbContext.Appointments.Delete(appointment.Id);
-
-                    if (appointment.Id == SelectedAppointment.Id)
-                    {
-                        SelectedAppointment = null;
-                    }
-
-                    EventAggregator.Publish(new DeleteAppointmentEvent());
-                    EventAggregator.Publish(
-                        new PublishNotificationEvent(
-                            "Appointment Cancelled",
-                            $"{appointment.Customer.FullName.GetFirstName()}'s appointment is cancelled.",
-                            NotificationType.Notify
-                        )
-                    );
-                }
-            });
-            await GenerateBookingTimes();
-        }
+                return;
+            }
+            if (appointment.Id == SelectedAppointment.Id)
+            {
+                SelectedAppointment = null;
+            }
+        });
+        await GenerateBookingTimes();
     }
 
     [Command]
     private async Task SelectCustomer(object param)
     {
-        if (param is ObservableCustomer customer)
+        if (param is not ObservableCustomer customer)
         {
-            await Task.Run(async () =>
-            {
-                ActiveAppointment.Customer = customer;
-                DialogService.CloseDialogs(NavigationService);
-                await Task.Delay(100);
-                DialogService.CreateAddAppointmentsDialog(this, NavigationService);
-            });
+            return;
         }
+        ActiveAppointment.Customer = customer;
+        await Task.Run(async () =>
+        {
+            DialogService.CloseDialogs(NavigationService);
+            await Task.Delay(100);
+            DialogService.CreateAddAppointmentsDialog(this, NavigationService);
+        });
     }
 
     [Command]
-    private async Task SelectAppointment(object param)
+    private void SelectAppointment(object param)
     {
-        if (param is ObservableAppointment appointment)
+        if (param is not ObservableAppointment appointment)
         {
-            await Task.Run(() =>
-            {
-                SelectedAppointment = appointment;
-            });
+            return;
         }
+
+        SelectedAppointment = appointment;
     }
 
     [Command]
     private async Task SaveAppointment()
     {
-        await Task.Run(() =>
+        if (
+            ActiveAppointment.Services is null
+            || ActiveAppointment.Services.Count == 0
+            || ActiveAppointment.Services.Any(service => service is null)
+        )
         {
-            if (ActiveAppointment.Customer is null)
-            {
-                EventAggregator.Publish(
-                    new PublishNotificationEvent(
-                        "Save Failed",
-                        "Appointment should be scheduled to a customer",
-                        NotificationType.Danger
-                    )
-                );
-                return;
-            }
-
-            if (
-                ActiveAppointment.Services is null
-                || ActiveAppointment.Services.Count == 0
-                || ActiveAppointment.Services.Any(service => service is null)
-            )
-            {
-                EventAggregator.Publish(
-                    new PublishNotificationEvent(
-                        "Save Failed",
-                        "Cannot create an appointment if there are no services.",
-                        NotificationType.Danger
-                    )
-                );
-                return;
-            }
-
-            var dialogResult = DialogService.Create(
-                "Appointments",
-                $"Book Appointment for {ActiveAppointment.Customer.FullName.Split(" ")[0]}?",
-                NavigationService
+            EventAggregator.Publish(
+                new PublishNotificationEvent(
+                    "Save Failed",
+                    "Cannot create an appointment if there are no services.",
+                    NotificationType.Danger
+                )
             );
-            if (dialogResult is true)
-            {
-                DialogService.CloseDialogs(NavigationService);
+            return;
+        }
+        var dialogResult = await Task.Run(
+            () =>
+                DialogService.Create(
+                    "Appointments",
+                    $"Book Appointment for {ActiveAppointment.Customer.FullName.Split(" ")[0]}?",
+                    NavigationService
+                )
+        );
+        if (dialogResult is false)
+        {
+            return;
+        }
+        DialogService.CloseDialogs(NavigationService);
+        GroomWiseDbContext.Appointments.Insert(ActiveAppointment.ToEntity());
+        EventAggregator.Publish(new CreateAppointmentEvent());
+        EventAggregator.Publish(
+            new PublishNotificationEvent(
+                "Appointment Booked",
+                $"{ActiveAppointment.Customer.FullName.GetFirstName()}'s appointment is scheduled on {ActiveAppointment.Date:MMM-dd ddd}",
+                NotificationType.Success
+            )
+        );
 
-                var appointment = ActiveAppointment.ToEntity();
-                GroomWiseDbContext.Appointments.Insert(appointment);
-                EventAggregator.Publish(new CreateAppointmentEvent());
-                EventAggregator.Publish(
-                    new PublishNotificationEvent(
-                        "Appointment Booked",
-                        $"{appointment.Customer.FullName.GetFirstName()}'s appointment is scheduled on {appointment.Date:MMM-dd ddd}",
-                        NotificationType.Success
-                    )
-                );
-
-                ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
-                OnPropertyChanged(nameof(ActiveAppointment.Date));
-                PopulateCollections();
-            }
-        });
+        ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
+        OnPropertyChanged(nameof(ActiveAppointment.Date));
+        PopulateCollections();
     }
 
     [Command]
@@ -278,7 +270,7 @@ public partial class AppointmentViewModel
             });
             return;
         }
-        ActiveAppointment.Services.Insert(
+        ActiveAppointment.Services!.Insert(
             0,
             new ObservableAppointmentService { GroomingService = GroomingServices.First() }
         );
@@ -288,16 +280,18 @@ public partial class AppointmentViewModel
     [Command]
     private async Task RemoveGroomingService(object param)
     {
-        if (param is ObservableAppointmentService service)
+        if (param is not ObservableAppointmentService service)
         {
-            if (ActiveAppointment.Services is { } services)
-            {
-                if (services.Contains(service))
-                {
-                    ActiveAppointment.Services?.Remove(service);
-                    await CalculateAppointmentTimeSpan();
-                }
-            }
+            return;
+        }
+        if (ActiveAppointment.Services is not { } services)
+        {
+            return;
+        }
+        if (services.Contains(service))
+        {
+            ActiveAppointment.Services?.Remove(service);
+            await CalculateAppointmentTimeSpan();
         }
     }
 
@@ -328,18 +322,22 @@ public partial class AppointmentViewModel
                 )
         )
         {
-            await Task.Run(async () =>
+            if (ActiveAppointment.Services is null)
             {
-                var dialogResult = DialogService.CreateOk(
-                    "Appointments",
-                    $"Appointment Service is overlapping other appointments. Remove Service {ActiveAppointment.Services[0].GroomingService.Type}?",
-                    NavigationService
-                );
-                if (dialogResult is true)
-                {
-                    await RemoveGroomingService(ActiveAppointment.Services[0]);
-                }
-            });
+                return;
+            }
+            var dialogResult = await Task.Run(
+                () =>
+                    DialogService.CreateOk(
+                        "Appointments",
+                        $"Appointment Service is overlapping other appointments. Remove Service {ActiveAppointment.Services[0].GroomingService!.Type}?",
+                        NavigationService
+                    )
+            );
+            if (dialogResult is true)
+            {
+                await RemoveGroomingService(ActiveAppointment.Services[0]);
+            }
         }
     }
 
@@ -355,10 +353,7 @@ public partial class AppointmentViewModel
 
     public void OnEvent(ScheduleAppointmentEvent eventData)
     {
-        Task.Run(async () =>
-        {
-            await CreateAppointment(eventData.Customer);
-        });
+        Task.Run(async () => await CreateAppointment(eventData.Customer));
     }
 
     public void OnEvent(DeleteCustomerEvent eventData)

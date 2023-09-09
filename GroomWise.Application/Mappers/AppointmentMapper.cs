@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -44,16 +44,11 @@ public static class AppointmentMapper
                 src => src.Employees.Select(employee => employee.ToObservable()).ToList()
             );
         }
-
-        if (appointment.Customer is not null)
-        {
-            config.Map(dest => dest.Customer, src => src.Customer.ToObservable());
-        }
-
         if (appointment.Pet is not null)
         {
             config.Map(dest => dest.Pet, src => src.Pet.ToObservable());
         }
+        config.Map(dest => dest.Customer, src => src.Customer.ToObservable());
         return appointment.Adapt<ObservableAppointment>();
     }
 

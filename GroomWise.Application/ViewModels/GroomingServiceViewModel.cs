@@ -84,50 +84,52 @@ public partial class GroomingServiceViewModel
 
             return DialogService.Create("GroomWise", "Create Service?", NavigationService);
         });
-        if (dialogResult is true)
+        if (dialogResult is false)
         {
-            var service = ActiveGroomingService.ToEntity();
-            GroomWiseDbContext.GroomingServices.Insert(service);
-            DialogService.CloseDialogs(NavigationService);
-            EventAggregator.Publish(
-                new PublishNotificationEvent(
-                    "Save Successful",
-                    $"Service {ActiveGroomingService.Type} saved",
-                    NotificationType.Success
-                )
-            );
-            EventAggregator.Publish(new CreateGroomingServiceEvent());
-            ActiveGroomingService = new();
-            PopulateCollections();
+            return;
         }
+        GroomWiseDbContext.GroomingServices.Insert(ActiveGroomingService.ToEntity());
+        DialogService.CloseDialogs(NavigationService);
+        EventAggregator.Publish(
+            new PublishNotificationEvent(
+                "Save Successful",
+                $"Service {ActiveGroomingService.Type} saved",
+                NotificationType.Success
+            )
+        );
+        EventAggregator.Publish(new CreateGroomingServiceEvent());
+        ActiveGroomingService = new();
+        PopulateCollections();
     }
 
     [Command]
     private async Task RemoveService(object param)
     {
-        if (param is ObservableGroomingService observableGroomingService)
+        if (param is not ObservableGroomingService observableGroomingService)
         {
-            var dialogResult = await Task.Run(
-                () =>
-                    DialogService.Create(
-                        "Services",
-                        $"Are you sure you want to delete {observableGroomingService.Type}?",
-                        NavigationService
-                    )
-            );
-            if (dialogResult is true)
-            {
-                GroomWiseDbContext.GroomingServices.Delete(observableGroomingService.Id);
-                EventAggregator.Publish(new DeleteGroomingServiceEvent());
-                EventAggregator.Publish(
-                    new PublishNotificationEvent(
-                        "Service List Updated",
-                        $"{observableGroomingService.Type}' is removed",
-                        NotificationType.Notify
-                    )
-                );
-                PopulateCollections();
-            }
+            return;
         }
+        var dialogResult = await Task.Run(
+            () =>
+                DialogService.Create(
+                    "Services",
+                    $"Are you sure you want to delete {observableGroomingService.Type}?",
+                    NavigationService
+                )
+        );
+        if (dialogResult is false)
+        {
+            return;
+        }
+        GroomWiseDbContext.GroomingServices.Delete(observableGroomingService.Id);
+        EventAggregator.Publish(new DeleteGroomingServiceEvent());
+        EventAggregator.Publish(
+            new PublishNotificationEvent(
+                "Service List Updated",
+                $"{observableGroomingService.Type}' is removed",
+                NotificationType.Notify
+            )
+        );
+        PopulateCollections();
     }
 }

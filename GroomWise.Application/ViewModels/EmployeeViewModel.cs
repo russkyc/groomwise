@@ -63,32 +63,24 @@ public partial class EmployeeViewModel
     [Command]
     private async Task CreateEmployee()
     {
-        await Task.Run(() =>
-        {
-            ActiveEmployee = new();
-            DialogService.CreateAddEmployeeDialog(this, NavigationService);
-        });
+        ActiveEmployee = new();
+        await Task.Run(() => DialogService.CreateAddEmployeeDialog(this, NavigationService));
     }
 
     [Command]
-    private async Task SelectEmployee(object param)
+    private void SelectEmployee(object param)
     {
-        await Task.Run(() =>
+        if (param is not ObservableEmployee employee)
         {
-            if (param is ObservableEmployee employee)
-            {
-                SelectedEmployee = employee;
-            }
-        });
+            return;
+        }
+        SelectedEmployee = employee;
     }
 
     [Command]
     private async Task EditEmployee()
     {
-        await Task.Run(() =>
-        {
-            DialogService.CreateEditEmployeeDialog(this, NavigationService);
-        });
+        await Task.Run(() => DialogService.CreateEditEmployeeDialog(this, NavigationService));
     }
 
     [Command]
@@ -98,16 +90,17 @@ public partial class EmployeeViewModel
             () =>
                 DialogService.Create(
                     "Employees",
-                    $"Update {SelectedEmployee.FullName.GetFirstName()}?",
+                    $"Update {SelectedEmployee.FullName!.GetFirstName()}?",
                     NavigationService
                 )
         );
-        if (dialogResult is true)
+        if (dialogResult is false)
         {
-            GroomWiseDbContext.Employees.Update(SelectedEmployee.Id, SelectedEmployee.ToEntity());
-            EventAggregator.Publish(new UpdateCustomerEvent());
-            DialogService.CloseDialogs(NavigationService);
+            return;
         }
+        GroomWiseDbContext.Employees.Update(SelectedEmployee.Id, SelectedEmployee.ToEntity());
+        EventAggregator.Publish(new UpdateCustomerEvent());
+        DialogService.CloseDialogs(NavigationService);
     }
 
     [Command]
@@ -133,8 +126,7 @@ public partial class EmployeeViewModel
             );
             return;
         }
-        var employee = ActiveEmployee.ToEntity();
-        GroomWiseDbContext.Employees.Insert(employee);
+        GroomWiseDbContext.Employees.Insert(ActiveEmployee.ToEntity());
         DialogService.CloseDialogs(NavigationService);
         EventAggregator.Publish(new CreateCustomerEvent());
         EventAggregator.Publish(
@@ -151,36 +143,40 @@ public partial class EmployeeViewModel
     [Command]
     private async Task RemoveEmployee(object param)
     {
-        if (param is ObservableEmployee observableEmployee)
+        if (param is not ObservableEmployee observableEmployee)
         {
-            var dialogResult = await Task.Run(
-                () =>
-                    DialogService.Create(
-                        "Employees",
-                        $"Are you sure you want to delete {observableEmployee.FullName.GetFirstName()}?",
-                        NavigationService
-                    )
-            );
-
-            if (dialogResult is true)
-            {
-                if (observableEmployee == SelectedEmployee)
-                {
-                    SelectedEmployee = null!;
-                }
-                GroomWiseDbContext.Employees.Delete(observableEmployee.Id);
-                EventAggregator.Publish(
-                    new DeleteEmployeeEvent(observableEmployee.FullName.GetFirstName())
-                );
-                EventAggregator.Publish(
-                    new PublishNotificationEvent(
-                        "Employees Updated",
-                        $"{observableEmployee.FullName.GetFirstName()}' is removed",
-                        NotificationType.Notify
-                    )
-                );
-                PopulateCollections();
-            }
+            return;
         }
+        var dialogResult = await Task.Run(
+            () =>
+                DialogService.Create(
+                    "Employees",
+                    $"Are you sure you want to delete {observableEmployee.FullName!.GetFirstName()}?",
+                    NavigationService
+                )
+        );
+
+        if (dialogResult is false)
+        {
+            return;
+        }
+
+        if (observableEmployee == SelectedEmployee)
+        {
+            SelectedEmployee = null!;
+        }
+
+        GroomWiseDbContext.Employees.Delete(observableEmployee.Id);
+        EventAggregator.Publish(
+            new DeleteEmployeeEvent(observableEmployee.FullName!.GetFirstName())
+        );
+        EventAggregator.Publish(
+            new PublishNotificationEvent(
+                "Employees Updated",
+                $"{observableEmployee.FullName!.GetFirstName()}' is removed",
+                NotificationType.Notify
+            )
+        );
+        PopulateCollections();
     }
 }

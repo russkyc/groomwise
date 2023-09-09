@@ -76,44 +76,48 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
     [Command]
     private void NavigateToPage(object param)
     {
-        if (param is Type type)
+        if (param is not Type type)
         {
-            if (AppServicesContainer.GetService(type) is ViewModelBase viewModel)
-            {
-                PageContext = viewModel;
-            }
+            return;
+        }
+        if (AppServicesContainer.GetService(type) is ViewModelBase viewModel)
+        {
+            PageContext = viewModel;
         }
     }
 
     [Command]
     private void SetDarkTheme(object param)
     {
-        if (param is bool useDarkTheme)
+        if (param is not bool useDarkTheme)
         {
-            ConfigurationService.DarkMode = useDarkTheme;
-            ThemeManagerService.SetDarkTheme(useDarkTheme);
-            OnPropertyChanged(nameof(ConfigurationService.DarkMode));
+            return;
         }
+        ConfigurationService.DarkMode = useDarkTheme;
+        ThemeManagerService.SetDarkTheme(useDarkTheme);
+        OnPropertyChanged(nameof(ConfigurationService.DarkMode));
     }
 
     [Command]
     private void SetColorTheme(object param)
     {
-        if (param is string themeId)
+        if (param is not string themeId)
         {
-            ConfigurationService.ColorTheme = themeId;
-            ThemeManagerService.SetColorTheme(themeId);
-            OnPropertyChanged(nameof(ConfigurationService.ColorTheme));
+            return;
         }
+        ConfigurationService.ColorTheme = themeId;
+        ThemeManagerService.SetColorTheme(themeId);
+        OnPropertyChanged(nameof(ConfigurationService.ColorTheme));
     }
 
     [Command]
     private void RemoveNotification(object param)
     {
-        if (param is ObservableNotification notification)
+        if (param is not ObservableNotification notification)
         {
-            Notifications.Remove(notification);
+            return;
         }
+        Notifications.Remove(notification);
     }
 
     public void OnEvent(PublishNotificationEvent eventData)
