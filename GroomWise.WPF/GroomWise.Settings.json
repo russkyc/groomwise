@@ -1,7 +1,7 @@
 {
   "darkMode": true,
   "colorTheme": "Teal",
-  "version": "0.10.16",
+  "version": "0.10.17",
   "dbConnection": "",
   "toastCooldown": 5.0,
   "multiUser": false,
