@@ -9,12 +9,18 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
-using Injectio.Attributes;
-using MvvmGen;
+using System.Windows;
+using Bindables.Wpf;
 
-namespace GroomWise.Application.ViewModels;
+namespace GroomWise.Views.Controls;
 
-[ViewModel]
-[ViewModelGenerateInterface]
-[RegisterSingleton]
-public partial class AboutViewModel { }
+public partial class ProgressBarControl
+{
+    [DependencyProperty(typeof(double))]
+    public static readonly DependencyProperty ProgressProperty;
+
+    public ProgressBarControl()
+    {
+        InitializeComponent();
+    }
+}

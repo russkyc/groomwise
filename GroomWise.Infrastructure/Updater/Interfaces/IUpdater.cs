@@ -9,12 +9,11 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
-using Injectio.Attributes;
-using MvvmGen;
+namespace GroomWise.Infrastructure.Updater.Interfaces;
 
-namespace GroomWise.Application.ViewModels;
-
-[ViewModel]
-[ViewModelGenerateInterface]
-[RegisterSingleton]
-public partial class AboutViewModel { }
+public interface IUpdater
+{
+    string GetVersion();
+    Task<bool> CheckForUpdates();
+    Task PerformUpdate(IProgress<double> progress);
+}
