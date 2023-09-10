@@ -1,27 +1,29 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
 using System.Linq.Expressions;
 using GroomWise.Infrastructure.Database.Interfaces;
+using Injectio.Attributes;
 using LiteDB;
 
 namespace GroomWise.Infrastructure.Database;
 
+[RegisterSingleton<IDbStore, LiteDbStore>]
 public class LiteDbStore : IDbStore
 {
     private readonly ILiteDatabase _db;
 
-    public LiteDbStore(string connectionString)
+    public LiteDbStore()
     {
-        _db = new LiteDatabase(connectionString);
+        _db = new LiteDatabase("data.db");
     }
 
     public LiteDbStore(Stream stream)
