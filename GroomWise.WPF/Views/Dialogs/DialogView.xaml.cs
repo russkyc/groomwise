@@ -9,8 +9,6 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
-using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 
 namespace GroomWise.Views.Dialogs;

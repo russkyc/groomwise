@@ -9,6 +9,7 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
+using GroomWise.Infrastructure.IoC.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using Injectio.Attributes;
 
@@ -17,18 +18,20 @@ namespace GroomWise.Infrastructure.Navigation;
 [RegisterSingleton<INavigationService, NavigationService>]
 public class NavigationService : INavigationService
 {
-    private readonly Dictionary<Enum, object> _views;
+    private readonly Dictionary<Enum, Type> _views;
     private readonly object _lock;
-    
+    private readonly IAppServicesContainer _container;
+
     private SynchronizationContext? _synchronizationContext;
     private IWindow? _currentWindow;
 
-    public NavigationService()
+    public NavigationService(IAppServicesContainer container)
     {
+        _container = container;
         _lock = new();
         lock (_lock)
         {
-            _views = new Dictionary<Enum, object>();
+            _views = new Dictionary<Enum, Type>();
         }
     }
 
@@ -37,11 +40,11 @@ public class NavigationService : INavigationService
         get { return _currentWindow!; }
     }
 
-    public void Add(Enum key, IWindow instance)
+    public void Add(Enum key, Type type)
     {
         lock (_lock)
         {
-            _views.Add(key, instance);
+            _views.Add(key, type);
         }
     }
 
@@ -49,7 +52,7 @@ public class NavigationService : INavigationService
     {
         lock (_lock)
         {
-            var view = _views[key];
+            var view = _container.GetService(_views[key]);
             if (view is IWindow window)
             {
                 window.Show();
