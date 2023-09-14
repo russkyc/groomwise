@@ -77,7 +77,10 @@ public partial class LoginViewModel : IEventSubscriber<LogoutEvent>
         }
 
         var result = AuthenticationService.Login(Username, Password);
-        if (result is AuthenticationStatus.InvalidAccount)
+        if (
+            result is AuthenticationStatus.InvalidAccount
+            || result is AuthenticationStatus.InvalidPassword
+        )
         {
             HasErrors = true;
             Notifications.RemoveLast();
@@ -85,23 +88,10 @@ public partial class LoginViewModel : IEventSubscriber<LogoutEvent>
                 new ObservableNotification
                 {
                     Type = NotificationType.Danger,
-                    Description = "Account is invalid."
+                    Description = "Username or Password is incorrect."
                 }
             );
-            return;
-        }
-
-        if (result is AuthenticationStatus.InvalidPassword)
-        {
-            HasErrors = true;
-            Notifications.RemoveLast();
-            Notifications.Add(
-                new ObservableNotification
-                {
-                    Type = NotificationType.Danger,
-                    Description = "Password is incorrect."
-                }
-            );
+            EventAggregator.Publish(new LoginEvent(AuthenticationStatus.InvalidPassword));
             return;
         }
 
@@ -120,7 +110,7 @@ public partial class LoginViewModel : IEventSubscriber<LogoutEvent>
 
         await Task.Delay(300);
         Notifications.RemoveLast();
-        EventAggregator.Publish(new LoginEvent());
+        EventAggregator.Publish(new LoginEvent(AuthenticationStatus.Authenticated));
         NavigationService.Navigate(AppViews.Main);
     }
 

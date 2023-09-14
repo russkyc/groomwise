@@ -14,6 +14,6 @@ namespace GroomWise.Infrastructure.Updater.Interfaces;
 public interface IUpdater
 {
     string GetVersion();
-    Task<bool> CheckForUpdates();
+    Task<bool?> CheckForUpdates(bool silent = false);
     Task PerformUpdate(IProgress<double> progress);
 }

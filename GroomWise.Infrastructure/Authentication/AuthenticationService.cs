@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -16,17 +16,18 @@ using GroomWise.Infrastructure.Authentication.Mappers;
 using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.Encryption.Interfaces;
 using Injectio.Attributes;
-using Role = GroomWise.Domain.Enums.Role;
+using NETCore.Encrypt.Extensions;
+using GroomWise.Domain.Enums;
 
 namespace GroomWise.Infrastructure.Authentication;
 
 [RegisterSingleton<IAuthenticationService, AuthenticationService>]
 public class AuthenticationService : IAuthenticationService
 {
-    private object _lock = new();
-    private SessionInfo? _sessionInfo = null;
+    private readonly object _lock = new();
     private readonly IEncryptionService _encryptionService;
     private readonly GroomWiseDbContext _dbContext;
+    private SessionInfo? _sessionInfo;
 
     public AuthenticationService(GroomWiseDbContext dbContext, IEncryptionService encryptionService)
     {
@@ -41,24 +42,31 @@ public class AuthenticationService : IAuthenticationService
         params Role[] roles
     )
     {
-        var account = new Account();
-        account.Username = _encryptionService.Hash(username);
-        account.Password = _encryptionService.Hash(password);
+        var account = new Account
+        {
+            Username = _encryptionService.Hash(username),
+            Password = _encryptionService.Hash(password)
+        };
 
         foreach (var role in roles)
         {
             account.Roles.Add(role);
         }
 
-        if (employeeId is not null)
+        if (employeeId is null)
         {
-            var employee = _dbContext.Employees.Get(employee => employee.Id.Equals(employeeId));
-
-            if (employee is not null)
-            {
-                account.Employee = employee;
-            }
+            return;
         }
+
+        if (
+            _dbContext.Employees.Get(filteredEmployee => filteredEmployee.Id.Equals(employeeId))
+            is not { } employee
+        )
+        {
+            return;
+        }
+
+        account.Employee = employee;
 
         _dbContext.Accounts.Insert(account);
     }
@@ -66,6 +74,22 @@ public class AuthenticationService : IAuthenticationService
     public void Register(string username, string password, params Role[] roles)
     {
         Register(username, password, null, roles);
+    }
+
+    public void Unregister(string username, string password)
+    {
+        var account = _dbContext.Accounts.Get(
+            account =>
+                account.Username!.Equals(username.SHA256())
+                && account.Password!.Equals(password.SHA256())
+        );
+
+        if (account is null)
+        {
+            return;
+        }
+
+        _dbContext.Accounts.Delete(account.Id);
     }
 
     public AuthenticationStatus Login(string username, string password)
@@ -110,29 +134,16 @@ public class AuthenticationService : IAuthenticationService
             return UpdateStatus.InvalidAccount;
         }
 
-        if (!string.IsNullOrEmpty(username))
+        account.Username = _encryptionService.Hash(newUsername);
+        account.Password = _encryptionService.Hash(newPassword);
+        account.Roles = roles;
+
+        if (_dbContext.Accounts.Update(account.Id, account) is false)
         {
-            account.Username = _encryptionService.Hash(newUsername);
+            return UpdateStatus.Fail;
         }
 
-        if (!string.IsNullOrEmpty(password))
-        {
-            account.Password = _encryptionService.Hash(newPassword);
-        }
-
-        bool executeUpdate = _dbContext.Accounts.Update(account.Id, account);
-
-        if (executeUpdate)
-        {
-            return UpdateStatus.Success;
-        }
-
-        foreach (var role in roles)
-        {
-            account.Roles.Add(role);
-        }
-
-        return UpdateStatus.Fail;
+        return UpdateStatus.Success;
     }
 
     public AuthenticationStatus Logout()

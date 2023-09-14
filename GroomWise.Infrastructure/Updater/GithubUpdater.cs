@@ -49,11 +49,15 @@ public class GithubUpdater : IUpdater
 
     public string GetVersion()
     {
-        return $"{_latestVersion.Major}.{_latestVersion.Minor}.{_latestVersion.Build}";
+        return $"{_latestVersion!.Major}.{_latestVersion.Minor}.{_latestVersion.Build}";
     }
 
-    public async Task<bool> CheckForUpdates()
+    public async Task<bool?> CheckForUpdates(bool silent = false)
     {
+        if (_configuration.CheckForUpdates is false)
+        {
+            return false;
+        }
         var result = await _updateManager.CheckForUpdatesAsync();
         var semanticVersion = _configuration.Version.Split(".").Select(Int32.Parse).ToArray();
 
@@ -64,9 +68,27 @@ public class GithubUpdater : IUpdater
         )
         {
             _latestVersion = result.LastVersion;
-            return true;
+            return await Task.Run(
+                () =>
+                    _dialogService.Create(
+                        "New Update Available",
+                        $"Update to Version {_latestVersion.Major}.{_latestVersion.Minor}.{_latestVersion.Build}?",
+                        _navigationService
+                    )
+            );
         }
-
+        if (silent)
+        {
+            return false;
+        }
+        await Task.Run(
+            () =>
+                _dialogService.CreateOk(
+                    "No Updates Available",
+                    "You are using the latest version",
+                    _navigationService
+                )
+        );
         _latestVersion = new Version(semanticVersion[0], semanticVersion[1], semanticVersion[2]);
         return false;
     }

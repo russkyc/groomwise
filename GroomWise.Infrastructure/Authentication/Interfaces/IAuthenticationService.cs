@@ -25,6 +25,7 @@ public interface IAuthenticationService
     );
 
     void Register(string username, string password, params Role[] roles);
+    void Unregister(string username, string password);
     AuthenticationStatus Login(string username, string password);
 
     UpdateStatus Update(

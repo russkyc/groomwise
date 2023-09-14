@@ -57,4 +57,10 @@ public class ConfigurationService : ConfigProvider, IConfigurationService
         get => GetValue<bool>(nameof(MultiUser));
         set => SetValue(nameof(MultiUser), value);
     }
+
+    public bool CheckForUpdates
+    {
+        get => GetValue<bool>(nameof(CheckForUpdates));
+        set => SetValue(nameof(CheckForUpdates), value);
+    }
 }

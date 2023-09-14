@@ -19,4 +19,5 @@ public interface IConfigurationService
     string AppDataPath { get; set; }
     double ToastCooldown { get; set; }
     bool MultiUser { get; set; }
+    bool CheckForUpdates { get; set; }
 }
