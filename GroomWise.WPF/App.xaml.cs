@@ -10,7 +10,6 @@
 // but WITHOUT ANY WARRANTY
 
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using GroomWise.Application.Enums;
 using GroomWise.Application.Extensions;
@@ -20,8 +19,6 @@ using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Infrastructure.Theming.Interfaces;
 using GroomWise.Views;
 using GroomWise.Views.Dialogs;
-using Hangfire;
-using Hangfire.LiteDB;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GroomWise;
@@ -47,7 +44,6 @@ public partial class App
 
         var scope = container.GetService<IAppServicesContainer>()!;
         scope.AddContainer(container);
-
         RegisterNavigationViews(scope);
         LoadThemeDefaults(scope);
         StartApp(scope);
@@ -59,13 +55,8 @@ public partial class App
         {
             var navigation = scope.GetService<INavigationService>()!;
 
-            var main = scope.GetService<MainView>();
-            var login = scope.GetService<LoginView>();
-            var addAppointment = scope.GetService<AddAppointmentsView>();
-
-            navigation.Add(AppViews.Login, login!);
-            navigation.Add(AppViews.Main, main!);
-            navigation.Add(AppViews.AddAppointment, addAppointment!);
+            navigation.Add(AppViews.Login, typeof(LoginView));
+            navigation.Add(AppViews.Main, typeof(MainView));
         });
     }
 
@@ -84,7 +75,6 @@ public partial class App
 
     private void StartApp(IAppServicesContainer scope)
     {
-        GlobalConfiguration.Configuration.UseLiteDbStorage();
         var configuration = scope.GetService<IConfigurationService>();
         var navigation = scope.GetService<INavigationService>()!;
 

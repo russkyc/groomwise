@@ -15,8 +15,6 @@
 
     <ItemGroup>
       <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-      <PackageReference Include="Hangfire.Core" Version="1.8.5" />
-      <PackageReference Include="Hangfire.LiteDB" Version="0.4.1" />
       <PackageReference Include="Injectio" Version="2.6.2" />
       <PackageReference Include="Mapster" Version="7.3.0" />
       <PackageReference Include="MvvmGen.PureCodeGeneration" Version="1.2.1">
@@ -30,14 +28,13 @@
 
     <ItemGroup>
       <ProjectReference Include="..\GroomWise.Infrastructure\GroomWise.Infrastructure.csproj" />
-
-
     </ItemGroup>
 
 
-
-
-
-
+    <ItemGroup>
+        <Reference Include="System.Windows.Extensions">
+            <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\7.0.11\System.Windows.Extensions.dll</HintPath>
+        </Reference>
+    </ItemGroup>
 
 </Project>
