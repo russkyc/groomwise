@@ -22,7 +22,6 @@ public class GroomWiseDbContext : DbContext
         : base(dbStore)
     {
         Pets = new(DataStore);
-        Roles = new(DataStore);
         Products = new(DataStore);
         Accounts = new(DataStore);
         Employees = new(DataStore);
@@ -32,7 +31,6 @@ public class GroomWiseDbContext : DbContext
     }
 
     public readonly DbSet<Pet> Pets;
-    public readonly DbSet<Role> Roles;
     public readonly DbSet<Account> Accounts;
     public readonly DbSet<Product> Products;
     public readonly DbSet<Customer> Customers;
