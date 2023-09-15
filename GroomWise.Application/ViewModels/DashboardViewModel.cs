@@ -9,12 +9,14 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
+using System.Media;
 using GroomWise.Application.Events;
 using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
 using GroomWise.Infrastructure.Authentication.Interfaces;
 using GroomWise.Infrastructure.Database;
-using Hangfire;
+using GroomWise.Infrastructure.Scheduler.Enums;
+using GroomWise.Infrastructure.Scheduler.Interfaces;
 using Injectio.Attributes;
 using MvvmGen;
 using MvvmGen.Events;
@@ -24,6 +26,7 @@ namespace GroomWise.Application.ViewModels;
 
 [ViewModel]
 [RegisterSingleton]
+[Inject(typeof(IScheduler))]
 [Inject(typeof(IAuthenticationService))]
 [Inject(typeof(GroomWiseDbContext))]
 public partial class DashboardViewModel
@@ -46,13 +49,37 @@ public partial class DashboardViewModel
     partial void OnInitialize()
     {
         PopulateCollections();
-        RecurringJob.AddOrUpdate("updateTime", () => SetDate(), Cron.Hourly);
+        Scheduler.ScheduleTask(NotifyOnAppointmentStart, 1, Span.Minutes);
+        Scheduler.ScheduleTask(SetDate, 30, Span.Minutes);
     }
 
-    public async Task SetDate()
+    public void NotifyOnAppointmentStart()
+    {
+        var appointment = Appointments.FirstOrDefault();
+
+        if (appointment is null)
+        {
+            return;
+        }
+
+        if (appointment.Date.Day != DateTime.Today.Day)
+        {
+            return;
+        }
+
+        if (appointment.StartTime != TimeOnly.FromDateTime(DateTime.Now))
+        {
+            return;
+        }
+
+        var player = new SoundPlayer("notification.wav");
+        player.Load();
+        player.Play();
+    }
+
+    public void SetDate()
     {
         Date = DateTime.Now;
-        await Task.Delay(10);
     }
 
     private void PopulateCollections()

@@ -17,9 +17,9 @@ using GroomWise.Infrastructure.Authentication.Interfaces;
 using GroomWise.Infrastructure.Configuration.Interfaces;
 using GroomWise.Infrastructure.IoC.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
+using GroomWise.Infrastructure.Scheduler.Interfaces;
 using GroomWise.Infrastructure.Theming.Interfaces;
 using GroomWise.Infrastructure.Updater.Interfaces;
-using Hangfire;
 using Injectio.Attributes;
 using MvvmGen;
 using MvvmGen.Events;
@@ -35,6 +35,7 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(IAppServicesContainer))]
 [Inject(typeof(IThemeManagerService))]
 [Inject(typeof(IEventAggregator))]
+[Inject(typeof(IScheduler))]
 [Inject(typeof(IConfigurationService), PropertyAccessModifier = AccessModifier.Public)]
 [Inject(typeof(DashboardViewModel))]
 [ViewModel]
@@ -60,45 +61,22 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
     {
         try
         {
-            var canUpdate = await Updater.CheckForUpdates();
-            RecurringJob.AddOrUpdate("checkForUpdates", () => CheckForUpdates(false), Cron.Hourly);
-            if (param is bool silent)
+            if (param is not bool silent)
             {
-                if (canUpdate)
-                {
-                    var dialogResult = await Task.Run(
-                        () =>
-                            DialogService.Create(
-                                "New Update Available",
-                                $"Update to Version {Updater.GetVersion()}?",
-                                NavigationService
-                            )
-                    );
-
-                    if (dialogResult is false)
-                    {
-                        return;
-                    }
-
-                    var progress = new Progress<double>(val => Progress = val * 100);
-                    await Updater.PerformUpdate(progress);
-                    return;
-                }
-                if (silent)
-                {
-                    return;
-                }
-                await Task.Run(
-                    () =>
-                        DialogService.CreateOk(
-                            "No Updates Available",
-                            $"You are using the latest version",
-                            NavigationService
-                        )
-                );
+                return;
             }
+
+            var canUpdate = await Updater.CheckForUpdates(silent);
+
+            if (canUpdate is false)
+            {
+                return;
+            }
+
+            var progress = new Progress<double>(val => Progress = val * 100);
+            await Updater.PerformUpdate(progress);
         }
-        catch (HttpRequestException e)
+        catch (HttpRequestException)
         {
             if (param is not bool silent)
             {
@@ -109,6 +87,7 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
             {
                 return;
             }
+
             await Task.Run(
                 () =>
                     DialogService.CreateOk(
@@ -131,16 +110,18 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
                     NavigationService
                 )
         );
-        if (dialogResult == true)
+
+        if (dialogResult is false)
         {
-            var result = AuthenticationService.Logout();
+            return;
+        }
+
+        if (AuthenticationService.Logout() is AuthenticationStatus.NotAuthenticated)
+        {
             await Task.Delay(300);
-            if (result.Equals(AuthenticationStatus.NotAuthenticated))
-            {
-                DialogService.CloseDialogs(NavigationService);
-                NavigationService.Navigate(AppViews.Login);
-                EventAggregator.Publish(new LogoutEvent());
-            }
+            DialogService.CloseDialogs(NavigationService);
+            NavigationService.Navigate(AppViews.Login);
+            EventAggregator.Publish(new LogoutEvent());
         }
     }
 
@@ -151,10 +132,12 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
         {
             return;
         }
-        if (AppServicesContainer.GetService(type) is ViewModelBase viewModel)
+        if (AppServicesContainer.GetService(type) is not ViewModelBase viewModel)
         {
-            PageContext = viewModel;
+            return;
         }
+
+        PageContext = viewModel;
     }
 
     [Command]
