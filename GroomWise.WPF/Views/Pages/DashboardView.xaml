@@ -18,11 +18,6 @@
     d:DesignWidth="1280"
     Style="{StaticResource FadeInFromBottomAnimation}"
     mc:Ignorable="d">
-    <b:Interaction.Triggers>
-        <b:EventTrigger EventName="Loaded">
-            <b:InvokeCommandAction Command="{Binding InvalidateCommand}" />
-        </b:EventTrigger>
-    </b:Interaction.Triggers>
     <Grid Grid.Column="0" Margin="16,20,16,16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

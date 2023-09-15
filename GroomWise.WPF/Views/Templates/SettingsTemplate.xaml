@@ -386,6 +386,40 @@
                 Margin="16"
                 VerticalAlignment="Center"
                 FontSize="16"
+                Text="Updates" />
+            <Border
+                Margin="16,0"
+                BorderBrush="{DynamicResource bg-200}"
+                BorderThickness="0,0,0,1" />
+        </Grid>
+        <Grid Margin="16,6" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <TextBlock
+                    FontSize="14"
+                    Foreground="{DynamicResource fg-600}"
+                    Text="Check for Updates" />
+                <TextBlock
+                    Margin="0,6,0,0"
+                    FontSize="12"
+                    Foreground="{DynamicResource bg-600}"
+                    Text="Automatically check for updates" />
+            </StackPanel>
+            <russkyc:ModernSwitch
+                Grid.Column="1"
+                Margin="12"
+                VerticalAlignment="Center"
+                IsChecked="{Binding ConfigurationService.CheckForUpdates, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+        </Grid>
+        <Grid>
+            <!--  Header Template  -->
+            <TextBlock
+                Margin="16"
+                VerticalAlignment="Center"
+                FontSize="16"
                 Text="Data" />
             <Border
                 Margin="16,0"
