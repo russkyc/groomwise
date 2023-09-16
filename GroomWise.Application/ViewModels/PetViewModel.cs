@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -46,14 +46,16 @@ public partial class PetViewModel
 
     private async void PopulateCollections()
     {
-        await Task.Run(() =>
+        var pets = await Task.Run(() =>
         {
-            Pets = new();
+            var pets = new ConcurrentObservableCollection<ObservablePet>();
             var customers = GroomWiseDbContext.Customers
                 .GetAll()
                 .Select(CustomerMapper.ToObservable);
             customers.ForEach(customer => customer.Pets.ForEach(Pets.Add));
+            return pets;
         });
+        Pets = new ConcurrentObservableCollection<ObservablePet>(pets);
     }
 
     public void OnEvent(CreateCustomerEvent eventData)

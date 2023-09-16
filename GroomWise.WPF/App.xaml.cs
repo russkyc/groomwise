@@ -54,7 +54,6 @@ public partial class App
         Dispatcher.BeginInvoke(() =>
         {
             var navigation = scope.GetService<INavigationService>()!;
-
             navigation.Add(AppViews.Login, typeof(LoginView));
             navigation.Add(AppViews.Main, typeof(MainView));
         });
@@ -63,40 +62,35 @@ public partial class App
     private void LoadThemeDefaults(IAppServicesContainer scope)
     {
         // Load Theme Defaults
-        var config = scope.GetService<IConfigurationService>();
-        var themeManager = scope.GetService<IThemeManagerService>();
+        var config = scope.GetService<IConfigurationService>()!;
+        var themeManager = scope.GetService<IThemeManagerService>()!;
 
-        if (config is not null && themeManager is not null)
-        {
-            themeManager.SetDarkTheme(config.DarkMode);
-            themeManager.SetColorTheme(config.ColorTheme);
-        }
+        // Apply Theme Defaults
+        themeManager.SetDarkTheme(config.DarkMode);
+        themeManager.SetColorTheme(config.ColorTheme);
     }
 
     private void StartApp(IAppServicesContainer scope)
     {
-        var configuration = scope.GetService<IConfigurationService>();
+        var configuration = scope.GetService<IConfigurationService>()!;
         var navigation = scope.GetService<INavigationService>()!;
-
-        if (configuration is null)
-        {
-            return;
-        }
 
         Current.Dispatcher.BeginInvoke(() =>
         {
-            IWindow window;
+            // Open Login if multi-user is enabled
             if (configuration.MultiUser)
             {
-                window = scope.GetService<LoginView>()!;
-            }
-            else
-            {
-                window = scope.GetService<MainView>()!;
+                var multiUserView = scope.GetService<LoginView>()!;
+                navigation.Initialize(SynchronizationContext.Current!, multiUserView);
+                MainWindow = multiUserView;
+                MainWindow!.Show();
+                return;
             }
 
-            navigation.Initialize(SynchronizationContext.Current!, window);
-            MainWindow = window as Window;
+            // Open Main Window if multi-user is disabled
+            var singleUserView = scope.GetService<MainView>()!;
+            navigation.Initialize(SynchronizationContext.Current!, singleUserView);
+            MainWindow = singleUserView;
             MainWindow!.Show();
         });
     }
