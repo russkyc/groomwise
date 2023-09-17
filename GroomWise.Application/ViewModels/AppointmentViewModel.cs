@@ -14,6 +14,7 @@ using GroomWise.Application.Extensions;
 using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
 using GroomWise.Domain.Enums;
+using GroomWise.Domain.Filters;
 using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.Logging.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
@@ -67,33 +68,23 @@ public partial class AppointmentViewModel
         ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
     }
 
-    private async void PopulateCollections()
+    private void PopulateCollections()
     {
-        var appointments = await Task.Run(
-            () =>
-                GroomWiseDbContext.Appointments
-                    .GetMultiple(appointment => appointment.Date >= DateTime.Today)
-                    .Select(AppointmentMapper.ToObservable)
-                    .OrderBy(appointment => appointment.Date)
-                    .ThenBy(appointment => appointment.StartTime)
-        );
-        await Task.Run(() =>
-        {
-            var services = GroomWiseDbContext.GroomingServices
-                .GetAll()
-                .Select(GroomingServiceMapper.ToObservable);
-
-            var customers = GroomWiseDbContext.Customers
-                .GetAll()
-                .Select(CustomerMapper.ToObservable)
-                .OrderBy(customer => customer.FullName);
-
-            Customers = new ConcurrentObservableCollection<ObservableCustomer>(customers);
-            Appointments = new ConcurrentObservableCollection<ObservableAppointment>(appointments);
-            GroomingServices = new ConcurrentObservableCollection<ObservableGroomingService>(
-                services
-            );
-        });
+        Customers = GroomWiseDbContext.Customers
+            .GetAll()
+            .Select(CustomerMapper.ToObservable)
+            .OrderBy(customer => customer.FullName)
+            .AsObservableCollection();
+        Appointments = GroomWiseDbContext.Appointments
+            .GetMultiple(AppointmentFilters.IsToday)
+            .Select(AppointmentMapper.ToObservable)
+            .OrderBy(appointment => appointment.Date)
+            .ThenBy(appointment => appointment.StartTime)
+            .AsObservableCollection();
+        GroomingServices = GroomWiseDbContext.GroomingServices
+            .GetAll()
+            .Select(GroomingServiceMapper.ToObservable)
+            .AsObservableCollection();
     }
 
     [Command]
@@ -112,7 +103,7 @@ public partial class AppointmentViewModel
             {
                 ActiveAppointment.StartTime = BookingTimes.First();
             }
-            DialogService.CreateAddAppointmentsDialog(this, NavigationService);
+            await DialogService.CreateAddAppointmentsDialog(this, NavigationService);
             return;
         }
         ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
@@ -120,7 +111,7 @@ public partial class AppointmentViewModel
         {
             ActiveAppointment.StartTime = BookingTimes.First();
         }
-        DialogService.CreateCustomerSelectionDialog(this, NavigationService);
+        await DialogService.CreateCustomerSelectionDialog(this, NavigationService);
         OnPropertyChanged(nameof(ActiveAppointment.Date));
     }
 
@@ -145,40 +136,37 @@ public partial class AppointmentViewModel
             );
             return;
         }
-        await Task.Run(() =>
+        var dialogResult = await DialogService.Create(
+            "Appointments",
+            $"Cancel {appointment.Customer.FullName.Split(" ")[0]}'s Appointment?",
+            NavigationService
+        );
+
+        if (dialogResult is false)
         {
-            var dialogResult = DialogService.Create(
-                "Appointments",
-                $"Cancel {appointment.Customer.FullName.Split(" ")[0]}'s Appointment?",
-                NavigationService
-            );
+            return;
+        }
 
-            if (dialogResult is false)
-            {
-                return;
-            }
+        Appointments.Remove(appointment);
+        GroomWiseDbContext.Appointments.Delete(appointment.Id);
 
-            Appointments.Remove(appointment);
-            GroomWiseDbContext.Appointments.Delete(appointment.Id);
+        EventAggregator.Publish(new DeleteAppointmentEvent());
+        EventAggregator.Publish(
+            new PublishNotificationEvent(
+                "Appointment Cancelled",
+                $"{appointment.Customer.FullName.GetFirstName()}'s appointment is cancelled.",
+                NotificationType.Notify
+            )
+        );
 
-            EventAggregator.Publish(new DeleteAppointmentEvent());
-            EventAggregator.Publish(
-                new PublishNotificationEvent(
-                    "Appointment Cancelled",
-                    $"{appointment.Customer.FullName.GetFirstName()}'s appointment is cancelled.",
-                    NotificationType.Notify
-                )
-            );
-
-            if (SelectedAppointment is null)
-            {
-                return;
-            }
-            if (appointment.Id == SelectedAppointment.Id)
-            {
-                SelectedAppointment = null;
-            }
-        });
+        if (SelectedAppointment is null)
+        {
+            return;
+        }
+        if (appointment.Id == SelectedAppointment.Id)
+        {
+            SelectedAppointment = null;
+        }
         await GenerateBookingTimes();
     }
 
@@ -190,12 +178,9 @@ public partial class AppointmentViewModel
             return;
         }
         ActiveAppointment.Customer = customer;
-        await Task.Run(async () =>
-        {
-            DialogService.CloseDialogs(NavigationService);
-            await Task.Delay(100);
-            DialogService.CreateAddAppointmentsDialog(this, NavigationService);
-        });
+        await DialogService.CloseDialogs(NavigationService);
+        await Task.Delay(100);
+        await DialogService.CreateAddAppointmentsDialog(this, NavigationService);
     }
 
     [Command]
@@ -212,11 +197,7 @@ public partial class AppointmentViewModel
     [Command]
     private async Task SaveAppointment()
     {
-        if (
-            ActiveAppointment.Services is null
-            || ActiveAppointment.Services.Count == 0
-            || ActiveAppointment.Services.Any(service => service is null)
-        )
+        if (ActiveAppointment.Services.IsNullOrEmpty())
         {
             EventAggregator.Publish(
                 new PublishNotificationEvent(
@@ -284,13 +265,13 @@ public partial class AppointmentViewModel
         {
             return;
         }
-        if (ActiveAppointment.Services is not { } services)
+        if (ActiveAppointment.Services.IsNullOrEmpty())
         {
             return;
         }
-        if (services.Contains(service))
+        if (ActiveAppointment.Services!.Contains(service))
         {
-            ActiveAppointment.Services?.Remove(service);
+            ActiveAppointment.Services!.Remove(service);
             await CalculateAppointmentTimeSpan();
         }
     }
@@ -322,7 +303,7 @@ public partial class AppointmentViewModel
                 )
         )
         {
-            if (ActiveAppointment.Services is null)
+            if (ActiveAppointment.Services.IsNullOrEmpty())
             {
                 return;
             }
@@ -330,13 +311,13 @@ public partial class AppointmentViewModel
                 () =>
                     DialogService.CreateOk(
                         "Appointments",
-                        $"Appointment Service is overlapping other appointments. Remove Service {ActiveAppointment.Services[0].GroomingService!.Type}?",
+                        $"Appointment Service is overlapping other appointments. Remove Service {ActiveAppointment.Services!.FirstOrDefault()!.GroomingService!.Type}?",
                         NavigationService
                     )
             );
             if (dialogResult is true)
             {
-                await RemoveGroomingService(ActiveAppointment.Services[0]);
+                await RemoveGroomingService(ActiveAppointment.Services!.First());
             }
         }
     }

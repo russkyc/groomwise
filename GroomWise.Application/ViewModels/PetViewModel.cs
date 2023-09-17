@@ -10,6 +10,7 @@
 // but WITHOUT ANY WARRANTY
 
 using GroomWise.Application.Events;
+using GroomWise.Application.Extensions;
 using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
 using GroomWise.Infrastructure.Database;
@@ -18,7 +19,6 @@ using Injectio.Attributes;
 using MvvmGen;
 using MvvmGen.Events;
 using Swordfish.NET.Collections;
-using Swordfish.NET.Collections.Auxiliary;
 
 namespace GroomWise.Application.ViewModels;
 
@@ -44,18 +44,13 @@ public partial class PetViewModel
         PopulateCollections();
     }
 
-    private async void PopulateCollections()
+    private void PopulateCollections()
     {
-        var pets = await Task.Run(() =>
-        {
-            var pets = new ConcurrentObservableCollection<ObservablePet>();
-            var customers = GroomWiseDbContext.Customers
-                .GetAll()
-                .Select(CustomerMapper.ToObservable);
-            customers.ForEach(customer => customer.Pets.ForEach(Pets.Add));
-            return pets;
-        });
-        Pets = new ConcurrentObservableCollection<ObservablePet>(pets);
+        Pets = GroomWiseDbContext.Customers
+            .GetAll()
+            .Select(CustomerMapper.ToObservable)
+            .SelectMany(customer => customer.Pets)
+            .AsObservableCollection();
     }
 
     public void OnEvent(CreateCustomerEvent eventData)

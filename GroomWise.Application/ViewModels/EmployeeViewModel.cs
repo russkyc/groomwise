@@ -47,24 +47,18 @@ public partial class EmployeeViewModel
 
     private void PopulateCollections()
     {
-        Task.Run(async () =>
-        {
-            var employees = await Task.Run(
-                () =>
-                    GroomWiseDbContext.Employees
-                        .GetAll()
-                        .Select(EmployeeMapper.ToObservable)
-                        .OrderBy(employee => employee.FullName)
-            );
-            Employees = new ConcurrentObservableCollection<ObservableEmployee>(employees);
-        });
+        Employees = GroomWiseDbContext.Employees
+            .GetAll()
+            .Select(EmployeeMapper.ToObservable)
+            .OrderBy(employee => employee.FullName)
+            .AsObservableCollection();
     }
 
     [Command]
     private async Task CreateEmployee()
     {
         ActiveEmployee = new();
-        await Task.Run(() => DialogService.CreateAddEmployeeDialog(this, NavigationService));
+        await DialogService.CreateAddEmployeeDialog(this, NavigationService);
     }
 
     [Command]
@@ -80,7 +74,7 @@ public partial class EmployeeViewModel
     [Command]
     private async Task EditEmployee()
     {
-        await Task.Run(() => DialogService.CreateEditEmployeeDialog(this, NavigationService));
+        await DialogService.CreateEditEmployeeDialog(this, NavigationService);
     }
 
     [Command]

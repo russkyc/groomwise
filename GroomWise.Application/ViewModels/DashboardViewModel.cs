@@ -11,8 +11,10 @@
 
 using System.Media;
 using GroomWise.Application.Events;
+using GroomWise.Application.Extensions;
 using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
+using GroomWise.Domain.Filters;
 using GroomWise.Infrastructure.Authentication.Interfaces;
 using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.Scheduler.Enums;
@@ -84,34 +86,17 @@ public partial class DashboardViewModel
 
     private void PopulateCollections()
     {
-        Task.Run(async () =>
-        {
-            var appointments = await Task.Run(
-                () =>
-                    GroomWiseDbContext.Appointments
-                        .GetMultiple(appointment => appointment.Date == DateTime.Today)
-                        .Select(AppointmentMapper.ToObservable)
-                        .OrderBy(appointment => appointment.Date)
-            );
-
-            var upcomingAppointments = await Task.Run(
-                () =>
-                    GroomWiseDbContext.Appointments
-                        .GetMultiple(
-                            appointment =>
-                                appointment.Date > DateTime.Today
-                                && appointment.Date < DateTime.Today.AddDays(7)
-                        )
-                        .Select(AppointmentMapper.ToObservable)
-                        .OrderBy(appointment => appointment.Date)
-                        .ThenBy(appointment => appointment.StartTime)
-            );
-
-            Appointments = new ConcurrentObservableCollection<ObservableAppointment>(appointments);
-            UpcomingAppointments = new ConcurrentObservableCollection<ObservableAppointment>(
-                upcomingAppointments
-            );
-        });
+        UpcomingAppointments = GroomWiseDbContext.Appointments
+            .GetMultiple(AppointmentFilters.IsThisWeek)
+            .Select(AppointmentMapper.ToObservable)
+            .OrderBy(appointment => appointment.Date)
+            .ThenBy(appointment => appointment.StartTime)
+            .AsObservableCollection();
+        Appointments = GroomWiseDbContext.Appointments
+            .GetMultiple(AppointmentFilters.IsToday)
+            .OrderBy(appointment => appointment.Date)
+            .Select(AppointmentMapper.ToObservable)
+            .AsObservableCollection();
     }
 
     public void OnEvent(LoginEvent eventData)

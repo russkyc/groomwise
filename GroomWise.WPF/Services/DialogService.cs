@@ -9,12 +9,14 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Views.Dialogs;
 using Injectio.Attributes;
+using org.russkyc.moderncontrols;
 using Swordfish.NET.Collections.Auxiliary;
 
 namespace GroomWise.Services;
@@ -22,229 +24,158 @@ namespace GroomWise.Services;
 [RegisterSingleton<IDialogService, DialogService>]
 public class DialogService : IDialogService
 {
-    public bool? Create(string messageBoxText, string caption, INavigationService navigationService)
-    {
-        return Task.Run(async () =>
-        {
-            return await App.Current.Dispatcher.InvokeAsync(() =>
-            {
-                if (
-                    App.Current.Windows
-                        .OfType<DialogView>()
-                        .FirstOrDefault(
-                            dialog =>
-                                dialog.Owner == navigationService.CurrentWindow
-                                && dialog!.Caption!.Equals(caption)
-                                && dialog!.MessageBoxText!.Equals(messageBoxText)
-                        ) is
-                    { } window
-                )
-                {
-                    return false;
-                }
-
-                return new DialogView(messageBoxText, caption)
-                {
-                    ShowInTaskbar = false,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                    Owner = (Window)navigationService.CurrentWindow!
-                }.ShowDialog();
-            });
-        }).Result;
-    }
-
-    public bool? CreateOk(
+    public async Task<bool?> Create(
         string messageBoxText,
         string caption,
         INavigationService navigationService
     )
     {
-        return Task.Run(async () =>
+        return await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
         {
-            return await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+            if (
+                System.Windows.Application.Current.Windows
+                    .OfType<DialogView>()
+                    .FirstOrDefault(
+                        dialog =>
+                            dialog.Owner == navigationService.CurrentWindow
+                            && dialog.Caption!.Equals(caption)
+                            && dialog.MessageBoxText!.Equals(messageBoxText)
+                    ) is
+                { }
+            )
             {
-                if (
-                    System.Windows.Application.Current.Windows
-                        .OfType<DialogView>()
-                        .FirstOrDefault(
-                            dialog =>
-                                dialog.Owner == navigationService.CurrentWindow
-                                && dialog.Caption!.Equals(caption)
-                                && dialog.MessageBoxText!.Equals(messageBoxText)
-                        ) is
-                    { } window
-                )
-                {
-                    return false;
-                }
+                return false;
+            }
 
-                return new DialogView(messageBoxText, caption, MessageBoxButton.OK)
-                {
-                    ShowInTaskbar = false,
-                    WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                    Owner = (Window)navigationService.CurrentWindow!
-                }.ShowDialog();
-            });
-        }).Result;
-    }
-
-    public void CloseDialogs(INavigationService navigationService)
-    {
-        Task.Run(async () =>
-        {
-            await App.Current.Dispatcher.InvokeAsync(() =>
+            return new DialogView(messageBoxText, caption)
             {
-                if (
-                    App.Current.Windows
-                        .OfType<Window>()
-                        .Where(dialog => dialog.Owner == navigationService.CurrentWindow) is
-                    { } windows
-                )
-                {
-                    var owner = navigationService.CurrentWindow as Window;
-                    windows.ForEach(window =>
-                    {
-                        window.Close();
-                    });
-                    owner!.Focus();
-                }
-            });
+                ShowInTaskbar = false,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = (Window)navigationService.CurrentWindow
+            }.ShowDialog();
         });
     }
 
-    public void CreateCustomerSelectionDialog(
-        object viewModel,
+    public async Task<bool?> CreateOk(
+        string messageBoxText,
+        string caption,
         INavigationService navigationService
     )
     {
-        Task.Run(async () =>
+        return await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
         {
-            await App.Current.Dispatcher.InvokeAsync(() =>
+            if (
+                System.Windows.Application.Current.Windows
+                    .OfType<DialogView>()
+                    .FirstOrDefault(
+                        dialog =>
+                            dialog.Owner == navigationService.CurrentWindow
+                            && dialog.Caption!.Equals(caption)
+                            && dialog.MessageBoxText!.Equals(messageBoxText)
+                    ) is
+                { }
+            )
             {
-                if (!App.Current.Windows.OfType<SelectCustomerView>().Any())
-                {
-                    new SelectCustomerView(viewModel)
-                    {
-                        ShowInTaskbar = false,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                        Owner = (Window)navigationService.CurrentWindow!
-                    }.Show();
-                }
-            });
+                return false;
+            }
+
+            return new DialogView(messageBoxText, caption, MessageBoxButton.OK)
+            {
+                ShowInTaskbar = false,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = (Window)navigationService.CurrentWindow
+            }.ShowDialog();
         });
     }
 
-    public void CreateAddAppointmentsDialog(object viewModel, INavigationService navigationService)
+    public async Task CloseDialogs(INavigationService navigationService)
     {
-        Task.Run(async () =>
+        await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
         {
-            await App.Current.Dispatcher.InvokeAsync(() =>
+            if (
+                System.Windows.Application.Current.Windows
+                    .OfType<Window>()
+                    .Where(dialog => dialog.Owner == navigationService.CurrentWindow)
+                is not { } windows
+            )
             {
-                if (!App.Current.Windows.OfType<AddAppointmentsView>().Any())
-                {
-                    new AddAppointmentsView(viewModel)
-                    {
-                        ShowInTaskbar = false,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                        Owner = (Window)navigationService.CurrentWindow!
-                    }.Show();
-                }
+                return;
+            }
+
+            if (navigationService.CurrentWindow is not Window owner)
+            {
+                return;
+            }
+
+            windows.ForEach(window =>
+            {
+                window.Close();
             });
+
+            owner.Focus();
         });
     }
 
-    public void CreateAddCustomersDialog(object viewModel, INavigationService navigationService)
-    {
-        Task.Run(async () =>
-        {
-            await App.Current.Dispatcher.InvokeAsync(() =>
-            {
-                if (!App.Current.Windows.OfType<AddCustomersView>().Any())
-                {
-                    new AddCustomersView(viewModel)
-                    {
-                        ShowInTaskbar = false,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                        Owner = (Window)navigationService.CurrentWindow!
-                    }.Show();
-                }
-            });
-        });
-    }
+    public async Task CreateAddAccountDialog(
+        object viewModel,
+        INavigationService navigationService
+    ) => await CreateNonReturningDialog<AddAccountView>(viewModel, navigationService);
 
-    public void CreateAddEmployeeDialog(object viewModel, INavigationService navigationService)
-    {
-        Task.Run(async () =>
-        {
-            await App.Current.Dispatcher.InvokeAsync(() =>
-            {
-                if (!App.Current.Windows.OfType<AddEmployeeView>().Any())
-                {
-                    new AddEmployeeView(viewModel)
-                    {
-                        ShowInTaskbar = false,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                        Owner = (Window)navigationService.CurrentWindow!
-                    }.Show();
-                }
-            });
-        });
-    }
+    public async Task CreateAddAppointmentsDialog(
+        object viewModel,
+        INavigationService navigationService
+    ) => await CreateNonReturningDialog<AddAppointmentsView>(viewModel, navigationService);
 
-    public void CreateEditCustomersDialog(object viewModel, INavigationService navigationService)
-    {
-        Task.Run(async () =>
-        {
-            await App.Current.Dispatcher.InvokeAsync(() =>
-            {
-                if (!App.Current.Windows.OfType<EditCustomersView>().Any())
-                {
-                    new EditCustomersView(viewModel)
-                    {
-                        ShowInTaskbar = false,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                        Owner = (Window)navigationService.CurrentWindow!
-                    }.Show();
-                }
-            });
-        });
-    }
+    public async Task CreateCustomerSelectionDialog(
+        object viewModel,
+        INavigationService navigationService
+    ) => await CreateNonReturningDialog<SelectCustomerView>(viewModel, navigationService);
 
-    public void CreateEditEmployeeDialog(object viewModel, INavigationService navigationService)
-    {
-        Task.Run(async () =>
-        {
-            await App.Current.Dispatcher.InvokeAsync(() =>
-            {
-                if (!App.Current.Windows.OfType<EditEmployeeView>().Any())
-                {
-                    new EditEmployeeView(viewModel)
-                    {
-                        ShowInTaskbar = false,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                        Owner = (Window)navigationService.CurrentWindow!
-                    }.Show();
-                }
-            });
-        });
-    }
+    public async Task CreateAddCustomersDialog(
+        object viewModel,
+        INavigationService navigationService
+    ) => await CreateNonReturningDialog<AddCustomersView>(viewModel, navigationService);
 
-    public void CreateAddServicesDialog(object viewModel, INavigationService navigationService)
-    {
-        Task.Run(async () =>
+    public async Task CreateEditCustomersDialog(
+        object viewModel,
+        INavigationService navigationService
+    ) => await CreateNonReturningDialog<EditCustomersView>(viewModel, navigationService);
+
+    public async Task CreateAddEmployeeDialog(
+        object viewModel,
+        INavigationService navigationService
+    ) => await CreateNonReturningDialog<AddEmployeeView>(viewModel, navigationService);
+
+    public async Task CreateEditEmployeeDialog(
+        object viewModel,
+        INavigationService navigationService
+    ) => await CreateNonReturningDialog<AddCustomersView>(viewModel, navigationService);
+
+    public async Task CreateAddServicesDialog(
+        object viewModel,
+        INavigationService navigationService
+    ) => await CreateNonReturningDialog<AddServicesView>(viewModel, navigationService);
+
+    public async Task CreateNonReturningDialog<T>(
+        object viewModel,
+        INavigationService navigationService
+    ) =>
+        await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
         {
-            await App.Current.Dispatcher.InvokeAsync(() =>
+            if (System.Windows.Application.Current.Windows.OfType<T>().Any())
             {
-                if (!App.Current.Windows.OfType<AddServicesView>().Any())
-                {
-                    new AddServicesView(viewModel)
-                    {
-                        ShowInTaskbar = false,
-                        WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                        Owner = (Window)navigationService.CurrentWindow!
-                    }.Show();
-                }
-            });
+                return;
+            }
+
+            if (Activator.CreateInstance<T>()! is not ModernWindow view)
+            {
+                return;
+            }
+
+            view.DataContext = viewModel;
+            view.ShowInTaskbar = false;
+            view.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            view.Owner = (ModernWindow)navigationService.CurrentWindow;
+            view.Show();
         });
-    }
 }

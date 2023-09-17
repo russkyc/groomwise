@@ -10,6 +10,7 @@
 // but WITHOUT ANY WARRANTY
 
 using GroomWise.Application.Events;
+using GroomWise.Application.Extensions;
 using GroomWise.Application.Mappers;
 using GroomWise.Application.Observables;
 using GroomWise.Domain.Enums;
@@ -43,53 +44,45 @@ public partial class GroomingServiceViewModel
 
     private void PopulateCollections()
     {
-        Task.Run(async () =>
-        {
-            var services = await Task.Run(
-                () =>
-                    GroomWiseDbContext.GroomingServices
-                        .GetAll()
-                        .Select(GroomingServiceMapper.ToObservable)
-            );
-
-            GroomingServices = new ConcurrentObservableCollection<ObservableGroomingService>(
-                services
-            );
-        });
+        GroomingServices = GroomWiseDbContext.GroomingServices
+            .GetAll()
+            .Select(GroomingServiceMapper.ToObservable)
+            .AsObservableCollection();
     }
 
     [Command]
     private async Task CreateService()
     {
         ActiveGroomingService = new();
-        await Task.Run(() => DialogService.CreateAddServicesDialog(this, NavigationService));
+        await DialogService.CreateAddServicesDialog(this, NavigationService);
     }
 
     [Command]
     private async Task SaveService()
     {
-        var dialogResult = await Task.Run(() =>
+        if (string.IsNullOrEmpty(ActiveGroomingService.Type))
         {
-            if (string.IsNullOrEmpty(ActiveGroomingService.Type))
-            {
-                EventAggregator.Publish(
-                    new PublishNotificationEvent(
-                        "Save Failed",
-                        "Service name cannot be blank",
-                        NotificationType.Danger
-                    )
-                );
-                return false;
-            }
+            EventAggregator.Publish(
+                new PublishNotificationEvent(
+                    "Save Failed",
+                    "Service name cannot be blank",
+                    NotificationType.Danger
+                )
+            );
+            return;
+        }
 
-            return DialogService.Create("GroomWise", "Create Service?", NavigationService);
-        });
+        var dialogResult = await DialogService.Create(
+            "GroomWise",
+            "Create Service?",
+            NavigationService
+        );
         if (dialogResult is false)
         {
             return;
         }
         GroomWiseDbContext.GroomingServices.Insert(ActiveGroomingService.ToEntity());
-        DialogService.CloseDialogs(NavigationService);
+        await DialogService.CloseDialogs(NavigationService);
         EventAggregator.Publish(
             new PublishNotificationEvent(
                 "Save Successful",

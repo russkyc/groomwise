@@ -9,13 +9,13 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
-using System.ComponentModel;
+using Swordfish.NET.Collections;
 
-namespace GroomWise.Domain.Enums;
+namespace GroomWise.Application.Extensions;
 
-public enum Role
+public static class CollectionExtensions
 {
-    [Description(nameof(Admin))] Admin,
-    [Description(nameof(Manager))] Manager,
-    [Description(nameof(Groomer))] Groomer
+    public static ConcurrentObservableCollection<T> AsObservableCollection<T>(
+        this IEnumerable<T> collection
+    ) => new ConcurrentObservableCollection<T>(collection);
 }

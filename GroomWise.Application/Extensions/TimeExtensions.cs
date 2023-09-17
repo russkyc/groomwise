@@ -15,27 +15,11 @@ namespace GroomWise.Application.Extensions;
 
 public static class TimeExtensions
 {
-    public static bool IsBetween(this TimeOnly target, TimeOnly start, TimeOnly end)
-    {
-        if (start <= end)
-        {
-            return start <= target && target <= end;
-        }
-        return start <= target || target <= end;
-    }
+    public static bool IsBetween(this TimeOnly target, TimeOnly start, TimeOnly end) =>
+        start < end ? start <= target && target <= end : start <= target || target <= end;
 
-    public static bool IsOverlapping(this Appointment appointment, TimeOnly start, TimeOnly end)
-    {
-        if (appointment.StartTime == end)
-        {
-            return false;
-        }
-
-        if (appointment.EndTime == start)
-        {
-            return false;
-        }
-
-        return appointment.StartTime < end && appointment.EndTime > start;
-    }
+    public static bool IsOverlapping(this Appointment appointment, TimeOnly start, TimeOnly end) =>
+        appointment.StartTime != end
+        && appointment.EndTime != end
+        && (appointment.StartTime < end && appointment.EndTime > start);
 }

@@ -167,6 +167,12 @@
                     PageContext="{x:Type viewModels:PetViewModel}"
                     Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:PetViewModel}, Mode=OneWay}"
                     Tooltip="Pets" />
+                <templates:NavItemTemplate
+                    Margin="8,8,8,0"
+                    Icon="{icons:MaterialIconExt Accounts}"
+                    PageContext="{x:Type viewModels:AccountViewModel}"
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:AccountViewModel}, Mode=OneWay}"
+                    Tooltip="Accounts" />
             </StackPanel>
             <StackPanel VerticalAlignment="Bottom">
                 <templates:NavItemTemplate
@@ -199,6 +205,9 @@
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type viewModels:EmployeeViewModel}">
                     <pages:EmployeesView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:AccountViewModel}">
+                    <pages:AccountsView />
                 </DataTemplate>
                 <DataTemplate DataType="{x:Type viewModels:PetViewModel}">
                     <pages:PetsView />

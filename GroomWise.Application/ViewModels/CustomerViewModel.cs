@@ -54,24 +54,18 @@ public partial class CustomerViewModel
 
     private void PopulateCollections()
     {
-        Task.Run(async () =>
-        {
-            var customers = await Task.Run(
-                () =>
-                    GroomWiseDbContext.Customers
-                        .GetAll()
-                        .Select(CustomerMapper.ToObservable)
-                        .OrderBy(customer => customer.FullName)
-            );
-            Customers = new ConcurrentObservableCollection<ObservableCustomer>(customers);
-        });
+        Customers = GroomWiseDbContext.Customers
+            .GetAll()
+            .Select(CustomerMapper.ToObservable)
+            .OrderBy(customer => customer.FullName)
+            .AsObservableCollection();
     }
 
     [Command]
     private async Task CreateCustomer()
     {
         ActiveCustomer = new();
-        await Task.Run(() => DialogService.CreateAddCustomersDialog(this, NavigationService));
+        await DialogService.CreateAddCustomersDialog(this, NavigationService);
     }
 
     [Command]
@@ -186,9 +180,9 @@ public partial class CustomerViewModel
     }
 
     [Command]
-    private void EditCustomer()
+    private async Task EditCustomer()
     {
-        DialogService.CreateEditCustomersDialog(this, NavigationService);
+        await DialogService.CreateEditCustomersDialog(this, NavigationService);
     }
 
     [Command]
