@@ -20,4 +20,5 @@ public interface IConfigurationService
     double ToastCooldown { get; set; }
     bool MultiUser { get; set; }
     bool CheckForUpdates { get; set; }
+    bool FirstRun { get; set; }
 }

@@ -12,6 +12,7 @@
 using GroomWise.Application.Enums;
 using GroomWise.Application.Events;
 using GroomWise.Application.Observables;
+using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
 using GroomWise.Infrastructure.Configuration.Interfaces;
@@ -40,8 +41,13 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(DashboardViewModel))]
 [ViewModel]
 [RegisterSingleton]
-public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
+public partial class AppViewModel
+    : IEventSubscriber<PublishNotificationEvent>,
+        IEventSubscriber<LoginEvent>
 {
+    [Property]
+    private Role _sessionRole;
+
     [Property]
     private ViewModelBase _pageContext;
 
@@ -192,5 +198,27 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
             await Task.Delay(TimeSpan.FromSeconds(ConfigurationService.ToastCooldown));
             Notifications.Remove(notification);
         });
+    }
+
+    public void OnEvent(LoginEvent eventData)
+    {
+        if (eventData.Status is AuthenticationStatus.NotAuthenticated)
+        {
+            return;
+        }
+
+        var session = AuthenticationService.GetSession();
+
+        if (session is null)
+        {
+            return;
+        }
+
+        if (eventData.Status is AuthenticationStatus.Authenticated)
+        {
+            PageContext = AppServicesContainer.GetService<DashboardViewModel>()!;
+        }
+
+        SessionRole = session.Role;
     }
 }

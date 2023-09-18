@@ -9,17 +9,13 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
-using GroomWise.Domain.Entities;
-using GroomWise.Domain.Interfaces;
-using LiteDB;
-using Role = GroomWise.Domain.Enums.Role;
+using GroomWise.Domain.Enums;
 
-public class Account : IEntity
+namespace GroomWise.Infrastructure.Authentication.Types;
+
+public static class AccessType
 {
-    [BsonId]
-    public Guid Id { get; set; }
-    public string? Username { get; set; }
-    public string? Password { get; set; }
-    public Employee? Employee { get; set; }
-    public Role Role { get; set; }
+    public static readonly IEnumerable<Role> All = new[] { Role.Admin, Role.Manager, Role.Groomer };
+    public static readonly IEnumerable<Role> AdminOnly = new[] { Role.Admin, Role.Manager };
+    public static readonly IEnumerable<Role> EmployeeOnly = new[] { Role.Groomer };
 }

@@ -105,13 +105,65 @@ public partial class LoginViewModel : IEventSubscriber<LogoutEvent>
             }
         );
 
+        EventAggregator.Publish(new LoginEvent(AuthenticationStatus.Authenticated));
+
         Password = string.Empty;
         Username = string.Empty;
 
         await Task.Delay(300);
         Notifications.RemoveLast();
-        EventAggregator.Publish(new LoginEvent(AuthenticationStatus.Authenticated));
         NavigationService.Navigate(AppViews.Main);
+    }
+
+    [Command]
+    async Task CreateAdminAccount()
+    {
+        if (string.IsNullOrEmpty(Username))
+        {
+            HasErrors = true;
+            Notifications.RemoveLast();
+            Notifications.Add(
+                new ObservableNotification
+                {
+                    Type = NotificationType.Danger,
+                    Description = "Username cannot be blank."
+                }
+            );
+            return;
+        }
+
+        if (string.IsNullOrEmpty(Password))
+        {
+            HasErrors = true;
+            Notifications.RemoveLast();
+            Notifications.Add(
+                new ObservableNotification
+                {
+                    Type = NotificationType.Danger,
+                    Description = "Password cannot be blank."
+                }
+            );
+            return;
+        }
+
+        AuthenticationService.Register(Username, Password, Role.Admin);
+        ConfigurationService.FirstRun = false;
+        HasErrors = false;
+        Notifications.RemoveLast();
+        Notifications.Add(
+            new ObservableNotification
+            {
+                Type = NotificationType.Success,
+                Description = "Admin account created."
+            }
+        );
+
+        Password = string.Empty;
+        Username = string.Empty;
+
+        await Task.Delay(300);
+        Notifications.RemoveLast();
+        NavigationService.Navigate(AppViews.Login);
     }
 
     [Command]

@@ -63,4 +63,10 @@ public class ConfigurationService : ConfigProvider, IConfigurationService
         get => GetValue<bool>(nameof(CheckForUpdates));
         set => SetValue(nameof(CheckForUpdates), value);
     }
+
+    public bool FirstRun
+    {
+        get => GetValue<bool>(nameof(FirstRun));
+        set => SetValue(nameof(FirstRun), value);
+    }
 }

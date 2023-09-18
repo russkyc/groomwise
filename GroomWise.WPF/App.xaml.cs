@@ -9,11 +9,12 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
+using System.Linq;
 using System.Threading;
-using System.Windows;
 using GroomWise.Application.Enums;
 using GroomWise.Application.Extensions;
 using GroomWise.Infrastructure.Configuration.Interfaces;
+using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.IoC.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using GroomWise.Infrastructure.Theming.Interfaces;
@@ -56,6 +57,7 @@ public partial class App
             var navigation = scope.GetService<INavigationService>()!;
             navigation.Add(AppViews.Login, typeof(LoginView));
             navigation.Add(AppViews.Main, typeof(MainView));
+            navigation.Add(AppViews.CreateAdmin, typeof(CreateAdminAccountView));
         });
     }
 
@@ -74,23 +76,38 @@ public partial class App
     {
         var configuration = scope.GetService<IConfigurationService>()!;
         var navigation = scope.GetService<INavigationService>()!;
+        var dbContext = scope.GetService<GroomWiseDbContext>()!;
 
         Current.Dispatcher.BeginInvoke(() =>
         {
             // Open Login if multi-user is enabled
-            if (configuration.MultiUser)
+            if (configuration.MultiUser is false)
             {
-                var multiUserView = scope.GetService<LoginView>()!;
-                navigation.Initialize(SynchronizationContext.Current!, multiUserView);
-                MainWindow = multiUserView;
+                // Open Main Window if multi-user is disabled
+                var singleUserView = scope.GetService<MainView>()!;
+                navigation.Initialize(SynchronizationContext.Current!, singleUserView);
+                MainWindow = singleUserView;
                 MainWindow!.Show();
                 return;
             }
 
-            // Open Main Window if multi-user is disabled
-            var singleUserView = scope.GetService<MainView>()!;
-            navigation.Initialize(SynchronizationContext.Current!, singleUserView);
-            MainWindow = singleUserView;
+            if (!dbContext.Accounts.GetAll().Any() || configuration.FirstRun)
+            {
+                if (configuration.FirstRun)
+                {
+                    dbContext.Accounts.DeleteMultiple(a => true);
+                    configuration.FirstRun = false;
+                }
+                var adminAccountView = scope.GetService<CreateAdminAccountView>();
+                navigation.Initialize(SynchronizationContext.Current!, adminAccountView);
+                MainWindow = adminAccountView;
+                MainWindow!.Show();
+                return;
+            }
+
+            var multiUserView = scope.GetService<LoginView>()!;
+            navigation.Initialize(SynchronizationContext.Current!, multiUserView);
+            MainWindow = multiUserView;
             MainWindow!.Show();
         });
     }
