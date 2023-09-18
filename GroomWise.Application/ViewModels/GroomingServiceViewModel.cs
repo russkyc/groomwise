@@ -72,7 +72,7 @@ public partial class GroomingServiceViewModel
             return;
         }
 
-        var dialogResult = await DialogService.Create(
+        var dialogResult = await DialogService.CreateYesNo(
             "GroomWise",
             "Create Service?",
             NavigationService
@@ -104,7 +104,7 @@ public partial class GroomingServiceViewModel
         }
         var dialogResult = await Task.Run(
             () =>
-                DialogService.Create(
+                DialogService.CreateYesNo(
                     "Services",
                     $"Are you sure you want to delete {observableGroomingService.Type}?",
                     NavigationService

@@ -70,7 +70,7 @@ public class GithubUpdater : IUpdater
             _latestVersion = result.LastVersion;
             return await Task.Run(
                 () =>
-                    _dialogService.Create(
+                    _dialogService.CreateYesNo(
                         "New Update Available",
                         $"Update to Version {_latestVersion.Major}.{_latestVersion.Minor}.{_latestVersion.Build}?",
                         _navigationService
@@ -102,9 +102,9 @@ public class GithubUpdater : IUpdater
         await _updateManager.PrepareUpdateAsync(_latestVersion, progress);
         var dialogResult = await Task.Run(
             () =>
-                _dialogService.Create(
+                _dialogService.CreateYesNo(
                     $"Update {_latestVersion} Downloaded",
-                    $"Restart now?",
+                    "Install update and restart application?",
                     _navigationService
                 )
         );

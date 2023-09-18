@@ -13,7 +13,13 @@ namespace GroomWise.Infrastructure.Navigation.Interfaces;
 
 public interface IDialogService
 {
-    Task<bool?> Create(
+    Task<bool?> CreateYesNo(
+        string messageBoxText,
+        string caption,
+        INavigationService navigationService
+    );
+
+    Task<bool?> CreateOkCancel(
         string messageBoxText,
         string caption,
         INavigationService navigationService

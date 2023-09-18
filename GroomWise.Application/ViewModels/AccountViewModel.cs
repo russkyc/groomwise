@@ -66,7 +66,7 @@ public partial class AccountViewModel
     private async Task SaveAccount()
     {
         var dialogResult = await Task.Run(
-            () => DialogService.Create("Accounts", "Create Account?", NavigationService)
+            () => DialogService.CreateYesNo("Accounts", "Create Account?", NavigationService)
         );
 
         if (dialogResult is false)
@@ -86,7 +86,7 @@ public partial class AccountViewModel
             return;
         }
         AuthenticationService.Register(Username, Password, Role);
-        DialogService.CloseDialogs(NavigationService);
+        await DialogService.CloseDialogs(NavigationService);
         EventAggregator.Publish(
             new PublishNotificationEvent(
                 "Accounts Updated",

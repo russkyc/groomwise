@@ -23,69 +23,41 @@ namespace GroomWise.Services;
 [RegisterSingleton<IDialogService, DialogService>]
 public class DialogService : IDialogService
 {
-    public async Task<bool?> Create(
+    public async Task<bool?> CreateYesNo(
         string messageBoxText,
         string caption,
         INavigationService navigationService
-    )
-    {
-        return await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
-        {
-            if (
-                System.Windows.Application.Current.Windows
-                    .OfType<DialogView>()
-                    .FirstOrDefault(
-                        dialog =>
-                            dialog.Owner == navigationService.CurrentWindow
-                            && dialog.Caption!.Equals(caption)
-                            && dialog.MessageBoxText!.Equals(messageBoxText)
-                    ) is
-                { }
-            )
-            {
-                return false;
-            }
+    ) =>
+        await CreateReturningDialog(
+            messageBoxText,
+            caption,
+            MessageBoxButton.YesNo,
+            navigationService
+        );
 
-            return new DialogView(messageBoxText, caption)
-            {
-                ShowInTaskbar = false,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Owner = (Window)navigationService.CurrentWindow
-            }.ShowDialog();
-        });
-    }
+    public async Task<bool?> CreateOkCancel(
+        string messageBoxText,
+        string caption,
+        INavigationService navigationService
+    ) =>
+        await CreateReturningDialog(
+            messageBoxText,
+            caption,
+            MessageBoxButton.OKCancel,
+            navigationService
+        );
 
     public async Task<bool?> CreateOk(
         string messageBoxText,
         string caption,
         INavigationService navigationService
-    )
-    {
-        return await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
-        {
-            if (
-                System.Windows.Application.Current.Windows
-                    .OfType<DialogView>()
-                    .FirstOrDefault(
-                        dialog =>
-                            dialog.Owner == navigationService.CurrentWindow
-                            && dialog.Caption!.Equals(caption)
-                            && dialog.MessageBoxText!.Equals(messageBoxText)
-                    ) is
-                { }
-            )
-            {
-                return false;
-            }
-
-            return new DialogView(messageBoxText, caption, MessageBoxButton.OK)
-            {
-                ShowInTaskbar = false,
-                WindowStartupLocation = WindowStartupLocation.CenterOwner,
-                Owner = (Window)navigationService.CurrentWindow
-            }.ShowDialog();
-        });
-    }
+    ) =>
+        await CreateReturningDialog(
+            messageBoxText,
+            caption,
+            MessageBoxButton.OK,
+            navigationService
+        );
 
     public async Task CloseDialogs(INavigationService navigationService)
     {
@@ -154,6 +126,39 @@ public class DialogService : IDialogService
         object viewModel,
         INavigationService navigationService
     ) => await CreateNonReturningDialog(new AddServicesView(viewModel), navigationService);
+
+    async Task<bool?> CreateReturningDialog(
+        string messageBoxText,
+        string caption,
+        MessageBoxButton buttons,
+        INavigationService navigationService
+    )
+    {
+        return await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
+        {
+            if (
+                System.Windows.Application.Current.Windows
+                    .OfType<DialogView>()
+                    .FirstOrDefault(
+                        dialog =>
+                            dialog.Owner == navigationService.CurrentWindow
+                            && dialog.Caption!.Equals(caption)
+                            && dialog.MessageBoxText!.Equals(messageBoxText)
+                    ) is
+                { }
+            )
+            {
+                return false;
+            }
+
+            return new DialogView(messageBoxText, caption, buttons)
+            {
+                ShowInTaskbar = false,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = (Window)navigationService.CurrentWindow
+            }.ShowDialog();
+        });
+    }
 
     async Task CreateNonReturningDialog(ModernWindow view, INavigationService navigationService) =>
         await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>

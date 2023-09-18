@@ -72,7 +72,7 @@ public partial class CustomerViewModel
     private async Task SaveCustomer()
     {
         var dialogResult = await Task.Run(
-            () => DialogService.Create("GroomWise", "Save Customer?", NavigationService)
+            () => DialogService.CreateYesNo("GroomWise", "Save Customer?", NavigationService)
         );
         if (dialogResult is false)
         {
@@ -90,7 +90,7 @@ public partial class CustomerViewModel
             return;
         }
         GroomWiseDbContext.Customers.Insert(ActiveCustomer.ToEntity());
-        DialogService.CloseDialogs(NavigationService);
+        await DialogService.CloseDialogs(NavigationService);
         EventAggregator.Publish(new CreateCustomerEvent());
         EventAggregator.Publish(
             new PublishNotificationEvent(
@@ -144,7 +144,7 @@ public partial class CustomerViewModel
         }
         var dialogResult = await Task.Run(
             () =>
-                DialogService.Create(
+                DialogService.CreateYesNo(
                     $"{SelectedCustomer.FullName.GetFirstName()}'s Pets",
                     $"Are you sure you want to remove {pet.Name}?",
                     NavigationService
@@ -164,7 +164,7 @@ public partial class CustomerViewModel
     {
         var dialogResult = await Task.Run(
             () =>
-                DialogService.Create(
+                DialogService.CreateYesNo(
                     "Appointments",
                     $"Update {SelectedCustomer.FullName.GetFirstName()}?",
                     NavigationService
@@ -176,7 +176,7 @@ public partial class CustomerViewModel
         }
         GroomWiseDbContext.Customers.Update(SelectedCustomer.Id, SelectedCustomer.ToEntity());
         EventAggregator.Publish(new UpdateCustomerEvent());
-        DialogService.CloseDialogs(NavigationService);
+        await DialogService.CloseDialogs(NavigationService);
     }
 
     [Command]
@@ -194,7 +194,7 @@ public partial class CustomerViewModel
         }
         var dialogResult = await Task.Run(
             () =>
-                DialogService.Create(
+                DialogService.CreateYesNo(
                     "Customers",
                     $"Are you sure you want to delete {observableCustomer.FullName.GetFirstName()}?",
                     NavigationService

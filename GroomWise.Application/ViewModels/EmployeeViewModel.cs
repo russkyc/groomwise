@@ -82,7 +82,7 @@ public partial class EmployeeViewModel
     {
         var dialogResult = await Task.Run(
             () =>
-                DialogService.Create(
+                DialogService.CreateYesNo(
                     "Employees",
                     $"Update {SelectedEmployee.FullName!.GetFirstName()}?",
                     NavigationService
@@ -94,14 +94,14 @@ public partial class EmployeeViewModel
         }
         GroomWiseDbContext.Employees.Update(SelectedEmployee.Id, SelectedEmployee.ToEntity());
         EventAggregator.Publish(new UpdateCustomerEvent());
-        DialogService.CloseDialogs(NavigationService);
+        await DialogService.CloseDialogs(NavigationService);
     }
 
     [Command]
     private async Task SaveEmployee()
     {
         var dialogResult = await Task.Run(
-            () => DialogService.Create("Employees", "Save Employee?", NavigationService)
+            () => DialogService.CreateYesNo("Employees", "Save Employee?", NavigationService)
         );
 
         if (dialogResult is false)
@@ -121,7 +121,7 @@ public partial class EmployeeViewModel
             return;
         }
         GroomWiseDbContext.Employees.Insert(ActiveEmployee.ToEntity());
-        DialogService.CloseDialogs(NavigationService);
+        await DialogService.CloseDialogs(NavigationService);
         EventAggregator.Publish(new CreateCustomerEvent());
         EventAggregator.Publish(
             new PublishNotificationEvent(
@@ -143,7 +143,7 @@ public partial class EmployeeViewModel
         }
         var dialogResult = await Task.Run(
             () =>
-                DialogService.Create(
+                DialogService.CreateYesNo(
                     "Employees",
                     $"Are you sure you want to delete {observableEmployee.FullName!.GetFirstName()}?",
                     NavigationService

@@ -104,7 +104,7 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
     {
         var dialogResult = await Task.Run(
             () =>
-                DialogService.Create(
+                DialogService.CreateYesNo(
                     "GroomWise",
                     "Are you sure you want to log out?",
                     NavigationService
@@ -119,7 +119,7 @@ public partial class AppViewModel : IEventSubscriber<PublishNotificationEvent>
         if (AuthenticationService.Logout() is AuthenticationStatus.NotAuthenticated)
         {
             await Task.Delay(300);
-            DialogService.CloseDialogs(NavigationService);
+            await DialogService.CloseDialogs(NavigationService);
             NavigationService.Navigate(AppViews.Login);
             EventAggregator.Publish(new LogoutEvent());
         }

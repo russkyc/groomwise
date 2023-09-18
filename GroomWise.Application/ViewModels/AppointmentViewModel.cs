@@ -136,7 +136,7 @@ public partial class AppointmentViewModel
             );
             return;
         }
-        var dialogResult = await DialogService.Create(
+        var dialogResult = await DialogService.CreateYesNo(
             "Appointments",
             $"Cancel {appointment.Customer.FullName.Split(" ")[0]}'s Appointment?",
             NavigationService
@@ -210,7 +210,7 @@ public partial class AppointmentViewModel
         }
         var dialogResult = await Task.Run(
             () =>
-                DialogService.Create(
+                DialogService.CreateYesNo(
                     "Appointments",
                     $"Book Appointment for {ActiveAppointment.Customer.FullName.Split(" ")[0]}?",
                     NavigationService
@@ -220,7 +220,7 @@ public partial class AppointmentViewModel
         {
             return;
         }
-        DialogService.CloseDialogs(NavigationService);
+        await DialogService.CloseDialogs(NavigationService);
         GroomWiseDbContext.Appointments.Insert(ActiveAppointment.ToEntity());
         EventAggregator.Publish(new CreateAppointmentEvent());
         EventAggregator.Publish(
