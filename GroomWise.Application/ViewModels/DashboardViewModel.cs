@@ -73,10 +73,6 @@ public partial class DashboardViewModel
         {
             return;
         }
-
-        var player = new SoundPlayer("notification.wav");
-        player.Load();
-        player.Play();
     }
 
     public void SetDate()
