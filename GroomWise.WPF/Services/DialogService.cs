@@ -9,7 +9,6 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -119,60 +118,58 @@ public class DialogService : IDialogService
     public async Task CreateAddAccountDialog(
         object viewModel,
         INavigationService navigationService
-    ) => await CreateNonReturningDialog<AddAccountView>(viewModel, navigationService);
+    ) => await CreateNonReturningDialog(new AddAccountView(viewModel), navigationService);
 
     public async Task CreateAddAppointmentsDialog(
         object viewModel,
         INavigationService navigationService
-    ) => await CreateNonReturningDialog<AddAppointmentsView>(viewModel, navigationService);
+    ) => await CreateNonReturningDialog(new AddAppointmentsView(viewModel), navigationService);
 
     public async Task CreateCustomerSelectionDialog(
         object viewModel,
         INavigationService navigationService
-    ) => await CreateNonReturningDialog<SelectCustomerView>(viewModel, navigationService);
+    ) => await CreateNonReturningDialog(new SelectCustomerView(viewModel), navigationService);
 
     public async Task CreateAddCustomersDialog(
         object viewModel,
         INavigationService navigationService
-    ) => await CreateNonReturningDialog<AddCustomersView>(viewModel, navigationService);
+    ) => await CreateNonReturningDialog(new AddCustomersView(viewModel), navigationService);
 
     public async Task CreateEditCustomersDialog(
         object viewModel,
         INavigationService navigationService
-    ) => await CreateNonReturningDialog<EditCustomersView>(viewModel, navigationService);
+    ) => await CreateNonReturningDialog(new EditCustomersView(viewModel), navigationService);
 
     public async Task CreateAddEmployeeDialog(
         object viewModel,
         INavigationService navigationService
-    ) => await CreateNonReturningDialog<AddEmployeeView>(viewModel, navigationService);
+    ) => await CreateNonReturningDialog(new AddEmployeeView(viewModel), navigationService);
 
     public async Task CreateEditEmployeeDialog(
         object viewModel,
         INavigationService navigationService
-    ) => await CreateNonReturningDialog<AddCustomersView>(viewModel, navigationService);
+    ) => await CreateNonReturningDialog(new AddCustomersView(viewModel), navigationService);
 
     public async Task CreateAddServicesDialog(
         object viewModel,
         INavigationService navigationService
-    ) => await CreateNonReturningDialog<AddServicesView>(viewModel, navigationService);
+    ) => await CreateNonReturningDialog(new AddServicesView(viewModel), navigationService);
 
-    public async Task CreateNonReturningDialog<T>(
-        object viewModel,
-        INavigationService navigationService
-    ) =>
+    async Task CreateNonReturningDialog(ModernWindow view, INavigationService navigationService) =>
         await System.Windows.Application.Current.Dispatcher.InvokeAsync(() =>
         {
-            if (System.Windows.Application.Current.Windows.OfType<T>().Any())
+            if (
+                System.Windows.Application.Current.Windows
+                    .OfType<ModernWindow>()
+                    .Any(
+                        dialog =>
+                            dialog.GetType() == view.GetType()
+                            && dialog.Owner == navigationService.CurrentWindow
+                    )
+            )
             {
                 return;
             }
-
-            if (Activator.CreateInstance<T>()! is not ModernWindow view)
-            {
-                return;
-            }
-
-            view.DataContext = viewModel;
             view.ShowInTaskbar = false;
             view.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             view.Owner = (ModernWindow)navigationService.CurrentWindow;

@@ -13,7 +13,11 @@ namespace GroomWise.Infrastructure.Navigation.Interfaces;
 
 public interface IDialogService
 {
-    Task<bool?> Create(string messageBoxText, string caption, INavigationService navigationService);
+    Task<bool?> Create(
+        string messageBoxText,
+        string caption,
+        INavigationService navigationService
+    );
 
     Task<bool?> CreateOk(
         string messageBoxText,
@@ -23,13 +27,43 @@ public interface IDialogService
 
     Task CloseDialogs(INavigationService navigationService);
 
-    Task CreateNonReturningDialog<T>(object viewModel, INavigationService navigationService);
-    Task CreateAddAccountDialog(object viewModel, INavigationService navigationService);
-    Task CreateAddAppointmentsDialog(object viewModel, INavigationService navigationService);
-    Task CreateCustomerSelectionDialog(object viewModel, INavigationService navigationService);
-    Task CreateAddCustomersDialog(object viewModel, INavigationService navigationService);
-    Task CreateEditCustomersDialog(object viewModel, INavigationService navigationService);
-    Task CreateAddEmployeeDialog(object viewModel, INavigationService navigationService);
-    Task CreateEditEmployeeDialog(object viewModel, INavigationService navigationService);
-    Task CreateAddServicesDialog(object viewModel, INavigationService navigationService);
+    Task CreateAddAccountDialog(
+        object viewModel,
+        INavigationService navigationService
+    );
+
+    Task CreateAddAppointmentsDialog(
+        object viewModel,
+        INavigationService navigationService
+    );
+
+    Task CreateCustomerSelectionDialog(
+        object viewModel,
+        INavigationService navigationService
+    );
+
+    Task CreateAddCustomersDialog(
+        object viewModel,
+        INavigationService navigationService
+    );
+
+    Task CreateEditCustomersDialog(
+        object viewModel,
+        INavigationService navigationService
+    );
+
+    Task CreateAddEmployeeDialog(
+        object viewModel,
+        INavigationService navigationService
+    );
+
+    Task CreateEditEmployeeDialog(
+        object viewModel,
+        INavigationService navigationService
+    );
+
+    Task CreateAddServicesDialog(
+        object viewModel,
+        INavigationService navigationService
+    );
 }
