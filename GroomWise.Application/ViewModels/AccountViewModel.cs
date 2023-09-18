@@ -11,9 +11,12 @@
 
 using GroomWise.Application.Events;
 using GroomWise.Application.Extensions;
+using GroomWise.Application.Mappers;
+using GroomWise.Application.Observables;
 using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
 using GroomWise.Infrastructure.Database;
+using GroomWise.Infrastructure.Encryption.Interfaces;
 using GroomWise.Infrastructure.IoC.Interfaces;
 using GroomWise.Infrastructure.Navigation.Interfaces;
 using Injectio.Attributes;
@@ -28,6 +31,7 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(IAuthenticationService))]
 [Inject(typeof(IDialogService))]
 [Inject(typeof(INavigationService))]
+[Inject(typeof(IEncryptionService))]
 [Inject(typeof(IEventAggregator))]
 [Inject(typeof(IAppServicesContainer))]
 [Inject(typeof(GroomWiseDbContext))]
@@ -44,7 +48,7 @@ public partial class AccountViewModel
     private string _password;
 
     [Property]
-    private ConcurrentObservableCollection<Account> _accounts = new();
+    private ConcurrentObservableCollection<ObservableAccount> _accounts = new();
 
     partial void OnInitialize()
     {
@@ -53,7 +57,14 @@ public partial class AccountViewModel
 
     void PopulateCollections()
     {
-        Accounts = GroomWiseDbContext.Accounts.GetAll().AsObservableCollection();
+        Accounts = GroomWiseDbContext.Accounts
+            .GetAll()
+            .Select(account =>
+            {
+                account.Username = EncryptionService.Decrypt(account.Username!);
+                return account.ToObservable();
+            })
+            .AsObservableCollection();
     }
 
     [Command]
@@ -96,6 +107,39 @@ public partial class AccountViewModel
         );
         Username = string.Empty;
         Password = string.Empty;
+        PopulateCollections();
+    }
+
+    [Command]
+    private async Task RemoveAccount(object param)
+    {
+        if (param is not ObservableAccount observableAccount)
+        {
+            return;
+        }
+        var dialogResult = await Task.Run(
+            () =>
+                DialogService.CreateYesNo(
+                    "Accounts",
+                    $"Are you sure you want to delete {observableAccount.Username}?",
+                    NavigationService
+                )
+        );
+
+        if (dialogResult is false)
+        {
+            return;
+        }
+
+        GroomWiseDbContext.Accounts.Delete(observableAccount.Id);
+        EventAggregator.Publish(new DeleteAccountEvent());
+        EventAggregator.Publish(
+            new PublishNotificationEvent(
+                "Employees Updated",
+                $"{observableAccount.Username}' is removed",
+                NotificationType.Notify
+            )
+        );
         PopulateCollections();
     }
 }

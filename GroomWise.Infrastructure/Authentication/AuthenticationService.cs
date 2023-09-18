@@ -35,52 +35,39 @@ public class AuthenticationService : IAuthenticationService
         _encryptionService = encryptionService;
     }
 
-    public void Register(
-        string username,
-        string password,
-        Guid? employeeId = null,
-        params Role[] roles
-    )
+    public void Register(string username, string password, Role role, Guid? employeeId = null)
     {
         var account = new Account
         {
-            Username = _encryptionService.Hash(username),
-            Password = _encryptionService.Hash(password)
+            Username = _encryptionService.Encrypt(username),
+            Password = _encryptionService.Hash(password),
+            Role = role
         };
-
-        foreach (var role in roles)
-        {
-            account.Roles.Add(role);
-        }
 
         if (employeeId is null)
         {
+            _dbContext.Accounts.Insert(account);
             return;
         }
 
         if (
-            _dbContext.Employees.Get(filteredEmployee => filteredEmployee.Id.Equals(employeeId))
-            is not { } employee
+            _dbContext.Employees.Get(filteredEmployee => filteredEmployee.Id.Equals(employeeId)) is
+            { } employee
+            
         )
         {
+            account.Employee = employee;
             return;
         }
 
-        account.Employee = employee;
-
         _dbContext.Accounts.Insert(account);
-    }
-
-    public void Register(string username, string password, params Role[] roles)
-    {
-        Register(username, password, null, roles);
     }
 
     public void Unregister(string username, string password)
     {
         var account = _dbContext.Accounts.Get(
             account =>
-                account.Username!.Equals(username.SHA256())
+                account.Username!.Equals(_encryptionService.Encrypt(username))
                 && account.Password!.Equals(password.SHA256())
         );
 
@@ -95,7 +82,7 @@ public class AuthenticationService : IAuthenticationService
     public AuthenticationStatus Login(string username, string password)
     {
         var account = _dbContext.Accounts.Get(
-            account => account.Username!.Equals(_encryptionService.Hash(username))
+            account => account.Username!.Equals(_encryptionService.Encrypt(username))
         );
 
         if (account is null)
@@ -110,7 +97,7 @@ public class AuthenticationService : IAuthenticationService
 
         lock (_lock)
         {
-            _sessionInfo = account.Employee.ToSession();
+            _sessionInfo = account.ToSession();
         }
         return AuthenticationStatus.Authenticated;
     }
@@ -120,12 +107,12 @@ public class AuthenticationService : IAuthenticationService
         string password,
         string newUsername,
         string newPassword,
-        params Role[] roles
+        Role role
     )
     {
         var account = _dbContext.Accounts.Get(
             account =>
-                account.Username!.Equals(_encryptionService.Hash(username))
+                account.Username!.Equals(_encryptionService.Encrypt(username))
                 && account.Password!.Equals(_encryptionService.Hash(password))
         );
 
@@ -134,9 +121,9 @@ public class AuthenticationService : IAuthenticationService
             return UpdateStatus.InvalidAccount;
         }
 
-        account.Username = _encryptionService.Hash(newUsername);
+        account.Username = _encryptionService.Encrypt(newUsername);
         account.Password = _encryptionService.Hash(newPassword);
-        account.Roles = roles;
+        account.Role = role;
 
         if (_dbContext.Accounts.Update(account.Id, account) is false)
         {

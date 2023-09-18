@@ -10,6 +10,7 @@
     xmlns:pages="clr-namespace:GroomWise.Views.Pages"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
     xmlns:templates="clr-namespace:GroomWise.Views.Templates"
+    xmlns:types="clr-namespace:GroomWise.Infrastructure.Authentication.Types;assembly=GroomWise.Infrastructure"
     xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
     Title="GroomWise"
     Width="1280"
@@ -135,44 +136,51 @@
                     Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt Home}"
                     PageContext="{x:Type viewModels:DashboardViewModel}"
-                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:DashboardViewModel}, Mode=OneWay}"
-                    Tooltip="Home" />
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:DashboardViewModel}}"
+                    Tooltip="Home"
+                    Visibility="{Binding SessionRole, Converter={x:Static converters:RoleToVisibilityConverter.Instance}, ConverterParameter={x:Static types:AccessType.All}}" />
                 <templates:NavItemTemplate
                     Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt Event}"
                     PageContext="{x:Type viewModels:AppointmentViewModel}"
-                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:AppointmentViewModel}, Mode=OneWay}"
-                    Tooltip="Appointments" />
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:AppointmentViewModel}}"
+                    Tooltip="Appointments"
+                    Visibility="{Binding SessionRole, Converter={x:Static converters:RoleToVisibilityConverter.Instance}, ConverterParameter={x:Static types:AccessType.All}}" />
                 <templates:NavItemTemplate
                     Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt BubbleChart}"
                     PageContext="{x:Type viewModels:GroomingServiceViewModel}"
-                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:GroomingServiceViewModel}, Mode=OneWay}"
-                    Tooltip="Services" />
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:GroomingServiceViewModel}}"
+                    Tooltip="Services"
+                    Visibility="{Binding SessionRole, Converter={x:Static converters:RoleToVisibilityConverter.Instance}, ConverterParameter={x:Static types:AccessType.All}}" />
                 <templates:NavItemTemplate
                     Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt Person}"
                     PageContext="{x:Type viewModels:CustomerViewModel}"
-                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:CustomerViewModel}, Mode=OneWay}"
-                    Tooltip="Customers" />
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:CustomerViewModel}}"
+                    Tooltip="Customers"
+                    Visibility="{Binding SessionRole, Converter={x:Static converters:RoleToVisibilityConverter.Instance}, ConverterParameter={x:Static types:AccessType.All}}" />
                 <templates:NavItemTemplate
                     Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt PeopleGroup}"
                     PageContext="{x:Type viewModels:EmployeeViewModel}"
-                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:EmployeeViewModel}, Mode=OneWay}"
-                    Tooltip="Employees" />
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:EmployeeViewModel}}"
+                    Tooltip="Employees"
+                    Visibility="{Binding SessionRole, Converter={x:Static converters:RoleToVisibilityConverter.Instance}, ConverterParameter={x:Static types:AccessType.AdminOnly}}" />
                 <templates:NavItemTemplate
                     Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt Pets}"
                     PageContext="{x:Type viewModels:PetViewModel}"
-                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:PetViewModel}, Mode=OneWay}"
-                    Tooltip="Pets" />
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:PetViewModel}}"
+                    Tooltip="Pets"
+                    Visibility="{Binding SessionRole, Converter={x:Static converters:RoleToVisibilityConverter.Instance}, ConverterParameter={x:Static types:AccessType.All}}" />
                 <templates:NavItemTemplate
                     Margin="8,8,8,0"
                     Icon="{icons:MaterialIconExt Accounts}"
                     PageContext="{x:Type viewModels:AccountViewModel}"
-                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:AccountViewModel}, Mode=OneWay}"
-                    Tooltip="Accounts" />
+                    Selected="{Binding PageContext, Converter={x:Static converters:PageContextToSelectionConverter.Instance}, ConverterParameter={x:Type viewModels:AccountViewModel}}"
+                    Tooltip="Accounts"
+                    Visibility="{Binding SessionRole, Converter={x:Static converters:RoleToVisibilityConverter.Instance}, ConverterParameter={x:Static types:AccessType.AdminOnly}}" />
             </StackPanel>
             <StackPanel VerticalAlignment="Bottom">
                 <templates:NavItemTemplate

@@ -10,21 +10,37 @@
 // but WITHOUT ANY WARRANTY
 
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using GroomWise.Domain.Enums;
+using System.Windows.Input;
+using GroomWise.Application.ViewModels;
+using GroomWise.Infrastructure.Navigation.Interfaces;
+using Injectio.Attributes;
 
 namespace GroomWise.Views.Dialogs;
 
-public partial class AddAccountView
+[RegisterTransient]
+public partial class CreateAdminAccountView : IWindow
 {
-    public IEnumerable<Role> Roles => new[] { Role.Admin, Role.Manager, Role.Groomer };
-
-    public AddAccountView(object vm)
+    public CreateAdminAccountView(LoginViewModel vm)
     {
         DataContext = vm;
         InitializeComponent();
+        UsernameBox.Focus();
+    }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        System.Windows.Application.Current.Shutdown();
+        Environment.Exit(0);
+        base.OnClosed(e);
+    }
+
+    private void UsernameBox_OnKeyDown(object sender, KeyEventArgs keyEventArgs)
+    {
+        if (keyEventArgs.Key == Key.Enter)
+            PasswordBox.Focus();
     }
 
     private void PasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)
@@ -33,5 +49,11 @@ public partial class AddAccountView
         {
             ((dynamic)DataContext).Password = ((PasswordBox)sender).Password;
         }
+    }
+
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        PasswordBox.Clear();
+        base.OnClosing(e);
     }
 }

@@ -9,17 +9,26 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
+using CommunityToolkit.Mvvm.ComponentModel;
 using GroomWise.Domain.Entities;
-using GroomWise.Domain.Interfaces;
-using LiteDB;
-using Role = GroomWise.Domain.Enums.Role;
+using GroomWise.Domain.Enums;
 
-public class Account : IEntity
+namespace GroomWise.Application.Observables;
+
+public partial class ObservableAccount : ObservableObject
 {
-    [BsonId]
-    public Guid Id { get; set; }
-    public string? Username { get; set; }
-    public string? Password { get; set; }
-    public Employee? Employee { get; set; }
-    public Role Role { get; set; }
+    [ObservableProperty]
+    private Guid _id;
+
+    [ObservableProperty]
+    private string? _username;
+
+    [ObservableProperty]
+    private string? _password;
+
+    [ObservableProperty]
+    private ObservableEmployee _employee;
+
+    [ObservableProperty]
+    private Role _role;
 }

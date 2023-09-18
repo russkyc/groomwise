@@ -10,7 +10,7 @@
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
     xmlns:templates="clr-namespace:GroomWise.Views.Templates"
     xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
-    Title="LoginView"
+    Title="Login to GroomWise"
     Width="660"
     Height="420"
     d:DataContext="{d:DesignInstance viewModels:LoginViewModel,

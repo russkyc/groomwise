@@ -1,0 +1,85 @@
+﻿<russkyc:ModernWindow
+    x:Class="GroomWise.Views.Dialogs.CreateAdminAccountView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:org.russkyc.moderncontrols.Helpers;assembly=Russkyc.ModernControls.WPF"
+    xmlns:icons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
+    xmlns:templates="clr-namespace:GroomWise.Views.Templates"
+    xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
+    Title="Create Admin Account"
+    Width="400"
+    Height="350"
+    d:DataContext="{d:DesignInstance viewModels:LoginViewModel,
+                                     IsDesignTimeCreatable=True}"
+    ExtendClientAreaToChrome="True"
+    FocusManager.FocusedElement="{Binding ElementName=UsernameBox}"
+    HideDefaultWindowTitle="True"
+    ResizeMode="NoResize"
+    TitleBarBackground="Transparent"
+    Topmost="True"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Grid>
+        <StackPanel Margin="12,18" VerticalAlignment="Center">
+            <TextBlock
+                Margin="12,0,12,0"
+                FontSize="22"
+                FontWeight="Medium"
+                Foreground="{DynamicResource fg-200}"
+                Text="Welcome to GroomWise!"
+                TextAlignment="Center" />
+            <TextBlock
+                Margin="12,12,12,5"
+                Foreground="{DynamicResource fg-600}"
+                Text="Create a default administrator account to get started."
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
+            <russkyc:ModernTextBox
+                x:Name="UsernameBox"
+                Margin="12,12,12,0"
+                CornerRadius="5"
+                HelperText="Required"
+                Icon="{icons:MaterialIconExt Kind=User}"
+                IconPlacement="Left"
+                KeyDown="UsernameBox_OnKeyDown"
+                Placeholder="Username"
+                Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+            <PasswordBox
+                x:Name="PasswordBox"
+                Margin="12,5,12,0"
+                helpers:PasswordBoxHelper.CornerRadius="5"
+                helpers:PasswordBoxHelper.HelperText="Required"
+                helpers:PasswordBoxHelper.LeftIcon="{icons:MaterialIconExt Kind=Password}"
+                helpers:PasswordBoxHelper.Placeholder="Password"
+                PasswordChanged="PasswordBox_OnPasswordChanged">
+                <PasswordBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding CreateAdminAccountCommand}" />
+                </PasswordBox.InputBindings>
+            </PasswordBox>
+            <ItemsControl
+                Margin="12,5,12,0"
+                IsTabStop="False"
+                ItemsSource="{Binding Notifications.EditableCollectionView}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <templates:LoginNotificationTemplate />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <russkyc:ModernButton
+                Margin="12,14,12,0"
+                Command="{Binding CreateAdminAccountCommand}"
+                Content="Create"
+                CornerRadius="5"
+                FontWeight="Bold" />
+        </StackPanel>
+    </Grid>
+</russkyc:ModernWindow>
