@@ -9,44 +9,43 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
+using GroomWise.Application.Extensions;
 using GroomWise.Application.Observables;
 using GroomWise.Domain.Entities;
-using Mapster;
 
 namespace GroomWise.Application.Mappers;
 
 public static class CustomerMapper
 {
-    public static ObservableCustomer ToObservable(this Customer customer)
+    public static ObservableCustomer ToObservable(this Customer c)
     {
-        var mapper = TypeAdapterConfig<Customer, ObservableCustomer>.NewConfig();
-
-        if (customer.Pets is not null)
+        return new ObservableCustomer
         {
-            mapper.Map(
-                dest => dest.Pets,
-                src => src.Pets!.Select(pet => pet.ToObservable()).ToList()
-            );
-        }
-        if (customer.Appointments is not null)
-        {
-            mapper.Map(
-                dest => dest.Appointments,
-                src => src.Appointments!.Select(appointment => appointment.ToObservable()).ToList()
-            );
-        }
-        return customer.Adapt<ObservableCustomer>();
+            Id = c.Id,
+            FullName = c.FullName,
+            Address = c.Address,
+            ContactNumber = c.ContactNumber,
+            Email = c.Email,
+            Pets = c.Pets?.ConvertAll(pet => pet.ToObservable()).AsObservableCollection(),
+            Appointments = c.Appointments?
+                .ConvertAll(appointment => appointment.ToObservable())
+                .AsObservableCollection()
+        };
     }
 
-    public static Customer ToEntity(this ObservableCustomer observableCustomer)
+    public static Customer ToEntity(this ObservableCustomer o)
     {
-        TypeAdapterConfig<ObservableCustomer, Customer>
-            .NewConfig()
-            .Map(dest => dest.Pets, src => src.Pets.Select(pet => pet.ToEntity()).ToList())
-            .Map(
-                dest => dest.Appointments,
-                src => src.Appointments.Select(appointment => appointment.ToEntity()).ToList()
-            );
-        return observableCustomer.Adapt<Customer>();
+        return new Customer
+        {
+            Id = o.Id,
+            FullName = o.FullName,
+            Address = o.Address,
+            ContactNumber = o.ContactNumber,
+            Email = o.Email,
+            Pets = o.Pets.ToList().ConvertAll(pet => pet.ToEntity()),
+            Appointments = o.Appointments
+                .ToList()
+                .ConvertAll(appointment => appointment.ToEntity())
+        };
     }
 }

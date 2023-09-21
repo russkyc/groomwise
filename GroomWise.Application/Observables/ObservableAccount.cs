@@ -27,7 +27,7 @@ public partial class ObservableAccount : ObservableObject
     private string? _password;
 
     [ObservableProperty]
-    private ObservableEmployee _employee;
+    private ObservableEmployee? _employee;
 
     [ObservableProperty]
     private Role _role;

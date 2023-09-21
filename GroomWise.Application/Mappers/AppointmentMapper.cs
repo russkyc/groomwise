@@ -9,69 +9,54 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
+using GroomWise.Application.Extensions;
 using GroomWise.Application.Observables;
 using GroomWise.Domain.Entities;
-using Mapster;
 
 namespace GroomWise.Application.Mappers;
 
 public static class AppointmentMapper
 {
-    public static ObservableAppointment ToObservable(this Appointment appointment)
+    public static Appointment ToEntity(this ObservableAppointment o)
     {
-        var config = TypeAdapterConfig<Appointment, ObservableAppointment>.NewConfig();
-        if (appointment.Services is not null)
+        return new Appointment
         {
-            config.Map(
-                dest => dest.Services,
-                src =>
-                    src.Services
-                        .Select(
-                            groomingService =>
-                                new ObservableAppointmentService
-                                {
-                                    GroomingService = groomingService.ToObservable()
-                                }
-                        )
-                        .ToList()
-            );
-        }
-
-        if (appointment.Employees is not null)
-        {
-            config.Map(
-                dest => dest.Employees,
-                src => src.Employees.Select(employee => employee.ToObservable()).ToList()
-            );
-        }
-        if (appointment.Pet is not null)
-        {
-            config.Map(dest => dest.Pet, src => src.Pet.ToObservable());
-        }
-        config.Map(dest => dest.Customer, src => src.Customer.ToObservable());
-        return appointment.Adapt<ObservableAppointment>();
+            Date = o.Date,
+            StartTime = o.StartTime,
+            EndTime = o.EndTime,
+            Status = o.Status,
+            Customer = o.Customer.ToEntity(),
+            Pet = o.Pet?.ToEntity(),
+            Services = o.Services?.Select(service => service.GroomingService?.ToEntity()).ToList(),
+            Employees = o.Employees
+                ?.Select(employee => employee?.ToEntity())
+                .AsObservableCollection()
+        };
     }
 
-    public static Appointment ToEntity(this ObservableAppointment observableAppointment)
+    public static ObservableAppointment ToObservable(this Appointment a)
     {
-        TypeAdapterConfig<ObservableAppointment, Appointment>
-            .NewConfig()
-            .Map(
-                dest => dest.Services,
-                src =>
-                    src.Services
-                        .Select(appointmentService => appointmentService.GroomingService)
-                        .ToList()
-            )
-            .Map(
-                dest => dest.Employees,
-                src =>
-                    src.Employees
-                        .Select(observableEmployee => observableEmployee.ToEntity())
-                        .ToList()
-            )
-            .Map(dest => dest.Customer, src => src.Customer.ToEntity())
-            .Map(dest => dest.Pet, src => src.Pet.ToEntity());
-        return observableAppointment.Adapt<Appointment>();
+        return new ObservableAppointment
+        {
+            Id = a.Id,
+            Date = a.Date,
+            StartTime = a.StartTime,
+            EndTime = a.EndTime,
+            Status = a.Status,
+            Customer = a.Customer.ToObservable(),
+            Pet = a.Pet?.ToObservable(),
+            Services = a.Services
+                ?.Select(
+                    service =>
+                        new ObservableAppointmentService
+                        {
+                            GroomingService = service?.ToObservable()
+                        }
+                )
+                .AsObservableCollection(),
+            Employees = a.Employees
+                ?.Select(employee => employee?.ToObservable())
+                .AsObservableCollection()
+        };
     }
 }

@@ -9,6 +9,7 @@
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
+using GroomWise.Application.Observables;
 using Swordfish.NET.Collections;
 
 namespace GroomWise.Application.Extensions;
@@ -17,5 +18,5 @@ public static class CollectionExtensions
 {
     public static ConcurrentObservableCollection<T> AsObservableCollection<T>(
         this IEnumerable<T> collection
-    ) => new ConcurrentObservableCollection<T>(collection);
+    ) => new (collection);
 }

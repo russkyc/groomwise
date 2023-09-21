@@ -20,20 +20,20 @@ public partial class ObservableCustomer : ObservableObject
     private Guid _id;
 
     [ObservableProperty]
-    private string _fullName;
+    private string? _fullName;
 
     [ObservableProperty]
-    private string _address;
+    private string? _address;
 
     [ObservableProperty]
-    private string _contactNumber;
+    private string? _contactNumber;
 
     [ObservableProperty]
-    private string _email;
+    private string? _email;
 
     [ObservableProperty]
-    private ConcurrentObservableCollection<ObservableAppointment> _appointments = new();
+    private ConcurrentObservableCollection<ObservableAppointment?>? _appointments = new();
 
     [ObservableProperty]
-    private ConcurrentObservableCollection<ObservablePet> _pets = new();
+    private ConcurrentObservableCollection<ObservablePet?>? _pets = new();
 }

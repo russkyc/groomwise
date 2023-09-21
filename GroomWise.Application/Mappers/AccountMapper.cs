@@ -10,24 +10,31 @@
 // but WITHOUT ANY WARRANTY
 
 using GroomWise.Application.Observables;
-using Mapster;
 
 namespace GroomWise.Application.Mappers;
 
 public static class AccountMapper
 {
-    public static Account ToEntity(this ObservableAccount observableAccount)
+    public static Account ToEntity(this ObservableAccount o)
     {
-        return observableAccount.Adapt<Account>();
+        return new Account
+        {
+            Username = o.Username,
+            Password = o.Password,
+            Role = o.Role,
+            Employee = o.Employee?.ToEntity()
+        };
     }
 
-    public static ObservableAccount ToObservable(this Account account)
+    public static ObservableAccount ToObservable(this Account a)
     {
-        var config = TypeAdapterConfig<Account, ObservableAccount>.NewConfig();
-        if (account.Employee is not null)
+        return new ObservableAccount
         {
-            config.Map(dest => dest.Employee, src => src.Employee.ToObservable());
-        }
-        return account.Adapt<ObservableAccount>();
+            Id = a.Id,
+            Username = a.Username,
+            Password = a.Password,
+            Role = a.Role,
+            Employee = a.Employee?.ToObservable()
+        };
     }
 }
