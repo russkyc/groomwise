@@ -91,13 +91,14 @@ public partial class App
                 return;
             }
 
-            if (!dbContext.Accounts.GetAll().Any() || configuration.FirstRun)
+            if (configuration.FirstRun)
             {
-                if (configuration.FirstRun)
-                {
-                    dbContext.Accounts.DeleteMultiple(a => true);
-                    configuration.FirstRun = false;
-                }
+                dbContext.Accounts.DeleteMultiple(a => true);
+                configuration.FirstRun = false;
+            }
+
+            if (!dbContext.Accounts.GetAll().Any())
+            {
                 var adminAccountView = scope.GetService<CreateAdminAccountView>();
                 navigation.Initialize(SynchronizationContext.Current!, adminAccountView);
                 MainWindow = adminAccountView;
