@@ -23,7 +23,7 @@
       </PackageReference>
       <PackageReference Include="NETCore.Encrypt" Version="2.1.1" />
       <PackageReference Include="Onova" Version="2.6.10" />
-      <PackageReference Include="Russkyc.Configuration" Version="1.0.0" />
+      <PackageReference Include="Russkyc.Configuration" Version="1.0.1" />
       <PackageReference Include="Russkyc.DependencyInjection" Version="2.1.0" />
     </ItemGroup>
 
