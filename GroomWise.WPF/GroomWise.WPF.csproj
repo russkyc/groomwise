@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net7.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
         <ApplicationIcon>Views\Resources\Icons\groomwise-multi.ico</ApplicationIcon>
@@ -11,6 +11,7 @@
         <EnableWindowsTargeting>true</EnableWindowsTargeting>
         <PreserveCompilationContext>false</PreserveCompilationContext>
         <IsPackable>false</IsPackable>
+        <LangVersion>12</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
