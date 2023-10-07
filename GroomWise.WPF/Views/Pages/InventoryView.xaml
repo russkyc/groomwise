@@ -4,15 +4,50 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
     HorizontalAlignment="Stretch"
+    d:DataContext="{d:DesignInstance viewModels:InventoryViewModel,
+                                     IsDesignTimeCreatable=True}"
     d:DesignHeight="720"
     d:DesignWidth="1280"
     Style="{StaticResource FadeInFromBottomAnimation}"
     mc:Ignorable="d">
-    <TextBlock
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        FontSize="18"
-        FontWeight="Medium"
-        Text="Inventory" />
+    <ItemsControl
+        Grid.Row="1"
+        Grid.Column="1"
+        ItemsSource="{Binding Products, UpdateSourceTrigger=PropertyChanged}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <TextBlock Text="{Binding ProductName}" />
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <VirtualizingStackPanel IsVirtualizing="True" VirtualizationMode="Recycling" />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <ItemsControl.ItemContainerStyle>
+            <Style TargetType="{x:Type FrameworkElement}">
+                <Setter Property="Margin" Value="0,0,0,10" />
+            </Style>
+        </ItemsControl.ItemContainerStyle>
+
+        <ItemsControl.Template>
+            <ControlTemplate TargetType="ItemsControl">
+                <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+                    <ScrollViewer
+                        Padding="{TemplateBinding Padding}"
+                        CanContentScroll="True"
+                        Focusable="False">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </Border>
+            </ControlTemplate>
+        </ItemsControl.Template>
+    </ItemsControl>
 </UserControl>
