@@ -11,7 +11,7 @@
         <EnableWindowsTargeting>true</EnableWindowsTargeting>
         <PreserveCompilationContext>false</PreserveCompilationContext>
         <IsPackable>false</IsPackable>
-        <LangVersion>12</LangVersion>
+        <LangVersion>11</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
