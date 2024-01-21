@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -31,14 +31,11 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(GroomWiseDbContext))]
 public partial class EmployeeViewModel
 {
-    [Property]
-    private ConcurrentObservableCollection<ObservableEmployee> _employees = new();
+    [Property] private ObservableEmployee _activeEmployee = new();
 
-    [Property]
-    private ObservableEmployee _activeEmployee = new();
+    [Property] private ConcurrentObservableCollection<ObservableEmployee> _employees = new();
 
-    [Property]
-    private ObservableEmployee _selectedEmployee;
+    [Property] private ObservableEmployee _selectedEmployee;
 
     partial void OnInitialize()
     {
@@ -57,17 +54,14 @@ public partial class EmployeeViewModel
     [Command]
     private async Task CreateEmployee()
     {
-        ActiveEmployee = new();
+        ActiveEmployee = new ObservableEmployee();
         await DialogService.CreateAddEmployeeDialog(this, NavigationService);
     }
 
     [Command]
     private void SelectEmployee(object param)
     {
-        if (param is not ObservableEmployee employee)
-        {
-            return;
-        }
+        if (param is not ObservableEmployee employee) return;
         SelectedEmployee = employee;
     }
 
@@ -88,10 +82,7 @@ public partial class EmployeeViewModel
                     NavigationService
                 )
         );
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
         GroomWiseDbContext.Employees.Update(SelectedEmployee.Id, SelectedEmployee.ToEntity());
         EventAggregator.Publish(new UpdateCustomerEvent());
         await DialogService.CloseDialogs(NavigationService);
@@ -104,10 +95,7 @@ public partial class EmployeeViewModel
             () => DialogService.CreateYesNo("Employees", "Save Employee?", NavigationService)
         );
 
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
 
         if (string.IsNullOrEmpty(ActiveEmployee.FullName))
         {
@@ -120,6 +108,7 @@ public partial class EmployeeViewModel
             );
             return;
         }
+
         GroomWiseDbContext.Employees.Insert(ActiveEmployee.ToEntity());
         await DialogService.CloseDialogs(NavigationService);
         EventAggregator.Publish(new CreateCustomerEvent());
@@ -130,17 +119,14 @@ public partial class EmployeeViewModel
                 NotificationType.Success
             )
         );
-        ActiveEmployee = new();
+        ActiveEmployee = new ObservableEmployee();
         PopulateCollections();
     }
 
     [Command]
     private async Task RemoveEmployee(object param)
     {
-        if (param is not ObservableEmployee observableEmployee)
-        {
-            return;
-        }
+        if (param is not ObservableEmployee observableEmployee) return;
         var dialogResult = await Task.Run(
             () =>
                 DialogService.CreateYesNo(
@@ -150,15 +136,9 @@ public partial class EmployeeViewModel
                 )
         );
 
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
 
-        if (observableEmployee == SelectedEmployee)
-        {
-            SelectedEmployee = null!;
-        }
+        if (observableEmployee == SelectedEmployee) SelectedEmployee = null!;
 
         GroomWiseDbContext.Employees.Delete(observableEmployee.Id);
         EventAggregator.Publish(

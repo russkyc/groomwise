@@ -29,41 +29,41 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <KnownFrameworkReference Update="Microsoft.WindowsDesktop.App.WPF" IsWindowsOnly="false" />
+        <KnownFrameworkReference Update="Microsoft.WindowsDesktop.App.WPF" IsWindowsOnly="false"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Bindables.Wpf" Version="1.4.1" />
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-        <PackageReference Include="CredentialManagement" Version="1.0.2" />
-        <PackageReference Include="Lombok.NET" Version="2.3.0" />
-        <PackageReference Include="Material.Icons.WPF" Version="2.1.0" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
-        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
-        <PackageReference Include="NETCore.Encrypt" Version="2.1.1" />
-        <PackageReference Include="Russkyc.Abstractions" Version="1.6.2" />
-        <PackageReference Include="Russkyc.AttachedUtilities.FilestreamExtensions" Version="1.1.1" />
-        <PackageReference Include="Russkyc.DependencyInjection" Version="2.2.6" />
-        <PackageReference Include="Russkyc.ModernControls.WPF" Version="2.2.3" />
-        <PackageReference Include="Russkyc.Services.HotKeyListener" Version="0.11.1" />
-        <PackageReference Include="Swordfish.NET.CollectionsV3" Version="3.3.12" />
+        <PackageReference Include="Bindables.Wpf" Version="1.4.1"/>
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2"/>
+        <PackageReference Include="CredentialManagement" Version="1.0.2"/>
+        <PackageReference Include="Lombok.NET" Version="2.3.0"/>
+        <PackageReference Include="Material.Icons.WPF" Version="2.1.0"/>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0"/>
+        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77"/>
+        <PackageReference Include="NETCore.Encrypt" Version="2.1.1"/>
+        <PackageReference Include="Russkyc.Abstractions" Version="1.6.2"/>
+        <PackageReference Include="Russkyc.AttachedUtilities.FilestreamExtensions" Version="1.1.1"/>
+        <PackageReference Include="Russkyc.DependencyInjection" Version="2.2.6"/>
+        <PackageReference Include="Russkyc.ModernControls.WPF" Version="2.2.3"/>
+        <PackageReference Include="Russkyc.Services.HotKeyListener" Version="0.11.1"/>
+        <PackageReference Include="Swordfish.NET.CollectionsV3" Version="3.3.12"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Views\Resources\Themes\BaseThemes\" />
-        <Folder Include="Views\Resources\Themes\ColorThemes\" />
+        <Folder Include="Views\Resources\Themes\BaseThemes\"/>
+        <Folder Include="Views\Resources\Themes\ColorThemes\"/>
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="Views\Resources\Icons\groomwise-icon-multi.ico" />
-        <None Remove="Views\Resources\Images\groomwise-logo-vertical.png" />
-        <None Remove="Views\Resources\Images\groomwise-logo-vertical-inverted.png" />
-        <None Remove="Views\Resources\Icons\groomwise-multi.ico" />
-        <Resource Include="Views\Resources\Icons\groomwise-multi.ico" />
+        <None Remove="Views\Resources\Icons\groomwise-icon-multi.ico"/>
+        <None Remove="Views\Resources\Images\groomwise-logo-vertical.png"/>
+        <None Remove="Views\Resources\Images\groomwise-logo-vertical-inverted.png"/>
+        <None Remove="Views\Resources\Icons\groomwise-multi.ico"/>
+        <Resource Include="Views\Resources\Icons\groomwise-multi.ico"/>
         <None Update="GroomWise.Settings.json">
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
-        <None Remove="data.db" />
+        <None Remove="data.db"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -73,25 +73,25 @@
             <SubType>Designer</SubType>
         </Page>
         <Page Update="Views\Templates\NavItemTemplate.xaml">
-          <Generator>MSBuild:Compile</Generator>
-          <XamlRuntime>Wpf</XamlRuntime>
-          <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
         </Page>
         <Page Update="Views\Dialogs\LoginView.xaml">
-          <Generator>MSBuild:Compile</Generator>
-          <XamlRuntime>Wpf</XamlRuntime>
-          <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
         </Page>
         <Page Update="Views\Resources\Styles\ScrollbarStyles.xaml">
-          <Generator>MSBuild:Compile</Generator>
-          <XamlRuntime>Wpf</XamlRuntime>
-          <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
+            <XamlRuntime>Wpf</XamlRuntime>
+            <SubType>Designer</SubType>
         </Page>
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Remove="Models\Helpers\FilterHelper.cs" />
-        <Compile Remove="Models\Entities\DateTimeInfo.cs" />
+        <Compile Remove="Models\Helpers\FilterHelper.cs"/>
+        <Compile Remove="Models\Entities\DateTimeInfo.cs"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -101,7 +101,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\GroomWise.Application\GroomWise.Application.csproj" />
+        <ProjectReference Include="..\GroomWise.Application\GroomWise.Application.csproj"/>
     </ItemGroup>
 
 </Project>

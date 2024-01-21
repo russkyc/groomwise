@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -26,21 +26,12 @@ public class RoleToVisibilityConverter : IValueConverter
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (parameter is not IEnumerable<Role> roles)
-        {
-            return Visibility.Collapsed;
-        }
+        if (parameter is not IEnumerable<Role> roles) return Visibility.Collapsed;
 
-        if (value is not Role accessRole)
-        {
-            return Visibility.Collapsed;
-        }
+        if (value is not Role accessRole) return Visibility.Collapsed;
 
-        if (roles.Any(role => role == accessRole))
-        {
-            return Visibility.Visible;
-        }
-        
+        if (roles.Any(role => role == accessRole)) return Visibility.Visible;
+
         return Visibility.Collapsed;
     }
 

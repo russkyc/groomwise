@@ -6,10 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
-    xmlns:pages="clr-namespace:GroomWise.Views.Pages"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-    xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
-    xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     Height="75"
     d:DataContext="{d:DesignInstance observables:ObservableAppointment,
                                      IsDesignTimeCreatable=True}"

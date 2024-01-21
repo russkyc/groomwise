@@ -10,19 +10,15 @@
 // but WITHOUT ANY WARRANTY
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using Lombok.NET;
 
 namespace GroomWise.Application.Observables;
 
 [ObservableObject]
 public partial class ObservableRole
 {
-    [ObservableProperty]
-    private Guid _id;
+    [ObservableProperty] private string? _description;
 
-    [ObservableProperty]
-    private string? _name;
+    [ObservableProperty] private Guid _id;
 
-    [ObservableProperty]
-    private string? _description;
+    [ObservableProperty] private string? _name;
 }

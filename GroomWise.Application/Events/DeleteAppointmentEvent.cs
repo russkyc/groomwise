@@ -11,4 +11,4 @@
 
 namespace GroomWise.Application.Events;
 
-public record DeleteAppointmentEvent();
+public record DeleteAppointmentEvent;

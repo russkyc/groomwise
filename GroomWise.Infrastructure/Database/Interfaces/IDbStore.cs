@@ -27,7 +27,7 @@ public interface IDbStore
     IEnumerable<T> GetMultiple<T>(
         Expression<Func<T, bool>> filter,
         int skip = 0,
-        int limit = Int32.MaxValue
+        int limit = int.MaxValue
     )
         where T : class;
 

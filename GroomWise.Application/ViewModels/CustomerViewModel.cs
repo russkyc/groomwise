@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -38,14 +38,11 @@ namespace GroomWise.Application.ViewModels;
 [RegisterSingleton]
 public partial class CustomerViewModel
 {
-    [Property]
-    private ObservableCustomer _activeCustomer = new ObservableCustomer();
+    [Property] private ObservableCustomer _activeCustomer = new();
 
-    [Property]
-    private ObservableCustomer _selectedCustomer;
+    [Property] private ConcurrentObservableCollection<ObservableCustomer> _customers = new();
 
-    [Property]
-    private ConcurrentObservableCollection<ObservableCustomer> _customers = new();
+    [Property] private ObservableCustomer _selectedCustomer;
 
     partial void OnInitialize()
     {
@@ -64,7 +61,7 @@ public partial class CustomerViewModel
     [Command]
     private async Task CreateCustomer()
     {
-        ActiveCustomer = new();
+        ActiveCustomer = new ObservableCustomer();
         await DialogService.CreateAddCustomersDialog(this, NavigationService);
     }
 
@@ -74,10 +71,7 @@ public partial class CustomerViewModel
         var dialogResult = await Task.Run(
             () => DialogService.CreateYesNo("GroomWise", "Save Customer?", NavigationService)
         );
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
         if (string.IsNullOrEmpty(ActiveCustomer.FullName))
         {
             EventAggregator.Publish(
@@ -89,6 +83,7 @@ public partial class CustomerViewModel
             );
             return;
         }
+
         GroomWiseDbContext.Customers.Insert(ActiveCustomer.ToEntity());
         await DialogService.CloseDialogs(NavigationService);
         EventAggregator.Publish(new CreateCustomerEvent());
@@ -106,10 +101,7 @@ public partial class CustomerViewModel
     [Command]
     private void SelectCustomer(object param)
     {
-        if (param is not ObservableCustomer customer)
-        {
-            return;
-        }
+        if (param is not ObservableCustomer customer) return;
         SelectedCustomer = customer;
     }
 
@@ -128,20 +120,14 @@ public partial class CustomerViewModel
     [Command]
     private void RemoveCustomerPet(object param)
     {
-        if (param is not ObservablePet pet)
-        {
-            return;
-        }
+        if (param is not ObservablePet pet) return;
         ActiveCustomer.Pets.Remove(pet);
     }
 
     [Command]
     private async Task RemoveSelectedCustomerPet(object param)
     {
-        if (param is not ObservablePet pet)
-        {
-            return;
-        }
+        if (param is not ObservablePet pet) return;
         var dialogResult = await Task.Run(
             () =>
                 DialogService.CreateYesNo(
@@ -150,10 +136,7 @@ public partial class CustomerViewModel
                     NavigationService
                 )
         );
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
         SelectedCustomer.Pets.Remove(pet);
         GroomWiseDbContext.Customers.Update(SelectedCustomer.Id, SelectedCustomer.ToEntity());
         EventAggregator.Publish(new UpdateCustomerEvent());
@@ -170,10 +153,7 @@ public partial class CustomerViewModel
                     NavigationService
                 )
         );
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
         GroomWiseDbContext.Customers.Update(SelectedCustomer.Id, SelectedCustomer.ToEntity());
         EventAggregator.Publish(new UpdateCustomerEvent());
         await DialogService.CloseDialogs(NavigationService);
@@ -188,10 +168,7 @@ public partial class CustomerViewModel
     [Command]
     private async Task RemoveCustomer(object param)
     {
-        if (param is not ObservableCustomer observableCustomer)
-        {
-            return;
-        }
+        if (param is not ObservableCustomer observableCustomer) return;
         var dialogResult = await Task.Run(
             () =>
                 DialogService.CreateYesNo(
@@ -201,15 +178,9 @@ public partial class CustomerViewModel
                 )
         );
 
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
 
-        if (observableCustomer == SelectedCustomer)
-        {
-            SelectedCustomer = null!;
-        }
+        if (observableCustomer == SelectedCustomer) SelectedCustomer = null!;
         GroomWiseDbContext.Customers.Delete(observableCustomer.Id);
         EventAggregator.Publish(new DeleteCustomerEvent(observableCustomer));
         EventAggregator.Publish(
@@ -225,15 +196,9 @@ public partial class CustomerViewModel
     [Command]
     private void ScheduleAppointment(object param)
     {
-        if (param is not ObservableCustomer customer)
-        {
-            return;
-        }
+        if (param is not ObservableCustomer customer) return;
         var appointmentsViewModel = AppServicesContainer.GetService<AppointmentViewModel>();
-        if (appointmentsViewModel is not null)
-        {
-            EventAggregator.Publish(new ScheduleAppointmentEvent(customer));
-        }
+        if (appointmentsViewModel is not null) EventAggregator.Publish(new ScheduleAppointmentEvent(customer));
     }
 
     [Command]

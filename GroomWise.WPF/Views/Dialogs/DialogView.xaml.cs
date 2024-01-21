@@ -15,10 +15,6 @@ namespace GroomWise.Views.Dialogs;
 
 public partial class DialogView
 {
-    public MessageBoxButton Buttons { get; set; }
-    public string? MessageBoxText { get; set; }
-    public string? Caption { get; set; }
-
     public DialogView()
     {
         Buttons = MessageBoxButton.YesNo;
@@ -44,6 +40,10 @@ public partial class DialogView
         BuildButtons();
     }
 
+    public MessageBoxButton Buttons { get; set; }
+    public string? MessageBoxText { get; set; }
+    public string? Caption { get; set; }
+
     private void ButtonYes_OnClick(object sender, RoutedEventArgs e)
     {
         DialogResult = true;
@@ -54,7 +54,7 @@ public partial class DialogView
         DialogResult = false;
     }
 
-    void BuildButtons()
+    private void BuildButtons()
     {
         ButtonYes.Visibility =
             Buttons == MessageBoxButton.YesNo || Buttons == MessageBoxButton.YesNoCancel

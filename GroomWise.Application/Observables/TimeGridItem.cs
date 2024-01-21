@@ -16,11 +16,9 @@ namespace GroomWise.Application.Observables;
 [ObservableObject]
 public partial class TimeGridItem
 {
-    [ObservableProperty]
-    private TimeOnly _time;
+    [ObservableProperty] private bool _available;
 
-    [ObservableProperty]
-    private bool _available;
+    [ObservableProperty] private TimeOnly _time;
 
     public TimeGridItem(TimeOnly time, bool available)
     {

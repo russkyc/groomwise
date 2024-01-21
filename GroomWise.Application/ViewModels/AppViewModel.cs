@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -45,17 +45,44 @@ public partial class AppViewModel
     : IEventSubscriber<PublishNotificationEvent>,
         IEventSubscriber<LoginEvent>
 {
-    [Property]
-    private Role _sessionRole;
+    [Property] private ConcurrentObservableCollection<ObservableNotification> _notifications = new();
 
-    [Property]
-    private ViewModelBase _pageContext;
+    [Property] private ViewModelBase _pageContext;
 
-    [Property]
-    private double _progress;
+    [Property] private double _progress;
 
-    [Property]
-    private ConcurrentObservableCollection<ObservableNotification> _notifications = new();
+    [Property] private Role _sessionRole;
+
+    public void OnEvent(LoginEvent eventData)
+    {
+        if (eventData.Status is AuthenticationStatus.NotAuthenticated) return;
+
+        var session = AuthenticationService.GetSession();
+
+        if (session is null) return;
+
+        if (eventData.Status is AuthenticationStatus.Authenticated)
+            PageContext = AppServicesContainer.GetService<DashboardViewModel>()!;
+
+        SessionRole = session.Role;
+    }
+
+    public void OnEvent(PublishNotificationEvent eventData)
+    {
+        var notification = new ObservableNotification
+        {
+            Title = eventData.Title,
+            Description = eventData.Content,
+            Type = eventData.NotificationType
+        };
+        Notifications.Add(notification);
+        if (Notifications.Count > 8) Notifications.RemoveAt(0);
+        Task.Run(async () =>
+        {
+            await Task.Delay(TimeSpan.FromSeconds(ConfigurationService.ToastCooldown));
+            Notifications.Remove(notification);
+        });
+    }
 
     partial void OnInitialize()
     {
@@ -67,38 +94,26 @@ public partial class AppViewModel
     {
         try
         {
-            if (param is not bool silent)
-            {
-                return;
-            }
+            if (param is not bool silent) return;
 
             var canUpdate = await Updater.CheckForUpdates(silent);
 
-            if (canUpdate is false)
-            {
-                return;
-            }
+            if (canUpdate is false) return;
 
             var progress = new Progress<double>(val => Progress = val * 100);
             await Updater.PerformUpdate(progress);
         }
         catch (HttpRequestException)
         {
-            if (param is not bool silent)
-            {
-                return;
-            }
+            if (param is not bool silent) return;
 
-            if (silent)
-            {
-                return;
-            }
+            if (silent) return;
 
             await Task.Run(
                 () =>
                     DialogService.CreateOk(
                         "No Network Connection",
-                        $"Cannot check for updates.",
+                        "Cannot check for updates.",
                         NavigationService
                     )
             );
@@ -117,10 +132,7 @@ public partial class AppViewModel
                 )
         );
 
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
 
         if (AuthenticationService.Logout() is AuthenticationStatus.NotAuthenticated)
         {
@@ -134,14 +146,8 @@ public partial class AppViewModel
     [Command]
     private void NavigateToPage(object param)
     {
-        if (param is not Type type)
-        {
-            return;
-        }
-        if (AppServicesContainer.GetService(type) is not ViewModelBase viewModel)
-        {
-            return;
-        }
+        if (param is not Type type) return;
+        if (AppServicesContainer.GetService(type) is not ViewModelBase viewModel) return;
 
         PageContext = viewModel;
     }
@@ -149,10 +155,7 @@ public partial class AppViewModel
     [Command]
     private void SetDarkTheme(object param)
     {
-        if (param is not bool useDarkTheme)
-        {
-            return;
-        }
+        if (param is not bool useDarkTheme) return;
         ConfigurationService.DarkMode = useDarkTheme;
         ThemeManagerService.SetDarkTheme(useDarkTheme);
         OnPropertyChanged(nameof(ConfigurationService.DarkMode));
@@ -161,10 +164,7 @@ public partial class AppViewModel
     [Command]
     private void SetColorTheme(object param)
     {
-        if (param is not string themeId)
-        {
-            return;
-        }
+        if (param is not string themeId) return;
         ConfigurationService.ColorTheme = themeId;
         ThemeManagerService.SetColorTheme(themeId);
         OnPropertyChanged(nameof(ConfigurationService.ColorTheme));
@@ -173,52 +173,7 @@ public partial class AppViewModel
     [Command]
     private void RemoveNotification(object param)
     {
-        if (param is not ObservableNotification notification)
-        {
-            return;
-        }
+        if (param is not ObservableNotification notification) return;
         Notifications.Remove(notification);
-    }
-
-    public void OnEvent(PublishNotificationEvent eventData)
-    {
-        var notification = new ObservableNotification
-        {
-            Title = eventData.Title,
-            Description = eventData.Content,
-            Type = eventData.NotificationType
-        };
-        Notifications.Add(notification);
-        if (Notifications.Count > 8)
-        {
-            Notifications.RemoveAt(0);
-        }
-        Task.Run(async () =>
-        {
-            await Task.Delay(TimeSpan.FromSeconds(ConfigurationService.ToastCooldown));
-            Notifications.Remove(notification);
-        });
-    }
-
-    public void OnEvent(LoginEvent eventData)
-    {
-        if (eventData.Status is AuthenticationStatus.NotAuthenticated)
-        {
-            return;
-        }
-
-        var session = AuthenticationService.GetSession();
-
-        if (session is null)
-        {
-            return;
-        }
-
-        if (eventData.Status is AuthenticationStatus.Authenticated)
-        {
-            PageContext = AppServicesContainer.GetService<DashboardViewModel>()!;
-        }
-
-        SessionRole = session.Role;
     }
 }

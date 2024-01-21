@@ -15,18 +15,13 @@ namespace GroomWise.Application.Observables;
 
 public partial class ObservablePet : ObservableObject
 {
-    [ObservableProperty]
-    private Guid _id;
+    [ObservableProperty] private int? _age;
 
-    [ObservableProperty]
-    private string? _name;
+    [ObservableProperty] private string? _breed;
 
-    [ObservableProperty]
-    private int? _age;
+    [ObservableProperty] private string? _gender;
 
-    [ObservableProperty]
-    private string? _breed;
+    [ObservableProperty] private Guid _id;
 
-    [ObservableProperty]
-    private string? _gender;
+    [ObservableProperty] private string? _name;
 }

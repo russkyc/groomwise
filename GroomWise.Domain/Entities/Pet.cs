@@ -16,10 +16,10 @@ namespace GroomWise.Domain.Entities;
 
 public class Pet : IEntity
 {
-    [BsonId]
-    public Guid Id { get; set; }
     public string? Name { get; set; }
     public int? Age { get; set; }
     public string? Breed { get; set; }
     public string? Gender { get; set; }
+
+    [BsonId] public Guid Id { get; set; }
 }

@@ -18,9 +18,8 @@ namespace GroomWise.Converters;
 [ValueConversion(typeof(DateTime), typeof(string))]
 public class DateTimeToFormattedDateConverter : IValueConverter
 {
+    public static DateTimeToFormattedDateConverter Instance = new();
 
-    public static DateTimeToFormattedDateConverter Instance = new DateTimeToFormattedDateConverter();
-    
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         var date = value as DateTime? ?? default;

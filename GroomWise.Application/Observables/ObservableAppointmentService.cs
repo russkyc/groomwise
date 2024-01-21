@@ -15,6 +15,5 @@ namespace GroomWise.Application.Observables;
 
 public partial class ObservableAppointmentService : ObservableObject
 {
-    [ObservableProperty]
-    private ObservableGroomingService? _groomingService;
+    [ObservableProperty] private ObservableGroomingService? _groomingService;
 }

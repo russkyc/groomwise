@@ -13,5 +13,4 @@ namespace GroomWise.Infrastructure.Navigation.Interfaces;
 
 public interface IPage
 {
-    
 }

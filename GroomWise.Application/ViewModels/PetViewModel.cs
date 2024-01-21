@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -33,25 +33,9 @@ public partial class PetViewModel
         IEventSubscriber<DeleteCustomerEvent>,
         IEventSubscriber<UpdateCustomerEvent>
 {
-    [Property]
-    private ObservablePet _activePet = new();
+    [Property] private ObservablePet _activePet = new();
 
-    [Property]
-    private ConcurrentObservableCollection<ObservablePet> _pets = new();
-
-    partial void OnInitialize()
-    {
-        PopulateCollections();
-    }
-
-    private void PopulateCollections()
-    {
-        Pets = GroomWiseDbContext.Customers
-            .GetAll()
-            .Select(CustomerMapper.ToObservable)
-            .SelectMany(customer => customer.Pets)
-            .AsObservableCollection();
-    }
+    [Property] private ConcurrentObservableCollection<ObservablePet> _pets = new();
 
     public void OnEvent(CreateCustomerEvent eventData)
     {
@@ -66,5 +50,19 @@ public partial class PetViewModel
     public void OnEvent(UpdateCustomerEvent eventData)
     {
         PopulateCollections();
+    }
+
+    partial void OnInitialize()
+    {
+        PopulateCollections();
+    }
+
+    private void PopulateCollections()
+    {
+        Pets = GroomWiseDbContext.Customers
+            .GetAll()
+            .Select(CustomerMapper.ToObservable)
+            .SelectMany(customer => customer.Pets)
+            .AsObservableCollection();
     }
 }

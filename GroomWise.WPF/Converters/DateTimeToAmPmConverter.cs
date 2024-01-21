@@ -18,7 +18,7 @@ namespace GroomWise.Converters;
 [ValueConversion(typeof(DateTime), typeof(string))]
 public class DateTimeToAmPmConverter : IValueConverter
 {
-    public static DateTimeToAmPmConverter Instance => new DateTimeToAmPmConverter();
+    public static DateTimeToAmPmConverter Instance => new();
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

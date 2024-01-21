@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -31,11 +31,9 @@ namespace GroomWise.Application.ViewModels;
 [Inject(typeof(IEventAggregator))]
 public partial class GroomingServiceViewModel
 {
-    [Property]
-    private ObservableGroomingService _activeGroomingService;
+    [Property] private ObservableGroomingService _activeGroomingService;
 
-    [Property]
-    private ConcurrentObservableCollection<ObservableGroomingService> _groomingServices = new();
+    [Property] private ConcurrentObservableCollection<ObservableGroomingService> _groomingServices = new();
 
     partial void OnInitialize()
     {
@@ -53,7 +51,7 @@ public partial class GroomingServiceViewModel
     [Command]
     private async Task CreateService()
     {
-        ActiveGroomingService = new();
+        ActiveGroomingService = new ObservableGroomingService();
         await DialogService.CreateAddServicesDialog(this, NavigationService);
     }
 
@@ -77,10 +75,7 @@ public partial class GroomingServiceViewModel
             "Create Service?",
             NavigationService
         );
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
         GroomWiseDbContext.GroomingServices.Insert(ActiveGroomingService.ToEntity());
         await DialogService.CloseDialogs(NavigationService);
         EventAggregator.Publish(
@@ -91,17 +86,14 @@ public partial class GroomingServiceViewModel
             )
         );
         EventAggregator.Publish(new CreateGroomingServiceEvent());
-        ActiveGroomingService = new();
+        ActiveGroomingService = new ObservableGroomingService();
         PopulateCollections();
     }
 
     [Command]
     private async Task RemoveService(object param)
     {
-        if (param is not ObservableGroomingService observableGroomingService)
-        {
-            return;
-        }
+        if (param is not ObservableGroomingService observableGroomingService) return;
         var dialogResult = await Task.Run(
             () =>
                 DialogService.CreateYesNo(
@@ -110,10 +102,7 @@ public partial class GroomingServiceViewModel
                     NavigationService
                 )
         );
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
         GroomWiseDbContext.GroomingServices.Delete(observableGroomingService.Id);
         EventAggregator.Publish(new DeleteGroomingServiceEvent());
         EventAggregator.Publish(

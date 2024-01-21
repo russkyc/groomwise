@@ -18,8 +18,7 @@ namespace GroomWise.Converters;
 [ValueConversion(typeof(string), typeof(bool))]
 public class StringSelectionToBooleanConverter : IValueConverter
 {
-    public static StringSelectionToBooleanConverter Instance =
-        new StringSelectionToBooleanConverter();
+    public static StringSelectionToBooleanConverter Instance = new();
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

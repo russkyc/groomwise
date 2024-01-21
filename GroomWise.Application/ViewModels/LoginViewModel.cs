@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -33,17 +33,29 @@ namespace GroomWise.Application.ViewModels;
 [RegisterSingleton]
 public partial class LoginViewModel : IEventSubscriber<LogoutEvent>
 {
-    [Property]
-    private string _username;
+    [Property] private bool _hasErrors;
 
-    [Property]
-    private string _password;
+    [Property] private ConcurrentObservableCollection<ObservableNotification> _notifications = new();
 
-    [Property]
-    private bool _hasErrors;
+    [Property] private string _password;
 
-    [Property]
-    private ConcurrentObservableCollection<ObservableNotification> _notifications = new();
+    [Property] private string _username;
+
+    public void OnEvent(LogoutEvent eventData)
+    {
+        Task.Run(async () =>
+        {
+            await Task.Delay(200);
+            Notifications.RemoveLast();
+            Notifications.Add(
+                new ObservableNotification
+                {
+                    Type = NotificationType.Danger,
+                    Description = "Session Ended."
+                }
+            );
+        });
+    }
 
     [Command]
     private async Task Login()
@@ -116,7 +128,7 @@ public partial class LoginViewModel : IEventSubscriber<LogoutEvent>
     }
 
     [Command]
-    async Task CreateAdminAccount()
+    private async Task CreateAdminAccount()
     {
         if (string.IsNullOrEmpty(Username))
         {
@@ -170,21 +182,5 @@ public partial class LoginViewModel : IEventSubscriber<LogoutEvent>
     private void RemoveNotification(object param)
     {
         Notifications.RemoveLast();
-    }
-
-    public void OnEvent(LogoutEvent eventData)
-    {
-        Task.Run(async () =>
-        {
-            await Task.Delay(200);
-            Notifications.RemoveLast();
-            Notifications.Add(
-                new ObservableNotification
-                {
-                    Type = NotificationType.Danger,
-                    Description = "Session Ended."
-                }
-            );
-        });
     }
 }

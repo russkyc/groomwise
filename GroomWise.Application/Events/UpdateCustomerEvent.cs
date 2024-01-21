@@ -11,4 +11,4 @@
 
 namespace GroomWise.Application.Events;
 
-public record UpdateCustomerEvent();
+public record UpdateCustomerEvent;

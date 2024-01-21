@@ -18,7 +18,7 @@ namespace GroomWise.Converters;
 [ValueConversion(typeof(DateTime), typeof(string))]
 public class DateTimeToTimeOfDayConverter : IValueConverter
 {
-    public static DateTimeToTimeOfDayConverter Instance = new DateTimeToTimeOfDayConverter();
+    public static DateTimeToTimeOfDayConverter Instance = new();
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

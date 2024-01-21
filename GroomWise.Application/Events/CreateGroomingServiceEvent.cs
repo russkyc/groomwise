@@ -11,4 +11,4 @@
 
 namespace GroomWise.Application.Events;
 
-public record CreateGroomingServiceEvent();
+public record CreateGroomingServiceEvent;

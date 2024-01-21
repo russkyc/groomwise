@@ -18,7 +18,7 @@ namespace GroomWise.Converters;
 [ValueConversion(typeof(DateTime), typeof(bool))]
 public class DateTimeToIsCurrentDayConverter : IValueConverter
 {
-    public static DateTimeToIsCurrentDayConverter Instance = new DateTimeToIsCurrentDayConverter();
+    public static DateTimeToIsCurrentDayConverter Instance = new();
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

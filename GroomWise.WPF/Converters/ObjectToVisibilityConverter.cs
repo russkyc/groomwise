@@ -23,10 +23,7 @@ public class ObjectToVisibilityConverter : IValueConverter
 
     public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is null)
-        {
-            return Visibility.Collapsed;
-        }
+        if (value is null) return Visibility.Collapsed;
 
         return Visibility.Visible;
     }

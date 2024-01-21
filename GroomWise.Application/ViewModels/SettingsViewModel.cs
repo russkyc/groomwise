@@ -18,4 +18,6 @@ namespace GroomWise.Application.ViewModels;
 [ViewModel]
 [Inject(typeof(IConfigurationService), PropertyAccessModifier = AccessModifier.Public)]
 [RegisterSingleton]
-public partial class SettingsViewModel { }
+public partial class SettingsViewModel
+{
+}

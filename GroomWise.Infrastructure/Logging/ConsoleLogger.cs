@@ -19,10 +19,7 @@ public class ConsoleLogger : ILogger
 {
     public void Log(string message, string? sender = null)
     {
-        if (sender is null)
-        {
-            Console.WriteLine(message);
-        }
+        if (sender is null) Console.WriteLine(message);
         Console.WriteLine($"{sender}: {message}");
     }
 }

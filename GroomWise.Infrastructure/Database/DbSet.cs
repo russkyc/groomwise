@@ -42,7 +42,7 @@ public class DbSet<T> : IDbSet<T>
     public IEnumerable<T> GetMultiple(
         Expression<Func<T, bool>> filter,
         int skip = 0,
-        int limit = Int32.MaxValue
+        int limit = int.MaxValue
     )
     {
         return _dbStore.GetMultiple(filter, skip, limit);

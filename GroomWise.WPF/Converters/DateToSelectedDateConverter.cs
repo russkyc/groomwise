@@ -24,10 +24,7 @@ public class DateToSelectedDateConverter : IValueConverter
     {
         if (value is DateTime date)
         {
-            if (parameter is DateTime calendarDate)
-            {
-                return date.Day == calendarDate.Day;
-            }
+            if (parameter is DateTime calendarDate) return date.Day == calendarDate.Day;
 
             return false;
         }

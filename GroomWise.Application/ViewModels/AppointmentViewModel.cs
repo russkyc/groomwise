@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -44,23 +44,50 @@ public partial class AppointmentViewModel
         IEventSubscriber<CreateCustomerEvent>,
         IEventSubscriber<UpdateCustomerEvent>
 {
-    [Property]
-    private ObservableAppointment _activeAppointment;
+    [Property] private ObservableAppointment _activeAppointment;
 
-    [Property]
-    private ObservableAppointment? _selectedAppointment;
+    [Property] private ConcurrentObservableCollection<ObservableAppointment> _appointments = new();
 
-    [Property]
-    private ConcurrentObservableCollection<ObservableAppointment> _appointments = new();
+    [Property] private ConcurrentObservableCollection<TimeOnly> _bookingTimes = new();
 
-    [Property]
-    private ConcurrentObservableCollection<ObservableCustomer> _customers = new();
+    [Property] private ConcurrentObservableCollection<ObservableCustomer> _customers = new();
 
-    [Property]
-    private ConcurrentObservableCollection<ObservableGroomingService> _groomingServices = new();
+    [Property] private ConcurrentObservableCollection<ObservableGroomingService> _groomingServices = new();
 
-    [Property]
-    private ConcurrentObservableCollection<TimeOnly> _bookingTimes = new();
+    [Property] private ObservableAppointment? _selectedAppointment;
+
+    public void OnEvent(CreateCustomerEvent eventData)
+    {
+        PopulateCollections();
+    }
+
+    public void OnEvent(CreateGroomingServiceEvent eventData)
+    {
+        PopulateCollections();
+    }
+
+    public void OnEvent(DeleteCustomerEvent eventData)
+    {
+        GroomWiseDbContext.Appointments.DeleteMultiple(
+            apppintment => apppintment.Customer.Id == eventData.Customer.Id
+        );
+        PopulateCollections();
+    }
+
+    public void OnEvent(DeleteGroomingServiceEvent eventData)
+    {
+        PopulateCollections();
+    }
+
+    public void OnEvent(ScheduleAppointmentEvent eventData)
+    {
+        Task.Run(async () => await CreateAppointment(eventData.Customer));
+    }
+
+    public void OnEvent(UpdateCustomerEvent eventData)
+    {
+        PopulateCollections();
+    }
 
     partial void OnInitialize()
     {
@@ -99,18 +126,13 @@ public partial class AppointmentViewModel
                 Customer = customer
             };
 
-            if (BookingTimes.Count > 0)
-            {
-                ActiveAppointment.StartTime = BookingTimes.First();
-            }
+            if (BookingTimes.Count > 0) ActiveAppointment.StartTime = BookingTimes.First();
             await DialogService.CreateAddAppointmentsDialog(this, NavigationService);
             return;
         }
+
         ActiveAppointment = new ObservableAppointment { Date = DateTime.Today };
-        if (BookingTimes.Count > 0)
-        {
-            ActiveAppointment.StartTime = BookingTimes.First();
-        }
+        if (BookingTimes.Count > 0) ActiveAppointment.StartTime = BookingTimes.First();
         await DialogService.CreateCustomerSelectionDialog(this, NavigationService);
         OnPropertyChanged(nameof(ActiveAppointment.Date));
     }
@@ -118,10 +140,7 @@ public partial class AppointmentViewModel
     [Command]
     private async Task CancelAppointment(object param, bool noConfirmation = false)
     {
-        if (param is not ObservableAppointment appointment)
-        {
-            return;
-        }
+        if (param is not ObservableAppointment appointment) return;
         if (noConfirmation)
         {
             Appointments.Remove(appointment);
@@ -136,16 +155,14 @@ public partial class AppointmentViewModel
             );
             return;
         }
+
         var dialogResult = await DialogService.CreateYesNo(
             "Appointments",
             $"Cancel {appointment.Customer.FullName.Split(" ")[0]}'s Appointment?",
             NavigationService
         );
 
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
 
         Appointments.Remove(appointment);
         GroomWiseDbContext.Appointments.Delete(appointment.Id);
@@ -159,24 +176,15 @@ public partial class AppointmentViewModel
             )
         );
 
-        if (SelectedAppointment is null)
-        {
-            return;
-        }
-        if (appointment.Id == SelectedAppointment.Id)
-        {
-            SelectedAppointment = null;
-        }
+        if (SelectedAppointment is null) return;
+        if (appointment.Id == SelectedAppointment.Id) SelectedAppointment = null;
         await GenerateBookingTimes();
     }
 
     [Command]
     private async Task SelectCustomer(object param)
     {
-        if (param is not ObservableCustomer customer)
-        {
-            return;
-        }
+        if (param is not ObservableCustomer customer) return;
         ActiveAppointment.Customer = customer;
         await DialogService.CloseDialogs(NavigationService);
         await Task.Delay(100);
@@ -186,10 +194,7 @@ public partial class AppointmentViewModel
     [Command]
     private void SelectAppointment(object param)
     {
-        if (param is not ObservableAppointment appointment)
-        {
-            return;
-        }
+        if (param is not ObservableAppointment appointment) return;
 
         SelectedAppointment = appointment;
     }
@@ -208,6 +213,7 @@ public partial class AppointmentViewModel
             );
             return;
         }
+
         var dialogResult = await Task.Run(
             () =>
                 DialogService.CreateYesNo(
@@ -216,10 +222,7 @@ public partial class AppointmentViewModel
                     NavigationService
                 )
         );
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
         await DialogService.CloseDialogs(NavigationService);
         GroomWiseDbContext.Appointments.Insert(ActiveAppointment.ToEntity());
         EventAggregator.Publish(new CreateAppointmentEvent());
@@ -251,6 +254,7 @@ public partial class AppointmentViewModel
             });
             return;
         }
+
         ActiveAppointment.Services!.Insert(
             0,
             new ObservableAppointmentService { GroomingService = GroomingServices.First() }
@@ -261,14 +265,8 @@ public partial class AppointmentViewModel
     [Command]
     private async Task RemoveGroomingService(object param)
     {
-        if (param is not ObservableAppointmentService service)
-        {
-            return;
-        }
-        if (ActiveAppointment.Services.IsNullOrEmpty())
-        {
-            return;
-        }
+        if (param is not ObservableAppointmentService service) return;
+        if (ActiveAppointment.Services.IsNullOrEmpty()) return;
         if (ActiveAppointment.Services!.Contains(service))
         {
             ActiveAppointment.Services!.Remove(service);
@@ -281,32 +279,27 @@ public partial class AppointmentViewModel
     {
         ActiveAppointment.EndTime = await Task.Run(() =>
         {
-            TimeSpan timeSpan = new TimeSpan();
+            var timeSpan = new TimeSpan();
             ActiveAppointment.Services.ForEach(groomingService =>
             {
                 if (groomingService.GroomingService is not null)
-                {
                     timeSpan = timeSpan.Add(groomingService.GroomingService.Duration);
-                }
             });
             return ActiveAppointment.StartTime.Add(timeSpan);
         });
 
         if (
             Appointments
-                .Where(appointment => appointment.Date.Date == ActiveAppointment.Date.Date)
-                .Any(
-                    appointment =>
-                        ActiveAppointment
-                            .ToEntity()
-                            .IsOverlapping(appointment.StartTime, appointment.EndTime)
-                )
+            .Where(appointment => appointment.Date.Date == ActiveAppointment.Date.Date)
+            .Any(
+                appointment =>
+                    ActiveAppointment
+                        .ToEntity()
+                        .IsOverlapping(appointment.StartTime, appointment.EndTime)
+            )
         )
         {
-            if (ActiveAppointment.Services.IsNullOrEmpty())
-            {
-                return;
-            }
+            if (ActiveAppointment.Services.IsNullOrEmpty()) return;
             var dialogResult = await Task.Run(
                 () =>
                     DialogService.CreateOk(
@@ -315,38 +308,12 @@ public partial class AppointmentViewModel
                         NavigationService
                     )
             );
-            if (dialogResult is true)
-            {
-                await RemoveGroomingService(ActiveAppointment.Services!.First());
-            }
+            if (dialogResult is true) await RemoveGroomingService(ActiveAppointment.Services!.First());
         }
     }
 
-    public void OnEvent(CreateGroomingServiceEvent eventData)
-    {
-        PopulateCollections();
-    }
-
-    public void OnEvent(DeleteGroomingServiceEvent eventData)
-    {
-        PopulateCollections();
-    }
-
-    public void OnEvent(ScheduleAppointmentEvent eventData)
-    {
-        Task.Run(async () => await CreateAppointment(eventData.Customer));
-    }
-
-    public void OnEvent(DeleteCustomerEvent eventData)
-    {
-        GroomWiseDbContext.Appointments.DeleteMultiple(
-            apppintment => apppintment.Customer.Id == eventData.Customer.Id
-        );
-        PopulateCollections();
-    }
-
     [Command]
-    async Task GenerateBookingTimes()
+    private async Task GenerateBookingTimes()
     {
         BookingTimes = await Task.Run(() =>
         {
@@ -359,7 +326,6 @@ public partial class AppointmentViewModel
                     appointment => appointment.Date.Date == ActiveAppointment.Date.Date
                 )
             )
-            {
                 return new ConcurrentObservableCollection<TimeOnly>(
                     range.Where(
                         time =>
@@ -374,19 +340,8 @@ public partial class AppointmentViewModel
                                 )
                     )
                 );
-            }
 
             return new ConcurrentObservableCollection<TimeOnly>(range);
         });
-    }
-
-    public void OnEvent(CreateCustomerEvent eventData)
-    {
-        PopulateCollections();
-    }
-
-    public void OnEvent(UpdateCustomerEvent eventData)
-    {
-        PopulateCollections();
     }
 }

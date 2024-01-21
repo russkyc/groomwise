@@ -15,17 +15,18 @@ using System.Windows.Data;
 
 namespace GroomWise.Converters;
 
-[ValueConversion(typeof(DateTime),typeof(string))]
+[ValueConversion(typeof(DateTime), typeof(string))]
 public class DateTimeToTimeConverter : IValueConverter
 {
+    public static DateTimeToTimeConverter Instance = new();
 
-    public static DateTimeToTimeConverter Instance = new DateTimeToTimeConverter();
-    
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         var date = value is DateTime
-            ? (DateTime)value : default;
-        return date.ToString("h:mm");;
+            ? (DateTime)value
+            : default;
+        return date.ToString("h:mm");
+        ;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

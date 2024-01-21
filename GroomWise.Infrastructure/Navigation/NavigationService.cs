@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -18,27 +18,24 @@ namespace GroomWise.Infrastructure.Navigation;
 [RegisterSingleton<INavigationService, NavigationService>]
 public class NavigationService : INavigationService
 {
-    private readonly Dictionary<Enum, Type> _views;
-    private readonly object _lock;
     private readonly IAppServicesContainer _container;
+    private readonly object _lock;
+    private readonly Dictionary<Enum, Type> _views;
+    private IWindow? _currentWindow;
 
     private SynchronizationContext? _synchronizationContext;
-    private IWindow? _currentWindow;
 
     public NavigationService(IAppServicesContainer container)
     {
         _container = container;
-        _lock = new();
+        _lock = new object();
         lock (_lock)
         {
             _views = new Dictionary<Enum, Type>();
         }
     }
 
-    public IWindow CurrentWindow
-    {
-        get { return _currentWindow!; }
-    }
+    public IWindow CurrentWindow => _currentWindow!;
 
     public void Add(Enum key, Type type)
     {
@@ -59,10 +56,7 @@ public class NavigationService : INavigationService
                 _synchronizationContext?.Send(
                     _ =>
                     {
-                        if (hidePrevious)
-                        {
-                            _currentWindow?.Hide();
-                        }
+                        if (hidePrevious) _currentWindow?.Hide();
                         _currentWindow = window;
                     },
                     null
@@ -74,12 +68,10 @@ public class NavigationService : INavigationService
     public void Initialize(SynchronizationContext? context, IWindow? mainWindow)
     {
         if (context is not null)
-        {
             lock (_lock)
             {
                 _synchronizationContext = context;
                 _currentWindow = mainWindow;
             }
-        }
     }
 }

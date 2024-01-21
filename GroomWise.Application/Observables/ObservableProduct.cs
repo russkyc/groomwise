@@ -15,15 +15,11 @@ namespace GroomWise.Application.Observables;
 
 public partial class ObservableProduct : ObservableObject
 {
-    [ObservableProperty]
-    private Guid _id;
+    [ObservableProperty] private Guid _id;
 
-    [ObservableProperty]
-    private string? _productName;
+    [ObservableProperty] private string? _productDescription;
 
-    [ObservableProperty]
-    private string? _productDescription;
+    [ObservableProperty] private string? _productName;
 
-    [ObservableProperty]
-    private int _quantity;
+    [ObservableProperty] private int _quantity;
 }

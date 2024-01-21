@@ -18,12 +18,13 @@ namespace GroomWise.Converters;
 [ValueConversion(typeof(DateTime), typeof(string))]
 public class DateTimeToShortDayOfWeekConverter : IValueConverter
 {
-    public static DateTimeToShortDayOfWeekConverter Instance = new DateTimeToShortDayOfWeekConverter();
-    
+    public static DateTimeToShortDayOfWeekConverter Instance = new();
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         var date = value is DateTime
-            ? (DateTime)value : default;
+            ? (DateTime)value
+            : default;
         return date.ToString("ddd");
     }
 

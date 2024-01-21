@@ -18,7 +18,7 @@ namespace GroomWise.Converters;
 [ValueConversion(typeof(DateTime), typeof(string))]
 public class DateTimeToMonthConverter : IValueConverter
 {
-    public static DateTimeToMonthConverter Instance = new DateTimeToMonthConverter();
+    public static DateTimeToMonthConverter Instance = new();
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

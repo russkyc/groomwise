@@ -1,15 +1,14 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
-using System.Media;
 using GroomWise.Application.Events;
 using GroomWise.Application.Extensions;
 using GroomWise.Application.Mappers;
@@ -36,17 +35,28 @@ public partial class DashboardViewModel
         IEventSubscriber<CreateAppointmentEvent>,
         IEventSubscriber<DeleteAppointmentEvent>
 {
-    [Property]
-    private ConcurrentObservableCollection<ObservableAppointment> _appointments = new();
+    [Property] private ConcurrentObservableCollection<ObservableAppointment> _appointments = new();
 
-    [Property]
-    private ConcurrentObservableCollection<ObservableAppointment> _upcomingAppointments = new();
+    [Property] private DateTime _date;
 
-    [Property]
-    private string _user;
+    [Property] private ConcurrentObservableCollection<ObservableAppointment> _upcomingAppointments = new();
 
-    [Property]
-    private DateTime _date;
+    [Property] private string _user;
+
+    public void OnEvent(CreateAppointmentEvent eventData)
+    {
+        PopulateCollections();
+    }
+
+    public void OnEvent(DeleteAppointmentEvent eventData)
+    {
+        PopulateCollections();
+    }
+
+    public void OnEvent(LoginEvent eventData)
+    {
+        User = AuthenticationService.GetSession()?.FirstName!;
+    }
 
     partial void OnInitialize()
     {
@@ -59,20 +69,11 @@ public partial class DashboardViewModel
     {
         var appointment = Appointments.FirstOrDefault();
 
-        if (appointment is null)
-        {
-            return;
-        }
+        if (appointment is null) return;
 
-        if (appointment.Date.Day != DateTime.Today.Day)
-        {
-            return;
-        }
+        if (appointment.Date.Day != DateTime.Today.Day) return;
 
-        if (appointment.StartTime != TimeOnly.FromDateTime(DateTime.Now))
-        {
-            return;
-        }
+        if (appointment.StartTime != TimeOnly.FromDateTime(DateTime.Now)) return;
     }
 
     public void SetDate()
@@ -93,20 +94,5 @@ public partial class DashboardViewModel
             .OrderBy(appointment => appointment.Date)
             .Select(AppointmentMapper.ToObservable)
             .AsObservableCollection();
-    }
-
-    public void OnEvent(LoginEvent eventData)
-    {
-        User = AuthenticationService.GetSession()?.FirstName!;
-    }
-
-    public void OnEvent(CreateAppointmentEvent eventData)
-    {
-        PopulateCollections();
-    }
-
-    public void OnEvent(DeleteAppointmentEvent eventData)
-    {
-        PopulateCollections();
     }
 }

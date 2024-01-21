@@ -14,8 +14,6 @@ using GroomWise.Infrastructure.Encryption.Interfaces;
 using Injectio.Attributes;
 using NETCore.Encrypt;
 using NETCore.Encrypt.Extensions;
-using Russkyc.DependencyInjection.Attributes;
-using Russkyc.DependencyInjection.Enums;
 
 namespace GroomWise.Infrastructure.Encryption;
 
@@ -26,8 +24,8 @@ public class EncryptionService : IEncryptionService
     {
         // Does not contain key and iv
         if (
-            CredentialStore.Instance.Get("AesKey") == String.Empty
-            && CredentialStore.Instance.Get("AesIv") == String.Empty
+            CredentialStore.Instance.Get("AesKey") == string.Empty
+            && CredentialStore.Instance.Get("AesIv") == string.Empty
         )
         {
             // Create new AES Key
@@ -99,7 +97,6 @@ public class EncryptionService : IEncryptionService
                     !string.IsNullOrEmpty(currentValue)
                     && !ignore.ToList().Any(fieldName => fieldInfo.Name.Contains(fieldName))
                 )
-                {
                     fieldInfo.SetValue(
                         item,
                         string.IsNullOrEmpty(currentValue)
@@ -110,7 +107,6 @@ public class EncryptionService : IEncryptionService
                                 CredentialStore.Instance.Get("AesIv")
                             )
                     );
-                }
             });
         return item;
     }

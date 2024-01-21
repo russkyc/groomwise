@@ -17,34 +17,25 @@ namespace GroomWise.Application.Observables;
 
 public partial class ObservableAppointment : ObservableObject
 {
-    [ObservableProperty]
-    private Guid _id;
+    [ObservableProperty] private ObservableCustomer _customer;
 
-    [ObservableProperty]
-    private DateTime _date;
+    [ObservableProperty] private DateTime _date;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(TimeSpan))]
-    private TimeOnly _startTime;
+    [ObservableProperty] private ConcurrentObservableCollection<ObservableEmployee>? _employees = new();
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(TimeSpan))]
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(TimeSpan))]
     private TimeOnly _endTime;
 
+    [ObservableProperty] private Guid _id;
+
+    [ObservableProperty] private ObservablePet? _pet;
+
+    [ObservableProperty] private ConcurrentObservableCollection<ObservableAppointmentService>? _services = new();
+
+    [ObservableProperty] [NotifyPropertyChangedFor(nameof(TimeSpan))]
+    private TimeOnly _startTime;
+
+    [ObservableProperty] private AppointmentStatus? _status;
+
     public string TimeSpan => $"{StartTime} - {EndTime}";
-
-    [ObservableProperty]
-    private AppointmentStatus? _status;
-
-    [ObservableProperty]
-    private ObservablePet? _pet;
-
-    [ObservableProperty]
-    private ObservableCustomer _customer;
-
-    [ObservableProperty]
-    private ConcurrentObservableCollection<ObservableEmployee>? _employees = new();
-
-    [ObservableProperty]
-    private ConcurrentObservableCollection<ObservableAppointmentService>? _services = new();
 }

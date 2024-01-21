@@ -16,15 +16,11 @@ namespace GroomWise.Application.Observables;
 
 public partial class ObservableNotification : ObservableObject
 {
-    [ObservableProperty]
-    private object? _icon;
+    [ObservableProperty] private string? _description;
 
-    [ObservableProperty]
-    private string? _title;
+    [ObservableProperty] private object? _icon;
 
-    [ObservableProperty]
-    private string? _description;
+    [ObservableProperty] private string? _title;
 
-    [ObservableProperty]
-    private NotificationType? _type;
+    [ObservableProperty] private NotificationType? _type;
 }

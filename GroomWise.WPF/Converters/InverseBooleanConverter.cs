@@ -18,7 +18,7 @@ namespace GroomWise.Converters;
 [ValueConversion(typeof(bool), typeof(bool))]
 public class InverseBooleanConverter : IValueConverter
 {
-    public static InverseBooleanConverter Instance = new InverseBooleanConverter();
+    public static InverseBooleanConverter Instance = new();
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

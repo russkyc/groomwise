@@ -16,24 +16,17 @@ namespace GroomWise.Application.Observables;
 
 public partial class ObservableCustomer : ObservableObject
 {
-    [ObservableProperty]
-    private Guid _id;
+    [ObservableProperty] private string? _address;
 
-    [ObservableProperty]
-    private string? _fullName;
+    [ObservableProperty] private ConcurrentObservableCollection<ObservableAppointment?>? _appointments = new();
 
-    [ObservableProperty]
-    private string? _address;
+    [ObservableProperty] private string? _contactNumber;
 
-    [ObservableProperty]
-    private string? _contactNumber;
+    [ObservableProperty] private string? _email;
 
-    [ObservableProperty]
-    private string? _email;
+    [ObservableProperty] private string? _fullName;
 
-    [ObservableProperty]
-    private ConcurrentObservableCollection<ObservableAppointment?>? _appointments = new();
+    [ObservableProperty] private Guid _id;
 
-    [ObservableProperty]
-    private ConcurrentObservableCollection<ObservablePet?>? _pets = new();
+    [ObservableProperty] private ConcurrentObservableCollection<ObservablePet?>? _pets = new();
 }

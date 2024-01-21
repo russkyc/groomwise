@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -38,24 +38,20 @@ namespace GroomWise.Application.ViewModels;
 [RegisterSingleton]
 public partial class AccountViewModel
 {
-    [Property]
-    private Role _role;
+    [Property] private ConcurrentObservableCollection<ObservableAccount> _accounts = new();
 
-    [Property]
-    private string _username;
+    [Property] private string _password;
 
-    [Property]
-    private string _password;
+    [Property] private Role _role;
 
-    [Property]
-    private ConcurrentObservableCollection<ObservableAccount> _accounts = new();
+    [Property] private string _username;
 
     partial void OnInitialize()
     {
         PopulateCollections();
     }
 
-    void PopulateCollections()
+    private void PopulateCollections()
     {
         Accounts = GroomWiseDbContext.Accounts
             .GetAll()
@@ -68,7 +64,7 @@ public partial class AccountViewModel
     }
 
     [Command]
-    async Task CreateAccount()
+    private async Task CreateAccount()
     {
         await DialogService.CreateAddAccountDialog(this, NavigationService);
     }
@@ -80,10 +76,7 @@ public partial class AccountViewModel
             () => DialogService.CreateYesNo("Accounts", "Create Account?", NavigationService)
         );
 
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
 
         if (string.IsNullOrEmpty(Username))
         {
@@ -96,6 +89,7 @@ public partial class AccountViewModel
             );
             return;
         }
+
         AuthenticationService.Register(Username, Password, Role);
         await DialogService.CloseDialogs(NavigationService);
         EventAggregator.Publish(
@@ -113,10 +107,7 @@ public partial class AccountViewModel
     [Command]
     private async Task RemoveAccount(object param)
     {
-        if (param is not ObservableAccount observableAccount)
-        {
-            return;
-        }
+        if (param is not ObservableAccount observableAccount) return;
         var dialogResult = await Task.Run(
             () =>
                 DialogService.CreateYesNo(
@@ -126,10 +117,7 @@ public partial class AccountViewModel
                 )
         );
 
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
 
         GroomWiseDbContext.Accounts.Delete(observableAccount.Id);
         EventAggregator.Publish(new DeleteAccountEvent());

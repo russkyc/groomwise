@@ -6,6 +6,6 @@
   "toastCooldown": 5.0,
   "multiUser": true,
   "appDataPath": "/",
-  "checkForUpdates" : true,
+  "checkForUpdates": true,
   "firstRun": true
 }

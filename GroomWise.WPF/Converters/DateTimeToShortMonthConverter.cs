@@ -18,13 +18,13 @@ namespace GroomWise.Converters;
 [ValueConversion(typeof(DateTime), typeof(string))]
 public class DateTimeToShortMonthConverter : IValueConverter
 {
+    public static DateTimeToShortMonthConverter Instance = new();
 
-    public static DateTimeToShortMonthConverter Instance = new DateTimeToShortMonthConverter();
-    
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         var date = value is DateTime
-            ? (DateTime)value : default;
+            ? (DateTime)value
+            : default;
         return date.ToString("MMM");
     }
 

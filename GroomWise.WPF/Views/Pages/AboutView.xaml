@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:moderncontrols="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"
-    xmlns:viewModels="clr-namespace:GroomWise.Application.ViewModels;assembly=GroomWise.Application"
     xmlns:views="clr-namespace:GroomWise.Views"
     xmlns:wpf="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
     d:DesignHeight="720"

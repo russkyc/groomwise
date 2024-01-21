@@ -10,33 +10,22 @@
 // but WITHOUT ANY WARRANTY
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using GroomWise.Domain.Entities;
-using Swordfish.NET.Collections;
 
 namespace GroomWise.Application.Observables;
 
 public partial class ObservableEmployee : ObservableObject
 {
-    [ObservableProperty]
-    private Guid _id;
-    
-    [ObservableProperty]
-    private string? _prefix;
+    [ObservableProperty] private string? _address;
 
-    [ObservableProperty]
-    private string? _fullName;
+    [ObservableProperty] private string? _contactNumber;
 
-    [ObservableProperty]
-    private string? _suffix;
+    [ObservableProperty] private string? _email;
 
-    [ObservableProperty]
-    private string? _address;
+    [ObservableProperty] private string? _fullName;
 
-    [ObservableProperty]
-    private string? _contactNumber;
+    [ObservableProperty] private Guid _id;
 
-    [ObservableProperty]
-    private string? _email;
-    
+    [ObservableProperty] private string? _prefix;
 
+    [ObservableProperty] private string? _suffix;
 }

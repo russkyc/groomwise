@@ -16,9 +16,9 @@ namespace GroomWise.Domain.Entities;
 
 public class Product : IEntity
 {
-    [BsonId]
-    public Guid Id { get; set; }
     public string? ProductName { get; set; }
     public string? ProductDescription { get; set; }
     public int Quantity { get; set; }
+
+    [BsonId] public Guid Id { get; set; }
 }

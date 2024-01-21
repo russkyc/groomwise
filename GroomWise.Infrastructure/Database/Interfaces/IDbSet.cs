@@ -23,7 +23,7 @@ public interface IDbSet<T>
     IEnumerable<T> GetMultiple(
         Expression<Func<T, bool>> filter,
         int skip = 0,
-        int limit = Int32.MaxValue
+        int limit = int.MaxValue
     );
 
     bool Update(Guid id, T entity);

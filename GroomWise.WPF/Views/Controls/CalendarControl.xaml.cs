@@ -29,13 +29,6 @@ public partial class CalendarControl
         typeof(CalendarControl)
     );
 
-    // .NET event wrapper for the DateChangedEvent
-    public event RoutedEventHandler DateChanged
-    {
-        add { AddHandler(DateChangedEvent, value); }
-        remove { RemoveHandler(DateChangedEvent, value); }
-    }
-
     public static readonly DependencyProperty SelectedDateProperty = DependencyProperty.Register(
         nameof(SelectedDate),
         typeof(DateTime),
@@ -47,10 +40,56 @@ public partial class CalendarControl
         )
     );
 
+    public static readonly DependencyProperty IsEditableProperty = DependencyProperty.Register(
+        nameof(IsEditable),
+        typeof(bool),
+        typeof(CalendarControl),
+        new FrameworkPropertyMetadata(false)
+    );
+
+    public static readonly DependencyProperty CurrentMonthProperty = DependencyProperty.Register(
+        nameof(CurrentMonth),
+        typeof(DateTime),
+        typeof(CalendarControl),
+        new FrameworkPropertyMetadata(
+            default(DateTime),
+            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault
+        )
+    );
+
+    public CalendarControl()
+    {
+        InitializeComponent();
+        CurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+        Dates = new ObservableCollection<CalendarDate>();
+        DisplayDates();
+    }
+
     public DateTime SelectedDate
     {
         get => (DateTime)GetValue(SelectedDateProperty);
         set => SetValue(SelectedDateProperty, value);
+    }
+
+    public bool IsEditable
+    {
+        get => (bool)GetValue(IsEditableProperty);
+        set => SetValue(IsEditableProperty, value);
+    }
+
+    public DateTime CurrentMonth
+    {
+        get => (DateTime)GetValue(CurrentMonthProperty);
+        set => SetValue(CurrentMonthProperty, value);
+    }
+
+    public ObservableCollection<CalendarDate> Dates { get; }
+
+    // .NET event wrapper for the DateChangedEvent
+    public event RoutedEventHandler DateChanged
+    {
+        add => AddHandler(DateChangedEvent, value);
+        remove => RemoveHandler(DateChangedEvent, value);
     }
 
     private static void OnSelectedDateChanged(
@@ -67,44 +106,6 @@ public partial class CalendarControl
         }
     }
 
-    public static readonly DependencyProperty IsEditableProperty = DependencyProperty.Register(
-        nameof(IsEditable),
-        typeof(bool),
-        typeof(CalendarControl),
-        new FrameworkPropertyMetadata(false)
-    );
-
-    public bool IsEditable
-    {
-        get => (bool)GetValue(IsEditableProperty);
-        set => SetValue(IsEditableProperty, value);
-    }
-    public static readonly DependencyProperty CurrentMonthProperty = DependencyProperty.Register(
-        nameof(CurrentMonth),
-        typeof(DateTime),
-        typeof(CalendarControl),
-        new FrameworkPropertyMetadata(
-            default(DateTime),
-            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault
-        )
-    );
-    public DateTime CurrentMonth
-    {
-        get => (DateTime)GetValue(CurrentMonthProperty);
-        set => SetValue(CurrentMonthProperty, value);
-    }
-
-    private readonly ObservableCollection<CalendarDate> _dates;
-    public ObservableCollection<CalendarDate> Dates => _dates;
-
-    public CalendarControl()
-    {
-        InitializeComponent();
-        CurrentMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-        _dates = new ObservableCollection<CalendarDate>();
-        DisplayDates();
-    }
-
     private async void DisplayDates()
     {
         var currentMonth = CurrentMonth;
@@ -115,8 +116,7 @@ public partial class CalendarControl
         var dateIndex = 1;
         await Task.Run(() =>
         {
-            for (int dayIndex = 1; dateIndex <= daysInMonth; dayIndex++)
-            {
+            for (var dayIndex = 1; dateIndex <= daysInMonth; dayIndex++)
                 if (dayIndex >= firstDayOfWeek)
                 {
                     var date = new DateTime(currentMonth.Year, currentMonth.Month, dateIndex);
@@ -138,7 +138,6 @@ public partial class CalendarControl
                 {
                     tasks.Add(Task.FromResult<CalendarDate>(null!));
                 }
-            }
         });
 
         var tempDates = await Task.WhenAll(tasks);

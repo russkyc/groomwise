@@ -1,11 +1,11 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
@@ -21,18 +21,20 @@ namespace GroomWise.Infrastructure.Updater;
 [RegisterSingleton<IUpdater, GithubUpdater>]
 public class GithubUpdater : IUpdater
 {
-    private Version? _latestVersion;
-    private readonly INavigationService _navigationService;
-    private readonly IDialogService _dialogService;
     private readonly IConfigurationService _configuration;
+    private readonly IDialogService _dialogService;
+    private readonly INavigationService _navigationService;
+
     private readonly IUpdateManager _updateManager = new UpdateManager(
         new GithubPackageResolver(
-            repositoryOwner: "russkyc",
-            repositoryName: "groomwise",
-            assetNamePattern: "groomwise-standalone-*.zip"
+            "russkyc",
+            "groomwise",
+            "groomwise-standalone-*.zip"
         ),
         new ZipPackageExtractor()
     );
+
+    private Version? _latestVersion;
 
     public GithubUpdater(
         IConfigurationService configuration,
@@ -43,7 +45,7 @@ public class GithubUpdater : IUpdater
         _configuration = configuration;
         _dialogService = dialogService;
         _navigationService = navigationService;
-        var semanticVersion = _configuration.Version.Split(".").Select(Int32.Parse).ToArray();
+        var semanticVersion = _configuration.Version.Split(".").Select(int.Parse).ToArray();
         _latestVersion = new Version(semanticVersion[0], semanticVersion[1], semanticVersion[2]);
     }
 
@@ -54,17 +56,13 @@ public class GithubUpdater : IUpdater
 
     public async Task<bool?> CheckForUpdates(bool silent = false)
     {
-        if (_configuration.CheckForUpdates is false)
-        {
-            return false;
-        }
+        if (_configuration.CheckForUpdates is false) return false;
         var result = await _updateManager.CheckForUpdatesAsync();
-        var semanticVersion = _configuration.Version.Split(".").Select(Int32.Parse).ToArray();
+        var semanticVersion = _configuration.Version.Split(".").Select(int.Parse).ToArray();
 
         if (
-            result.LastVersion is { }
-            && result.LastVersion
-                > new Version(semanticVersion[0], semanticVersion[1], semanticVersion[2])
+            result.LastVersion is not null && result.LastVersion
+            > new Version(semanticVersion[0], semanticVersion[1], semanticVersion[2])
         )
         {
             _latestVersion = result.LastVersion;
@@ -77,10 +75,8 @@ public class GithubUpdater : IUpdater
                     )
             );
         }
-        if (silent)
-        {
-            return false;
-        }
+
+        if (silent) return false;
         await Task.Run(
             () =>
                 _dialogService.CreateOk(
@@ -95,10 +91,7 @@ public class GithubUpdater : IUpdater
 
     public async Task PerformUpdate(IProgress<double> progress)
     {
-        if (_latestVersion is null)
-        {
-            return;
-        }
+        if (_latestVersion is null) return;
         await _updateManager.PrepareUpdateAsync(_latestVersion, progress);
         var dialogResult = await Task.Run(
             () =>
@@ -109,10 +102,7 @@ public class GithubUpdater : IUpdater
                 )
         );
 
-        if (dialogResult is false)
-        {
-            return;
-        }
+        if (dialogResult is false) return;
         await Task.Run(() => _updateManager.LaunchUpdater(_latestVersion));
         Environment.Exit(0);
     }

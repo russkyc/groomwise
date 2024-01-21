@@ -1,14 +1,15 @@
 ﻿// GroomWise
 // Copyright (C) 2023  John Russell C. Camo (@russkyc)
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY
 
+using GroomWise.Domain.Enums;
 using GroomWise.Infrastructure.Authentication.Entities;
 using GroomWise.Infrastructure.Authentication.Enums;
 using GroomWise.Infrastructure.Authentication.Interfaces;
@@ -17,16 +18,15 @@ using GroomWise.Infrastructure.Database;
 using GroomWise.Infrastructure.Encryption.Interfaces;
 using Injectio.Attributes;
 using NETCore.Encrypt.Extensions;
-using GroomWise.Domain.Enums;
 
 namespace GroomWise.Infrastructure.Authentication;
 
 [RegisterSingleton<IAuthenticationService, AuthenticationService>]
 public class AuthenticationService : IAuthenticationService
 {
-    private readonly object _lock = new();
-    private readonly IEncryptionService _encryptionService;
     private readonly GroomWiseDbContext _dbContext;
+    private readonly IEncryptionService _encryptionService;
+    private readonly object _lock = new();
     private SessionInfo? _sessionInfo;
 
     public AuthenticationService(GroomWiseDbContext dbContext, IEncryptionService encryptionService)
@@ -53,7 +53,6 @@ public class AuthenticationService : IAuthenticationService
         if (
             _dbContext.Employees.Get(filteredEmployee => filteredEmployee.Id.Equals(employeeId)) is
             { } employee
-            
         )
         {
             account.Employee = employee;
@@ -71,10 +70,7 @@ public class AuthenticationService : IAuthenticationService
                 && account.Password!.Equals(password.SHA256())
         );
 
-        if (account is null)
-        {
-            return;
-        }
+        if (account is null) return;
 
         _dbContext.Accounts.Delete(account.Id);
     }
@@ -85,20 +81,15 @@ public class AuthenticationService : IAuthenticationService
             account => account.Username!.Equals(_encryptionService.Encrypt(username))
         );
 
-        if (account is null)
-        {
-            return AuthenticationStatus.InvalidAccount;
-        }
+        if (account is null) return AuthenticationStatus.InvalidAccount;
 
-        if (!account.Password!.Equals(_encryptionService.Hash(password)))
-        {
-            return AuthenticationStatus.InvalidPassword;
-        }
+        if (!account.Password!.Equals(_encryptionService.Hash(password))) return AuthenticationStatus.InvalidPassword;
 
         lock (_lock)
         {
             _sessionInfo = account.ToSession();
         }
+
         return AuthenticationStatus.Authenticated;
     }
 
@@ -116,19 +107,13 @@ public class AuthenticationService : IAuthenticationService
                 && account.Password!.Equals(_encryptionService.Hash(password))
         );
 
-        if (account is null)
-        {
-            return UpdateStatus.InvalidAccount;
-        }
+        if (account is null) return UpdateStatus.InvalidAccount;
 
         account.Username = _encryptionService.Encrypt(newUsername);
         account.Password = _encryptionService.Hash(newPassword);
         account.Role = role;
 
-        if (_dbContext.Accounts.Update(account.Id, account) is false)
-        {
-            return UpdateStatus.Fail;
-        }
+        if (_dbContext.Accounts.Update(account.Id, account) is false) return UpdateStatus.Fail;
 
         return UpdateStatus.Success;
     }
@@ -139,6 +124,7 @@ public class AuthenticationService : IAuthenticationService
         {
             _sessionInfo = null!;
         }
+
         return AuthenticationStatus.NotAuthenticated;
     }
 

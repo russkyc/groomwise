@@ -18,17 +18,19 @@ namespace GroomWise.Converters;
 [ValueConversion(typeof(DateTime), typeof(string))]
 public class DateTimeToDayOfWeekConverter : IValueConverter
 {
+    public static DateTimeToDayOfWeekConverter Instance = new();
 
-    public static DateTimeToDayOfWeekConverter Instance = new DateTimeToDayOfWeekConverter();
-    
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         var date = value is DateTime
-            ? (DateTime)value : default;
+            ? (DateTime)value
+            : default;
         return date.Date == DateTime.Today.Date
-            ? "Today" : date == DateTime.Today.Date
+            ? "Today"
+            : date == DateTime.Today.Date
                 .AddDays(1)
-                ? "Tommorow" : date.DayOfWeek
+                ? "Tommorow"
+                : date.DayOfWeek
                     .ToString();
     }
 

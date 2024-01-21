@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dialogs="clr-namespace:GroomWise.Views.Dialogs"
-    xmlns:local="clr-namespace:GroomWise.Views.Templates"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:observables="clr-namespace:GroomWise.Application.Observables;assembly=GroomWise.Application"
     xmlns:russkyc="clr-namespace:org.russkyc.moderncontrols;assembly=Russkyc.ModernControls.WPF"

@@ -4,20 +4,20 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-		<LangVersion>11</LangVersion>
+        <LangVersion>11</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <DebugSymbols>true</DebugSymbols>
-      <DebugType>none</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>none</DebugType>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="FluentBuilder" Version="0.9.0">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="LiteDB" Version="5.0.17" />
+        <PackageReference Include="LiteDB" Version="5.0.17"/>
     </ItemGroup>
 
 
